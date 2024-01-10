@@ -1,12 +1,7 @@
-export type {
-  TwoSlashOptions,
-  TwoSlashReturn,
-} from "./core"
-export {
-  TwoslashError
-} from "./core"
+import process from "node:process";
 import * as ts from "typescript/lib/tsserverlibrary"
-import { TwoSlashOptions, twoslasher as twoslasherCore } from "./core"
+import type { TwoSlashOptions} from "./core";
+import { twoslasher as twoslasherCore } from "./core"
 
 export function twoslasher(code: string, lang: string, opts?: TwoSlashOptions) {
   return twoslasherCore(code, lang, {
@@ -15,3 +10,11 @@ export function twoslasher(code: string, lang: string, opts?: TwoSlashOptions) {
     ...opts
   })
 }
+
+export type {
+  TwoSlashOptions,
+  TwoSlashReturn,
+} from "./core"
+export {
+  TwoslashError
+} from "./core"

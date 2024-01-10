@@ -1,6 +1,6 @@
-import { twoslasher } from "../src/index"
 import { ModuleKind } from "typescript"
-import { expect, describe, it } from 'vitest'
+import { expect, it } from 'vitest'
+import { twoslasher } from "../src/index"
 
 it("emits CommonJS", () => {
   const files = `

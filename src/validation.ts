@@ -17,7 +17,7 @@ export function validateCodeForErrors(
 
     const missing = handbookOptions.errors.length
       ? `\nThe existing annotation specified ${handbookOptions.errors.join(" ")}`
-      : "\nExpected: " + codeToAdd
+      : `\nExpected: ${codeToAdd}`
 
     // These get filled by below
     const filesToErrors: Record<string, import("typescript").Diagnostic[]> = {}
@@ -35,13 +35,13 @@ export function validateCodeForErrors(
 
     const showDiagnostics = (title: string, diags: import("typescript").Diagnostic[]) => {
       return (
-        `${title}\n  ` +
+        `${title}\n  ${ 
         diags
           .map(e => {
             const msg = typeof e.messageText === "string" ? e.messageText : e.messageText.messageText
             return `[${e.code}] ${e.start} - ${msg}`
           })
-          .join("\n  ")
+          .join("\n  ")}`
       )
     }
 

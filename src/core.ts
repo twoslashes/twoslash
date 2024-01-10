@@ -1,20 +1,22 @@
+/* eslint-disable no-case-declarations */
+import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from "@typescript/vfs"
+import { TwoslashError } from "./error"
+import { cleanMarkdownEscaped, getClosestWord, getIdentifierTextSpans, parsePrimitive, typesToExtension } from "./utils"
+import { validateCodeForErrors, validateInput } from "./validation"
+
+
 type TS = typeof import("typescript")
 type CompilerOptions = import("typescript").CompilerOptions
 type CustomTransformers = import("typescript").CustomTransformers
 
 export * from './error'
 
-import { TwoslashError } from "./error"
-import { parsePrimitive, cleanMarkdownEscaped, typesToExtension, getIdentifierTextSpans, getClosestWord } from "./utils"
-import { validateInput, validateCodeForErrors } from "./validation"
-
-import { createSystem, createVirtualTypeScriptEnvironment, createFSBackedSystem } from "@typescript/vfs"
-
+// eslint-disable-next-line no-console
 const log = false ? console.log : undefined
 
 // Hacking in some internal stuff
 declare module "typescript" {
-  type Option = {
+  interface Option {
     name: string
     type: "list" | "boolean" | "number" | "string" | Map<string, any>
     element?: Option
@@ -23,7 +25,7 @@ declare module "typescript" {
   const optionDeclarations: Array<Option>
 }
 
-type QueryPosition = {
+interface QueryPosition {
   kind: "query" | "completion"
   offset: number
   text: string | undefined
@@ -31,7 +33,7 @@ type QueryPosition = {
   line: number
 }
 
-type PartialQueryResults = {
+interface PartialQueryResults {
   kind: "query"
   text: string
   docs: string | undefined
@@ -40,7 +42,7 @@ type PartialQueryResults = {
   file: string
 }
 
-type PartialCompletionResults = {
+interface PartialCompletionResults {
   kind: "completions"
   completions: import("typescript").CompletionEntry[]
   completionPrefix: string
@@ -181,9 +183,11 @@ function filterCompilerOptions(codeLines: string[], defaultCompilerOptions: Comp
   const options = { ...defaultCompilerOptions }
   for (let i = 0; i < codeLines.length;) {
     let match
+    // eslint-disable-next-line no-cond-assign
     if ((match = booleanConfigRegexp.exec(codeLines[i]))) {
       options[match[1]] = true
       setOption(match[1], "true", options, ts)
+      // eslint-disable-next-line no-cond-assign
     } else if ((match = valuedConfigRegexp.exec(codeLines[i]))) {
       // Skip a filename tag, which should propagate through this stage
       if (match[1] === "filename") {
@@ -205,9 +209,10 @@ function filterCustomTags(codeLines: string[], customTags: string[]) {
 
   for (let i = 0; i < codeLines.length;) {
     let match
+    // eslint-disable-next-line no-cond-assign
     if ((match = valuedConfigRegexp.exec(codeLines[i]))) {
       if (customTags.includes(match[1])) {
-        tags.push({ name: match[1], line: i, annotation: codeLines[i].split("@" + match[1] + ": ")[1] })
+        tags.push({ name: match[1], line: i, annotation: codeLines[i].split(`@${match[1]}: `)[1] })
         codeLines.splice(i, 1)
       }
     }
@@ -255,6 +260,7 @@ function filterHandbookOptions(codeLines: string[]): ExampleOptions {
   const options: any = { ...defaultHandbookOptions }
   for (let i = 0; i < codeLines.length; i++) {
     let match
+    // eslint-disable-next-line no-cond-assign
     if ((match = booleanConfigRegexp.exec(codeLines[i]))) {
       if (match[1] in options) {
         options[match[1]] = true
@@ -262,6 +268,7 @@ function filterHandbookOptions(codeLines: string[]): ExampleOptions {
         codeLines.splice(i, 1)
         i--
       }
+      // eslint-disable-next-line no-cond-assign
     } else if ((match = valuedConfigRegexp.exec(codeLines[i]))) {
       if (match[1] in options) {
         options[match[1]] = match[2]
@@ -410,7 +417,7 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
 
   const originalCode = code
   const safeExtension = typesToExtension(extension)
-  const defaultFileName = "index." + safeExtension
+  const defaultFileName = `index.${safeExtension}`
 
   log?.(`\n\nLooking at code: \n\`\`\`${safeExtension}\n${code}\n\`\`\`\n`)
 
@@ -444,7 +451,7 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
   const useFS = !!options.fsMap
   const vfs = useFS && options.fsMap ? options.fsMap : new Map<string, string>()
   const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, getRoot(), ts, options.tsLibDirectory)
-  const fsRoot = useFS ? "/" : getRoot() + "/"
+  const fsRoot = useFS ? "/" : `${getRoot()}/`
 
   const env = createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, options.customTransformers)
   const ls = env.languageService
@@ -537,6 +544,9 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
           }
           return queryResult
         }
+
+        default: 
+          throw new TwoslashError('Unreachable', 'This should never happen', '')
       }
     })
     partialQueries = partialQueries.concat(lspedQueries)
@@ -596,7 +606,7 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
 
     // Get all of the interesting quick info popover
     if (!handbookOptions.showEmit) {
-      const fileContentStartIndexInModifiedFile = code.indexOf(source) == -1 ? 0 : code.indexOf(source)
+      const fileContentStartIndexInModifiedFile = !code.includes(source) ? 0 : code.indexOf(source)
       const linesAbove = code.slice(0, fileContentStartIndexInModifiedFile).split("\n").length - 1
 
       // Get all interesting identifiers in the file, so we can show hover info for it
@@ -702,7 +712,7 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
     const emitSourceFilename =
       fsRoot + emitFilename.replace(".jsx", "").replace(".js", "").replace(".d.ts", "").replace(".map", "")
 
-    let emitSource = filenames.find(f => f === emitSourceFilename + ".ts" || f === emitSourceFilename + ".tsx")
+    let emitSource = filenames.find(f => f === `${emitSourceFilename}.ts` || f === `${emitSourceFilename}.tsx`)
 
     if (!emitSource && !compilerOptions.outFile) {
       const allFiles = filenames.join(", ")
@@ -817,7 +827,7 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
   }
 }
 
-const splitTwoslashCodeInfoFiles = (code: string, defaultFileName: string, root: string) => {
+function splitTwoslashCodeInfoFiles(code: string, defaultFileName: string, root: string) {
   const lines = code.split(/\r\n?|\n/g)
 
   let nameForFile = code.includes(`@filename: ${defaultFileName}`) ? "global.ts" : defaultFileName

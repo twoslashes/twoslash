@@ -1,8 +1,9 @@
-import fs from "fs/promises"
-import { join, extname, parse } from "path"
-import { twoslasher, TwoSlashReturn } from "../src/index"
+import fs from "node:fs/promises"
+import { extname, join, parse } from "node:path"
 import { format } from "prettier"
-import { expect, describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
+import type { TwoSlashReturn } from "../src/index";
+import { twoslasher } from "../src/index"
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
@@ -22,7 +23,7 @@ describe("fixtures", async () => {
 
       // if(!fixtureName.includes("imports")) return
       it(fixtureName, async () => {
-        const resultName = parse(fixtureName).name + ".json"
+        const resultName = `${parse(fixtureName).name}.json`
         const result = join(resultsFolder, "tests", resultName)
 
         const file = await fs.readFile(fixture, "utf8")
@@ -33,7 +34,7 @@ describe("fixtures", async () => {
       })
     })
   )
-  })
+})
 
 describe("fixtures readme", async () => {
   const fixturesRoot = await fs.readdir(join(fixturesFolder))
@@ -47,7 +48,7 @@ describe("fixtures readme", async () => {
 
       // if(!fixtureName.includes("compiler_fl")) return
       it(fixtureName, async () => {
-        const resultName = parse(fixtureName).name + ".json"
+        const resultName = `${parse(fixtureName).name}.json`
         const result = join(resultsFolder, resultName)
 
         const file = await fs.readFile(fixture, "utf8")
@@ -73,7 +74,7 @@ describe("fixtures throws", async () => {
       }
 
       it(fixtureName, async () => {
-        const resultName = parse(fixtureName).name + ".json"
+        const resultName = `${parse(fixtureName).name}.json`
         const result = join(resultsFolder, resultName)
 
         const file = await fs.readFile(fixture, "utf8")
@@ -93,10 +94,10 @@ describe("fixtures throws", async () => {
   )
 })
 
-const cleanFixture = (ts: TwoSlashReturn) => {
-  const wd = process.cwd()
+function cleanFixture(ts: TwoSlashReturn) {
+  const wd = process.cwd();
   ts.staticQuickInfos.forEach(info => {
-    info.text = info.text.replace(new RegExp(wd, "g"), "[home]")
-  })
-  return ts
+    info.text = info.text.replace(new RegExp(wd, "g"), "[home]");
+  });
+  return ts;
 }

@@ -1,5 +1,5 @@
-import { twoslasher } from "../src/index"
 import { expect, it } from 'vitest'
+import { twoslasher } from "../src/index"
 
 it("extracts custom tags", () => {
   const file = `

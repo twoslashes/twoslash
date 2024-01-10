@@ -1,9 +1,9 @@
 import ts from 'typescript'
-import { getIdentifierTextSpans } from '../src/utils'
 import { expect, it } from 'vitest'
+import { getIdentifierTextSpans } from '../src/utils'
 
 it('gets the expected identifiers', () => {
-  let file = ts.createSourceFile(
+  const file = ts.createSourceFile(
     'anything.ts',
     `
 readdirSync(fixturesFolder).forEach(fixtureName => {
