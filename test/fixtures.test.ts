@@ -23,12 +23,11 @@ describe("fixtures", async () => {
       // if(!fixtureName.includes("imports")) return
       it(fixtureName, async () => {
         const resultName = `${parse(fixtureName).name}.json`
-        const result = join(resultsFolder, "tests", resultName)
-
         const file = await fs.readFile(fixture, "utf8")
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
-        expect(cleanFixture(fourslashed)).toMatchFileSnapshot(result)
+        expect(cleanFixture(fourslashed))
+          .toMatchFileSnapshot(join(resultsFolder, "tests", resultName))
       })
     })
   )
@@ -47,12 +46,12 @@ describe("fixtures readme", async () => {
       // if(!fixtureName.includes("compiler_fl")) return
       it(fixtureName, async () => {
         const resultName = `${parse(fixtureName).name}.json`
-        const result = join(resultsFolder, resultName)
 
         const file = await fs.readFile(fixture, "utf8")
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
-        expect(cleanFixture(fourslashed)).toMatchFileSnapshot(result)
+        expect(cleanFixture(fourslashed))
+        .toMatchFileSnapshot(join(resultsFolder, resultName))
       })
     })
   )
@@ -71,8 +70,7 @@ describe("fixtures throws", async () => {
       }
 
       it(fixtureName, async () => {
-        const resultName = `${parse(fixtureName).name}.json`
-        const result = join(resultsFolder, resultName)
+        const resultName = `${parse(fixtureName).name}.txt`
 
         const file = await fs.readFile(fixture, "utf8")
 
@@ -82,7 +80,7 @@ describe("fixtures throws", async () => {
         } catch (err) {
           thrown = true
           if (err instanceof Error)
-            expect(err.message).toMatchFileSnapshot(result)
+            expect(err.message).toMatchFileSnapshot(join(resultsFolder, "throws", resultName))
         }
 
         if (!thrown) throw new Error("Did not throw")

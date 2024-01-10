@@ -1,7 +1,7 @@
 import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { TwoslashError } from './error';
-import type { HandbookOptions, Range, Token, TokenError, TokenWithoutPosition , TwoSlashOptions, TwoSlashReturn } from "./types";
+import type { HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashOptions, TwoSlashReturn } from "./types";
 import { createPosConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
 
@@ -90,8 +90,17 @@ export function twoslasher(
           break;
       }
     }
-    else {
+    else if (Object.keys(defaultHandbookOptions).includes(name)) {
       (handbookOptions as any)[name] = value;
+    }
+    else {
+      if (handbookOptions.noErrorValidation)
+        return false
+      throw new TwoslashError(
+        `Invalid inline compiler flag`,
+        `There isn't a TypeScript compiler flag called '@${name}'.`,
+        `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`
+      )
     }
   }
 
@@ -99,7 +108,8 @@ export function twoslasher(
   Array.from(code.matchAll(reConfigBoolean)).forEach((match) => {
     const index = match.index!;
     const name = match[1];
-    updateOptions(name, true);
+    if (updateOptions(name, true) === false)
+      return
     removals.push([index, index + match[0].length + 1]);
   });
   Array.from(code.matchAll(reConfigValue)).forEach((match) => {
@@ -118,7 +128,8 @@ export function twoslasher(
       })
     }
     else {
-      updateOptions(name, value);
+      if (updateOptions(name, value) === false)
+        return
     }
     removals.push([index, index + match[0].length + 1]);
   });
@@ -329,7 +340,7 @@ export function twoslasher(
         ...resultPC.indexToPos(token.start),
       } as Token;
     })
-  
+
   return {
     code: outputCode,
     tokens,
