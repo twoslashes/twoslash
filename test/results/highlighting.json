@@ -60,7 +60,7 @@
     },
     {
       "text": "(method) Console.log(...data: any[]): void",
-      "docs": "",
+      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
       "start": 55,
       "length": 3,
       "line": 1,
@@ -114,6 +114,6 @@
     }
   ],
   "errors": [],
-  "playgroundURL": "https://www.typescriptlang.org/play/#code/GYVwdgxgLglg9mABAcwE4FN1QBQAd2oDOCAXIoVKjGMgDSIAmAhlOmQCIvoCUiA3gChEiCAmIAbdADpxcZNgAGACXTjZiACR98RBAF96UOMwCeiGIU19mrKUc6sAypWrzuegIQLuAbgF6BATRMHAAiAFkmBgYLBFD6MHQAd0QHdGxuXwEAemzhfILC4QA9UrLygSA",
-  "tags": []
+  "tags": [],
+  "playgroundURL": ""
 }

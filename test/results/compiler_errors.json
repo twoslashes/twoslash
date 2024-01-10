@@ -33,7 +33,7 @@
     },
     {
       "text": "(method) Console.log(...data: any[]): void",
-      "docs": "",
+      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
       "start": 28,
       "length": 3,
       "line": 2,
@@ -79,6 +79,6 @@
       "id": "err-7006-13-1"
     }
   ],
-  "playgroundURL": "https://www.typescriptlang.org/play/#code/PTAEAEBcEMCcHMCmkBcoCiBlATABgIwCsAUCBIrLAPawDOaA7LrgGzHEBmArgHYDGkAJZUeoDjwAUtAJSgA3sVCg+I2lQA2iAHTqq8KVtpcARpFgSAzNOnEAvu3ESALNhtA",
-  "tags": []
+  "tags": [],
+  "playgroundURL": ""
 }
