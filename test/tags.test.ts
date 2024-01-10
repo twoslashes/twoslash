@@ -23,8 +23,12 @@ const b = 12331234
   expect(tag).toMatchInlineSnapshot(`
     {
       "annotation": "OK, sure",
-      "line": 1,
+      "character": 0,
+      "length": 0,
+      "line": 2,
       "name": "thing",
+      "offset": 1,
+      "type": "tag",
     }
   `)
 })
@@ -41,7 +45,8 @@ const another = ''
   expect(result.tags.length).toEqual(1)
 
   expect(result.code).toMatchInlineSnapshot(`
-    "const another = ''
+    "// @thing: This one only
+    const another = ''
         "
   `)
 
@@ -49,8 +54,12 @@ const another = ''
   expect(tag).toMatchInlineSnapshot(`
     {
       "annotation": "This one only",
-      "line": 0,
+      "character": 0,
+      "length": 0,
+      "line": 1,
       "name": "thing",
+      "offset": 0,
+      "type": "tag",
     }
   `)
 })

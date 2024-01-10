@@ -1,11 +1,13 @@
 
 ## Errors were thrown in the sample, but not included in an errors tag
 
-These errors were not marked as being expected: 2304. 
-Expected: // @errors: 2304
+These errors were not marked as being expected: 2552 2304. 
+Expected: // @errors: 2552 2304
 
 Compiler Errors:
 
 index.ts
+  [2552] 26 - Cannot find name 'consol'. Did you mean 'console'?
   [2304] 35 - Cannot find name 'log'.
+  [2552] 70 - Cannot find name 'consol'. Did you mean 'console'?
   [2304] 79 - Cannot find name 'err'.

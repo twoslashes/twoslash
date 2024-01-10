@@ -106,8 +106,21 @@ export function twoslasherNew(
   Array.from(code.matchAll(reConfigValue)).forEach((match) => {
     const index = match.index!;
     const name = match[1];
+    if (name === 'filename')
+      return
     const value = match[2];
-    updateOptions(name, value);
+    if (options.customTags?.includes(name)) {
+      tokens.push({
+        type: 'tag',
+        name,
+        offset: index,
+        length: 0,
+        annotation: match[0].split(":")[1].trim(),
+      })
+    }
+    else {
+      updateOptions(name, value);
+    }
     removals.push([index, index + match[0].length + 1]);
   });
   // #endregion
@@ -283,15 +296,13 @@ export function twoslasherNew(
     outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1]);
     tokens.forEach(token => {
       // tokens before the range, do nothing
-      if (token.offset < remove[0]) {
+      if (token.offset + token.length <= remove[0]) {
         return undefined;
       }
-
       // remove tokens that are within in the range
-      else if (token.offset <= remove[1]) {
+      else if (token.offset < remove[1]) {
         token.offset = -1;
       }
-
       // move tokens after the range forward
       else {
         token.offset -= removalLength;
@@ -300,7 +311,7 @@ export function twoslasherNew(
   }
 
   tokens = tokens
-    .filter(token => token.offset !== -1)
+    .filter(token => token.offset >= 0)
     .sort((a, b) => a.offset - b.offset);
 
   return {
