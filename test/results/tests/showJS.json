@@ -1,6 +1,5 @@
 {
   "code": "/** The translation of 'Hello world' into Portuguese */\nexport const helloWorldPTBR = 'Olá Mundo'\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
@@ -8,7 +7,9 @@
       "docs": "The translation of 'Hello world' into Portuguese",
       "start": 69,
       "length": 14,
-      "target": "helloWorldPTBR"
+      "target": "helloWorldPTBR",
+      "line": 2,
+      "character": 13
     }
   ]
 }

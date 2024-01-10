@@ -1,76 +1,95 @@
 {
   "code": "\n// @filename: service.ts\nexport class Service {}\n\n// @filename: component.ts\nimport type { Service } from \"./service\"\n\ndeclare var decorator: any\n\n@decorator\nclass MyComponent {\n  constructor(public Service: Service) {}\n\n  @decorator\n  method(x: this) {}\n}\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "class Service",
       "start": 39,
       "length": 7,
-      "target": "Service"
+      "target": "Service",
+      "line": 3,
+      "character": 13
     },
     {
       "type": "hover",
       "text": "(alias) class Service\nimport Service",
       "start": 92,
       "length": 7,
-      "target": "Service"
+      "target": "Service",
+      "line": 6,
+      "character": 14
     },
     {
       "type": "hover",
       "text": "var decorator: any",
       "start": 132,
       "length": 9,
-      "target": "decorator"
+      "target": "decorator",
+      "line": 8,
+      "character": 12
     },
     {
       "type": "hover",
       "text": "var decorator: any",
       "start": 149,
       "length": 9,
-      "target": "decorator"
+      "target": "decorator",
+      "line": 10,
+      "character": 1
     },
     {
       "type": "hover",
       "text": "class MyComponent",
       "start": 165,
       "length": 11,
-      "target": "MyComponent"
+      "target": "MyComponent",
+      "line": 11,
+      "character": 6
     },
     {
       "type": "hover",
       "text": "(property) MyComponent.Service: Service",
       "start": 200,
       "length": 7,
-      "target": "Service"
+      "target": "Service",
+      "line": 12,
+      "character": 21
     },
     {
       "type": "hover",
       "text": "(alias) class Service\nimport Service",
       "start": 209,
       "length": 7,
-      "target": "Service"
+      "target": "Service",
+      "line": 12,
+      "character": 30
     },
     {
       "type": "hover",
       "text": "var decorator: any",
       "start": 225,
       "length": 9,
-      "target": "decorator"
+      "target": "decorator",
+      "line": 14,
+      "character": 3
     },
     {
       "type": "hover",
       "text": "(method) MyComponent.method(x: this): void",
       "start": 237,
       "length": 6,
-      "target": "method"
+      "target": "method",
+      "line": 15,
+      "character": 2
     },
     {
       "type": "hover",
       "text": "(parameter) x: this",
       "start": 244,
       "length": 1,
-      "target": "x"
+      "target": "x",
+      "line": 15,
+      "character": 9
     }
   ]
 }

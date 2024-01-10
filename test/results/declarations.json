@@ -1,6 +1,5 @@
 {
   "code": "\n/**\n * Gets the length of a string\n * @param value a string\n */\nexport function getStringLength(value: string) {\n  return value.length\n}\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
@@ -8,7 +7,9 @@
       "docs": "Gets the length of a string",
       "start": 81,
       "length": 15,
-      "target": "getStringLength"
+      "target": "getStringLength",
+      "line": 6,
+      "character": 16
     },
     {
       "type": "hover",
@@ -16,7 +17,9 @@
       "docs": "a string",
       "start": 97,
       "length": 5,
-      "target": "value"
+      "target": "value",
+      "line": 6,
+      "character": 32
     },
     {
       "type": "hover",
@@ -24,7 +27,9 @@
       "docs": "a string",
       "start": 123,
       "length": 5,
-      "target": "value"
+      "target": "value",
+      "line": 7,
+      "character": 9
     },
     {
       "type": "hover",
@@ -32,7 +37,9 @@
       "docs": "Returns the length of a String object.",
       "start": 129,
       "length": 6,
-      "target": "length"
+      "target": "length",
+      "line": 7,
+      "character": 15
     }
   ]
 }

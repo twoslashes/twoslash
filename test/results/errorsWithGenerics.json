@@ -1,13 +1,14 @@
 {
   "code": "const a: Record<string, string> = {}\nlet b: Record<string, number> = {}\nb = a\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "const a: Record<string, string>",
       "start": 6,
       "length": 1,
-      "target": "a"
+      "target": "a",
+      "line": 1,
+      "character": 6
     },
     {
       "type": "hover",
@@ -15,14 +16,18 @@
       "docs": "Construct a type with a set of properties K of type T",
       "start": 9,
       "length": 6,
-      "target": "Record"
+      "target": "Record",
+      "line": 1,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "let b: Record<string, number>",
       "start": 41,
       "length": 1,
-      "target": "b"
+      "target": "b",
+      "line": 2,
+      "character": 4
     },
     {
       "type": "hover",
@@ -30,14 +35,18 @@
       "docs": "Construct a type with a set of properties K of type T",
       "start": 44,
       "length": 6,
-      "target": "Record"
+      "target": "Record",
+      "line": 2,
+      "character": 7
     },
     {
       "type": "hover",
       "text": "let b: Record<string, number>",
       "start": 72,
       "length": 1,
-      "target": "b"
+      "target": "b",
+      "line": 3,
+      "character": 0
     },
     {
       "type": "error",
@@ -47,14 +56,18 @@
       "filename": "[home]/index.ts",
       "id": "err-2322-89-1",
       "text": "Type 'Record<string, string>' is not assignable to type 'Record<string, number>'.\n  'string' index signatures are incompatible.\n    Type 'string' is not assignable to type 'number'.",
-      "level": 1
+      "level": 1,
+      "line": 3,
+      "character": 0
     },
     {
       "type": "hover",
       "text": "const a: Record<string, string>",
       "start": 76,
       "length": 1,
-      "target": "a"
+      "target": "a",
+      "line": 3,
+      "character": 4
     }
   ]
 }

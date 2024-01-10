@@ -1,34 +1,41 @@
 {
   "code": "\n// --importHelpers on: Spread helper will be imported from 'tslib'\n\nexport function fn(arr: number[]) {\n  const arr2 = [1, ...arr]\n}\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "function fn(arr: number[]): void",
       "start": 85,
       "length": 2,
-      "target": "fn"
+      "target": "fn",
+      "line": 4,
+      "character": 16
     },
     {
       "type": "hover",
       "text": "(parameter) arr: number[]",
       "start": 88,
       "length": 3,
-      "target": "arr"
+      "target": "arr",
+      "line": 4,
+      "character": 19
     },
     {
       "type": "hover",
       "text": "const arr2: number[]",
       "start": 113,
       "length": 4,
-      "target": "arr2"
+      "target": "arr2",
+      "line": 5,
+      "character": 8
     },
     {
       "type": "hover",
       "text": "(parameter) arr: number[]",
       "start": 127,
       "length": 3,
-      "target": "arr"
+      "target": "arr",
+      "line": 5,
+      "character": 22
     }
   ]
 }

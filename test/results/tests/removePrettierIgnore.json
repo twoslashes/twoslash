@@ -1,20 +1,23 @@
 {
   "code": "const myThing = {}\n\n// prettier-ignore\nconst anotherThing = {}\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "const myThing: {}",
       "start": 6,
       "length": 7,
-      "target": "myThing"
+      "target": "myThing",
+      "line": 1,
+      "character": 6
     },
     {
       "type": "hover",
       "text": "const anotherThing: {}",
       "start": 45,
       "length": 12,
-      "target": "anotherThing"
+      "target": "anotherThing",
+      "line": 4,
+      "character": 6
     }
   ]
 }

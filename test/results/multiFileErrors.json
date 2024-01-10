@@ -1,69 +1,86 @@
 {
   "code": "// @filename: sum.ts\nexport function sum(a: number, b: number): number {\n  return a + b\n}\n\n// @filename: ok.ts\nimport { sum } from \"./sum\"\nsum(1, 2)\n\n// @filename: error.ts\nimport { sum } from \"./sum\"\nsum(4, \"woops\")\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "function sum(a: number, b: number): number",
       "start": 37,
       "length": 3,
-      "target": "sum"
+      "target": "sum",
+      "line": 2,
+      "character": 16
     },
     {
       "type": "hover",
       "text": "(parameter) a: number",
       "start": 41,
       "length": 1,
-      "target": "a"
+      "target": "a",
+      "line": 2,
+      "character": 20
     },
     {
       "type": "hover",
       "text": "(parameter) b: number",
       "start": 52,
       "length": 1,
-      "target": "b"
+      "target": "b",
+      "line": 2,
+      "character": 31
     },
     {
       "type": "hover",
       "text": "(parameter) a: number",
       "start": 82,
       "length": 1,
-      "target": "a"
+      "target": "a",
+      "line": 3,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "(parameter) b: number",
       "start": 86,
       "length": 1,
-      "target": "b"
+      "target": "b",
+      "line": 3,
+      "character": 13
     },
     {
       "type": "hover",
       "text": "(alias) function sum(a: number, b: number): number\nimport sum",
       "start": 120,
       "length": 3,
-      "target": "sum"
+      "target": "sum",
+      "line": 7,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "(alias) sum(a: number, b: number): number\nimport sum",
       "start": 139,
       "length": 3,
-      "target": "sum"
+      "target": "sum",
+      "line": 8,
+      "character": 0
     },
     {
       "type": "hover",
       "text": "(alias) function sum(a: number, b: number): number\nimport sum",
       "start": 182,
       "length": 3,
-      "target": "sum"
+      "target": "sum",
+      "line": 11,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "(alias) sum(a: number, b: number): number\nimport sum",
       "start": 201,
       "length": 3,
-      "target": "sum"
+      "target": "sum",
+      "line": 12,
+      "character": 0
     },
     {
       "type": "error",
@@ -73,7 +90,9 @@
       "filename": "[home]/error.ts",
       "id": "err-2345-75-7",
       "text": "Argument of type 'string' is not assignable to parameter of type 'number'.",
-      "level": 1
+      "level": 1,
+      "line": 12,
+      "character": 7
     }
   ]
 }

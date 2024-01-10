@@ -1,13 +1,14 @@
 {
   "code": "let foo = \"hello there!\";\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "query",
       "text": "let foo: string",
       "start": 4,
       "length": 3,
-      "target": "foo"
+      "target": "foo",
+      "line": 1,
+      "character": 4
     }
   ]
 }

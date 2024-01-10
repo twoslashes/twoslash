@@ -2,7 +2,7 @@ import fs from "node:fs/promises"
 import { extname, join, parse } from "node:path"
 import { describe, expect, it } from 'vitest'
 import type { TwoSlashReturnNew } from "../src/types-new";
-import { twoslasherNew } from "../src/index"
+import { twoslasher } from "../src/index"
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
@@ -27,7 +27,7 @@ describe("fixtures", async () => {
 
         const file = await fs.readFile(fixture, "utf8")
 
-        const fourslashed = twoslasherNew(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
+        const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
         expect(cleanFixture(fourslashed)).toMatchFileSnapshot(result)
       })
     })
@@ -51,7 +51,7 @@ describe("fixtures readme", async () => {
 
         const file = await fs.readFile(fixture, "utf8")
 
-        const fourslashed = twoslasherNew(file, extname(fixtureName).substr(1))
+        const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
         expect(cleanFixture(fourslashed)).toMatchFileSnapshot(result)
       })
     })
@@ -78,7 +78,7 @@ describe("fixtures throws", async () => {
 
         let thrown = false
         try {
-          twoslasherNew(file, extname(fixtureName).substr(1))
+          twoslasher(file, extname(fixtureName).substr(1))
         } catch (err) {
           thrown = true
           if (err instanceof Error)
@@ -92,11 +92,8 @@ describe("fixtures throws", async () => {
 })
 
 function cleanFixture(ts: TwoSlashReturnNew) {
-  const r= {
-    ...ts,
-    original: undefined,
-    compilerOptions: undefined,
-    removals: undefined,
-  }
-  return JSON.stringify(r, null, 2).replaceAll(process.cwd(), "[home]")
+  return JSON.stringify({
+    code: ts.code,
+    tokens: ts.tokens,
+  }, null, 2).replaceAll(process.cwd(), "[home]")
 }

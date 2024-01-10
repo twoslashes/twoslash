@@ -1,27 +1,32 @@
 {
   "code": "// The testing infra has set up `annotate` to be a customTag\n\n// @annotate - left - You can use JSDoc comments to provide type information to your editor\nfunction compact(arr: string[]) {\n  if (arr.length > 10) return arr.length\n  // @annotate - right - You can use JSDoc comments to provide type information to your editor\n  return arr\n}\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "function compact(arr: string[]): number | string[]",
       "start": 163,
       "length": 7,
-      "target": "compact"
+      "target": "compact",
+      "line": 4,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "(parameter) arr: string[]",
       "start": 171,
       "length": 3,
-      "target": "arr"
+      "target": "arr",
+      "line": 4,
+      "character": 17
     },
     {
       "type": "hover",
       "text": "(parameter) arr: string[]",
       "start": 194,
       "length": 3,
-      "target": "arr"
+      "target": "arr",
+      "line": 5,
+      "character": 6
     },
     {
       "type": "hover",
@@ -29,14 +34,18 @@
       "docs": "Gets or sets the length of the array. This is a number one higher than the highest index in the array.",
       "start": 198,
       "length": 6,
-      "target": "length"
+      "target": "length",
+      "line": 5,
+      "character": 10
     },
     {
       "type": "hover",
       "text": "(parameter) arr: string[]",
       "start": 218,
       "length": 3,
-      "target": "arr"
+      "target": "arr",
+      "line": 5,
+      "character": 30
     },
     {
       "type": "hover",
@@ -44,14 +53,18 @@
       "docs": "Gets or sets the length of the array. This is a number one higher than the highest index in the array.",
       "start": 222,
       "length": 6,
-      "target": "length"
+      "target": "length",
+      "line": 5,
+      "character": 34
     },
     {
       "type": "hover",
       "text": "(parameter) arr: string[]",
       "start": 333,
       "length": 3,
-      "target": "arr"
+      "target": "arr",
+      "line": 7,
+      "character": 9
     }
   ]
 }

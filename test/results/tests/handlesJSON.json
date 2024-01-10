@@ -1,34 +1,41 @@
 {
   "code": "// @filename: settings.json\n{\n    \"repo\": \"TypeScript\",\n    \"dry\": false,\n    \"debug\": false\n}\n// @filename: index.ts\nimport settings from \"./settings.json\";\n\nsettings.debug === true;\nsettings.dry === 2;\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "import settings",
       "start": 125,
       "length": 8,
-      "target": "settings"
+      "target": "settings",
+      "line": 8,
+      "character": 7
     },
     {
       "type": "hover",
       "text": "import settings",
       "start": 159,
       "length": 8,
-      "target": "settings"
+      "target": "settings",
+      "line": 10,
+      "character": 0
     },
     {
       "type": "hover",
       "text": "(property) \"debug\": boolean",
       "start": 168,
       "length": 5,
-      "target": "debug"
+      "target": "debug",
+      "line": 10,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "import settings",
       "start": 184,
       "length": 8,
-      "target": "settings"
+      "target": "settings",
+      "line": 11,
+      "character": 0
     },
     {
       "type": "error",
@@ -38,14 +45,18 @@
       "filename": "[home]/index.ts",
       "id": "err-2367-89-18",
       "text": "This comparison appears to be unintentional because the types 'boolean' and 'number' have no overlap.",
-      "level": 1
+      "level": 1,
+      "line": 11,
+      "character": 0
     },
     {
       "type": "hover",
       "text": "(property) \"dry\": boolean",
       "start": 193,
       "length": 3,
-      "target": "dry"
+      "target": "dry",
+      "line": 11,
+      "character": 9
     }
   ]
 }

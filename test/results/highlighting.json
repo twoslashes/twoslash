@@ -1,27 +1,32 @@
 {
   "code": "function greet(person: string, date: Date) {\n  console.log(`Hello ${person}, today is ${date.toDateString()}!`);\n}\n\ngreet(\"Maddison\", new Date());\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "function greet(person: string, date: Date): void",
       "start": 9,
       "length": 5,
-      "target": "greet"
+      "target": "greet",
+      "line": 1,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "(parameter) person: string",
       "start": 15,
       "length": 6,
-      "target": "person"
+      "target": "person",
+      "line": 1,
+      "character": 15
     },
     {
       "type": "hover",
       "text": "(parameter) date: Date",
       "start": 31,
       "length": 4,
-      "target": "date"
+      "target": "date",
+      "line": 1,
+      "character": 31
     },
     {
       "type": "hover",
@@ -29,14 +34,18 @@
       "docs": "Enables basic storage and retrieval of dates and times.",
       "start": 37,
       "length": 4,
-      "target": "Date"
+      "target": "Date",
+      "line": 1,
+      "character": 37
     },
     {
       "type": "hover",
       "text": "var console: Console",
       "start": 47,
       "length": 7,
-      "target": "console"
+      "target": "console",
+      "line": 2,
+      "character": 2
     },
     {
       "type": "hover",
@@ -44,21 +53,27 @@
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
       "start": 55,
       "length": 3,
-      "target": "log"
+      "target": "log",
+      "line": 2,
+      "character": 10
     },
     {
       "type": "hover",
       "text": "(parameter) person: string",
       "start": 68,
       "length": 6,
-      "target": "person"
+      "target": "person",
+      "line": 2,
+      "character": 23
     },
     {
       "type": "hover",
       "text": "(parameter) date: Date",
       "start": 88,
       "length": 4,
-      "target": "date"
+      "target": "date",
+      "line": 2,
+      "character": 43
     },
     {
       "type": "hover",
@@ -66,21 +81,27 @@
       "docs": "Returns a date as a string value.",
       "start": 93,
       "length": 12,
-      "target": "toDateString"
+      "target": "toDateString",
+      "line": 2,
+      "character": 48
     },
     {
       "type": "hover",
       "text": "function greet(person: string, date: Date): void",
       "start": 116,
       "length": 5,
-      "target": "greet"
+      "target": "greet",
+      "line": 5,
+      "character": 0
     },
     {
       "type": "hover",
       "text": "var Date: DateConstructor\nnew () => Date (+4 overloads)",
       "start": 138,
       "length": 4,
-      "target": "Date"
+      "target": "Date",
+      "line": 5,
+      "character": 22
     }
   ]
 }

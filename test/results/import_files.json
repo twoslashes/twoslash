@@ -1,27 +1,32 @@
 {
   "code": "// @filename: file-with-export.ts\nexport const helloWorld = \"Example string\";\n\n// @filename: index.ts\nimport {helloWorld} from \"./file-with-export\"\nconsole.log(helloWorld)\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "const helloWorld: \"Example string\"",
       "start": 47,
       "length": 10,
-      "target": "helloWorld"
+      "target": "helloWorld",
+      "line": 2,
+      "character": 13
     },
     {
       "type": "hover",
       "text": "(alias) const helloWorld: \"Example string\"\nimport helloWorld",
       "start": 110,
       "length": 10,
-      "target": "helloWorld"
+      "target": "helloWorld",
+      "line": 5,
+      "character": 8
     },
     {
       "type": "hover",
       "text": "var console: Console",
       "start": 148,
       "length": 7,
-      "target": "console"
+      "target": "console",
+      "line": 6,
+      "character": 0
     },
     {
       "type": "hover",
@@ -29,14 +34,18 @@
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
       "start": 156,
       "length": 3,
-      "target": "log"
+      "target": "log",
+      "line": 6,
+      "character": 8
     },
     {
       "type": "hover",
       "text": "(alias) const helloWorld: \"Example string\"\nimport helloWorld",
       "start": 160,
       "length": 10,
-      "target": "helloWorld"
+      "target": "helloWorld",
+      "line": 6,
+      "character": 12
     }
   ]
 }

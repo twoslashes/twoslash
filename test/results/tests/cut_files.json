@@ -1,13 +1,14 @@
 {
   "code": "const bye = 'globe'\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "const bye: \"globe\"",
       "start": 6,
       "length": 3,
-      "target": "bye"
+      "target": "bye",
+      "line": 1,
+      "character": 6
     }
   ]
 }

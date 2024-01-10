@@ -1,34 +1,41 @@
 {
   "code": "const a: string = \"242342\"\nconst b = \"hello\"\nif (a === b) {\n}\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "const a: string",
       "start": 6,
       "length": 1,
-      "target": "a"
+      "target": "a",
+      "line": 1,
+      "character": 6
     },
     {
       "type": "hover",
       "text": "const b: \"hello\"",
       "start": 33,
       "length": 1,
-      "target": "b"
+      "target": "b",
+      "line": 2,
+      "character": 6
     },
     {
       "type": "hover",
       "text": "const a: string",
       "start": 49,
       "length": 1,
-      "target": "a"
+      "target": "a",
+      "line": 3,
+      "character": 4
     },
     {
       "type": "query",
       "text": "const b: \"hello\"",
       "start": 55,
       "length": 1,
-      "target": "b"
+      "target": "b",
+      "line": 3,
+      "character": 10
     }
   ]
 }

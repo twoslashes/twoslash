@@ -1,69 +1,86 @@
 {
   "code": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState\n\nfunction networkStatus(state: NetworkState): string {\n  // Right now we don't know  which of the three potential\n  // types state could be.\n\n  // Trying to access a property which isn't shared\n  // across all types will raise an error\n  state.code\n\n  // By switching on state, we can discriminate the\n  switch (state.state) {\n    case 'loading':\n      return 'Downloading...'\n    case 'failed':\n      return `Error ${state.code} downloading`\n    case 'success':\n      return `Error ${state.response} downloading`\n  }\n}\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
       "start": 5,
       "length": 12,
-      "target": "NetworkState"
+      "target": "NetworkState",
+      "line": 1,
+      "character": 5
     },
     {
       "type": "hover",
       "text": "type NetworkLoadingState = {\n    state: 'loading';\n}",
       "start": 20,
       "length": 19,
-      "target": "NetworkLoadingState"
+      "target": "NetworkLoadingState",
+      "line": 1,
+      "character": 20
     },
     {
       "type": "hover",
       "text": "type NetworkFailedState = {\n    state: 'failed';\n    code: number;\n}",
       "start": 42,
       "length": 18,
-      "target": "NetworkFailedState"
+      "target": "NetworkFailedState",
+      "line": 1,
+      "character": 42
     },
     {
       "type": "hover",
       "text": "type NetworkSuccessState = {\n    state: 'success';\n    response: {\n        title: string;\n        duration: number;\n        summary: string;\n    };\n}",
       "start": 63,
       "length": 19,
-      "target": "NetworkSuccessState"
+      "target": "NetworkSuccessState",
+      "line": 1,
+      "character": 63
     },
     {
       "type": "hover",
       "text": "function networkStatus(state: NetworkState): string",
       "start": 93,
       "length": 13,
-      "target": "networkStatus"
+      "target": "networkStatus",
+      "line": 3,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "(parameter) state: NetworkState",
       "start": 107,
       "length": 5,
-      "target": "state"
+      "target": "state",
+      "line": 3,
+      "character": 23
     },
     {
       "type": "hover",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
       "start": 114,
       "length": 12,
-      "target": "NetworkState"
+      "target": "NetworkState",
+      "line": 3,
+      "character": 30
     },
     {
       "type": "hover",
       "text": "(parameter) state: NetworkState",
       "start": 321,
       "length": 5,
-      "target": "state"
+      "target": "state",
+      "line": 9,
+      "character": 2
     },
     {
       "type": "hover",
       "text": "any",
       "start": 327,
       "length": 4,
-      "target": "code"
+      "target": "code",
+      "line": 9,
+      "character": 8
     },
     {
       "type": "error",
@@ -73,49 +90,63 @@
       "filename": "[home]/index.ts",
       "id": "err-2339-599-4",
       "text": "Property 'code' does not exist on type 'NetworkState'.\n  Property 'code' does not exist on type 'NetworkLoadingState'.",
-      "level": 1
+      "level": 1,
+      "line": 9,
+      "character": 8
     },
     {
       "type": "hover",
       "text": "(parameter) state: NetworkState",
       "start": 395,
       "length": 5,
-      "target": "state"
+      "target": "state",
+      "line": 12,
+      "character": 10
     },
     {
       "type": "hover",
       "text": "(property) state: \"loading\" | \"failed\" | \"success\"",
       "start": 401,
       "length": 5,
-      "target": "state"
+      "target": "state",
+      "line": 12,
+      "character": 16
     },
     {
       "type": "hover",
       "text": "(parameter) state: NetworkFailedState",
       "start": 501,
       "length": 5,
-      "target": "state"
+      "target": "state",
+      "line": 16,
+      "character": 22
     },
     {
       "type": "hover",
       "text": "(property) code: number",
       "start": 507,
       "length": 4,
-      "target": "code"
+      "target": "code",
+      "line": 16,
+      "character": 28
     },
     {
       "type": "hover",
       "text": "(parameter) state: NetworkSuccessState",
       "start": 568,
       "length": 5,
-      "target": "state"
+      "target": "state",
+      "line": 18,
+      "character": 22
     },
     {
       "type": "hover",
       "text": "(property) response: {\n    title: string;\n    duration: number;\n    summary: string;\n}",
       "start": 574,
       "length": 8,
-      "target": "response"
+      "target": "response",
+      "line": 18,
+      "character": 28
     }
   ]
 }

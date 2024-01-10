@@ -1,27 +1,32 @@
 {
   "code": "// @filename: getStringLength.ts\nexport const getStringLength = (str: string) => str.length\n// @filename: index.ts\nimport { getStringLength } from './getStringLength'\nconst b = getStringLength('string')\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "const getStringLength: (str: string) => number",
       "start": 46,
       "length": 15,
-      "target": "getStringLength"
+      "target": "getStringLength",
+      "line": 2,
+      "character": 13
     },
     {
       "type": "hover",
       "text": "(parameter) str: string",
       "start": 65,
       "length": 3,
-      "target": "str"
+      "target": "str",
+      "line": 2,
+      "character": 32
     },
     {
       "type": "hover",
       "text": "(parameter) str: string",
       "start": 81,
       "length": 3,
-      "target": "str"
+      "target": "str",
+      "line": 2,
+      "character": 48
     },
     {
       "type": "hover",
@@ -29,28 +34,36 @@
       "docs": "Returns the length of a String object.",
       "start": 85,
       "length": 6,
-      "target": "length"
+      "target": "length",
+      "line": 2,
+      "character": 52
     },
     {
       "type": "hover",
       "text": "(alias) const getStringLength: (str: string) => number\nimport getStringLength",
       "start": 124,
       "length": 15,
-      "target": "getStringLength"
+      "target": "getStringLength",
+      "line": 4,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "const b: number",
       "start": 173,
       "length": 1,
-      "target": "b"
+      "target": "b",
+      "line": 5,
+      "character": 6
     },
     {
       "type": "hover",
       "text": "(alias) getStringLength(str: string): number\nimport getStringLength",
       "start": 177,
       "length": 15,
-      "target": "getStringLength"
+      "target": "getStringLength",
+      "line": 5,
+      "character": 10
     }
   ]
 }

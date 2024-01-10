@@ -22,12 +22,12 @@ const b = 12331234
   const tag = result.tags[0]
   expect(tag).toMatchInlineSnapshot(`
     {
-      "annotation": "OK, sure",
       "character": 0,
       "length": 0,
       "line": 2,
       "name": "thing",
       "start": 1,
+      "text": "OK, sure",
       "type": "tag",
     }
   `)

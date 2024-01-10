@@ -1,20 +1,23 @@
 {
   "code": "type Result = \"pass\" | \"fail\"\n\nconst hello = \"OK\"\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "highlight",
       "text": "type Result = \"pass\" | \"fail\"",
       "start": 5,
       "length": 6,
-      "target": "Result"
+      "target": "Result",
+      "line": 1,
+      "character": 5
     },
     {
       "type": "highlight",
       "text": "const hello: \"OK\"",
       "start": 37,
       "length": 5,
-      "target": "hello"
+      "target": "hello",
+      "line": 3,
+      "character": 6
     }
   ]
 }

@@ -1,7 +1,7 @@
 import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { TwoslashError } from './error';
-import type { Position, Range, Token, TokenCompletion, TokenError, TokenHighlight, TokenHover, TokenQuery, TokenTag, TokenWithPosition, TwoSlashReturnNew } from "./types-new";
+import type { Range, Token, TokenError, TokenWithoutPosition, TwoSlashReturnNew } from "./types-new";
 import type { HandbookOptions, TwoSlashOptions } from './types';
 import { createPosConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
@@ -40,7 +40,7 @@ const defaultHandbookOptions: HandbookOptions = {
   noErrorValidation: false,
 }
 
-export function twoslasherNew(
+export function twoslasher(
   code: string,
   extension: string,
   options: Partial<TwoSlashOptions> = {}
@@ -49,7 +49,7 @@ export function twoslasherNew(
   const ext = typesToExtension(extension);
   const defaultFilename = `index.${ext}`;
 
-  let tokens: Token[] = [];
+  const _tokens: TokenWithoutPosition[] = [];
   let removals: Range[] = [];
   function isInRemoval(index: number) {
     return isInRanges(index, removals);
@@ -111,12 +111,12 @@ export function twoslasherNew(
       return
     const value = match[2];
     if (options.customTags?.includes(name)) {
-      tokens.push({
+      _tokens.push({
         type: 'tag',
         name,
         start: index,
         length: 0,
-        annotation: match[0].split(":")[1].trim(),
+        text: match[0].split(":")[1].trim(),
       })
     }
     else {
@@ -204,9 +204,10 @@ export function twoslasherNew(
         // TODO: get different type of docs
         const docs = quickInfo.documentation?.map(d => d.text).join("\n") || undefined;
 
-        tokens.push({
+        _tokens.push({
           type: 'hover',
-          text, docs,
+          text,
+          docs,
           start,
           length: span.length,
           target: identifier.text
@@ -216,7 +217,7 @@ export function twoslasherNew(
     // #endregion
 
     // #region update token with types
-    tokens.forEach(token => {
+    _tokens.forEach(token => {
       if (token.type as any !== 'hover')
         return undefined;
       const range: Range = [token.start, token.start + token.length];
@@ -248,7 +249,7 @@ export function twoslasherNew(
       let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || '';
       prefix = prefix.split('.').pop()!;
 
-      tokens.push({
+      _tokens.push({
         type: 'completion',
         start: target,
         length: 0,
@@ -271,7 +272,7 @@ export function twoslasherNew(
         const renderedMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
         const id = `err-${diagnostic.code}-${diagnostic.start}-${diagnostic.length}`;
 
-        tokens.push({
+        _tokens.push({
           type: 'error',
           start,
           length: diagnostic.length!,
@@ -286,7 +287,7 @@ export function twoslasherNew(
     // #endregion
   }
 
-  const errors = tokens.filter(i => i.type === 'error') as TokenError[];
+  const errors = _tokens.filter(i => i.type === 'error') as TokenError[];
 
   // A validator that error codes are mentioned, so we can know if something has broken in the future
   if (!handbookOptions.noErrorValidation && errors.length) {
@@ -302,7 +303,7 @@ export function twoslasherNew(
   for (const remove of removals) {
     const removalLength = remove[1] - remove[0];
     outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1]);
-    tokens.forEach(token => {
+    _tokens.forEach(token => {
       // tokens before the range, do nothing
       if (token.start + token.length <= remove[0]) {
         return undefined;
@@ -318,39 +319,47 @@ export function twoslasherNew(
     });
   }
 
-  tokens = tokens
-    .filter(token => token.start >= 0)
-    .sort((a, b) => a.start - b.start);
 
+  const resultPC = outputCode === code ? pc : createPosConverter(outputCode);
+
+  const tokens = _tokens
+    .filter(token => token.start >= 0)
+    .sort((a, b) => a.start - b.start)
+    .map(token => {
+      return {
+        ...token,
+        ...resultPC.indexToPos(token.start),
+      } as Token;
+    })
+  
   return {
-    original: code,
     code: outputCode,
-    extension: ext,
     tokens,
-    compilerOptions,
-    removals,
+    meta: {
+      extension: ext,
+      compilerOptions,
+      handbookOptions,
+      removals,
+    },
+
+    get queries() {
+      return tokens.filter(i => i.type === 'query') as any
+    },
+    get completions() {
+      return tokens.filter(i => i.type === 'completion') as any
+    },
+    get errors() {
+      return tokens.filter(i => i.type === 'error') as any
+    },
+    get highlights() {
+      return tokens.filter(i => i.type === 'highlight') as any
+    },
+    get hovers() {
+      return tokens.filter(i => i.type === 'hover') as any
+    },
+    get tags() {
+      return tokens.filter(i => i.type === 'tag') as any
+    },
   };
 }
 
-export function twoslasher(code: string, extension: string, options: Partial<TwoSlashOptions> = {}) {
-  const result = twoslasherNew(code, extension, options)
-
-  const pc = createPosConverter(result.code);
-
-  const tokens = result.tokens.map(token => {
-    return {
-      ...token,
-      ...pc.indexToPos(token.start)
-    } as TokenWithPosition
-  })
-
-  return {
-    ...result,
-    staticQuickInfos: tokens.filter(i => i.type === 'hover') as (TokenHover & Position)[],
-    queries: tokens.filter(i => i.type === 'query') as (TokenQuery & Position)[],
-    highlights: tokens.filter(i => i.type === 'highlight') as (TokenHighlight & Position)[],
-    completions: tokens.filter(i => i.type === 'completion') as (TokenCompletion & Position)[],
-    errors: tokens.filter(i => i.type === 'error') as (TokenError & Position)[],
-    tags: tokens.filter(i => i.type === 'tag') as (TokenTag & Position)[],
-  }
-}

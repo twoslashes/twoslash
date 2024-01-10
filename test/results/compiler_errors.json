@@ -1,20 +1,23 @@
 {
   "code": "\nfunction fn(s) {\n  console.log(s.subtr(3))\n}\n\nfn(42)\n",
-  "extension": "ts",
   "tokens": [
     {
       "type": "hover",
       "text": "function fn(s: any): void",
       "start": 10,
       "length": 2,
-      "target": "fn"
+      "target": "fn",
+      "line": 2,
+      "character": 9
     },
     {
       "type": "hover",
       "text": "(parameter) s: any",
       "start": 13,
       "length": 1,
-      "target": "s"
+      "target": "s",
+      "line": 2,
+      "character": 12
     },
     {
       "type": "error",
@@ -24,14 +27,18 @@
       "filename": "[home]/index.ts",
       "id": "err-7006-49-1",
       "text": "Parameter 's' implicitly has an 'any' type.",
-      "level": 1
+      "level": 1,
+      "line": 2,
+      "character": 12
     },
     {
       "type": "hover",
       "text": "var console: Console",
       "start": 20,
       "length": 7,
-      "target": "console"
+      "target": "console",
+      "line": 3,
+      "character": 2
     },
     {
       "type": "hover",
@@ -39,28 +46,36 @@
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
       "start": 28,
       "length": 3,
-      "target": "log"
+      "target": "log",
+      "line": 3,
+      "character": 10
     },
     {
       "type": "hover",
       "text": "(parameter) s: any",
       "start": 32,
       "length": 1,
-      "target": "s"
+      "target": "s",
+      "line": 3,
+      "character": 14
     },
     {
       "type": "hover",
       "text": "any",
       "start": 34,
       "length": 5,
-      "target": "subtr"
+      "target": "subtr",
+      "line": 3,
+      "character": 16
     },
     {
       "type": "hover",
       "text": "function fn(s: any): void",
       "start": 47,
       "length": 2,
-      "target": "fn"
+      "target": "fn",
+      "line": 6,
+      "character": 0
     }
   ]
 }
