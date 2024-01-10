@@ -5,18 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@types/lz-string':
-    specifier: ^1.3.0
-    version: 1.3.27
   '@typescript/vfs':
     specifier: 1.5.0
     version: 1.5.0
   debug:
     specifier: ^4.1.1
     version: 4.1.1
-  lz-string:
-    specifier: ^1.4.4
-    version: 1.4.4
 
 devDependencies:
   '@types/jest':
@@ -1943,10 +1937,6 @@ packages:
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
-
-  /@types/lz-string@1.3.27:
-    resolution: {integrity: sha512-NdwVqEtjDov+cqTLMPHYUbOrh0Uwdvum9kfZrOzI2xDoGlKMjjSVCX3jJcRXw45gLGRFePO07roBgGKfalhy6A==}
-    dev: false
 
   /@types/node@20.10.8:
     resolution: {integrity: sha512-f8nQs3cLxbAFc00vEU59yf9UyGUftkPaLGfvbVOIDdx2i1b8epBqj2aNGyP19fiyXWvlmZ7qC1XLjAzw/OKIeA==}
@@ -6147,11 +6137,6 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
-
-  /lz-string@1.4.4:
-    resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
-    hasBin: true
-    dev: false
 
   /magic-string@0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}

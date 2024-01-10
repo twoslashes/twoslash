@@ -5,7 +5,6 @@ try {
 const hasProcess = typeof process !== `undefined`
 const shouldDebug = (hasLocalStorage && localStorage.getItem("DEBUG")) || (hasProcess && process.env.DEBUG)
 
-type LZ = typeof import("lz-string")
 type TS = typeof import("typescript")
 type CompilerOptions = import("typescript").CompilerOptions
 type CustomTransformers = import("typescript").CustomTransformers
@@ -417,9 +416,6 @@ export interface TwoSlashOptions {
   /** Absolute path to the directory to look up built-in TypeScript .d.ts files. */
   tsLibDirectory?: string
 
-  /** An optional copy of the lz-string import, if missing it will be require'd. */
-  lzstringModule?: LZ
-
   /**
    * An optional Map object which is passed into @typescript/vfs - if you are using twoslash on the
    * web then you'll need this to set up your lib *.d.ts files. If missing, it will use your fs.
@@ -443,7 +439,6 @@ export interface TwoSlashOptions {
  */
 export function twoslasher(code: string, extension: string, options: TwoSlashOptions = {}): TwoSlashReturn {
   const ts: TS = options.tsModule ?? require("typescript")
-  const lzstring: LZ = options.lzstringModule ?? require("lz-string")
 
   const originalCode = code
   const safeExtension = typesToExtension(extension)
@@ -785,9 +780,6 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
     staticQuickInfos = []
   }
 
-  const zippedCode = lzstring.compressToEncodedURIComponent(originalCode)
-  const playgroundURL = `https://www.typescriptlang.org/play/#code/${zippedCode}`
-
   // Cutting happens last, and it means editing the lines and character index of all
   // the type annotations which are attached to a location
 
@@ -854,8 +846,11 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
     queries,
     staticQuickInfos,
     errors,
-    playgroundURL,
     tags,
+    /**
+     * @deprecated removed in `twoslashes`
+     */
+    playgroundURL: '',
   }
 }
 
