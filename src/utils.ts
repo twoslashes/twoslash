@@ -1,4 +1,4 @@
-import { TwoslashError } from "./"
+import { TwoslashError } from "./error"
 
 export function escapeHtml(text: string) {
   return text.replace(/</g, "&lt;")

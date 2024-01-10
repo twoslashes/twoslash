@@ -1,4 +1,4 @@
-import { TwoslashError } from "./"
+import { TwoslashError } from "./error"
 
 /** To ensure that errors are matched up right */
 export function validateCodeForErrors(

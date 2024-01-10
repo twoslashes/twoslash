@@ -2,7 +2,7 @@
   "include": ["src", "types", "test"],
   "exclude": ["test/fixtures"],
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
@@ -19,7 +19,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "baseUrl": "./src",
     "paths": {
       "*": ["src/*", "node_modules/*"]
