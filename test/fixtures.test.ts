@@ -3,6 +3,7 @@ import { extname, join, parse } from "node:path"
 import { describe, expect, it } from 'vitest'
 import type { TwoSlashReturn } from "../src/types";
 import { twoslasher } from "../src/index"
+import { FEAT_SHOW_EMIT } from "./FEATURES";
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
@@ -24,6 +25,9 @@ describe("fixtures", async () => {
       it(fixtureName, async () => {
         const resultName = `${parse(fixtureName).name}.json`
         const file = await fs.readFile(fixture, "utf8")
+
+        if (!FEAT_SHOW_EMIT && file.includes("@showEmit")) 
+          return
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
         expect(cleanFixture(fourslashed))
@@ -48,10 +52,12 @@ describe("fixtures readme", async () => {
         const resultName = `${parse(fixtureName).name}.json`
 
         const file = await fs.readFile(fixture, "utf8")
+        if (!FEAT_SHOW_EMIT && file.includes("@showEmit")) 
+          return
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
         expect(cleanFixture(fourslashed))
-        .toMatchFileSnapshot(join(resultsFolder, resultName))
+          .toMatchFileSnapshot(join(resultsFolder, resultName))
       })
     })
   )
@@ -93,5 +99,6 @@ function cleanFixture(ts: TwoSlashReturn) {
   return JSON.stringify({
     code: ts.code,
     tokens: ts.tokens,
+    // compilerOptions: ts.meta.compilerOptions
   }, null, 2).replaceAll(process.cwd(), "[home]")
 }
