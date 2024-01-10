@@ -1,100 +1,96 @@
-import { readdirSync, readFileSync, lstatSync } from "fs"
+import fs from "fs/promises"
 import { join, extname, parse } from "path"
 import { twoslasher, TwoSlashReturn } from "../src/index"
 import { format } from "prettier"
-import {expect} from 'vitest'
+import { expect, describe, it } from 'vitest'
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
 
-describe("with fixtures", () => {
-  // Add all codefixes
-  const fixturesFolder = join(__dirname, "fixtures")
-  const resultsFolder = join(__dirname, "results")
+const fixturesFolder = join(__dirname, "fixtures")
+const resultsFolder = join(__dirname, "results")
 
-  readdirSync(join(fixturesFolder, "tests")).forEach(fixtureName => {
-    const fixture = join(fixturesFolder, "tests", fixtureName)
-    if (lstatSync(fixture).isDirectory()) {
-      return
-    }
+describe("fixtures", async () => {
+  const fixturesTests = await fs.readdir(join(fixturesFolder, "tests"))
 
-    // if(!fixtureName.includes("imports")) return
-    it("Hidden Fixtures: " + fixtureName, () => {
-      const resultName = parse(fixtureName).name + ".json"
-      const result = join(resultsFolder, "tests", resultName)
-
-      const file = readFileSync(fixture, "utf8")
-
-      const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
-      const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-      expect(jsonString).toMatchFileSnapshot(result)
-    })
-  })
-
-  readdirSync(fixturesFolder).forEach(fixtureName => {
-    const fixture = join(fixturesFolder, fixtureName)
-    if (lstatSync(fixture).isDirectory()) {
-      return
-    }
-
-    // if(!fixtureName.includes("compiler_fl")) return
-    it("README Fixtures: " + fixtureName, () => {
-      const resultName = parse(fixtureName).name + ".json"
-      const result = join(resultsFolder, resultName)
-
-      const file = readFileSync(fixture, "utf8")
-
-      const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
-      const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-      expect(jsonString).toMatchFileSnapshot(result)
-    })
-  })
-
-  readdirSync(join(fixturesFolder, "tests")).forEach(fixtureName => {
-    const fixture = join(fixturesFolder, "tests", fixtureName)
-    if (lstatSync(fixture).isDirectory()) {
-      return
-    }
-
-    // if(!fixtureName.includes("compiler_fl")) return
-    it("Hidden Fixtures: " + fixtureName, () => {
-      const resultName = parse(fixtureName).name + ".json"
-      const result = join(resultsFolder, "tests", resultName)
-
-      const file = readFileSync(fixture, "utf8")
-
-      const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
-      const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-      expect(jsonString).toMatchFileSnapshot(result)
-    })
-  })
-
-  const throwingFixturesFolder = join(__dirname, "fixtures", "throws")
-
-  readdirSync(throwingFixturesFolder).forEach(fixtureName => {
-    const fixture = join(throwingFixturesFolder, fixtureName)
-    if (lstatSync(fixture).isDirectory()) {
-      return
-    }
-
-    it("Throwing Fixture: " + fixtureName, () => {
-      const resultName = parse(fixtureName).name + ".json"
-      const result = join(resultsFolder, resultName)
-
-      const file = readFileSync(fixture, "utf8")
-
-      let thrown = false
-      try {
-        twoslasher(file, extname(fixtureName).substr(1))
-      } catch (err) {
-        thrown = true
-        if (err instanceof Error)
-         expect(err.message).toMatchFileSnapshot(result)
+  await Promise.all(
+    fixturesTests.map(async fixtureName => {
+      const fixture = join(fixturesFolder, "tests", fixtureName)
+      if (await fs.lstat(fixture).then(r => r.isDirectory())) {
+        return
       }
 
-      if (!thrown) throw new Error("Did not throw")
+      // if(!fixtureName.includes("imports")) return
+      it(fixtureName, async () => {
+        const resultName = parse(fixtureName).name + ".json"
+        const result = join(resultsFolder, "tests", resultName)
+
+        const file = await fs.readFile(fixture, "utf8")
+
+        const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
+        const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
+        expect(jsonString).toMatchFileSnapshot(result)
+      })
     })
+  )
   })
+
+describe("fixtures readme", async () => {
+  const fixturesRoot = await fs.readdir(join(fixturesFolder))
+
+  await Promise.all(
+    fixturesRoot.map(async fixtureName => {
+      const fixture = join(fixturesFolder, fixtureName)
+      if (await fs.lstat(fixture).then(r => r.isDirectory())) {
+        return
+      }
+
+      // if(!fixtureName.includes("compiler_fl")) return
+      it(fixtureName, async () => {
+        const resultName = parse(fixtureName).name + ".json"
+        const result = join(resultsFolder, resultName)
+
+        const file = await fs.readFile(fixture, "utf8")
+
+        const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
+        const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
+        expect(jsonString).toMatchFileSnapshot(result)
+      })
+    })
+  )
+
+})
+
+describe("fixtures throws", async () => {
+  const throwingFixturesFolder = join(__dirname, "fixtures", "throws")
+  const fixturesTrows = await fs.readdir(throwingFixturesFolder)
+
+  await Promise.all(
+    fixturesTrows.map(async fixtureName => {
+      const fixture = join(throwingFixturesFolder, fixtureName)
+      if (await fs.lstat(fixture).then(r => r.isDirectory())) {
+        return
+      }
+
+      it(fixtureName, async () => {
+        const resultName = parse(fixtureName).name + ".json"
+        const result = join(resultsFolder, resultName)
+
+        const file = await fs.readFile(fixture, "utf8")
+
+        let thrown = false
+        try {
+          twoslasher(file, extname(fixtureName).substr(1))
+        } catch (err) {
+          thrown = true
+          if (err instanceof Error)
+            expect(err.message).toMatchFileSnapshot(result)
+        }
+
+        if (!thrown) throw new Error("Did not throw")
+      })
+    })
+  )
 })
 
 const cleanFixture = (ts: TwoSlashReturn) => {

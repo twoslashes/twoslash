@@ -13,6 +13,9 @@ devDependencies:
   '@types/lz-string':
     specifier: ^1.5.0
     version: 1.5.0
+  '@types/node':
+    specifier: ^20.10.8
+    version: 20.10.8
   '@types/prettier':
     specifier: ^1.19.0
     version: 1.19.0
@@ -39,7 +42,7 @@ devDependencies:
     version: 2.0.0(typescript@5.3.2)
   vitest:
     specifier: ^1.1.3
-    version: 1.1.3
+    version: 1.1.3(@types/node@20.10.8)
 
 packages:
 
@@ -725,6 +728,12 @@ packages:
     deprecated: This is a stub types definition. lz-string provides its own type definitions, so you do not need this installed.
     dependencies:
       lz-string: 1.5.0
+    dev: true
+
+  /@types/node@20.10.8:
+    resolution: {integrity: sha512-f8nQs3cLxbAFc00vEU59yf9UyGUftkPaLGfvbVOIDdx2i1b8epBqj2aNGyP19fiyXWvlmZ7qC1XLjAzw/OKIeA==}
+    dependencies:
+      undici-types: 5.26.5
     dev: true
 
   /@types/prettier@1.19.0:
@@ -2291,6 +2300,10 @@ packages:
       - supports-color
     dev: true
 
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+    dev: true
+
   /universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
@@ -2326,7 +2339,7 @@ packages:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
-  /vite-node@1.1.3:
+  /vite-node@1.1.3(@types/node@20.10.8):
     resolution: {integrity: sha512-BLSO72YAkIUuNrOx+8uznYICJfTEbvBAmWClY3hpath5+h1mbPS5OMn42lrTxXuyCazVyZoDkSRnju78GiVCqA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2335,7 +2348,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.11
+      vite: 5.0.11(@types/node@20.10.8)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -2347,7 +2360,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.11:
+  /vite@5.0.11(@types/node@20.10.8):
     resolution: {integrity: sha512-XBMnDjZcNAw/G1gEiskiM1v6yzM4GE5aMGvhWTlHAYYhxb7S3/V1s3m2LDHa8Vh6yIWYYB0iJwsEaS523c4oYA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2375,6 +2388,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.10.8
       esbuild: 0.19.11
       postcss: 8.4.33
       rollup: 4.9.4
@@ -2382,7 +2396,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitest@1.1.3:
+  /vitest@1.1.3(@types/node@20.10.8):
     resolution: {integrity: sha512-2l8om1NOkiA90/Y207PsEvJLYygddsOyr81wLQ20Ra8IlLKbyQncWsGZjnbkyG2KwwuTXLQjEPOJuxGMG8qJBQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2407,6 +2421,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
+      '@types/node': 20.10.8
       '@vitest/expect': 1.1.3
       '@vitest/runner': 1.1.3
       '@vitest/snapshot': 1.1.3
@@ -2425,8 +2440,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.11
-      vite-node: 1.1.3
+      vite: 5.0.11(@types/node@20.10.8)
+      vite-node: 1.1.3(@types/node@20.10.8)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

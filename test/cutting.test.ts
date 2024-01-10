@@ -1,4 +1,5 @@
 import { twoslasher } from "../src/index"
+import { expect, describe, it } from 'vitest'
 
 describe("supports hiding the example code", () => {
   const file = `

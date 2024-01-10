@@ -1,5 +1,6 @@
 import ts from 'typescript'
 import { getIdentifierTextSpans } from '../src/utils'
+import { expect, it } from 'vitest'
 
 it('gets the expected identifiers', () => {
   let file = ts.createSourceFile(

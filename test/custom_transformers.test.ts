@@ -1,5 +1,6 @@
 import { isSourceFile, isStringLiteral, SourceFile, TransformationContext, TransformerFactory, visitEachChild, visitNode, Node } from "typescript"
 import { twoslasher } from "../src/index"
+import { expect, describe, it } from 'vitest'
 
 it("applies custom transformers", () => {
   const code = "console.log('Hello World!')"

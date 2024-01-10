@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/lz-string": "^1.5.0",
+    "@types/node": "^20.10.8",
     "@types/prettier": "^1.19.0",
     "@types/react": "^18.2.47",
     "lz-string": "^1.5.0",
