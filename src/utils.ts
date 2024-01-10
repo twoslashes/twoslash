@@ -1,4 +1,5 @@
 import { TwoslashError } from "./error"
+import type {Range} from "./types-new"
 
 export function escapeHtml(text: string) {
   return text.replace(/</g, "&lt;")
@@ -24,6 +25,9 @@ export function fileNameToUrlName(s: string) {
 }
 
 export function parsePrimitive(value: string, type: string): any {
+  // eslint-disable-next-line valid-typeof
+  if (typeof value === type)
+    return value
   switch (type) {
     case "number":
       return +value
@@ -119,5 +123,80 @@ export function getClosestWord(str: string, pos: number) {
   return {
     word: str.slice(left, right + pos),
     startPos: left,
+  }
+}
+
+
+export function isInRanges(index: number, ranges: Range[]) {
+  return ranges.find(([start, end]) => start <= index && index <= end);
+}
+
+/**
+* Merge overlapping ranges
+*/
+export function mergeRanges(ranges: Range[]) {
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged: Range[] = [];
+  for (const range of ranges) {
+    const last = merged[merged.length - 1];
+    if (last && last[1] >= range[0]) {
+      last[1] = Math.max(last[1], range[1]);
+    } else {
+      merged.push(range);
+    }
+  }
+  return merged;
+}
+
+
+export function getOptionValueFromMap(name: string, key: string, optMap: Map<string, string>) {
+  const result = optMap.get(key.toLowerCase())
+  if (result === undefined) {
+    const keys = Array.from(optMap.keys() as any)
+
+    throw new TwoslashError(
+      `Invalid inline compiler value`,
+      `Got ${key} for ${name} but it is not a supported value by the TS compiler.`,
+      `Allowed values: ${keys.join(",")}`
+    )
+  }
+  return result
+}
+
+
+export function createPosConverter(code: string) {
+  const lines = Array.from(code.matchAll(/.*?($|\n)/g)).map((match) => match[0])
+
+  function indexToPos(index: number) {
+    let character = index;
+    let line = 0;
+    for (const lineText of lines) {
+      if (character < lineText.length)
+        break;
+      character -= lineText.length;
+      line++;
+    }
+    return { line: line + 1, character };
+  }
+
+  function posToIndex(line: number, character: number) {
+    let index = 0;
+    for (let i = 0; i < line - 1; i++) {
+      index += lines[i].length;
+    }
+    index += character;
+    return index;
+  }
+
+  function getIndexOfLineAbove(index: number) {
+    const pos = indexToPos(index);
+    return posToIndex(pos.line - 1, pos.character);
+  }
+
+  return {
+    lines,
+    indexToPos,
+    posToIndex,
+    getIndexOfLineAbove
   }
 }

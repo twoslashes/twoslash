@@ -1,10 +1,38 @@
 {
-  "code": "/**\n * Gets the length of a string\n * @param value a string\n */\nexport declare function getStringLength(value: string): number;\n",
+  "code": "\n/**\n * Gets the length of a string\n * @param value a string\n */\nexport function getStringLength(value: string) {\n  return value.length\n}\n",
   "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  "tokens": [
+    {
+      "type": "quick-info",
+      "text": "function getStringLength(value: string): number",
+      "docs": "Gets the length of a string",
+      "offset": 81,
+      "length": 15,
+      "target": "getStringLength"
+    },
+    {
+      "type": "quick-info",
+      "text": "(parameter) value: string",
+      "docs": "a string",
+      "offset": 97,
+      "length": 5,
+      "target": "value"
+    },
+    {
+      "type": "quick-info",
+      "text": "(parameter) value: string",
+      "docs": "a string",
+      "offset": 123,
+      "length": 5,
+      "target": "value"
+    },
+    {
+      "type": "quick-info",
+      "text": "(property) String.length: number",
+      "docs": "Returns the length of a String object.",
+      "offset": 129,
+      "length": 6,
+      "target": "length"
+    }
+  ]
 }

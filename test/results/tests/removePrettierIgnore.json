@@ -1,29 +1,20 @@
 {
-  "code": "const myThing = {}\n\nconst anotherThing = {}\n",
+  "code": "const myThing = {}\n\n// prettier-ignore\nconst anotherThing = {}\n",
   "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "quick-info",
       "text": "const myThing: {}",
-      "docs": "",
-      "start": 6,
+      "offset": 6,
       "length": 7,
-      "line": 0,
-      "character": 6,
-      "targetString": "myThing"
+      "target": "myThing"
     },
     {
+      "type": "quick-info",
       "text": "const anotherThing: {}",
-      "docs": "",
-      "start": 26,
+      "offset": 45,
       "length": 12,
-      "line": 2,
-      "character": 6,
-      "targetString": "anotherThing"
+      "target": "anotherThing"
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

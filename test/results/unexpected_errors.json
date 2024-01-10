@@ -7,4 +7,4 @@ Expected: // @errors: 2588
 Compiler Errors:
 
 index.ts
-  [2588] 98 - Cannot assign to 'myVariable' because it is a constant.
+  [2588] 117 - Cannot assign to 'myVariable' because it is a constant.

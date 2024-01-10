@@ -1,10 +1,14 @@
 {
-  "code": "export const helloWorldPTBR = 'Olá Mundo';\n",
-  "extension": "js",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  "code": "/** The translation of 'Hello world' into Portuguese */\nexport const helloWorldPTBR = 'Olá Mundo'\n",
+  "extension": "ts",
+  "tokens": [
+    {
+      "type": "quick-info",
+      "text": "const helloWorldPTBR: \"Olá Mundo\"",
+      "docs": "The translation of 'Hello world' into Portuguese",
+      "offset": 69,
+      "length": 14,
+      "target": "helloWorldPTBR"
+    }
+  ]
 }

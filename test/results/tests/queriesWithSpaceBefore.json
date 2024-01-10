@@ -1,57 +1,34 @@
 {
   "code": "const a: string = \"242342\"\nconst b = \"hello\"\nif (a === b) {\n}\n",
   "extension": "ts",
-  "highlights": [],
-  "queries": [
+  "tokens": [
     {
-      "docs": "",
-      "kind": "query",
-      "start": 55,
-      "length": 16,
-      "text": "const b: \"hello\"",
-      "offset": 10,
-      "line": 3
-    }
-  ],
-  "staticQuickInfos": [
-    {
+      "type": "quick-info",
       "text": "const a: string",
-      "docs": "",
-      "start": 6,
+      "offset": 6,
       "length": 1,
-      "line": 0,
-      "character": 6,
-      "targetString": "a"
+      "target": "a"
     },
     {
+      "type": "quick-info",
       "text": "const b: \"hello\"",
-      "docs": "",
-      "start": 33,
+      "offset": 33,
       "length": 1,
-      "line": 1,
-      "character": 6,
-      "targetString": "b"
+      "target": "b"
     },
     {
+      "type": "quick-info",
       "text": "const a: string",
-      "docs": "",
-      "start": 49,
+      "offset": 49,
       "length": 1,
-      "line": 2,
-      "character": 4,
-      "targetString": "a"
+      "target": "a"
     },
     {
+      "type": "query",
       "text": "const b: \"hello\"",
-      "docs": "",
-      "start": 55,
+      "offset": 55,
       "length": 1,
-      "line": 2,
-      "character": 10,
-      "targetString": "b"
+      "target": "b"
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

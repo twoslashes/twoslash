@@ -24,7 +24,7 @@ const b = "345"
     // b is one char long
     expect(bLSPResult!.length).toEqual(1)
     // Should be at char 6
-    expect(bLSPResult!.start).toEqual(6)
+    expect(bLSPResult!.offset).toEqual(6)
   })
 })
 
@@ -47,7 +47,7 @@ const b = "345"
     // b is one char long
     expect(bLSPResult!.length).toEqual(1)
     // Should be at char 6
-    expect(bLSPResult!.start).toEqual(6)
+    expect(bLSPResult!.offset).toEqual(6)
   })
 })
 
@@ -109,6 +109,6 @@ const b = "345"
     // b is one char long
     expect(bLSPResult!.length).toEqual(1)
     // Should be at char 7
-    expect(bLSPResult!.start).toEqual(7)
+    expect(bLSPResult!.offset).toEqual(7)
   })
 })

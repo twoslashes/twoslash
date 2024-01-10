@@ -1,138 +1,91 @@
 {
-  "code": "type Either2dOr3d = [number, number, number?]\n\nfunction setCoordinate(coord: Either2dOr3d) {\n  const [x, y, z] = coord\n\n  console.log(`Provided coordinates had ${coord.length} dimensions`)\n}\n",
+  "code": "type Either2dOr3d = [number, number, number?]\n\nfunction setCoordinate(coord: Either2dOr3d) {\n  const [x, y, z] = coord\n  console.log(`Provided coordinates had ${coord.length} dimensions`)\n}\n",
   "extension": "ts",
-  "highlights": [],
-  "queries": [
+  "tokens": [
     {
-      "docs": "",
-      "kind": "query",
-      "start": 108,
-      "length": 27,
-      "text": "const z: number | undefined",
-      "offset": 15,
-      "line": 4
-    },
-    {
-      "docs": "",
-      "kind": "query",
-      "start": 168,
-      "length": 24,
-      "text": "(property) length: 2 | 3",
-      "offset": 48,
-      "line": 6
-    }
-  ],
-  "staticQuickInfos": [
-    {
+      "type": "quick-info",
       "text": "type Either2dOr3d = [number, number, (number | undefined)?]",
-      "docs": "",
-      "start": 5,
+      "offset": 5,
       "length": 12,
-      "line": 0,
-      "character": 5,
-      "targetString": "Either2dOr3d"
+      "target": "Either2dOr3d"
     },
     {
+      "type": "quick-info",
       "text": "function setCoordinate(coord: Either2dOr3d): void",
-      "docs": "",
-      "start": 56,
+      "offset": 56,
       "length": 13,
-      "line": 2,
-      "character": 9,
-      "targetString": "setCoordinate"
+      "target": "setCoordinate"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) coord: Either2dOr3d",
-      "docs": "",
-      "start": 70,
+      "offset": 70,
       "length": 5,
-      "line": 2,
-      "character": 23,
-      "targetString": "coord"
+      "target": "coord"
     },
     {
+      "type": "quick-info",
       "text": "type Either2dOr3d = [number, number, (number | undefined)?]",
-      "docs": "",
-      "start": 77,
+      "offset": 77,
       "length": 12,
-      "line": 2,
-      "character": 30,
-      "targetString": "Either2dOr3d"
+      "target": "Either2dOr3d"
     },
     {
+      "type": "quick-info",
       "text": "const x: number",
-      "docs": "",
-      "start": 102,
+      "offset": 102,
       "length": 1,
-      "line": 3,
-      "character": 9,
-      "targetString": "x"
+      "target": "x"
     },
     {
+      "type": "quick-info",
       "text": "const y: number",
-      "docs": "",
-      "start": 105,
+      "offset": 105,
       "length": 1,
-      "line": 3,
-      "character": 12,
-      "targetString": "y"
+      "target": "y"
     },
     {
+      "type": "query",
       "text": "const z: number | undefined",
-      "docs": "",
-      "start": 108,
+      "offset": 108,
       "length": 1,
-      "line": 3,
-      "character": 15,
-      "targetString": "z"
+      "target": "z"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) coord: Either2dOr3d",
-      "docs": "",
-      "start": 113,
+      "offset": 113,
       "length": 5,
-      "line": 3,
-      "character": 20,
-      "targetString": "coord"
+      "target": "coord"
     },
     {
+      "type": "quick-info",
       "text": "var console: Console",
-      "docs": "",
-      "start": 122,
+      "offset": 121,
       "length": 7,
-      "line": 5,
-      "character": 2,
-      "targetString": "console"
+      "target": "console"
     },
     {
+      "type": "quick-info",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "start": 130,
+      "offset": 129,
       "length": 3,
-      "line": 5,
-      "character": 10,
-      "targetString": "log"
+      "target": "log"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) coord: Either2dOr3d",
-      "docs": "",
-      "start": 162,
+      "offset": 161,
       "length": 5,
-      "line": 5,
-      "character": 42,
-      "targetString": "coord"
+      "target": "coord"
     },
     {
+      "type": "query",
       "text": "(property) length: 2 | 3",
-      "docs": "",
-      "start": 168,
+      "offset": 167,
       "length": 6,
-      "line": 5,
-      "character": 48,
-      "targetString": "length"
+      "target": "length"
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

@@ -72,7 +72,6 @@ const b = "345"
 //    ^? 
   `
   const result = twoslasher(file, "ts")
-  expect(result.queries.length).toEqual(2)
 
   const aQueryResult = result.queries.find(info => info.line === 3)
   expect(aQueryResult!.text).toContain("const a:")

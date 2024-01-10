@@ -1,8 +1,8 @@
 import type { CompilerOptions, CustomTransformers } from "typescript"
+
 type TS = typeof import("typescript")
 
 // Hacking in some internal stuff
-
 declare module "typescript" {
   interface Option {
     name: string;
@@ -12,39 +12,6 @@ declare module "typescript" {
 
   const optionDeclarations: Array<Option>;
 }
-
-export interface TokenBase {
-  /** 0-indexed position of the token in the file */
-  start: number
-  /** The length of the token */
-  length: number
-}
-
-export interface TokenHightlight extends TokenBase {
-  type: 'highlight'
-  /** The text of the token which is highlighted */
-  text?: string
-}
-
-export interface TokenQuickInfo extends TokenBase {
-  type: 'quick-info'
-  /** The string content of the node this represents (mainly for debugging) */
-  targetString: string
-  /** The base LSP response (the type) */
-  text: string
-  /** Attached JSDoc info */
-  docs: string | undefined
-}
-
-export interface TokenQuery extends TokenBase {
-  type: 'query'
-  /** The text of the token which is highlighted */
-  text?: string
-  /** Any attached JSDocs */
-  docs?: string | undefined
-}
-
-
 
 export interface TwoSlashReturn {
   /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
@@ -135,7 +102,7 @@ export interface TwoSlashReturn {
 
 export interface TwoSlashOptions {
   /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
-  defaultOptions?: Partial<ExampleOptions>
+  defaultOptions?: Partial<HandbookOptions>
 
   /** Allows setting any of the compiler options from outside the function */
   defaultCompilerOptions?: CompilerOptions
@@ -190,7 +157,7 @@ export type HighlightPosition = TwoSlashReturn["highlights"][number];
 
 
 /** Available inline flags which are not compiler flags */
-export interface ExampleOptions {
+export interface HandbookOptions {
   /** Lets the sample suppress all error diagnostics */
   noErrors: boolean
   /** An array of TS error codes, which you write as space separated - this is so the tool can know about unexpected errors */
@@ -201,7 +168,7 @@ export interface ExampleOptions {
    * Must be used with showEmit, lets you choose the file to present instead of the source - defaults to index.js which
    * means when you just use `showEmit` above it shows the transpiled JS.
    */
-  showEmittedFile: string
+  showEmittedFile?: string
 
   /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
   noStaticSemanticInfo: boolean

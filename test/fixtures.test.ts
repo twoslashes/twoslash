@@ -1,9 +1,8 @@
 import fs from "node:fs/promises"
 import { extname, join, parse } from "node:path"
-import { format } from "prettier"
 import { describe, expect, it } from 'vitest'
-import type { TwoSlashReturn } from "../src/index";
-import { twoslasher } from "../src/index"
+import type { TwoSlashReturnNew } from "../src/types-new";
+import { twoslasherNew } from "../src/index"
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
@@ -28,9 +27,8 @@ describe("fixtures", async () => {
 
         const file = await fs.readFile(fixture, "utf8")
 
-        const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
-        const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-        expect(jsonString).toMatchFileSnapshot(result)
+        const fourslashed = twoslasherNew(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
+        expect(cleanFixture(fourslashed)).toMatchFileSnapshot(result)
       })
     })
   )
@@ -53,9 +51,8 @@ describe("fixtures readme", async () => {
 
         const file = await fs.readFile(fixture, "utf8")
 
-        const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
-        const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-        expect(jsonString).toMatchFileSnapshot(result)
+        const fourslashed = twoslasherNew(file, extname(fixtureName).substr(1))
+        expect(cleanFixture(fourslashed)).toMatchFileSnapshot(result)
       })
     })
   )
@@ -81,7 +78,7 @@ describe("fixtures throws", async () => {
 
         let thrown = false
         try {
-          twoslasher(file, extname(fixtureName).substr(1))
+          twoslasherNew(file, extname(fixtureName).substr(1))
         } catch (err) {
           thrown = true
           if (err instanceof Error)
@@ -94,10 +91,17 @@ describe("fixtures throws", async () => {
   )
 })
 
-function cleanFixture(ts: TwoSlashReturn) {
+function cleanFixture(ts: TwoSlashReturnNew) {
+  const r= {
+    ...ts,
+    original: undefined,
+    compilerOptions: undefined,
+    removals: undefined,
+  }
   const wd = process.cwd();
-  ts.staticQuickInfos.forEach(info => {
-    info.text = info.text.replace(new RegExp(wd, "g"), "[home]");
+  r.tokens.forEach(info => {
+    if ('text' in info)
+      info.text = info.text.replace(new RegExp(wd, "g"), "[home]");
   });
-  return ts;
+  return JSON.stringify(r, null, 2)
 }

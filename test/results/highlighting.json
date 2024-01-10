@@ -1,119 +1,86 @@
 {
   "code": "function greet(person: string, date: Date) {\n  console.log(`Hello ${person}, today is ${date.toDateString()}!`);\n}\n\ngreet(\"Maddison\", new Date());\n",
   "extension": "ts",
-  "highlights": [
+  "tokens": [
     {
-      "kind": "highlight",
-      "offset": 134,
-      "length": 10,
-      "text": "",
-      "line": 4,
-      "start": 18
-    }
-  ],
-  "queries": [],
-  "staticQuickInfos": [
-    {
+      "type": "quick-info",
       "text": "function greet(person: string, date: Date): void",
-      "docs": "",
-      "start": 9,
+      "offset": 9,
       "length": 5,
-      "line": 0,
-      "character": 9,
-      "targetString": "greet"
+      "target": "greet"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) person: string",
-      "docs": "",
-      "start": 15,
+      "offset": 15,
       "length": 6,
-      "line": 0,
-      "character": 15,
-      "targetString": "person"
+      "target": "person"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) date: Date",
-      "docs": "",
-      "start": 31,
+      "offset": 31,
       "length": 4,
-      "line": 0,
-      "character": 31,
-      "targetString": "date"
+      "target": "date"
     },
     {
+      "type": "quick-info",
       "text": "interface Date",
       "docs": "Enables basic storage and retrieval of dates and times.",
-      "start": 37,
+      "offset": 37,
       "length": 4,
-      "line": 0,
-      "character": 37,
-      "targetString": "Date"
+      "target": "Date"
     },
     {
+      "type": "quick-info",
       "text": "var console: Console",
-      "docs": "",
-      "start": 47,
+      "offset": 47,
       "length": 7,
-      "line": 1,
-      "character": 2,
-      "targetString": "console"
+      "target": "console"
     },
     {
+      "type": "quick-info",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "start": 55,
+      "offset": 55,
       "length": 3,
-      "line": 1,
-      "character": 10,
-      "targetString": "log"
+      "target": "log"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) person: string",
-      "docs": "",
-      "start": 68,
+      "offset": 68,
       "length": 6,
-      "line": 1,
-      "character": 23,
-      "targetString": "person"
+      "target": "person"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) date: Date",
-      "docs": "",
-      "start": 88,
+      "offset": 88,
       "length": 4,
-      "line": 1,
-      "character": 43,
-      "targetString": "date"
+      "target": "date"
     },
     {
+      "type": "quick-info",
       "text": "(method) Date.toDateString(): string",
       "docs": "Returns a date as a string value.",
-      "start": 93,
+      "offset": 93,
       "length": 12,
-      "line": 1,
-      "character": 48,
-      "targetString": "toDateString"
+      "target": "toDateString"
     },
     {
+      "type": "quick-info",
       "text": "function greet(person: string, date: Date): void",
-      "docs": "",
-      "start": 116,
+      "offset": 116,
       "length": 5,
-      "line": 4,
-      "character": 0,
-      "targetString": "greet"
+      "target": "greet"
     },
     {
+      "type": "quick-info",
       "text": "var Date: DateConstructor\nnew () => Date (+4 overloads)",
-      "docs": "",
-      "start": 138,
+      "offset": 138,
       "length": 4,
-      "line": 4,
-      "character": 22,
-      "targetString": "Date"
+      "target": "Date"
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

@@ -1,156 +1,120 @@
 {
   "code": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState\n\nfunction networkStatus(state: NetworkState): string {\n  // Right now we don't know  which of the three potential\n  // types state could be.\n\n  // Trying to access a property which isn't shared\n  // across all types will raise an error\n  state.code\n\n  // By switching on state, we can discriminate the\n  switch (state.state) {\n    case 'loading':\n      return 'Downloading...'\n    case 'failed':\n      return `Error ${state.code} downloading`\n    case 'success':\n      return `Error ${state.response} downloading`\n  }\n}\n",
   "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "quick-info",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
-      "docs": "",
-      "start": 5,
+      "offset": 5,
       "length": 12,
-      "line": 0,
-      "character": 5,
-      "targetString": "NetworkState"
+      "target": "NetworkState"
     },
     {
+      "type": "quick-info",
       "text": "type NetworkLoadingState = {\n    state: 'loading';\n}",
-      "docs": "",
-      "start": 20,
+      "offset": 20,
       "length": 19,
-      "line": 0,
-      "character": 20,
-      "targetString": "NetworkLoadingState"
+      "target": "NetworkLoadingState"
     },
     {
+      "type": "quick-info",
       "text": "type NetworkFailedState = {\n    state: 'failed';\n    code: number;\n}",
-      "docs": "",
-      "start": 42,
+      "offset": 42,
       "length": 18,
-      "line": 0,
-      "character": 42,
-      "targetString": "NetworkFailedState"
+      "target": "NetworkFailedState"
     },
     {
+      "type": "quick-info",
       "text": "type NetworkSuccessState = {\n    state: 'success';\n    response: {\n        title: string;\n        duration: number;\n        summary: string;\n    };\n}",
-      "docs": "",
-      "start": 63,
+      "offset": 63,
       "length": 19,
-      "line": 0,
-      "character": 63,
-      "targetString": "NetworkSuccessState"
+      "target": "NetworkSuccessState"
     },
     {
+      "type": "quick-info",
       "text": "function networkStatus(state: NetworkState): string",
-      "docs": "",
-      "start": 93,
+      "offset": 93,
       "length": 13,
-      "line": 2,
-      "character": 9,
-      "targetString": "networkStatus"
+      "target": "networkStatus"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) state: NetworkState",
-      "docs": "",
-      "start": 107,
+      "offset": 107,
       "length": 5,
-      "line": 2,
-      "character": 23,
-      "targetString": "state"
+      "target": "state"
     },
     {
+      "type": "quick-info",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
-      "docs": "",
-      "start": 114,
+      "offset": 114,
       "length": 12,
-      "line": 2,
-      "character": 30,
-      "targetString": "NetworkState"
+      "target": "NetworkState"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) state: NetworkState",
-      "docs": "",
-      "start": 321,
+      "offset": 321,
       "length": 5,
-      "line": 8,
-      "character": 2,
-      "targetString": "state"
+      "target": "state"
     },
     {
+      "type": "quick-info",
       "text": "any",
-      "start": 327,
+      "offset": 327,
       "length": 4,
-      "line": 8,
-      "character": 8,
-      "targetString": "code"
+      "target": "code"
     },
     {
-      "text": "(parameter) state: NetworkState",
-      "docs": "",
-      "start": 395,
-      "length": 5,
-      "line": 11,
-      "character": 10,
-      "targetString": "state"
-    },
-    {
-      "text": "(property) state: \"loading\" | \"failed\" | \"success\"",
-      "docs": "",
-      "start": 401,
-      "length": 5,
-      "line": 11,
-      "character": 16,
-      "targetString": "state"
-    },
-    {
-      "text": "(parameter) state: NetworkFailedState",
-      "docs": "",
-      "start": 501,
-      "length": 5,
-      "line": 15,
-      "character": 22,
-      "targetString": "state"
-    },
-    {
-      "text": "(property) code: number",
-      "docs": "",
-      "start": 507,
+      "type": "error",
+      "offset": 327,
       "length": 4,
-      "line": 15,
-      "character": 28,
-      "targetString": "code"
-    },
-    {
-      "text": "(parameter) state: NetworkSuccessState",
-      "docs": "",
-      "start": 568,
-      "length": 5,
-      "line": 17,
-      "character": 22,
-      "targetString": "state"
-    },
-    {
-      "text": "(property) response: {\n    title: string;\n    duration: number;\n    summary: string;\n}",
-      "docs": "",
-      "start": 574,
-      "length": 8,
-      "line": 17,
-      "character": 28,
-      "targetString": "response"
-    }
-  ],
-  "errors": [
-    {
-      "category": 1,
       "code": 2339,
-      "length": 4,
-      "start": 327,
-      "line": 8,
-      "character": 8,
+      "id": "err-2339-599-4",
       "renderedMessage": "Property 'code' does not exist on type 'NetworkState'.\n  Property 'code' does not exist on type 'NetworkLoadingState'.",
-      "id": "err-2339-582-4"
+      "category": 1
+    },
+    {
+      "type": "quick-info",
+      "text": "(parameter) state: NetworkState",
+      "offset": 395,
+      "length": 5,
+      "target": "state"
+    },
+    {
+      "type": "quick-info",
+      "text": "(property) state: \"loading\" | \"failed\" | \"success\"",
+      "offset": 401,
+      "length": 5,
+      "target": "state"
+    },
+    {
+      "type": "quick-info",
+      "text": "(parameter) state: NetworkFailedState",
+      "offset": 501,
+      "length": 5,
+      "target": "state"
+    },
+    {
+      "type": "quick-info",
+      "text": "(property) code: number",
+      "offset": 507,
+      "length": 4,
+      "target": "code"
+    },
+    {
+      "type": "quick-info",
+      "text": "(parameter) state: NetworkSuccessState",
+      "offset": 568,
+      "length": 5,
+      "target": "state"
+    },
+    {
+      "type": "quick-info",
+      "text": "(property) response: {\n    title: string;\n    duration: number;\n    summary: string;\n}",
+      "offset": 574,
+      "length": 8,
+      "target": "response"
     }
-  ],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }
