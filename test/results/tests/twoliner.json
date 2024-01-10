@@ -3,52 +3,52 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const getStringLength: (str: string) => number",
-      "offset": 46,
+      "start": 46,
       "length": 15,
       "target": "getStringLength"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) str: string",
-      "offset": 65,
+      "start": 65,
       "length": 3,
       "target": "str"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) str: string",
-      "offset": 81,
+      "start": 81,
       "length": 3,
       "target": "str"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) String.length: number",
       "docs": "Returns the length of a String object.",
-      "offset": 85,
+      "start": 85,
       "length": 6,
       "target": "length"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) const getStringLength: (str: string) => number\nimport getStringLength",
-      "offset": 124,
+      "start": 124,
       "length": 15,
       "target": "getStringLength"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const b: number",
-      "offset": 173,
+      "start": 173,
       "length": 1,
       "target": "b"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) getStringLength(str: string): number\nimport getStringLength",
-      "offset": 177,
+      "start": 177,
       "length": 15,
       "target": "getStringLength"
     }

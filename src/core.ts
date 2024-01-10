@@ -1,7 +1,7 @@
 import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { TwoslashError } from './error';
-import type { Position, Range, Token, TokenCompletion, TokenError, TokenHighlight, TokenQuery, TokenQuickInfo, TokenTag, TokenWithPosition, TwoSlashReturnNew } from "./types-new";
+import type { Position, Range, Token, TokenCompletion, TokenError, TokenHighlight, TokenHover, TokenQuery, TokenTag, TokenWithPosition, TwoSlashReturnNew } from "./types-new";
 import type { HandbookOptions, TwoSlashOptions } from './types';
 import { createPosConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
@@ -114,7 +114,7 @@ export function twoslasherNew(
       tokens.push({
         type: 'tag',
         name,
-        offset: index,
+        start: index,
         length: 0,
         annotation: match[0].split(":")[1].trim(),
       })
@@ -205,9 +205,9 @@ export function twoslasherNew(
         const docs = quickInfo.documentation?.map(d => d.text).join("\n") || undefined;
 
         tokens.push({
-          type: 'quick-info',
+          type: 'hover',
           text, docs,
-          offset: start,
+          start,
           length: span.length,
           target: identifier.text
         });
@@ -217,9 +217,9 @@ export function twoslasherNew(
 
     // #region update token with types
     tokens.forEach(token => {
-      if (token.type as any !== 'quick-info')
+      if (token.type as any !== 'hover')
         return undefined;
-      const range: Range = [token.offset, token.offset + token.length];
+      const range: Range = [token.start, token.start + token.length];
       // Turn static info to query if in range
       if (targetsQuery.find(target => isInRanges(target, [range]))) {
         token.type = 'query';
@@ -250,7 +250,7 @@ export function twoslasherNew(
 
       tokens.push({
         type: 'completion',
-        offset: target,
+        start: target,
         length: 0,
         completions: (completions?.entries ?? []).filter(i => i.name.startsWith(prefix)),
         completionsPrefix: prefix
@@ -273,13 +273,13 @@ export function twoslasherNew(
 
         tokens.push({
           type: 'error',
-          offset: start,
+          start,
           length: diagnostic.length!,
           code: diagnostic.code,
           filename: file.filename,
           id,
-          renderedMessage,
-          category: diagnostic.category,
+          text: renderedMessage,
+          level: diagnostic.category,
         });
       }
     }
@@ -304,23 +304,23 @@ export function twoslasherNew(
     outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1]);
     tokens.forEach(token => {
       // tokens before the range, do nothing
-      if (token.offset + token.length <= remove[0]) {
+      if (token.start + token.length <= remove[0]) {
         return undefined;
       }
       // remove tokens that are within in the range
-      else if (token.offset < remove[1]) {
-        token.offset = -1;
+      else if (token.start < remove[1]) {
+        token.start = -1;
       }
       // move tokens after the range forward
       else {
-        token.offset -= removalLength;
+        token.start -= removalLength;
       }
     });
   }
 
   tokens = tokens
-    .filter(token => token.offset >= 0)
-    .sort((a, b) => a.offset - b.offset);
+    .filter(token => token.start >= 0)
+    .sort((a, b) => a.start - b.start);
 
   return {
     original: code,
@@ -340,13 +340,13 @@ export function twoslasher(code: string, extension: string, options: Partial<Two
   const tokens = result.tokens.map(token => {
     return {
       ...token,
-      ...pc.indexToPos(token.offset)
+      ...pc.indexToPos(token.start)
     } as TokenWithPosition
   })
 
   return {
     ...result,
-    staticQuickInfos: tokens.filter(i => i.type === 'quick-info') as (TokenQuickInfo & Position)[],
+    staticQuickInfos: tokens.filter(i => i.type === 'hover') as (TokenHover & Position)[],
     queries: tokens.filter(i => i.type === 'query') as (TokenQuery & Position)[],
     highlights: tokens.filter(i => i.type === 'highlight') as (TokenHighlight & Position)[],
     completions: tokens.filter(i => i.type === 'completion') as (TokenCompletion & Position)[],

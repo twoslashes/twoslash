@@ -5,14 +5,14 @@
     {
       "type": "highlight",
       "text": "type Result = \"pass\" | \"fail\"",
-      "offset": 5,
+      "start": 5,
       "length": 6,
       "target": "Result"
     },
     {
       "type": "highlight",
       "text": "const hello: \"OK\"",
-      "offset": 37,
+      "start": 37,
       "length": 5,
       "target": "hello"
     }

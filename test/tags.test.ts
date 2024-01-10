@@ -27,7 +27,7 @@ const b = 12331234
       "length": 0,
       "line": 2,
       "name": "thing",
-      "offset": 1,
+      "start": 1,
       "type": "tag",
     }
   `)

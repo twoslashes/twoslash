@@ -3,56 +3,56 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const a: Record<string, string>",
-      "offset": 6,
+      "start": 6,
       "length": 1,
       "target": "a"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type Record<K extends string | number | symbol, T> = { [P in K]: T; }",
       "docs": "Construct a type with a set of properties K of type T",
-      "offset": 9,
+      "start": 9,
       "length": 6,
       "target": "Record"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "let b: Record<string, number>",
-      "offset": 41,
+      "start": 41,
       "length": 1,
       "target": "b"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type Record<K extends string | number | symbol, T> = { [P in K]: T; }",
       "docs": "Construct a type with a set of properties K of type T",
-      "offset": 44,
+      "start": 44,
       "length": 6,
       "target": "Record"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "let b: Record<string, number>",
-      "offset": 72,
+      "start": 72,
       "length": 1,
       "target": "b"
     },
     {
       "type": "error",
-      "offset": 72,
+      "start": 72,
       "length": 1,
       "code": 2322,
       "filename": "[home]/index.ts",
       "id": "err-2322-89-1",
-      "renderedMessage": "Type 'Record<string, string>' is not assignable to type 'Record<string, number>'.\n  'string' index signatures are incompatible.\n    Type 'string' is not assignable to type 'number'.",
-      "category": 1
+      "text": "Type 'Record<string, string>' is not assignable to type 'Record<string, number>'.\n  'string' index signatures are incompatible.\n    Type 'string' is not assignable to type 'number'.",
+      "level": 1
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const a: Record<string, string>",
-      "offset": 76,
+      "start": 76,
       "length": 1,
       "target": "a"
     }

@@ -35,7 +35,7 @@ console.log(a.name);
 function verifyResult(result: TwoSlashReturnNew) {
   for (const token of result.tokens) {
     if ('target' in token)
-      expect.soft(result.code.slice(token.offset, token.offset + token.length)).toBe(token.target)
+      expect.soft(result.code.slice(token.start, token.start + token.length)).toBe(token.target)
   }
 }
 
@@ -100,87 +100,87 @@ it('should pass', () => {
     [
       {
         "length": 11,
-        "offset": 9,
+        "start": 9,
         "target": "createLabel",
         "text": "function createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 1,
-        "offset": 21,
+        "start": 21,
         "target": "T",
         "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 8,
-        "offset": 48,
+        "start": 48,
         "target": "idOrName",
         "text": "(parameter) idOrName: T extends string | number",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 1,
-        "offset": 58,
+        "start": 58,
         "target": "T",
         "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 8,
-        "offset": 62,
+        "start": 62,
         "target": "NameOrId",
         "text": "type NameOrId<T extends string | number> = T extends number ? IdLabel : NameLabel",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 1,
-        "offset": 71,
+        "start": 71,
         "target": "T",
         "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 1,
-        "offset": 109,
+        "start": 109,
         "target": "a",
         "text": "let a: NameLabel",
         "type": "query",
       },
       {
         "length": 11,
-        "offset": 113,
+        "start": 113,
         "target": "createLabel",
         "text": "function createLabel<"typescript">(idOrName: "typescript"): NameLabel",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 1,
-        "offset": 144,
+        "start": 144,
         "target": "b",
         "text": "let b: IdLabel",
         "type": "highlight",
       },
       {
         "length": 11,
-        "offset": 148,
+        "start": 148,
         "target": "createLabel",
         "text": "function createLabel<2.8>(idOrName: 2.8): IdLabel",
         "type": "highlight",
       },
       {
         "length": 1,
-        "offset": 171,
+        "start": 171,
         "target": "c",
         "text": "let c: IdLabel | NameLabel",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "length": 11,
-        "offset": 175,
+        "start": 175,
         "target": "createLabel",
         "text": "function createLabel<"hello" | 42>(idOrName: "hello" | 42): IdLabel | NameLabel",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "completions": [
@@ -211,24 +211,24 @@ it('should pass', () => {
         ],
         "completionsPrefix": "cr",
         "length": 0,
-        "offset": 177,
+        "start": 177,
         "type": "completion",
       },
       {
         "docs": "An intrinsic object that provides basic mathematics functionality and constants.",
         "length": 4,
-        "offset": 187,
+        "start": 187,
         "target": "Math",
         "text": "var Math: Math",
-        "type": "quick-info",
+        "type": "hover",
       },
       {
         "docs": "Returns a pseudorandom number between 0 and 1.",
         "length": 6,
-        "offset": 192,
+        "start": 192,
         "target": "random",
         "text": "(method) Math.random(): number",
-        "type": "quick-info",
+        "type": "hover",
       },
     ]
   `)

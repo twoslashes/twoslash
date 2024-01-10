@@ -3,11 +3,11 @@ import type { CompilerOptions, CompletionEntry } from "typescript";
 
 export interface Position {
   /**
-   * Zero-based line number
+   * 1-indexed line number
    */
   line: number;
   /**
-   * Zero-based column number
+   * 0-indexed column number
    */
   character: number;
 }
@@ -18,11 +18,11 @@ export interface TokenBase {
   /** The length of the token */
   length: number;
   /** 0-indexed position of the token in the file */
-  offset: number;
+  start: number;
 }
 
-export interface TokenQuickInfo extends TokenBase {
-  type: 'quick-info';
+export interface TokenHover extends TokenBase {
+  type: 'hover';
   /** The string content of the node this represents (mainly for debugging) */
   target: string;
   /** The base LSP response (the type) */
@@ -31,11 +31,11 @@ export interface TokenQuickInfo extends TokenBase {
   docs?: string
 }
 
-export interface TokenHighlight extends Omit<TokenQuickInfo, 'type'> {
+export interface TokenHighlight extends Omit<TokenHover, 'type'> {
   type: 'highlight';
 }
 
-export interface TokenQuery extends  Omit<TokenQuickInfo, 'type'> {
+export interface TokenQuery extends  Omit<TokenHover, 'type'> {
   type: 'query';
 }
 
@@ -50,9 +50,9 @@ export interface TokenCompletion extends TokenBase {
 export interface TokenError extends TokenBase {
   type: 'error';
   id: string;
-  category: 0 | 1 | 2 | 3;
+  level: 0 | 1 | 2 | 3;
   code: number;
-  renderedMessage: string
+  text: string
   filename: string
 }
 
@@ -64,7 +64,7 @@ export interface TokenTag extends TokenBase {
   annotation?: string;
 }
 
-export type Token = TokenHighlight | TokenQuickInfo | TokenQuery | TokenCompletion | TokenError | TokenTag;
+export type Token = TokenHighlight | TokenHover | TokenQuery | TokenCompletion | TokenError | TokenTag;
 export type TokenWithPosition = Token & Position
 
 export interface TwoSlashReturnNew {

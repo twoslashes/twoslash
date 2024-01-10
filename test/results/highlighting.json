@@ -3,82 +3,82 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function greet(person: string, date: Date): void",
-      "offset": 9,
+      "start": 9,
       "length": 5,
       "target": "greet"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) person: string",
-      "offset": 15,
+      "start": 15,
       "length": 6,
       "target": "person"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) date: Date",
-      "offset": 31,
+      "start": 31,
       "length": 4,
       "target": "date"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "interface Date",
       "docs": "Enables basic storage and retrieval of dates and times.",
-      "offset": 37,
+      "start": 37,
       "length": 4,
       "target": "Date"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "var console: Console",
-      "offset": 47,
+      "start": 47,
       "length": 7,
       "target": "console"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "offset": 55,
+      "start": 55,
       "length": 3,
       "target": "log"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) person: string",
-      "offset": 68,
+      "start": 68,
       "length": 6,
       "target": "person"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) date: Date",
-      "offset": 88,
+      "start": 88,
       "length": 4,
       "target": "date"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(method) Date.toDateString(): string",
       "docs": "Returns a date as a string value.",
-      "offset": 93,
+      "start": 93,
       "length": 12,
       "target": "toDateString"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function greet(person: string, date: Date): void",
-      "offset": 116,
+      "start": 116,
       "length": 5,
       "target": "greet"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "var Date: DateConstructor\nnew () => Date (+4 overloads)",
-      "offset": 138,
+      "start": 138,
       "length": 4,
       "target": "Date"
     }

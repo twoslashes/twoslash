@@ -3,34 +3,34 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function getStringLength(value: string): number",
       "docs": "Gets the length of a string",
-      "offset": 81,
+      "start": 81,
       "length": 15,
       "target": "getStringLength"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) value: string",
       "docs": "a string",
-      "offset": 97,
+      "start": 97,
       "length": 5,
       "target": "value"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) value: string",
       "docs": "a string",
-      "offset": 123,
+      "start": 123,
       "length": 5,
       "target": "value"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) String.length: number",
       "docs": "Returns the length of a String object.",
-      "offset": 129,
+      "start": 129,
       "length": 6,
       "target": "length"
     }

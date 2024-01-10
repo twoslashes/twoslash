@@ -39,7 +39,7 @@ export function validateCodeForErrors(
         `${title}\n  ${ 
         diags
           .map(e => {
-            return `[${e.code}] ${e.offset} - ${e.renderedMessage}`
+            return `[${e.code}] ${e.start} - ${e.text}`
           })
           .join("\n  ")}`
       )

@@ -3,16 +3,16 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const myThing: {}",
-      "offset": 6,
+      "start": 6,
       "length": 7,
       "target": "myThing"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const anotherThing: {}",
-      "offset": 45,
+      "start": 45,
       "length": 12,
       "target": "anotherThing"
     }

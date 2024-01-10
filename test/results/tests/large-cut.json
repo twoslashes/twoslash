@@ -3,145 +3,145 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
-      "offset": 5,
+      "start": 5,
       "length": 12,
       "target": "NetworkState"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type NetworkLoadingState = {\n    state: 'loading';\n}",
-      "offset": 20,
+      "start": 20,
       "length": 19,
       "target": "NetworkLoadingState"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type NetworkFailedState = {\n    state: 'failed';\n    code: number;\n}",
-      "offset": 42,
+      "start": 42,
       "length": 18,
       "target": "NetworkFailedState"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type NetworkSuccessState = {\n    state: 'success';\n    response: {\n        title: string;\n        duration: number;\n        summary: string;\n    };\n}",
-      "offset": 63,
+      "start": 63,
       "length": 19,
       "target": "NetworkSuccessState"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function networkStatus(state: NetworkState): string",
-      "offset": 93,
+      "start": 93,
       "length": 13,
       "target": "networkStatus"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) state: NetworkState",
-      "offset": 107,
+      "start": 107,
       "length": 5,
       "target": "state"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
-      "offset": 114,
+      "start": 114,
       "length": 12,
       "target": "NetworkState"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) state: NetworkState",
-      "offset": 331,
+      "start": 331,
       "length": 5,
       "target": "state"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "any",
-      "offset": 337,
+      "start": 337,
       "length": 4,
       "target": "code"
     },
     {
       "type": "error",
-      "offset": 337,
+      "start": 337,
       "length": 4,
       "code": 2339,
       "filename": "[home]/index.ts",
       "id": "err-2339-609-4",
-      "renderedMessage": "Property 'code' does not exist on type 'NetworkState'.\n  Property 'code' does not exist on type 'NetworkLoadingState'.",
-      "category": 1
+      "text": "Property 'code' does not exist on type 'NetworkState'.\n  Property 'code' does not exist on type 'NetworkLoadingState'.",
+      "level": 1
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) state: NetworkState",
-      "offset": 445,
+      "start": 445,
       "length": 5,
       "target": "state"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) state: \"loading\" | \"failed\" | \"success\"",
-      "offset": 451,
+      "start": 451,
       "length": 5,
       "target": "state"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) state: NetworkFailedState",
-      "offset": 649,
+      "start": 649,
       "length": 5,
       "target": "state"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) code: number",
-      "offset": 655,
+      "start": 655,
       "length": 4,
       "target": "code"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) state: NetworkSuccessState",
-      "offset": 721,
+      "start": 721,
       "length": 5,
       "target": "state"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) response: {\n    title: string;\n    duration: number;\n    summary: string;\n}",
-      "offset": 727,
+      "start": 727,
       "length": 8,
       "target": "response"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) title: string",
-      "offset": 736,
+      "start": 736,
       "length": 5,
       "target": "title"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) state: NetworkSuccessState",
-      "offset": 747,
+      "start": 747,
       "length": 5,
       "target": "state"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) response: {\n    title: string;\n    duration: number;\n    summary: string;\n}",
-      "offset": 753,
+      "start": 753,
       "length": 8,
       "target": "response"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) summary: string",
-      "offset": 762,
+      "start": 762,
       "length": 7,
       "target": "summary"
     }

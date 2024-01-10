@@ -3,53 +3,53 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function compact(arr: string[]): number | string[]",
-      "offset": 163,
+      "start": 163,
       "length": 7,
       "target": "compact"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "offset": 171,
+      "start": 171,
       "length": 3,
       "target": "arr"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "offset": 194,
+      "start": 194,
       "length": 3,
       "target": "arr"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) Array<string>.length: number",
       "docs": "Gets or sets the length of the array. This is a number one higher than the highest index in the array.",
-      "offset": 198,
+      "start": 198,
       "length": 6,
       "target": "length"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "offset": 218,
+      "start": 218,
       "length": 3,
       "target": "arr"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(property) Array<string>.length: number",
       "docs": "Gets or sets the length of the array. This is a number one higher than the highest index in the array.",
-      "offset": 222,
+      "start": 222,
       "length": 6,
       "target": "length"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "offset": 333,
+      "start": 333,
       "length": 3,
       "target": "arr"
     }

@@ -3,87 +3,87 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type Either2dOr3d = [number, number, (number | undefined)?]",
-      "offset": 5,
+      "start": 5,
       "length": 12,
       "target": "Either2dOr3d"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function setCoordinate(coord: Either2dOr3d): void",
-      "offset": 56,
+      "start": 56,
       "length": 13,
       "target": "setCoordinate"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) coord: Either2dOr3d",
-      "offset": 70,
+      "start": 70,
       "length": 5,
       "target": "coord"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type Either2dOr3d = [number, number, (number | undefined)?]",
-      "offset": 77,
+      "start": 77,
       "length": 12,
       "target": "Either2dOr3d"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const x: number",
-      "offset": 102,
+      "start": 102,
       "length": 1,
       "target": "x"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const y: number",
-      "offset": 105,
+      "start": 105,
       "length": 1,
       "target": "y"
     },
     {
       "type": "query",
       "text": "const z: number | undefined",
-      "offset": 108,
+      "start": 108,
       "length": 1,
       "target": "z"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) coord: Either2dOr3d",
-      "offset": 113,
+      "start": 113,
       "length": 5,
       "target": "coord"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "var console: Console",
-      "offset": 121,
+      "start": 121,
       "length": 7,
       "target": "console"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "offset": 129,
+      "start": 129,
       "length": 3,
       "target": "log"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) coord: Either2dOr3d",
-      "offset": 161,
+      "start": 161,
       "length": 5,
       "target": "coord"
     },
     {
       "type": "query",
       "text": "(property) length: 2 | 3",
-      "offset": 167,
+      "start": 167,
       "length": 6,
       "target": "length"
     }

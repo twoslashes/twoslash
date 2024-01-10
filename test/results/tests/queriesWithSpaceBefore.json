@@ -3,30 +3,30 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const a: string",
-      "offset": 6,
+      "start": 6,
       "length": 1,
       "target": "a"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const b: \"hello\"",
-      "offset": 33,
+      "start": 33,
       "length": 1,
       "target": "b"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const a: string",
-      "offset": 49,
+      "start": 49,
       "length": 1,
       "target": "a"
     },
     {
       "type": "query",
       "text": "const b: \"hello\"",
-      "offset": 55,
+      "start": 55,
       "length": 1,
       "target": "b"
     }

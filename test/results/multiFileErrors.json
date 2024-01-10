@@ -3,77 +3,77 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function sum(a: number, b: number): number",
-      "offset": 37,
+      "start": 37,
       "length": 3,
       "target": "sum"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) a: number",
-      "offset": 41,
+      "start": 41,
       "length": 1,
       "target": "a"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) b: number",
-      "offset": 52,
+      "start": 52,
       "length": 1,
       "target": "b"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) a: number",
-      "offset": 82,
+      "start": 82,
       "length": 1,
       "target": "a"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) b: number",
-      "offset": 86,
+      "start": 86,
       "length": 1,
       "target": "b"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) function sum(a: number, b: number): number\nimport sum",
-      "offset": 120,
+      "start": 120,
       "length": 3,
       "target": "sum"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) sum(a: number, b: number): number\nimport sum",
-      "offset": 139,
+      "start": 139,
       "length": 3,
       "target": "sum"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) function sum(a: number, b: number): number\nimport sum",
-      "offset": 182,
+      "start": 182,
       "length": 3,
       "target": "sum"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) sum(a: number, b: number): number\nimport sum",
-      "offset": 201,
+      "start": 201,
       "length": 3,
       "target": "sum"
     },
     {
       "type": "error",
-      "offset": 208,
+      "start": 208,
       "length": 7,
       "code": 2345,
       "filename": "[home]/error.ts",
       "id": "err-2345-75-7",
-      "renderedMessage": "Argument of type 'string' is not assignable to parameter of type 'number'.",
-      "category": 1
+      "text": "Argument of type 'string' is not assignable to parameter of type 'number'.",
+      "level": 1
     }
   ]
 }

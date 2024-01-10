@@ -3,9 +3,9 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const bye: \"globe\"",
-      "offset": 6,
+      "start": 6,
       "length": 3,
       "target": "bye"
     }

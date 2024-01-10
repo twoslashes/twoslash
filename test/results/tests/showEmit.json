@@ -1,10 +1,76 @@
 {
-  "code": "var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {\n    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;\n    if (typeof Reflect === \"object\" && typeof Reflect.decorate === \"function\") r = Reflect.decorate(decorators, target, key, desc);\n    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;\n    return c > 3 && r && Object.defineProperty(target, key, r), r;\n};\nlet MyComponent = class MyComponent {\n    Service;\n    constructor(Service) {\n        this.Service = Service;\n    }\n    method(x) { }\n};\n__decorate([\n    decorator\n], MyComponent.prototype, \"method\", null);\nMyComponent = __decorate([\n    decorator\n], MyComponent);\nexport {};\n",
-  "extension": "js",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  "code": "\n// @filename: service.ts\nexport class Service {}\n\n// @filename: component.ts\nimport type { Service } from \"./service\"\n\ndeclare var decorator: any\n\n@decorator\nclass MyComponent {\n  constructor(public Service: Service) {}\n\n  @decorator\n  method(x: this) {}\n}\n",
+  "extension": "ts",
+  "tokens": [
+    {
+      "type": "hover",
+      "text": "class Service",
+      "start": 39,
+      "length": 7,
+      "target": "Service"
+    },
+    {
+      "type": "hover",
+      "text": "(alias) class Service\nimport Service",
+      "start": 92,
+      "length": 7,
+      "target": "Service"
+    },
+    {
+      "type": "hover",
+      "text": "var decorator: any",
+      "start": 132,
+      "length": 9,
+      "target": "decorator"
+    },
+    {
+      "type": "hover",
+      "text": "var decorator: any",
+      "start": 149,
+      "length": 9,
+      "target": "decorator"
+    },
+    {
+      "type": "hover",
+      "text": "class MyComponent",
+      "start": 165,
+      "length": 11,
+      "target": "MyComponent"
+    },
+    {
+      "type": "hover",
+      "text": "(property) MyComponent.Service: Service",
+      "start": 200,
+      "length": 7,
+      "target": "Service"
+    },
+    {
+      "type": "hover",
+      "text": "(alias) class Service\nimport Service",
+      "start": 209,
+      "length": 7,
+      "target": "Service"
+    },
+    {
+      "type": "hover",
+      "text": "var decorator: any",
+      "start": 225,
+      "length": 9,
+      "target": "decorator"
+    },
+    {
+      "type": "hover",
+      "text": "(method) MyComponent.method(x: this): void",
+      "start": 237,
+      "length": 6,
+      "target": "method"
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) x: this",
+      "start": 244,
+      "length": 1,
+      "target": "x"
+    }
+  ]
 }

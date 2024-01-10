@@ -3,62 +3,62 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function fn(s: any): void",
-      "offset": 10,
+      "start": 10,
       "length": 2,
       "target": "fn"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) s: any",
-      "offset": 13,
+      "start": 13,
       "length": 1,
       "target": "s"
     },
     {
       "type": "error",
-      "offset": 13,
+      "start": 13,
       "length": 1,
       "code": 7006,
       "filename": "[home]/index.ts",
       "id": "err-7006-49-1",
-      "renderedMessage": "Parameter 's' implicitly has an 'any' type.",
-      "category": 1
+      "text": "Parameter 's' implicitly has an 'any' type.",
+      "level": 1
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "var console: Console",
-      "offset": 20,
+      "start": 20,
       "length": 7,
       "target": "console"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "offset": 28,
+      "start": 28,
       "length": 3,
       "target": "log"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) s: any",
-      "offset": 32,
+      "start": 32,
       "length": 1,
       "target": "s"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "any",
-      "offset": 34,
+      "start": 34,
       "length": 5,
       "target": "subtr"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function fn(s: any): void",
-      "offset": 47,
+      "start": 47,
       "length": 2,
       "target": "fn"
     }

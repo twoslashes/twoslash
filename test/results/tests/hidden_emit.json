@@ -3,10 +3,10 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const helloWorldPTBR: \"Olá Mundo\"",
       "docs": "The translation of 'Hello world' into Portuguese",
-      "offset": 77,
+      "start": 77,
       "length": 14,
       "target": "helloWorldPTBR"
     }

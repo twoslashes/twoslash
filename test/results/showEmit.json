@@ -3,30 +3,30 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function fn(arr: number[]): void",
-      "offset": 85,
+      "start": 85,
       "length": 2,
       "target": "fn"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) arr: number[]",
-      "offset": 88,
+      "start": 88,
       "length": 3,
       "target": "arr"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const arr2: number[]",
-      "offset": 113,
+      "start": 113,
       "length": 4,
       "target": "arr2"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) arr: number[]",
-      "offset": 127,
+      "start": 127,
       "length": 3,
       "target": "arr"
     }

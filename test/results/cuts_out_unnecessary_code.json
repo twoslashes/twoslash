@@ -3,102 +3,102 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-      "offset": 9,
+      "start": 9,
       "length": 11,
       "target": "createLabel"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-      "offset": 21,
+      "start": 21,
       "length": 1,
       "target": "T"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) idOrName: T extends string | number",
-      "offset": 48,
+      "start": 48,
       "length": 8,
       "target": "idOrName"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-      "offset": 58,
+      "start": 58,
       "length": 1,
       "target": "T"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "type NameOrId<T extends string | number> = T extends number ? IdLabel : NameLabel",
-      "offset": 62,
+      "start": 62,
       "length": 8,
       "target": "NameOrId"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
-      "offset": 71,
+      "start": 71,
       "length": 1,
       "target": "T"
     },
     {
       "type": "query",
       "text": "let a: NameLabel",
-      "offset": 109,
+      "start": 109,
       "length": 1,
       "target": "a"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function createLabel<\"typescript\">(idOrName: \"typescript\"): NameLabel",
-      "offset": 113,
+      "start": 113,
       "length": 11,
       "target": "createLabel"
     },
     {
       "type": "query",
       "text": "let b: IdLabel",
-      "offset": 144,
+      "start": 144,
       "length": 1,
       "target": "b"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function createLabel<2.8>(idOrName: 2.8): IdLabel",
-      "offset": 148,
+      "start": 148,
       "length": 11,
       "target": "createLabel"
     },
     {
       "type": "query",
       "text": "let c: IdLabel | NameLabel",
-      "offset": 170,
+      "start": 170,
       "length": 1,
       "target": "c"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function createLabel<\"hello\" | 42>(idOrName: \"hello\" | 42): IdLabel | NameLabel",
-      "offset": 174,
+      "start": 174,
       "length": 11,
       "target": "createLabel"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "var Math: Math",
       "docs": "An intrinsic object that provides basic mathematics functionality and constants.",
-      "offset": 186,
+      "start": 186,
       "length": 4,
       "target": "Math"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(method) Math.random(): number",
       "docs": "Returns a pseudorandom number between 0 and 1.",
-      "offset": 191,
+      "start": 191,
       "length": 6,
       "target": "random"
     }

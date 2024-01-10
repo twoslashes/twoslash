@@ -5,7 +5,7 @@
     {
       "type": "query",
       "text": "let foo: string",
-      "offset": 4,
+      "start": 4,
       "length": 3,
       "target": "foo"
     }

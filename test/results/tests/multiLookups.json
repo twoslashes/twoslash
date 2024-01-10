@@ -3,65 +3,65 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "function paintShape(opts: PaintOptions): void",
-      "offset": 9,
+      "start": 9,
       "length": 10,
       "target": "paintShape"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) opts: PaintOptions",
-      "offset": 20,
+      "start": 20,
       "length": 4,
       "target": "opts"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "interface PaintOptions",
-      "offset": 26,
+      "start": 26,
       "length": 12,
       "target": "PaintOptions"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "let xPos: number | undefined",
-      "offset": 48,
+      "start": 48,
       "length": 4,
       "target": "xPos"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) opts: PaintOptions",
-      "offset": 55,
+      "start": 55,
       "length": 4,
       "target": "opts"
     },
     {
       "type": "query",
       "text": "(property) PaintOptions.xPos?: number | undefined",
-      "offset": 60,
+      "start": 60,
       "length": 4,
       "target": "xPos"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "let yPos: number | undefined",
-      "offset": 71,
+      "start": 71,
       "length": 4,
       "target": "yPos"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(parameter) opts: PaintOptions",
-      "offset": 78,
+      "start": 78,
       "length": 4,
       "target": "opts"
     },
     {
       "type": "query",
       "text": "(property) PaintOptions.yPos?: number | undefined",
-      "offset": 83,
+      "start": 83,
       "length": 4,
       "target": "yPos"
     }

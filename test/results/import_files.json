@@ -3,38 +3,38 @@
   "extension": "ts",
   "tokens": [
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "const helloWorld: \"Example string\"",
-      "offset": 47,
+      "start": 47,
       "length": 10,
       "target": "helloWorld"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) const helloWorld: \"Example string\"\nimport helloWorld",
-      "offset": 110,
+      "start": 110,
       "length": 10,
       "target": "helloWorld"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "var console: Console",
-      "offset": 148,
+      "start": 148,
       "length": 7,
       "target": "console"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "offset": 156,
+      "start": 156,
       "length": 3,
       "target": "log"
     },
     {
-      "type": "quick-info",
+      "type": "hover",
       "text": "(alias) const helloWorld: \"Example string\"\nimport helloWorld",
-      "offset": 160,
+      "start": 160,
       "length": 10,
       "target": "helloWorld"
     }
