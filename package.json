@@ -1,7 +1,7 @@
 {
   "name": "twoslashes",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.0-1",
   "description": "Rewrite of TypeScript TwoSlash",
   "author": "TypeScript team",
   "license": "MIT",
@@ -30,11 +30,11 @@
     "dist"
   ],
   "scripts": {
-    "bootstrap": "pnpm run build",
     "typecheck": "tsc --noEmit",
     "build": "unbuild",
     "test": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "typescript": "*"

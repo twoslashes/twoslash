@@ -1,15 +1,13 @@
 /* eslint-disable no-case-declarations */
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from "@typescript/vfs"
+import type { CompilerOptions, CustomTransformers, ScriptTarget } from "typescript"
 import { TwoslashError } from "./error"
 import { cleanMarkdownEscaped, getClosestWord, getIdentifierTextSpans, parsePrimitive, typesToExtension } from "./utils"
 import { validateCodeForErrors, validateInput } from "./validation"
 
+export * from './error'
 
 type TS = typeof import("typescript")
-type CompilerOptions = import("typescript").CompilerOptions
-type CustomTransformers = import("typescript").CustomTransformers
-
-export * from './error'
 
 // eslint-disable-next-line no-console
 const log = false ? console.log : undefined
@@ -423,7 +421,7 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
 
   const defaultCompilerOptions = {
     strict: true,
-    target: ts.ScriptTarget.ES2016,
+    target: 99 satisfies ScriptTarget.ESNext,
     allowJs: true,
     ...(options.defaultCompilerOptions ?? {}),
   }
