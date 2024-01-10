@@ -1,29 +1,6 @@
 import { TwoslashError } from "./error"
 import type {Position, Range, TemporaryFile} from "./types"
 
-export function escapeHtml(text: string) {
-  return text.replace(/</g, "&lt;")
-}
-
-export function strrep(text: string, count: number) {
-  let s = ""
-  for (let i = 0; i < count; i++) {
-    s += text
-  }
-  return s
-}
-
-export function textToAnchorName(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/`|#|\//g, "")
-}
-
-export function fileNameToUrlName(s: string) {
-  return s.replace(/ /g, "-").replace(/#/g, "sharp").toLowerCase()
-}
-
 export function parsePrimitive(value: string, type: string): any {
   // eslint-disable-next-line valid-typeof
   if (typeof value === type)
@@ -42,12 +19,6 @@ export function parsePrimitive(value: string, type: string): any {
     `The only recognized primitives are number, string and boolean. Got ${type} with ${value}.`,
     `This is likely a typo.`
   )
-}
-
-export function cleanMarkdownEscaped(code: string) {
-  code = code.replace(/¨D/g, "$")
-  code = code.replace(/¨T/g, "~")
-  return code
 }
 
 export function typesToExtension(types: string) {
@@ -87,46 +58,6 @@ export function getIdentifierTextSpans(ts: typeof import("typescript"), sourceFi
   }
 }
 
-export function stringAroundIndex(string: string, index: number) {
-  const arr = [
-    string[index - 3],
-    string[index - 2],
-    string[index - 1],
-    ">",
-    string[index],
-    "<",
-    string[index + 1],
-    string[index + 2],
-    string[index + 3],
-  ]
-  return arr.filter(Boolean).join("")
-}
-
-/** Came from https://ourcodeworld.com/articles/read/223/how-to-retrieve-the-closest-word-in-a-string-with-a-given-index-in-javascript */
-export function getClosestWord(str: string, pos: number) {
-  // Make copies
-  str = String(str)
-  pos = Number(pos) >>> 0
-
-  // Search for the word's beginning and end.
-  const left = str.slice(0, pos + 1).search(/\S+$/)
-  const right = str.slice(pos).search(/\s/)
-
-  // The last word in the string is a special case.
-  if (right < 0) {
-    return {
-      word: str.slice(left),
-      startPos: left,
-    }
-  }
-  // Return the word, using the located bounds to extract it from the string.
-  return {
-    word: str.slice(left, right + pos),
-    startPos: left,
-  }
-}
-
-
 export function isInRanges(index: number, ranges: Range[]) {
   return ranges.find(([start, end]) => start <= index && index <= end);
 }
@@ -163,8 +94,10 @@ export function getOptionValueFromMap(name: string, key: string, optMap: Map<str
   return result
 }
 
-
-export function createPosConverter(code: string) {
+/**
+ * Creates a converter between index and position in a code block.
+ */
+export function createPositionConverter(code: string) {
   const lines = Array.from(code.matchAll(/.*?($|\n)/g)).map((match) => match[0])
 
   function indexToPos(index: number): Position {

@@ -1,0 +1,32 @@
+{
+  "code": "\n/** @jsxImportSource preact */\nfunction App() {\n  return <h1>Hello World</h1>\n}\n",
+  "tokens": [
+    {
+      "type": "hover",
+      "text": "function App(): any",
+      "start": 41,
+      "length": 3,
+      "target": "App",
+      "line": 2,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 59,
+      "length": 2,
+      "target": "h1",
+      "line": 3,
+      "character": 10
+    },
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 75,
+      "length": 2,
+      "target": "h1",
+      "line": 3,
+      "character": 26
+    }
+  ]
+}

@@ -5,14 +5,12 @@ import { TwoslashError } from "./error"
 export function validateCodeForErrors(
   relevantErrors: TokenError[],
   handbookOptions: { errors: number[] },
-  extension: string,
-  originalCode: string,
   vfsRoot: string
 ) {
-  const inErrsButNotFoundInTheHeader = relevantErrors.filter(e => !handbookOptions.errors.includes(e.code))
-  const errorsFound = Array.from(new Set(inErrsButNotFoundInTheHeader.map(e => e.code))).join(" ")
+  const unspecifiedErrors = relevantErrors.filter(e => !handbookOptions.errors.includes(e.code))
+  const errorsFound = Array.from(new Set(unspecifiedErrors.map(e => e.code))).join(" ")
 
-  if (inErrsButNotFoundInTheHeader.length) {
+  if (unspecifiedErrors.length) {
     const errorsToShow = new Set(relevantErrors.map(e => e.code))
     const codeToAdd = `// @errors: ${Array.from(errorsToShow).join(" ")}`
 
@@ -24,7 +22,7 @@ export function validateCodeForErrors(
     const filesToErrors: Record<string, TokenError[]> = {}
     const noFiles: TokenError[] = []
 
-    inErrsButNotFoundInTheHeader.forEach(d => {
+    unspecifiedErrors.forEach(d => {
       const fileRef = d.filename?.replace(vfsRoot, "")
       if (!fileRef) noFiles.push(d)
       else {
@@ -35,13 +33,9 @@ export function validateCodeForErrors(
     })
 
     const showDiagnostics = (title: string, diags: TokenError[]) => {
-      return (
-        `${title}\n  ${ 
-        diags
-          .map(e => {
-            return `[${e.code}] ${e.start} - ${e.text}`
-          })
-          .join("\n  ")}`
+      return (`${title}\n  ${diags
+        .map(e => `[${e.code}] ${e.start} - ${e.text}`)
+        .join("\n  ")}`
       )
     }
 
@@ -61,7 +55,6 @@ export function validateCodeForErrors(
       `Compiler Errors:\n\n${allMessages}`
     )
 
-    newErr.code = `## Code\n\n'''${extension}\n${originalCode}\n'''`
     throw newErr
   }
 }

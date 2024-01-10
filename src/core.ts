@@ -2,7 +2,7 @@ import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { TwoslashError } from './error';
 import type { HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashOptions, TwoSlashReturn } from "./types";
-import { createPosConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
+import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
 
 export * from './error'
@@ -59,39 +59,42 @@ export function twoslasher(
     allowJs: true,
     ...(options.defaultCompilerOptions ?? {}),
   };
-
   const handbookOptions: HandbookOptions = {
     ...defaultHandbookOptions,
     ...options.defaultOptions
   };
 
-  function updateOptions(name: string, value: any) {
-    const compilerOpt = ts.optionDeclarations.find((d) => d.name.toLocaleLowerCase() === name.toLocaleLowerCase());
-    if (compilerOpt) {
-      switch (compilerOpt.type) {
+  function updateOptions(name: string, value: any): false | void {
+    const oc = ts.optionDeclarations.find((d) => d.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    if (oc) {
+      switch (oc.type) {
         case "number":
         case "string":
         case "boolean":
-          compilerOptions[compilerOpt.name] = parsePrimitive(value, compilerOpt.type);
+          compilerOptions[oc.name] = parsePrimitive(value, oc.type);
           break;
         case "list": {
-          const elementType = compilerOpt.element!.type;
+          const elementType = oc.element!.type;
           const strings = value.split(",") as string[];
           if (typeof elementType === "string") {
-            compilerOptions[compilerOpt.name] = strings.map(v => parsePrimitive(v, elementType));
+            compilerOptions[oc.name] = strings.map(v => parsePrimitive(v, elementType));
           } else {
-            compilerOptions[compilerOpt.name] = strings.map(v => getOptionValueFromMap(compilerOpt.name, v, elementType as Map<string, string>));
+            compilerOptions[oc.name] = strings.map(v => getOptionValueFromMap(oc.name, v, elementType as Map<string, string>));
           }
           break;
         }
         default:
           // It's a map
-          compilerOptions[compilerOpt.name] = getOptionValueFromMap(compilerOpt.name, value, compilerOpt.type);
+          compilerOptions[oc.name] = getOptionValueFromMap(oc.name, value, oc.type);
           break;
       }
     }
     else if (Object.keys(defaultHandbookOptions).includes(name)) {
-      (handbookOptions as any)[name] = value;
+      // "errors" is a special case, it's a list of numbers
+      if (name === "errors" && typeof value === "string")
+        value = value.split(" ").map(Number);
+
+      (handbookOptions as any)[name] = value
     }
     else {
       if (handbookOptions.noErrorValidation)
@@ -149,7 +152,8 @@ export function twoslasher(
   const targetsQuery: number[] = [];
   const targetsCompletions: number[] = [];
   const targetsHighlights: Range[] = [];
-  const pc = createPosConverter(code);
+  const pc = createPositionConverter(code);
+
 
   // #region extract cuts
   if (code.includes(cutString)) {
@@ -160,9 +164,20 @@ export function twoslasher(
   }
   // #endregion
 
+  const supportedFileTyes = ["js", "jsx", "ts", "tsx"]
   const files = splitFiles(code, defaultFilename, fsRoot)
-
   for (const file of files) {
+    const filetype = file.filename.split(".").pop() || ""
+
+    // Only run the LSP-y things on source files
+    if (filetype === "json") {
+      if (!compilerOptions.resolveJsonModule)
+        continue
+    }
+    else if (!supportedFileTyes.includes(filetype)) {
+      continue
+    }
+
     env.createFile(file.filename, file.content);
 
     // #region extract markers
@@ -269,7 +284,7 @@ export function twoslasher(
     // #endregion
 
     // #region get diagnostics
-    if (!handbookOptions.noErrorValidation) {
+    if (!handbookOptions.noErrorValidation && !handbookOptions.noErrors) {
       const diagnostics = [
         ...ls.getSemanticDiagnostics(file.filename),
         ...ls.getSuggestionDiagnostics(file.filename),
@@ -300,7 +315,7 @@ export function twoslasher(
 
   // A validator that error codes are mentioned, so we can know if something has broken in the future
   if (!handbookOptions.noErrorValidation && errors.length) {
-    validateCodeForErrors(errors, handbookOptions, extension, code, fsRoot)
+    validateCodeForErrors(errors, handbookOptions, fsRoot)
   }
 
   // Sort descending, so that we start removal from the end
@@ -329,7 +344,7 @@ export function twoslasher(
   }
 
 
-  const resultPC = outputCode === code ? pc : createPosConverter(outputCode);
+  const resultPC = outputCode === code ? pc : createPositionConverter(outputCode);
 
   const tokens = _tokens
     .filter(token => token.start >= 0)
