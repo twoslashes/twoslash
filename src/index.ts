@@ -1,10 +1,3 @@
-let hasLocalStorage = false
-try {
-  hasLocalStorage = typeof localStorage !== `undefined`
-} catch (error) { }
-const hasProcess = typeof process !== `undefined`
-const shouldDebug = (hasLocalStorage && localStorage.getItem("DEBUG")) || (hasProcess && process.env.DEBUG)
-
 type TS = typeof import("typescript")
 type CompilerOptions = import("typescript").CompilerOptions
 type CustomTransformers = import("typescript").CustomTransformers
@@ -14,7 +7,7 @@ import { validateInput, validateCodeForErrors } from "./validation"
 
 import { createSystem, createVirtualTypeScriptEnvironment, createFSBackedSystem } from "@typescript/vfs"
 
-const log = shouldDebug ? console.log : (_message?: any, ..._optionalParams: any[]) => ""
+const log = false ? console.log : undefined
 
 // Hacking in some internal stuff
 declare module "typescript" {
@@ -100,7 +93,7 @@ function filterHighlightLines(codeLines: string[]): { highlights: HighlightPosit
     }
 
     const stripLine = (logDesc: string) => {
-      log(`Removing line ${i} for ${logDesc}`)
+      log?.(`Removing line ${i} for ${logDesc}`)
 
       removedLines++
       codeLines.splice(i, 1)
@@ -152,7 +145,7 @@ function filterHighlightLines(codeLines: string[]): { highlights: HighlightPosit
 
 function getOptionValueFromMap(name: string, key: string, optMap: Map<string, string>) {
   const result = optMap.get(key.toLowerCase())
-  log(`Get ${name} mapped option: ${key} => ${result}`)
+  log?.(`Get ${name} mapped option: ${key} => ${result}`)
   if (result === undefined) {
     const keys = Array.from(optMap.keys() as any)
 
@@ -166,7 +159,7 @@ function getOptionValueFromMap(name: string, key: string, optMap: Map<string, st
 }
 
 function setOption(name: string, value: string, opts: CompilerOptions, ts: TS) {
-  log(`Setting ${name} to ${value}`)
+  log?.(`Setting ${name} to ${value}`)
 
   for (const opt of ts.optionDeclarations) {
     if (opt.name.toLowerCase() === name.toLowerCase()) {
@@ -290,14 +283,14 @@ function filterHandbookOptions(codeLines: string[]): ExampleOptions {
     if ((match = booleanConfigRegexp.exec(codeLines[i]))) {
       if (match[1] in options) {
         options[match[1]] = true
-        log(`Setting options.${match[1]} to true`)
+        log?.(`Setting options.${match[1]} to true`)
         codeLines.splice(i, 1)
         i--
       }
     } else if ((match = valuedConfigRegexp.exec(codeLines[i]))) {
       if (match[1] in options) {
         options[match[1]] = match[2]
-        log(`Setting options.${match[1]} to ${match[2]}`)
+        log?.(`Setting options.${match[1]} to ${match[2]}`)
         codeLines.splice(i, 1)
         i--
       }
@@ -307,7 +300,7 @@ function filterHandbookOptions(codeLines: string[]): ExampleOptions {
   // Edge case the errors object to turn it into a string array
   if ("errors" in options && typeof options.errors === "string") {
     options.errors = options.errors.split(" ").map(Number)
-    log("Setting options.error to ", options.errors)
+    log?.("Setting options.error to ", options.errors)
   }
 
   return options
@@ -444,7 +437,7 @@ export function twoslasher(code: string, extension: string, options: TwoSlashOpt
   const safeExtension = typesToExtension(extension)
   const defaultFileName = "index." + safeExtension
 
-  log(`\n\nLooking at code: \n\`\`\`${safeExtension}\n${code}\n\`\`\`\n`)
+  log?.(`\n\nLooking at code: \n\`\`\`${safeExtension}\n${code}\n\`\`\`\n`)
 
   const defaultCompilerOptions = {
     strict: true,
