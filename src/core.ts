@@ -122,7 +122,7 @@ export function twoslasher(
       _tokens.push({
         type: 'tag',
         name,
-        start: index,
+        start: index + match[0].length + 1,
         length: 0,
         text: match[0].split(":")[1].trim(),
       })

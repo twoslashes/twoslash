@@ -45,20 +45,19 @@ const another = ''
   expect(result.tags.length).toEqual(1)
 
   expect(result.code).toMatchInlineSnapshot(`
-    "// @thing: This one only
-    const another = ''
+    "const another = ''
         "
   `)
 
   const tag = result.tags[0]
   expect(tag).toMatchInlineSnapshot(`
     {
-      "annotation": "This one only",
       "character": 0,
       "length": 0,
-      "line": 1,
+      "line": 0,
       "name": "thing",
-      "offset": 0,
+      "start": 0,
+      "text": "This one only",
       "type": "tag",
     }
   `)
