@@ -53,6 +53,7 @@ export interface TokenError extends TokenBase {
   category: 0 | 1 | 2 | 3;
   code: number;
   renderedMessage: string
+  filename: string
 }
 
 export interface TokenTag extends TokenBase {
@@ -85,4 +86,11 @@ export interface TwoSlashReturnNew {
    * Resolved compiler options
    */
   compilerOptions: CompilerOptions
+}
+
+
+export interface TemporaryFile {
+  offset: number
+  filename: string
+  content: string
 }

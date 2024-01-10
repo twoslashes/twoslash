@@ -1,5 +1,5 @@
 import { TwoslashError } from "./error"
-import type {Range} from "./types-new"
+import type {Range, TemporaryFile} from "./types-new"
 
 export function escapeHtml(text: string) {
   return text.replace(/</g, "&lt;")
@@ -199,4 +199,31 @@ export function createPosConverter(code: string) {
     posToIndex,
     getIndexOfLineAbove
   }
+}
+
+
+const reFilenamesMakers = /^\/\/\s?@filename: (.+)$/mg
+
+export function splitFiles(code: string, defaultFileName: string, rootPath: string) {
+  const matches = Array.from(code.matchAll(reFilenamesMakers))
+
+  let currentFileName = rootPath + defaultFileName
+  const files: TemporaryFile[] = []
+
+  let index = 0
+  for (const match of matches) {
+    const offset = match.index!
+    const content = code.slice(index, offset)
+    if (content)
+      files.push({ offset: index, filename: currentFileName, content })
+    currentFileName = rootPath + match[1].trimEnd()
+    index = offset
+  }
+  
+  if (index < code.length) {
+    const content = code.slice(index)
+    files.push({ offset: index, filename: currentFileName, content })
+  }
+  
+  return files
 }

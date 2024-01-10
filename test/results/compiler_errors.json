@@ -21,6 +21,7 @@
       "offset": 13,
       "length": 1,
       "code": 7006,
+      "filename": "[home]/index.ts",
       "id": "err-7006-49-1",
       "renderedMessage": "Parameter 's' implicitly has an 'any' type.",
       "category": 1

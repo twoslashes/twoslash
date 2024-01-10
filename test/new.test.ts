@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest'
 import * as ts from 'typescript/lib/tsserverlibrary'
+import { splitFiles } from '../src/utils'
 import type { TwoSlashReturnNew } from "../src/types-new"
 import { twoslasher } from '../src'
 
@@ -37,6 +38,53 @@ function verifyResult(result: TwoSlashReturnNew) {
       expect.soft(result.code.slice(token.offset, token.offset + token.length)).toBe(token.target)
   }
 }
+
+it('split files', ()=>{
+  const files = splitFiles(`
+// @module: esnext
+// @filename: maths.ts
+export function absolute(num: number) {
+  if (num < 0) return num * -1;
+  return num;
+}
+// @filename: index.ts
+// ---cut---
+import {absolute} from "./maths"
+const value = absolute(-1)
+//    ^?
+`, 'test.ts', '')
+  expect(files).toMatchInlineSnapshot(`
+    [
+      {
+        "content": "
+    // @module: esnext
+    ",
+        "filename": "test.ts",
+        "offset": 0,
+      },
+      {
+        "content": "// @filename: maths.ts
+    export function absolute(num: number) {
+      if (num < 0) return num * -1;
+      return num;
+    }
+    ",
+        "filename": "maths.ts",
+        "offset": 20,
+      },
+      {
+        "content": "// @filename: index.ts
+    // ---cut---
+    import {absolute} from "./maths"
+    const value = absolute(-1)
+    //    ^?
+    ",
+        "filename": "index.ts",
+        "offset": 131,
+      },
+    ]
+  `)
+})
 
 it('should pass', () => {
   const result = twoslasher(code, 'ts', {

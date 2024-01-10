@@ -1,56 +1,42 @@
 {
   "code": "// @filename: file-with-export.ts\nexport const helloWorld = \"Example string\";\n\n// @filename: index.ts\nimport {helloWorld} from \"./file-with-export\"\nconsole.log(helloWorld)\n",
   "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "quick-info",
       "text": "const helloWorld: \"Example string\"",
-      "docs": "",
-      "start": 47,
+      "offset": 47,
       "length": 10,
-      "line": 1,
-      "character": 13,
-      "targetString": "helloWorld"
+      "target": "helloWorld"
     },
     {
+      "type": "quick-info",
       "text": "(alias) const helloWorld: \"Example string\"\nimport helloWorld",
-      "docs": "",
-      "start": 110,
+      "offset": 110,
       "length": 10,
-      "line": 4,
-      "character": 8,
-      "targetString": "helloWorld"
+      "target": "helloWorld"
     },
     {
+      "type": "quick-info",
       "text": "var console: Console",
-      "docs": "",
-      "start": 148,
+      "offset": 148,
       "length": 7,
-      "line": 5,
-      "character": 0,
-      "targetString": "console"
+      "target": "console"
     },
     {
+      "type": "quick-info",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "start": 156,
+      "offset": 156,
       "length": 3,
-      "line": 5,
-      "character": 8,
-      "targetString": "log"
+      "target": "log"
     },
     {
+      "type": "quick-info",
       "text": "(alias) const helloWorld: \"Example string\"\nimport helloWorld",
-      "docs": "",
-      "start": 160,
+      "offset": 160,
       "length": 10,
-      "line": 5,
-      "character": 12,
-      "targetString": "helloWorld"
+      "target": "helloWorld"
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

@@ -1,74 +1,56 @@
 {
   "code": "// @filename: getStringLength.ts\nexport const getStringLength = (str: string) => str.length\n// @filename: index.ts\nimport { getStringLength } from './getStringLength'\nconst b = getStringLength('string')\n",
   "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "quick-info",
       "text": "const getStringLength: (str: string) => number",
-      "docs": "",
-      "start": 46,
+      "offset": 46,
       "length": 15,
-      "line": 1,
-      "character": 13,
-      "targetString": "getStringLength"
+      "target": "getStringLength"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) str: string",
-      "docs": "",
-      "start": 65,
+      "offset": 65,
       "length": 3,
-      "line": 1,
-      "character": 32,
-      "targetString": "str"
+      "target": "str"
     },
     {
+      "type": "quick-info",
       "text": "(parameter) str: string",
-      "docs": "",
-      "start": 81,
+      "offset": 81,
       "length": 3,
-      "line": 1,
-      "character": 48,
-      "targetString": "str"
+      "target": "str"
     },
     {
+      "type": "quick-info",
       "text": "(property) String.length: number",
       "docs": "Returns the length of a String object.",
-      "start": 85,
+      "offset": 85,
       "length": 6,
-      "line": 1,
-      "character": 52,
-      "targetString": "length"
+      "target": "length"
     },
     {
+      "type": "quick-info",
       "text": "(alias) const getStringLength: (str: string) => number\nimport getStringLength",
-      "docs": "",
-      "start": 124,
+      "offset": 124,
       "length": 15,
-      "line": 3,
-      "character": 9,
-      "targetString": "getStringLength"
+      "target": "getStringLength"
     },
     {
+      "type": "quick-info",
       "text": "const b: number",
-      "docs": "",
-      "start": 173,
+      "offset": 173,
       "length": 1,
-      "line": 4,
-      "character": 6,
-      "targetString": "b"
+      "target": "b"
     },
     {
+      "type": "quick-info",
       "text": "(alias) getStringLength(str: string): number\nimport getStringLength",
-      "docs": "",
-      "start": 177,
+      "offset": 177,
       "length": 15,
-      "line": 4,
-      "character": 10,
-      "targetString": "getStringLength"
+      "target": "getStringLength"
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

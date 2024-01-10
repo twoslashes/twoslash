@@ -98,10 +98,5 @@ function cleanFixture(ts: TwoSlashReturnNew) {
     compilerOptions: undefined,
     removals: undefined,
   }
-  const wd = process.cwd();
-  r.tokens.forEach(info => {
-    if ('text' in info)
-      info.text = info.text.replace(new RegExp(wd, "g"), "[home]");
-  });
-  return JSON.stringify(r, null, 2)
+  return JSON.stringify(r, null, 2).replaceAll(process.cwd(), "[home]")
 }

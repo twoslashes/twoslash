@@ -44,6 +44,7 @@
       "offset": 72,
       "length": 1,
       "code": 2322,
+      "filename": "[home]/index.ts",
       "id": "err-2322-89-1",
       "renderedMessage": "Type 'Record<string, string>' is not assignable to type 'Record<string, number>'.\n  'string' index signatures are incompatible.\n    Type 'string' is not assignable to type 'number'.",
       "category": 1

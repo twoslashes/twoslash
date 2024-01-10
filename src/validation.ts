@@ -1,8 +1,9 @@
+import type { TokenError } from "./types-new"
 import { TwoslashError } from "./error"
 
 /** To ensure that errors are matched up right */
 export function validateCodeForErrors(
-  relevantErrors: import("typescript").Diagnostic[],
+  relevantErrors: TokenError[],
   handbookOptions: { errors: number[] },
   extension: string,
   originalCode: string,
@@ -20,11 +21,11 @@ export function validateCodeForErrors(
       : `\nExpected: ${codeToAdd}`
 
     // These get filled by below
-    const filesToErrors: Record<string, import("typescript").Diagnostic[]> = {}
-    const noFiles: import("typescript").Diagnostic[] = []
+    const filesToErrors: Record<string, TokenError[]> = {}
+    const noFiles: TokenError[] = []
 
     inErrsButNotFoundInTheHeader.forEach(d => {
-      const fileRef = d.file?.fileName && d.file.fileName.replace(vfsRoot, "")
+      const fileRef = d.filename?.replace(vfsRoot, "")
       if (!fileRef) noFiles.push(d)
       else {
         const existing = filesToErrors[fileRef]
@@ -33,13 +34,12 @@ export function validateCodeForErrors(
       }
     })
 
-    const showDiagnostics = (title: string, diags: import("typescript").Diagnostic[]) => {
+    const showDiagnostics = (title: string, diags: TokenError[]) => {
       return (
         `${title}\n  ${ 
         diags
           .map(e => {
-            const msg = typeof e.messageText === "string" ? e.messageText : e.messageText.messageText
-            return `[${e.code}] ${e.start} - ${msg}`
+            return `[${e.code}] ${e.offset} - ${e.renderedMessage}`
           })
           .join("\n  ")}`
       )

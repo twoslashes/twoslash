@@ -3,7 +3,7 @@ import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment 
 import { TwoslashError } from './error';
 import type { Position, Range, Token, TokenCompletion, TokenError, TokenHighlight, TokenQuery, TokenQuickInfo, TokenTag, TokenWithPosition, TwoSlashReturnNew } from "./types-new";
 import type { HandbookOptions, TwoSlashOptions } from './types';
-import { createPosConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, typesToExtension } from './utils';
+import { createPosConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
 
 export * from './error'
@@ -14,6 +14,7 @@ type TS = typeof import("typescript")
 
 const ignoredErrors = [
   6133, // not in used
+  6196, // not in used
 ]
 
 // TODO: Make them configurable maybe
@@ -46,7 +47,7 @@ export function twoslasherNew(
 ): TwoSlashReturnNew {
   const ts: TS = options.tsModule!;
   const ext = typesToExtension(extension);
-  const filename = `index.${ext}`;
+  const defaultFilename = `index.${ext}`;
 
   let tokens: Token[] = [];
   let removals: Range[] = [];
@@ -124,6 +125,7 @@ export function twoslasherNew(
     removals.push([index, index + match[0].length + 1]);
   });
   // #endregion
+
   const getRoot = () => options.vfsRoot!.replace(/\//g, "/"); // Normalize slashes
 
   // In a browser we want to DI everything, in node we can use local infra
@@ -134,8 +136,6 @@ export function twoslasherNew(
 
   const env = createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, options.customTransformers);
   const ls = env.languageService;
-
-  env.createFile(filename, code);
 
   const targetsQuery: number[] = [];
   const targetsCompletions: number[] = [];
@@ -151,139 +151,147 @@ export function twoslasherNew(
   }
   // #endregion
 
-  // #region extract markers
-  if (code.includes("//")) {
-    Array.from(code.matchAll(reMarkerQuery)).forEach((match) => {
-      const index = match.index!;
-      removals.push([index, index + match[0].length + 1]);
-      const markerIndex = index + match[0].indexOf("^");
-      targetsQuery.push(pc.getIndexOfLineAbove(markerIndex));
-    });
+  const files = splitFiles(code, defaultFilename, fsRoot)
 
-    Array.from(code.matchAll(reMarkerCompletions)).forEach((match) => {
-      const index = match.index!;
-      removals.push([index, index + match[0].length + 1]);
-      const markerIndex = index + match[0].indexOf("^");
-      targetsCompletions.push(pc.getIndexOfLineAbove(markerIndex));
-    });
+  for (const file of files) {
+    env.createFile(file.filename, file.content);
 
-    Array.from(code.matchAll(reMarkerHighlight)).forEach((match) => {
-      const index = match.index!;
-      removals.push([index, index + match[0].length + 1]);
-      const markerIndex = index + match[0].indexOf("^");
-      const markerLength = match[1].length;
-      const targetIndex = pc.getIndexOfLineAbove(markerIndex);
-      targetsHighlights.push([
-        targetIndex,
-        targetIndex + markerLength,
-      ]);
-    });
-  }
-  // #endregion
+    // #region extract markers
+    if (file.content.includes("//")) {
+      Array.from(file.content.matchAll(reMarkerQuery)).forEach((match) => {
+        const index = match.index! + file.offset;
+        removals.push([index, index + match[0].length + 1]);
+        const markerIndex = index + match[0].indexOf("^");
+        targetsQuery.push(pc.getIndexOfLineAbove(markerIndex));
+      });
 
-  // #region get ts info for quick info
-  const source = ls.getProgram()!.getSourceFile(filename)!;
-  const identifiers = getIdentifierTextSpans(ts, source);
-  for (const identifier of identifiers) {
-    if (isInRemoval(identifier.span.start))
-      continue;
+      Array.from(file.content.matchAll(reMarkerCompletions)).forEach((match) => {
+        const index = match.index! + file.offset;
+        removals.push([index, index + match[0].length + 1]);
+        const markerIndex = index + match[0].indexOf("^");
+        targetsCompletions.push(pc.getIndexOfLineAbove(markerIndex));
+      });
 
-    // TODO: hooks to filter out some identifiers
-    const span = identifier.span;
-    const quickInfo = ls.getQuickInfoAtPosition(filename, span.start);
-
-    if (quickInfo && quickInfo.displayParts) {
-      const text = quickInfo.displayParts.map(dp => dp.text).join("");
-
-      // TODO: get different type of docs
-      const docs = quickInfo.documentation?.map(d => d.text).join("\n") || undefined;
-
-      const position = span.start;
-
-      tokens.push({
-        type: 'quick-info',
-        text, docs,
-        offset: position,
-        length: span.length,
-        target: identifier.text
+      Array.from(file.content.matchAll(reMarkerHighlight)).forEach((match) => {
+        const index = match.index! + file.offset;
+        removals.push([index, index + match[0].length + 1]);
+        const markerIndex = index + match[0].indexOf("^") + file.offset;
+        const markerLength = match[1].length;
+        const targetIndex = pc.getIndexOfLineAbove(markerIndex);
+        targetsHighlights.push([
+          targetIndex,
+          targetIndex + markerLength,
+        ]);
       });
     }
-  }
-  // #endregion
+    // #endregion
 
-  // #region update token with types
-  tokens.forEach(token => {
-    if (token.type as any !== 'quick-info')
-      return undefined;
-    const range: Range = [token.offset, token.offset + token.length];
-    // Turn static info to query if in range
-    if (targetsQuery.find(target => isInRanges(target, [range]))) {
-      token.type = 'query';
+    // #region get ts info for quick info
+    const source = ls.getProgram()!.getSourceFile(file.filename)!;
+    const identifiers = getIdentifierTextSpans(ts, source);
+    for (const identifier of identifiers) {
+      const start = identifier.span.start + file.offset
+      if (isInRemoval(start))
+        continue;
+
+      // TODO: hooks to filter out some identifiers
+      const span = identifier.span;
+      const quickInfo = ls.getQuickInfoAtPosition(file.filename, span.start);
+
+      if (quickInfo && quickInfo.displayParts) {
+        const text = quickInfo.displayParts.map(dp => dp.text).join("");
+
+        // TODO: get different type of docs
+        const docs = quickInfo.documentation?.map(d => d.text).join("\n") || undefined;
+
+        tokens.push({
+          type: 'quick-info',
+          text, docs,
+          offset: start,
+          length: span.length,
+          target: identifier.text
+        });
+      }
     }
+    // #endregion
 
-    // Turn static info to completion if in range
-    else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range]))) {
-      token.type = 'highlight';
-    }
-  });
-  // #endregion
-
-  // #region get completions
-  targetsCompletions.forEach(target => {
-    if (isInRemoval(target))
-      return;
-    const completions = ls.getCompletionsAtPosition(filename, target - 1, {});
-    if (!completions && !handbookOptions.noErrorValidation) {
-      const pos = pc.indexToPos(target);
-      throw new TwoslashError(
-        `Invalid completion query`,
-        `The request on line ${pos} in ${filename} for completions via ^| returned no completions from the compiler.`,
-        `This is likely that the positioning is off.`
-      );
-    }
-
-    let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || '';
-    prefix = prefix.split('.').pop()!;
-
-    tokens.push({
-      type: 'completion',
-      offset: target,
-      length: 0,
-      completions: (completions?.entries ?? []).filter(i => i.name.startsWith(prefix)),
-      completionsPrefix: prefix
+    // #region update token with types
+    tokens.forEach(token => {
+      if (token.type as any !== 'quick-info')
+        return undefined;
+      const range: Range = [token.offset, token.offset + token.length];
+      // Turn static info to query if in range
+      if (targetsQuery.find(target => isInRanges(target, [range]))) {
+        token.type = 'query';
+      }
+      // Turn static info to completion if in range
+      else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range]))) {
+        token.type = 'highlight';
+      }
     });
-  });
-  // #endregion
+    // #endregion
 
-  // #region get diagnostics
-  if (!handbookOptions.noErrorValidation) {
-    const diagnostics = [
-      ...ls.getSemanticDiagnostics(filename),
-      ...ls.getSuggestionDiagnostics(filename),
-    ]
-      .filter(i => i.file?.fileName === filename && !ignoredErrors.includes(i.code) && !isInRemoval(i.start!));
+    // #region get completions
+    targetsCompletions.forEach(target => {
+      if (isInRemoval(target))
+        return;
+      const completions = ls.getCompletionsAtPosition(file.filename, target - 1, {});
+      if (!completions && !handbookOptions.noErrorValidation) {
+        const pos = pc.indexToPos(target);
+        throw new TwoslashError(
+          `Invalid completion query`,
+          `The request on line ${pos} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
+          `This is likely that the positioning is off.`
+        );
+      }
 
-    for (const diagnostic of diagnostics) {
-      const start = diagnostic.start!;
-      const renderedMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
-      const id = `err-${diagnostic.code}-${diagnostic.start}-${diagnostic.length}`;
+      let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || '';
+      prefix = prefix.split('.').pop()!;
 
       tokens.push({
-        type: 'error',
-        offset: start,
-        length: diagnostic.length!,
-        code: diagnostic.code,
-        id,
-        renderedMessage,
-        category: diagnostic.category,
+        type: 'completion',
+        offset: target,
+        length: 0,
+        completions: (completions?.entries ?? []).filter(i => i.name.startsWith(prefix)),
+        completionsPrefix: prefix
       });
+    });
+    // #endregion
+
+    // #region get diagnostics
+    if (!handbookOptions.noErrorValidation) {
+      const diagnostics = [
+        ...ls.getSemanticDiagnostics(file.filename),
+        ...ls.getSuggestionDiagnostics(file.filename),
+      ]
+        .filter(i => i.file?.fileName === file.filename && !ignoredErrors.includes(i.code));
+
+      for (const diagnostic of diagnostics) {
+        const start = diagnostic.start! + file.offset;
+        const renderedMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+        const id = `err-${diagnostic.code}-${diagnostic.start}-${diagnostic.length}`;
+
+        tokens.push({
+          type: 'error',
+          offset: start,
+          length: diagnostic.length!,
+          code: diagnostic.code,
+          filename: file.filename,
+          id,
+          renderedMessage,
+          category: diagnostic.category,
+        });
+      }
     }
-    // A validator that error codes are mentioned, so we can know if something has broken in the future
-    if (!handbookOptions.noErrorValidation && diagnostics.length) {
-      validateCodeForErrors(diagnostics, handbookOptions, extension, code, fsRoot)
-    }
+    // #endregion
   }
-  // #endregion
+
+  const errors = tokens.filter(i => i.type === 'error') as TokenError[];
+
+  // A validator that error codes are mentioned, so we can know if something has broken in the future
+  if (!handbookOptions.noErrorValidation && errors.length) {
+    validateCodeForErrors(errors, handbookOptions, extension, code, fsRoot)
+  }
 
   // Sort descending, so that we start removal from the end
   removals = mergeRanges(removals)
@@ -326,7 +334,7 @@ export function twoslasherNew(
 
 export function twoslasher(code: string, extension: string, options: Partial<TwoSlashOptions> = {}) {
   const result = twoslasherNew(code, extension, options)
-  
+
   const pc = createPosConverter(result.code);
 
   const tokens = result.tokens.map(token => {
