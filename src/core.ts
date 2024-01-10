@@ -10,10 +10,6 @@ export * from './types';
 
 type TS = typeof import("typescript")
 
-const ignoredErrors = [
-  6133, // not in used
-  6196, // not in used
-]
 
 // TODO: Make them configurable maybe
 const reConfigBoolean = /^\/\/\s?@(\w+)$/mg;
@@ -287,9 +283,9 @@ export function twoslasher(
     if (!handbookOptions.noErrorValidation && !handbookOptions.noErrors) {
       const diagnostics = [
         ...ls.getSemanticDiagnostics(file.filename),
-        ...ls.getSuggestionDiagnostics(file.filename),
+        ...ls.getSyntacticDiagnostics(file.filename),
       ]
-        .filter(i => i.file?.fileName === file.filename && !ignoredErrors.includes(i.code));
+        .filter(i => i.file?.fileName === file.filename);
 
       for (const diagnostic of diagnostics) {
         const start = diagnostic.start! + file.offset;

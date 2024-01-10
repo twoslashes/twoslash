@@ -1,0 +1,69 @@
+{
+  "code": "\n// This will not throw because of the noImplicitAny\nfunction fn(s) {\n  console.log(s.slice(3))\n}\n\nfn(42);\n",
+  "tokens": [
+    {
+      "type": "hover",
+      "text": "function fn(s: any): void",
+      "start": 62,
+      "length": 2,
+      "target": "fn",
+      "line": 2,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) s: any",
+      "start": 65,
+      "length": 1,
+      "target": "s",
+      "line": 2,
+      "character": 12
+    },
+    {
+      "type": "hover",
+      "text": "var console: Console",
+      "start": 72,
+      "length": 7,
+      "target": "console",
+      "line": 3,
+      "character": 2
+    },
+    {
+      "type": "hover",
+      "text": "(method) Console.log(...data: any[]): void",
+      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
+      "start": 80,
+      "length": 3,
+      "target": "log",
+      "line": 3,
+      "character": 10
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) s: any",
+      "start": 84,
+      "length": 1,
+      "target": "s",
+      "line": 3,
+      "character": 14
+    },
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 86,
+      "length": 5,
+      "target": "slice",
+      "line": 3,
+      "character": 16
+    },
+    {
+      "type": "hover",
+      "text": "function fn(s: any): void",
+      "start": 99,
+      "length": 2,
+      "target": "fn",
+      "line": 6,
+      "character": 0
+    }
+  ]
+}
