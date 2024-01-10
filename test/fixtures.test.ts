@@ -1,10 +1,8 @@
 import { readdirSync, readFileSync, lstatSync } from "fs"
 import { join, extname, parse } from "path"
-import { toMatchFile } from "jest-file-snapshot"
 import { twoslasher, TwoSlashReturn } from "../src/index"
 import { format } from "prettier"
-
-expect.extend({ toMatchFile })
+import {expect} from 'vitest'
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
@@ -29,7 +27,7 @@ describe("with fixtures", () => {
 
       const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
       const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-      expect(jsonString).toMatchFile(result)
+      expect(jsonString).toMatchFileSnapshot(result)
     })
   })
 
@@ -48,7 +46,7 @@ describe("with fixtures", () => {
 
       const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
       const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-      expect(jsonString).toMatchFile(result)
+      expect(jsonString).toMatchFileSnapshot(result)
     })
   })
 
@@ -67,7 +65,7 @@ describe("with fixtures", () => {
 
       const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
       const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-      expect(jsonString).toMatchFile(result)
+      expect(jsonString).toMatchFileSnapshot(result)
     })
   })
 
@@ -90,7 +88,8 @@ describe("with fixtures", () => {
         twoslasher(file, extname(fixtureName).substr(1))
       } catch (err) {
         thrown = true
-        if (err instanceof Error) expect(err.message).toMatchFile(result)
+        if (err instanceof Error)
+         expect(err.message).toMatchFileSnapshot(result)
       }
 
       if (!thrown) throw new Error("Did not throw")
