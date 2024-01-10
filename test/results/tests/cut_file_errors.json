@@ -7,7 +7,7 @@
       "start": 5,
       "length": 12,
       "target": "NetworkState",
-      "line": 1,
+      "line": 0,
       "character": 5
     },
     {
@@ -16,7 +16,7 @@
       "start": 20,
       "length": 19,
       "target": "NetworkLoadingState",
-      "line": 1,
+      "line": 0,
       "character": 20
     },
     {
@@ -25,7 +25,7 @@
       "start": 42,
       "length": 18,
       "target": "NetworkFailedState",
-      "line": 1,
+      "line": 0,
       "character": 42
     },
     {
@@ -34,7 +34,7 @@
       "start": 63,
       "length": 19,
       "target": "NetworkSuccessState",
-      "line": 1,
+      "line": 0,
       "character": 63
     },
     {
@@ -43,7 +43,7 @@
       "start": 93,
       "length": 13,
       "target": "networkStatus",
-      "line": 3,
+      "line": 2,
       "character": 9
     },
     {
@@ -52,7 +52,7 @@
       "start": 107,
       "length": 5,
       "target": "state",
-      "line": 3,
+      "line": 2,
       "character": 23
     },
     {
@@ -61,7 +61,7 @@
       "start": 114,
       "length": 12,
       "target": "NetworkState",
-      "line": 3,
+      "line": 2,
       "character": 30
     },
     {
@@ -70,7 +70,7 @@
       "start": 321,
       "length": 5,
       "target": "state",
-      "line": 9,
+      "line": 8,
       "character": 2
     },
     {
@@ -79,7 +79,7 @@
       "start": 327,
       "length": 4,
       "target": "code",
-      "line": 9,
+      "line": 8,
       "character": 8
     },
     {
@@ -91,7 +91,7 @@
       "id": "err-2339-599-4",
       "text": "Property 'code' does not exist on type 'NetworkState'.\n  Property 'code' does not exist on type 'NetworkLoadingState'.",
       "level": 1,
-      "line": 9,
+      "line": 8,
       "character": 8
     },
     {
@@ -100,7 +100,7 @@
       "start": 395,
       "length": 5,
       "target": "state",
-      "line": 12,
+      "line": 11,
       "character": 10
     },
     {
@@ -109,7 +109,7 @@
       "start": 401,
       "length": 5,
       "target": "state",
-      "line": 12,
+      "line": 11,
       "character": 16
     },
     {
@@ -118,7 +118,7 @@
       "start": 501,
       "length": 5,
       "target": "state",
-      "line": 16,
+      "line": 15,
       "character": 22
     },
     {
@@ -127,7 +127,7 @@
       "start": 507,
       "length": 4,
       "target": "code",
-      "line": 16,
+      "line": 15,
       "character": 28
     },
     {
@@ -136,7 +136,7 @@
       "start": 568,
       "length": 5,
       "target": "state",
-      "line": 18,
+      "line": 17,
       "character": 22
     },
     {
@@ -145,7 +145,7 @@
       "start": 574,
       "length": 8,
       "target": "response",
-      "line": 18,
+      "line": 17,
       "character": 28
     }
   ]

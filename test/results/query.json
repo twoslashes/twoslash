@@ -7,7 +7,7 @@
       "start": 4,
       "length": 3,
       "target": "foo",
-      "line": 1,
+      "line": 0,
       "character": 4
     }
   ]

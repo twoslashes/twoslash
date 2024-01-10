@@ -7,7 +7,7 @@
       "start": 9,
       "length": 5,
       "target": "greet",
-      "line": 1,
+      "line": 0,
       "character": 9
     },
     {
@@ -16,7 +16,7 @@
       "start": 15,
       "length": 6,
       "target": "person",
-      "line": 1,
+      "line": 0,
       "character": 15
     },
     {
@@ -25,7 +25,7 @@
       "start": 31,
       "length": 4,
       "target": "date",
-      "line": 1,
+      "line": 0,
       "character": 31
     },
     {
@@ -35,7 +35,7 @@
       "start": 37,
       "length": 4,
       "target": "Date",
-      "line": 1,
+      "line": 0,
       "character": 37
     },
     {
@@ -44,7 +44,7 @@
       "start": 47,
       "length": 7,
       "target": "console",
-      "line": 2,
+      "line": 1,
       "character": 2
     },
     {
@@ -54,7 +54,7 @@
       "start": 55,
       "length": 3,
       "target": "log",
-      "line": 2,
+      "line": 1,
       "character": 10
     },
     {
@@ -63,7 +63,7 @@
       "start": 68,
       "length": 6,
       "target": "person",
-      "line": 2,
+      "line": 1,
       "character": 23
     },
     {
@@ -72,7 +72,7 @@
       "start": 88,
       "length": 4,
       "target": "date",
-      "line": 2,
+      "line": 1,
       "character": 43
     },
     {
@@ -82,7 +82,7 @@
       "start": 93,
       "length": 12,
       "target": "toDateString",
-      "line": 2,
+      "line": 1,
       "character": 48
     },
     {
@@ -91,7 +91,7 @@
       "start": 116,
       "length": 5,
       "target": "greet",
-      "line": 5,
+      "line": 4,
       "character": 0
     },
     {
@@ -100,7 +100,7 @@
       "start": 138,
       "length": 4,
       "target": "Date",
-      "line": 5,
+      "line": 4,
       "character": 22
     }
   ]

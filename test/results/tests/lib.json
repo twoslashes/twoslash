@@ -7,7 +7,7 @@
       "start": 6,
       "length": 3,
       "target": "map",
-      "line": 1,
+      "line": 0,
       "character": 6
     },
     {
@@ -16,7 +16,7 @@
       "start": 16,
       "length": 3,
       "target": "Map",
-      "line": 1,
+      "line": 0,
       "character": 16
     },
     {
@@ -25,7 +25,7 @@
       "start": 28,
       "length": 3,
       "target": "Set",
-      "line": 1,
+      "line": 0,
       "character": 28
     }
   ]

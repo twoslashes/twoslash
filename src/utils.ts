@@ -1,5 +1,5 @@
 import { TwoslashError } from "./error"
-import type {Range, TemporaryFile} from "./types-new"
+import type {Position, Range, TemporaryFile} from "./types"
 
 export function escapeHtml(text: string) {
   return text.replace(/</g, "&lt;")
@@ -167,7 +167,7 @@ export function getOptionValueFromMap(name: string, key: string, optMap: Map<str
 export function createPosConverter(code: string) {
   const lines = Array.from(code.matchAll(/.*?($|\n)/g)).map((match) => match[0])
 
-  function indexToPos(index: number) {
+  function indexToPos(index: number): Position {
     let character = index;
     let line = 0;
     for (const lineText of lines) {
@@ -176,7 +176,7 @@ export function createPosConverter(code: string) {
       character -= lineText.length;
       line++;
     }
-    return { line: line + 1, character };
+    return { line, character };
   }
 
   function posToIndex(line: number, character: number) {
@@ -188,9 +188,9 @@ export function createPosConverter(code: string) {
     return index;
   }
 
-  function getIndexOfLineAbove(index: number) {
+  function getIndexOfLineAbove(index: number): number {
     const pos = indexToPos(index);
-    return posToIndex(pos.line - 1, pos.character);
+    return posToIndex(pos.line, pos.character);
   }
 
   return {

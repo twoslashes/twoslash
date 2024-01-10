@@ -7,7 +7,7 @@
       "start": 47,
       "length": 10,
       "target": "helloWorld",
-      "line": 2,
+      "line": 1,
       "character": 13
     },
     {
@@ -16,7 +16,7 @@
       "start": 110,
       "length": 10,
       "target": "helloWorld",
-      "line": 5,
+      "line": 4,
       "character": 8
     },
     {
@@ -25,7 +25,7 @@
       "start": 148,
       "length": 7,
       "target": "console",
-      "line": 6,
+      "line": 5,
       "character": 0
     },
     {
@@ -35,7 +35,7 @@
       "start": 156,
       "length": 3,
       "target": "log",
-      "line": 6,
+      "line": 5,
       "character": 8
     },
     {
@@ -44,7 +44,7 @@
       "start": 160,
       "length": 10,
       "target": "helloWorld",
-      "line": 6,
+      "line": 5,
       "character": 12
     }
   ]

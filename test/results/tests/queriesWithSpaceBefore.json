@@ -7,7 +7,7 @@
       "start": 6,
       "length": 1,
       "target": "a",
-      "line": 1,
+      "line": 0,
       "character": 6
     },
     {
@@ -16,7 +16,7 @@
       "start": 33,
       "length": 1,
       "target": "b",
-      "line": 2,
+      "line": 1,
       "character": 6
     },
     {
@@ -25,7 +25,7 @@
       "start": 49,
       "length": 1,
       "target": "a",
-      "line": 3,
+      "line": 2,
       "character": 4
     },
     {
@@ -34,7 +34,7 @@
       "start": 55,
       "length": 1,
       "target": "b",
-      "line": 3,
+      "line": 2,
       "character": 10
     }
   ]

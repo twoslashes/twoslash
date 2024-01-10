@@ -7,7 +7,7 @@
       "start": 10,
       "length": 2,
       "target": "fn",
-      "line": 2,
+      "line": 1,
       "character": 9
     },
     {
@@ -16,7 +16,7 @@
       "start": 13,
       "length": 1,
       "target": "s",
-      "line": 2,
+      "line": 1,
       "character": 12
     },
     {
@@ -28,7 +28,7 @@
       "id": "err-7006-49-1",
       "text": "Parameter 's' implicitly has an 'any' type.",
       "level": 1,
-      "line": 2,
+      "line": 1,
       "character": 12
     },
     {
@@ -37,7 +37,7 @@
       "start": 20,
       "length": 7,
       "target": "console",
-      "line": 3,
+      "line": 2,
       "character": 2
     },
     {
@@ -47,7 +47,7 @@
       "start": 28,
       "length": 3,
       "target": "log",
-      "line": 3,
+      "line": 2,
       "character": 10
     },
     {
@@ -56,7 +56,7 @@
       "start": 32,
       "length": 1,
       "target": "s",
-      "line": 3,
+      "line": 2,
       "character": 14
     },
     {
@@ -65,7 +65,7 @@
       "start": 34,
       "length": 5,
       "target": "subtr",
-      "line": 3,
+      "line": 2,
       "character": 16
     },
     {
@@ -74,7 +74,7 @@
       "start": 47,
       "length": 2,
       "target": "fn",
-      "line": 6,
+      "line": 5,
       "character": 0
     }
   ]

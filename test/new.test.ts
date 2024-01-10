@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import * as ts from 'typescript/lib/tsserverlibrary'
 import { splitFiles } from '../src/utils'
-import type { TwoSlashReturnNew } from "../src/types-new"
+import type { TwoSlashReturn } from "../src/types"
 import { twoslasher } from '../src'
 
 export type TS = typeof import("typescript")
@@ -32,7 +32,7 @@ console.log(a.name);
 `
 
 
-function verifyResult(result: TwoSlashReturnNew) {
+function verifyResult(result: TwoSlashReturn) {
   for (const token of result.tokens) {
     if ('target' in token)
       expect.soft(result.code.slice(token.start, token.start + token.length)).toBe(token.target)
@@ -101,7 +101,7 @@ it('should pass', () => {
       {
         "character": 9,
         "length": 11,
-        "line": 1,
+        "line": 0,
         "start": 9,
         "target": "createLabel",
         "text": "function createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
@@ -110,7 +110,7 @@ it('should pass', () => {
       {
         "character": 21,
         "length": 1,
-        "line": 1,
+        "line": 0,
         "start": 21,
         "target": "T",
         "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
@@ -119,7 +119,7 @@ it('should pass', () => {
       {
         "character": 48,
         "length": 8,
-        "line": 1,
+        "line": 0,
         "start": 48,
         "target": "idOrName",
         "text": "(parameter) idOrName: T extends string | number",
@@ -128,7 +128,7 @@ it('should pass', () => {
       {
         "character": 58,
         "length": 1,
-        "line": 1,
+        "line": 0,
         "start": 58,
         "target": "T",
         "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
@@ -137,7 +137,7 @@ it('should pass', () => {
       {
         "character": 62,
         "length": 8,
-        "line": 1,
+        "line": 0,
         "start": 62,
         "target": "NameOrId",
         "text": "type NameOrId<T extends string | number> = T extends number ? IdLabel : NameLabel",
@@ -146,7 +146,7 @@ it('should pass', () => {
       {
         "character": 71,
         "length": 1,
-        "line": 1,
+        "line": 0,
         "start": 71,
         "target": "T",
         "text": "(type parameter) T in createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
@@ -155,7 +155,7 @@ it('should pass', () => {
       {
         "character": 4,
         "length": 1,
-        "line": 5,
+        "line": 4,
         "start": 109,
         "target": "a",
         "text": "let a: NameLabel",
@@ -164,7 +164,7 @@ it('should pass', () => {
       {
         "character": 8,
         "length": 11,
-        "line": 5,
+        "line": 4,
         "start": 113,
         "target": "createLabel",
         "text": "function createLabel<"typescript">(idOrName: "typescript"): NameLabel",
@@ -173,7 +173,7 @@ it('should pass', () => {
       {
         "character": 4,
         "length": 1,
-        "line": 6,
+        "line": 5,
         "start": 144,
         "target": "b",
         "text": "let b: IdLabel",
@@ -182,7 +182,7 @@ it('should pass', () => {
       {
         "character": 8,
         "length": 11,
-        "line": 6,
+        "line": 5,
         "start": 148,
         "target": "createLabel",
         "text": "function createLabel<2.8>(idOrName: 2.8): IdLabel",
@@ -191,7 +191,7 @@ it('should pass', () => {
       {
         "character": 4,
         "length": 1,
-        "line": 8,
+        "line": 7,
         "start": 171,
         "target": "c",
         "text": "let c: IdLabel | NameLabel",
@@ -200,7 +200,7 @@ it('should pass', () => {
       {
         "character": 8,
         "length": 11,
-        "line": 8,
+        "line": 7,
         "start": 175,
         "target": "createLabel",
         "text": "function createLabel<"hello" | 42>(idOrName: "hello" | 42): IdLabel | NameLabel",
@@ -236,7 +236,7 @@ it('should pass', () => {
         ],
         "completionsPrefix": "cr",
         "length": 0,
-        "line": 8,
+        "line": 7,
         "start": 177,
         "type": "completion",
       },
@@ -244,7 +244,7 @@ it('should pass', () => {
         "character": 20,
         "docs": "An intrinsic object that provides basic mathematics functionality and constants.",
         "length": 4,
-        "line": 8,
+        "line": 7,
         "start": 187,
         "target": "Math",
         "text": "var Math: Math",
@@ -254,7 +254,7 @@ it('should pass', () => {
         "character": 25,
         "docs": "Returns a pseudorandom number between 0 and 1.",
         "length": 6,
-        "line": 8,
+        "line": 7,
         "start": 192,
         "target": "random",
         "text": "(method) Math.random(): number",

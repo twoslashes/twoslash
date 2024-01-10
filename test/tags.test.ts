@@ -24,7 +24,7 @@ const b = 12331234
     {
       "character": 0,
       "length": 0,
-      "line": 2,
+      "line": 1,
       "name": "thing",
       "start": 1,
       "text": "OK, sure",

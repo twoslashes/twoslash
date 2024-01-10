@@ -7,7 +7,7 @@
       "start": 9,
       "length": 10,
       "target": "paintShape",
-      "line": 1,
+      "line": 0,
       "character": 9
     },
     {
@@ -16,7 +16,7 @@
       "start": 20,
       "length": 4,
       "target": "opts",
-      "line": 1,
+      "line": 0,
       "character": 20
     },
     {
@@ -25,7 +25,7 @@
       "start": 26,
       "length": 12,
       "target": "PaintOptions",
-      "line": 1,
+      "line": 0,
       "character": 26
     },
     {
@@ -34,7 +34,7 @@
       "start": 48,
       "length": 4,
       "target": "xPos",
-      "line": 2,
+      "line": 1,
       "character": 6
     },
     {
@@ -43,7 +43,7 @@
       "start": 55,
       "length": 4,
       "target": "opts",
-      "line": 2,
+      "line": 1,
       "character": 13
     },
     {
@@ -52,7 +52,7 @@
       "start": 60,
       "length": 4,
       "target": "xPos",
-      "line": 2,
+      "line": 1,
       "character": 18
     },
     {
@@ -61,7 +61,7 @@
       "start": 71,
       "length": 4,
       "target": "yPos",
-      "line": 3,
+      "line": 2,
       "character": 6
     },
     {
@@ -70,7 +70,7 @@
       "start": 78,
       "length": 4,
       "target": "opts",
-      "line": 3,
+      "line": 2,
       "character": 13
     },
     {
@@ -79,7 +79,7 @@
       "start": 83,
       "length": 4,
       "target": "yPos",
-      "line": 3,
+      "line": 2,
       "character": 18
     }
   ]

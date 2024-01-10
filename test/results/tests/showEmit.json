@@ -7,7 +7,7 @@
       "start": 39,
       "length": 7,
       "target": "Service",
-      "line": 3,
+      "line": 2,
       "character": 13
     },
     {
@@ -16,7 +16,7 @@
       "start": 92,
       "length": 7,
       "target": "Service",
-      "line": 6,
+      "line": 5,
       "character": 14
     },
     {
@@ -25,7 +25,7 @@
       "start": 132,
       "length": 9,
       "target": "decorator",
-      "line": 8,
+      "line": 7,
       "character": 12
     },
     {
@@ -34,7 +34,7 @@
       "start": 149,
       "length": 9,
       "target": "decorator",
-      "line": 10,
+      "line": 9,
       "character": 1
     },
     {
@@ -43,7 +43,7 @@
       "start": 165,
       "length": 11,
       "target": "MyComponent",
-      "line": 11,
+      "line": 10,
       "character": 6
     },
     {
@@ -52,7 +52,7 @@
       "start": 200,
       "length": 7,
       "target": "Service",
-      "line": 12,
+      "line": 11,
       "character": 21
     },
     {
@@ -61,7 +61,7 @@
       "start": 209,
       "length": 7,
       "target": "Service",
-      "line": 12,
+      "line": 11,
       "character": 30
     },
     {
@@ -70,7 +70,7 @@
       "start": 225,
       "length": 9,
       "target": "decorator",
-      "line": 14,
+      "line": 13,
       "character": 3
     },
     {
@@ -79,7 +79,7 @@
       "start": 237,
       "length": 6,
       "target": "method",
-      "line": 15,
+      "line": 14,
       "character": 2
     },
     {
@@ -88,7 +88,7 @@
       "start": 244,
       "length": 1,
       "target": "x",
-      "line": 15,
+      "line": 14,
       "character": 9
     }
   ]

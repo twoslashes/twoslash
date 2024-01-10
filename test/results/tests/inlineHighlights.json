@@ -7,7 +7,7 @@
       "start": 5,
       "length": 6,
       "target": "Result",
-      "line": 1,
+      "line": 0,
       "character": 5
     },
     {
@@ -16,7 +16,7 @@
       "start": 37,
       "length": 5,
       "target": "hello",
-      "line": 3,
+      "line": 2,
       "character": 6
     }
   ]

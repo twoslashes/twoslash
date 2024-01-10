@@ -1,4 +1,4 @@
-import type { TokenError } from "./types-new"
+import type { TokenError } from "./types"
 import { TwoslashError } from "./error"
 
 /** To ensure that errors are matched up right */

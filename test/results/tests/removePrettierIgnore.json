@@ -7,7 +7,7 @@
       "start": 6,
       "length": 7,
       "target": "myThing",
-      "line": 1,
+      "line": 0,
       "character": 6
     },
     {
@@ -16,7 +16,7 @@
       "start": 45,
       "length": 12,
       "target": "anotherThing",
-      "line": 4,
+      "line": 3,
       "character": 6
     }
   ]

@@ -16,9 +16,9 @@ const b = "345"
   })
 
   it("shows the right LSP results", () => {
-    expect(result.staticQuickInfos.find(info => info.text.includes("const a"))).toBeUndefined()
+    expect(result.hovers.find(info => info.text.includes("const a"))).toBeUndefined()
 
-    const bLSPResult = result.staticQuickInfos.find(info => info.text.includes("const b"))
+    const bLSPResult = result.hovers.find(info => info.text.includes("const b"))
     expect(bLSPResult).toBeTruthy()
 
     // b is one char long
@@ -39,9 +39,9 @@ const b = "345"
   const result = twoslasher(file, "ts")
 
   it("shows the right LSP results", () => {
-    expect(result.staticQuickInfos.find(info => info.text.includes("const a"))).toBeUndefined()
+    expect(result.hovers.find(info => info.text.includes("const a"))).toBeUndefined()
 
-    const bLSPResult = result.staticQuickInfos.find(info => info.text.includes("const b"))
+    const bLSPResult = result.hovers.find(info => info.text.includes("const b"))
     expect(bLSPResult).toBeTruthy()
 
     // b is one char long
@@ -61,7 +61,7 @@ const b = "345"
   const result = twoslasher(file, "ts")
 
   it("shows the right query results", () => {
-    const bLSPResult = result.queries.find(info => info.line === 1)
+    const bLSPResult = result.queries.find(info => info.line === 0)
     expect(bLSPResult).toBeTruthy()
     expect(bLSPResult!.text).toContain("const b:")
   })
@@ -80,7 +80,7 @@ const c = "678"
   const result = twoslasher(file, "ts")
 
   it("shows the right query results", () => {
-    const bQueryResult = result.queries.find(info => info.line === 1)
+    const bQueryResult = result.queries.find(info => info.line === 0)
     expect(bQueryResult).toBeTruthy()
     expect(bQueryResult!.text).toContain("const c")
   })
@@ -101,9 +101,9 @@ const b = "345"
   })
 
   it("shows the right LSP results", () => {
-    expect(result.staticQuickInfos.find(info => info.text.includes("const b"))).toBeUndefined()
+    expect(result.hovers.find(info => info.text.includes("const b"))).toBeUndefined()
 
-    const bLSPResult = result.staticQuickInfos.find(info => info.text.includes("const a"))
+    const bLSPResult = result.hovers.find(info => info.text.includes("const a"))
     expect(bLSPResult).toBeTruthy()
 
     // b is one char long

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises"
 import { extname, join, parse } from "node:path"
 import { describe, expect, it } from 'vitest'
-import type { TwoSlashReturnNew } from "../src/types-new";
+import type { TwoSlashReturn } from "../src/types";
 import { twoslasher } from "../src/index"
 
 // To add a test, create a file in the fixtures folder and it will will run through
@@ -91,7 +91,7 @@ describe("fixtures throws", async () => {
   )
 })
 
-function cleanFixture(ts: TwoSlashReturnNew) {
+function cleanFixture(ts: TwoSlashReturn) {
   return JSON.stringify({
     code: ts.code,
     tokens: ts.tokens,

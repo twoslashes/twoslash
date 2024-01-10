@@ -7,7 +7,7 @@
       "start": 46,
       "length": 15,
       "target": "getStringLength",
-      "line": 2,
+      "line": 1,
       "character": 13
     },
     {
@@ -16,7 +16,7 @@
       "start": 65,
       "length": 3,
       "target": "str",
-      "line": 2,
+      "line": 1,
       "character": 32
     },
     {
@@ -25,7 +25,7 @@
       "start": 81,
       "length": 3,
       "target": "str",
-      "line": 2,
+      "line": 1,
       "character": 48
     },
     {
@@ -35,7 +35,7 @@
       "start": 85,
       "length": 6,
       "target": "length",
-      "line": 2,
+      "line": 1,
       "character": 52
     },
     {
@@ -44,7 +44,7 @@
       "start": 124,
       "length": 15,
       "target": "getStringLength",
-      "line": 4,
+      "line": 3,
       "character": 9
     },
     {
@@ -53,7 +53,7 @@
       "start": 173,
       "length": 1,
       "target": "b",
-      "line": 5,
+      "line": 4,
       "character": 6
     },
     {
@@ -62,7 +62,7 @@
       "start": 177,
       "length": 15,
       "target": "getStringLength",
-      "line": 5,
+      "line": 4,
       "character": 10
     }
   ]

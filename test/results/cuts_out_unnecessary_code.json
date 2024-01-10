@@ -7,7 +7,7 @@
       "start": 9,
       "length": 11,
       "target": "createLabel",
-      "line": 1,
+      "line": 0,
       "character": 9
     },
     {
@@ -16,7 +16,7 @@
       "start": 21,
       "length": 1,
       "target": "T",
-      "line": 1,
+      "line": 0,
       "character": 21
     },
     {
@@ -25,7 +25,7 @@
       "start": 48,
       "length": 8,
       "target": "idOrName",
-      "line": 1,
+      "line": 0,
       "character": 48
     },
     {
@@ -34,7 +34,7 @@
       "start": 58,
       "length": 1,
       "target": "T",
-      "line": 1,
+      "line": 0,
       "character": 58
     },
     {
@@ -43,7 +43,7 @@
       "start": 62,
       "length": 8,
       "target": "NameOrId",
-      "line": 1,
+      "line": 0,
       "character": 62
     },
     {
@@ -52,7 +52,7 @@
       "start": 71,
       "length": 1,
       "target": "T",
-      "line": 1,
+      "line": 0,
       "character": 71
     },
     {
@@ -61,7 +61,7 @@
       "start": 109,
       "length": 1,
       "target": "a",
-      "line": 5,
+      "line": 4,
       "character": 4
     },
     {
@@ -70,7 +70,7 @@
       "start": 113,
       "length": 11,
       "target": "createLabel",
-      "line": 5,
+      "line": 4,
       "character": 8
     },
     {
@@ -79,7 +79,7 @@
       "start": 144,
       "length": 1,
       "target": "b",
-      "line": 6,
+      "line": 5,
       "character": 4
     },
     {
@@ -88,7 +88,7 @@
       "start": 148,
       "length": 11,
       "target": "createLabel",
-      "line": 6,
+      "line": 5,
       "character": 8
     },
     {
@@ -97,7 +97,7 @@
       "start": 170,
       "length": 1,
       "target": "c",
-      "line": 7,
+      "line": 6,
       "character": 4
     },
     {
@@ -106,7 +106,7 @@
       "start": 174,
       "length": 11,
       "target": "createLabel",
-      "line": 7,
+      "line": 6,
       "character": 8
     },
     {
@@ -116,7 +116,7 @@
       "start": 186,
       "length": 4,
       "target": "Math",
-      "line": 7,
+      "line": 6,
       "character": 20
     },
     {
@@ -126,7 +126,7 @@
       "start": 191,
       "length": 6,
       "target": "random",
-      "line": 7,
+      "line": 6,
       "character": 25
     }
   ]

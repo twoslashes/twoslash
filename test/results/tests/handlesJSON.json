@@ -7,7 +7,7 @@
       "start": 125,
       "length": 8,
       "target": "settings",
-      "line": 8,
+      "line": 7,
       "character": 7
     },
     {
@@ -16,7 +16,7 @@
       "start": 159,
       "length": 8,
       "target": "settings",
-      "line": 10,
+      "line": 9,
       "character": 0
     },
     {
@@ -25,7 +25,7 @@
       "start": 168,
       "length": 5,
       "target": "debug",
-      "line": 10,
+      "line": 9,
       "character": 9
     },
     {
@@ -34,7 +34,7 @@
       "start": 184,
       "length": 8,
       "target": "settings",
-      "line": 11,
+      "line": 10,
       "character": 0
     },
     {
@@ -46,7 +46,7 @@
       "id": "err-2367-89-18",
       "text": "This comparison appears to be unintentional because the types 'boolean' and 'number' have no overlap.",
       "level": 1,
-      "line": 11,
+      "line": 10,
       "character": 0
     },
     {
@@ -55,7 +55,7 @@
       "start": 193,
       "length": 3,
       "target": "dry",
-      "line": 11,
+      "line": 10,
       "character": 9
     }
   ]

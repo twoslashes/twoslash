@@ -1,14 +1,12 @@
 import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { TwoslashError } from './error';
-import type { Range, Token, TokenError, TokenWithoutPosition, TwoSlashReturnNew } from "./types-new";
-import type { HandbookOptions, TwoSlashOptions } from './types';
+import type { HandbookOptions, Range, Token, TokenError, TokenWithoutPosition , TwoSlashOptions, TwoSlashReturn } from "./types";
 import { createPosConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
 
 export * from './error'
 export * from './types';
-export * from './types-new';
 
 type TS = typeof import("typescript")
 
@@ -44,7 +42,7 @@ export function twoslasher(
   code: string,
   extension: string,
   options: Partial<TwoSlashOptions> = {}
-): TwoSlashReturnNew {
+): TwoSlashReturn {
   const ts: TS = options.tsModule!;
   const ext = typesToExtension(extension);
   const defaultFilename = `index.${ext}`;

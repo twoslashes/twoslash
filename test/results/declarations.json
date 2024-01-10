@@ -8,7 +8,7 @@
       "start": 81,
       "length": 15,
       "target": "getStringLength",
-      "line": 6,
+      "line": 5,
       "character": 16
     },
     {
@@ -18,7 +18,7 @@
       "start": 97,
       "length": 5,
       "target": "value",
-      "line": 6,
+      "line": 5,
       "character": 32
     },
     {
@@ -28,7 +28,7 @@
       "start": 123,
       "length": 5,
       "target": "value",
-      "line": 7,
+      "line": 6,
       "character": 9
     },
     {
@@ -38,7 +38,7 @@
       "start": 129,
       "length": 6,
       "target": "length",
-      "line": 7,
+      "line": 6,
       "character": 15
     }
   ]

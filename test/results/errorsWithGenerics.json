@@ -7,7 +7,7 @@
       "start": 6,
       "length": 1,
       "target": "a",
-      "line": 1,
+      "line": 0,
       "character": 6
     },
     {
@@ -17,7 +17,7 @@
       "start": 9,
       "length": 6,
       "target": "Record",
-      "line": 1,
+      "line": 0,
       "character": 9
     },
     {
@@ -26,7 +26,7 @@
       "start": 41,
       "length": 1,
       "target": "b",
-      "line": 2,
+      "line": 1,
       "character": 4
     },
     {
@@ -36,7 +36,7 @@
       "start": 44,
       "length": 6,
       "target": "Record",
-      "line": 2,
+      "line": 1,
       "character": 7
     },
     {
@@ -45,7 +45,7 @@
       "start": 72,
       "length": 1,
       "target": "b",
-      "line": 3,
+      "line": 2,
       "character": 0
     },
     {
@@ -57,7 +57,7 @@
       "id": "err-2322-89-1",
       "text": "Type 'Record<string, string>' is not assignable to type 'Record<string, number>'.\n  'string' index signatures are incompatible.\n    Type 'string' is not assignable to type 'number'.",
       "level": 1,
-      "line": 3,
+      "line": 2,
       "character": 0
     },
     {
@@ -66,7 +66,7 @@
       "start": 76,
       "length": 1,
       "target": "a",
-      "line": 3,
+      "line": 2,
       "character": 4
     }
   ]
