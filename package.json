@@ -1,16 +1,16 @@
 {
-  "name": "@typescript/twoslash",
-  "version": "3.2.4",
+  "name": "twoslashes",
+  "version": "0.0.0",
   "license": "MIT",
   "author": "TypeScript team",
-  "homepage": "https://github.com/microsoft/TypeScript-Website",
+  "description": "Rewrite of TypeScript TwoSlash",
+  "homepage": "https://github.com/antfu/twoslashes",
   "repository": {
-    "url": "https://github.com/microsoft/TypeScript-Website.git",
-    "directory": "packages/create-typescript-playground-plugin",
+    "url": "https://github.com/antfu/twoslashes",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/microsoft/TypeScript-Website/issues"
+    "url": "https://github.com/antfu/twoslashes/issues"
   },
   "main": "dist/index.js",
   "module": "dist/twoslash.esm.js",
@@ -39,7 +39,7 @@
     "ts-jest": "^29.0.5",
     "tsdx": "^0.14.1",
     "tslib": "^1.10.0",
-    "typescript": "*"
+    "typescript": "^5.3"
   },
   "jest": {
     "preset": "ts-jest",

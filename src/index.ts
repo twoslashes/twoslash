@@ -201,7 +201,7 @@ function setOption(name: string, value: string, opts: CompilerOptions, ts: TS) {
   throw new TwoslashError(
     `Invalid inline compiler flag`,
     `There isn't a TypeScript compiler flag called '${name}'.`,
-    `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`
+    `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for twoslashes.`
   )
 }
 
