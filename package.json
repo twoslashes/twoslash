@@ -35,7 +35,9 @@
     "test": "vitest",
     "lint": "eslint .",
     "bench": "vitest bench --run",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "nr build",
+    "release": "bumpp && npm publish",
+    "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
     "typescript": "*"
@@ -48,15 +50,24 @@
     "@types/node": "^20.10.8",
     "@types/react": "^18.2.47",
     "@typescript/twoslash": "^3.2.4",
+    "bumpp": "^9.2.1",
     "eslint": "^8.56.0",
     "fast-glob": "^3.3.2",
+    "lint-staged": "^15.2.0",
     "lz-string": "^1.5.0",
     "ohash": "^1.1.3",
     "react": "^18.2.0",
+    "simple-git-hooks": "^2.9.0",
     "tslib": "^1.14.1",
     "twoslashes": "workspace:*",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.1.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

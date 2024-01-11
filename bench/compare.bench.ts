@@ -8,7 +8,7 @@ import { basename } from 'node:path'
 import { bench, describe } from 'vitest'
 import fg from 'fast-glob'
 import { twoslasher as twoslasherOld } from '@typescript/twoslash'
-import { createTwoSlasher, twoslasher } from 'twoslashes'
+import { createTwoSlasher } from 'twoslashes'
 
 const codes = await fg([
   'examples/*.ts',
