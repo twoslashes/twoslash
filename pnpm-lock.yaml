@@ -4,42 +4,53 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  '@typescript/vfs':
-    specifier: 1.5.0
-    version: 1.5.0
+importers:
 
-devDependencies:
-  '@antfu/eslint-config':
-    specifier: ^2.6.2
-    version: 2.6.2(@vue/compiler-sfc@3.4.7)(eslint@8.56.0)(typescript@5.3.3)(vitest@1.1.3)
-  '@types/node':
-    specifier: ^20.10.8
-    version: 20.10.8
-  '@types/react':
-    specifier: ^18.2.47
-    version: 18.2.47
-  eslint:
-    specifier: ^8.56.0
-    version: 8.56.0
-  lz-string:
-    specifier: ^1.5.0
-    version: 1.5.0
-  react:
-    specifier: ^18.2.0
-    version: 18.2.0
-  tslib:
-    specifier: ^1.14.1
-    version: 1.14.1
-  typescript:
-    specifier: ^5.3.3
-    version: 5.3.3
-  unbuild:
-    specifier: ^2.0.0
-    version: 2.0.0(typescript@5.3.3)
-  vitest:
-    specifier: ^1.1.3
-    version: 1.1.3(@types/node@20.10.8)
+  .:
+    dependencies:
+      '@typescript/vfs':
+        specifier: 1.5.0
+        version: 1.5.0
+    devDependencies:
+      '@antfu/eslint-config':
+        specifier: ^2.6.2
+        version: 2.6.2(@vue/compiler-sfc@3.4.7)(eslint@8.56.0)(typescript@5.3.3)(vitest@1.1.3)
+      '@types/node':
+        specifier: ^20.10.8
+        version: 20.10.8
+      '@types/react':
+        specifier: ^18.2.47
+        version: 18.2.47
+      '@typescript/twoslash':
+        specifier: ^3.2.4
+        version: 3.2.4(typescript@5.3.3)
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
+      lz-string:
+        specifier: ^1.5.0
+        version: 1.5.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      tslib:
+        specifier: ^1.14.1
+        version: 1.14.1
+      twoslashes:
+        specifier: workspace:*
+        version: 'link:'
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+      unbuild:
+        specifier: ^2.0.0
+        version: 2.0.0(typescript@5.3.3)
+      vitest:
+        specifier: ^1.1.3
+        version: 1.1.3(@types/node@20.10.8)
 
 packages:
 
@@ -960,6 +971,13 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
+  /@types/lz-string@1.5.0:
+    resolution: {integrity: sha512-s84fKOrzqqNCAPljhVyC5TjAo6BH4jKHw9NRNFNiRUY5QSgZCmVm5XILlWbisiKl+0OcS7eWihmKGS5akc2iQw==}
+    deprecated: This is a stub types definition. lz-string provides its own type definitions, so you do not need this installed.
+    dependencies:
+      lz-string: 1.5.0
+    dev: true
+
   /@types/mdast@3.0.15:
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
     dependencies:
@@ -1136,13 +1154,26 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
+  /@typescript/twoslash@3.2.4(typescript@5.3.3):
+    resolution: {integrity: sha512-/TCIOuPQaKltzUUT1qJo6mplYwjbAxkaSFvkeZD3FeFt3Ovt+HJi8xisu8rcLyDRmM3VJ0+jAx+AAICwn4Zlhw==}
+    peerDependencies:
+      typescript: '*'
+    dependencies:
+      '@types/lz-string': 1.5.0
+      '@typescript/vfs': 1.5.0
+      debug: 4.3.4
+      lz-string: 1.5.0
+      typescript: 5.3.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@typescript/vfs@1.5.0:
     resolution: {integrity: sha512-AJS307bPgbsZZ9ggCT3wwpg3VbTKMFNHfaY/uF0ahSkYYrPF2dSSKDNIDIQAHm9qJqbLvCsSJH7yN4Vs/CsMMg==}
     dependencies:
       debug: 4.1.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}

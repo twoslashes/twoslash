@@ -30,7 +30,7 @@ describe("fixtures", async () => {
         const resultName = `${parse(fixtureName).name}.json`
         const file = await fs.readFile(fixture, "utf8")
 
-        if (!FEAT_SHOW_EMIT && file.includes("@showEmit")) 
+        if (!FEAT_SHOW_EMIT && file.includes("@showEmit"))
           return
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
@@ -41,11 +41,12 @@ describe("fixtures", async () => {
   )
 })
 
-describe("fixtures readme", async () => {
+describe("fixtures examples", async () => {
+  const fixturesFolder = join(__dirname, "fixtures", "examples")
   const fixturesRoot = await fs.readdir(join(fixturesFolder))
 
   await Promise.all(
-    fixturesRoot.map(async fixtureName => {
+    fixturesRoot.map(async (fixtureName) => {
       const fixture = join(fixturesFolder, fixtureName)
       if (await fs.lstat(fixture).then(r => r.isDirectory())) {
         return
@@ -56,12 +57,12 @@ describe("fixtures readme", async () => {
         const resultName = `${parse(fixtureName).name}.json`
 
         const file = await fs.readFile(fixture, "utf8")
-        if (!FEAT_SHOW_EMIT && file.includes("@showEmit")) 
+        if (!FEAT_SHOW_EMIT && file.includes("@showEmit"))
           return
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
         expect(cleanFixture(fourslashed))
-          .toMatchFileSnapshot(join(resultsFolder, resultName))
+          .toMatchFileSnapshot(join(resultsFolder, "examples", resultName))
       })
     })
   )

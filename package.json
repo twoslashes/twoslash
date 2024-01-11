@@ -34,6 +34,7 @@
     "build": "unbuild",
     "test": "vitest",
     "lint": "eslint .",
+    "bench": "vitest bench",
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
@@ -46,10 +47,13 @@
     "@antfu/eslint-config": "^2.6.2",
     "@types/node": "^20.10.8",
     "@types/react": "^18.2.47",
+    "@typescript/twoslash": "^3.2.4",
     "eslint": "^8.56.0",
+    "fast-glob": "^3.3.2",
     "lz-string": "^1.5.0",
     "react": "^18.2.0",
     "tslib": "^1.14.1",
+    "twoslashes": "workspace:*",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.1.3"

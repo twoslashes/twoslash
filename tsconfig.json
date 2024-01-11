@@ -8,6 +8,11 @@
     ],
     "module": "esnext",
     "moduleResolution": "node",
+    "paths": {
+      "twoslashes": [
+        "./src/index"
+      ]
+    },
     "strict": true,
     "esModuleInterop": true
   },
