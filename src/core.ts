@@ -13,7 +13,7 @@ type TS = typeof import('typescript')
 // TODO: Make them configurable maybe
 const reConfigBoolean = /^\/\/\s?@(\w+)$/mg
 const reConfigValue = /^\/\/\s?@(\w+):\s?(.+)$/mg
-const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?\n?$/mg
+const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?$/mg
 
 const cutString = '// ---cut---\n'
 const cutAfterString = '// ---cut-after---\n'
@@ -267,12 +267,20 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           return undefined
         const range: Range = [token.start, token.start + token.length]
         // Turn static info to query if in range
-        if (targetsQuery.find(target => isInRanges(target, [range])))
-          token.type = 'query'
+        if (targetsQuery.find(target => isInRanges(target, [range]))) {
+          _tokens.push({
+            ...token,
+            type: 'query',
+          } as any)
+        }
 
         // Turn static info to completion if in range
-        else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range])))
-          token.type = 'highlight'
+        else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range]))) {
+          _tokens.push({
+            ...token,
+            type: 'highlight',
+          } as any)
+        }
       })
       // #endregion
 

@@ -29,6 +29,15 @@
       "character": 4
     },
     {
+      "type": "hover",
+      "text": "const b: \"hello\"",
+      "start": 55,
+      "length": 1,
+      "target": "b",
+      "line": 2,
+      "character": 10
+    },
+    {
       "type": "query",
       "text": "const b: \"hello\"",
       "start": 55,

@@ -47,6 +47,15 @@
       "character": 13
     },
     {
+      "type": "hover",
+      "text": "(property) PaintOptions.xPos?: number | undefined",
+      "start": 60,
+      "length": 4,
+      "target": "xPos",
+      "line": 1,
+      "character": 18
+    },
+    {
       "type": "query",
       "text": "(property) PaintOptions.xPos?: number | undefined",
       "start": 60,
@@ -72,6 +81,15 @@
       "target": "opts",
       "line": 2,
       "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "(property) PaintOptions.yPos?: number | undefined",
+      "start": 83,
+      "length": 4,
+      "target": "yPos",
+      "line": 2,
+      "character": 18
     },
     {
       "type": "query",

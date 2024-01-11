@@ -1,8 +1,11 @@
 import ts from 'typescript'
 import type { TwoSlashOptions } from './core'
 import { createTwoSlasher as _createTwoSlasher, twoslasher as _twoslasher } from './core'
+import { convertLegacyOptions, convertLegacyReturn } from './legacy'
+import type { TwoSlashOptionsLegacy, TwoSlashReturnLegacy } from './legacy'
 
 export * from './public'
+export * from './legacy'
 
 // eslint-disable-next-line node/prefer-global/process
 const cwd = /* @__PURE__ */ typeof process !== 'undefined' && typeof process.cwd === 'function' ? process.cwd() : ''
@@ -21,4 +24,19 @@ export function createTwoSlasher(opts?: TwoSlashOptions) {
     tsModule: ts,
     ...opts,
   })
+}
+
+/**
+ * Compatability wrapper to align with `@typescript/twoslash`'s input/output
+ *
+ * @deprecated migrate to `twoslasher` instead
+ */
+export function twoslasherLegacy(code: string, lang: string, opts?: TwoSlashOptionsLegacy): TwoSlashReturnLegacy {
+  return convertLegacyReturn(
+    _twoslasher(code, lang, convertLegacyOptions({
+      vfsRoot: cwd,
+      tsModule: ts,
+      ...opts,
+    })),
+  )
 }

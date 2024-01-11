@@ -1,5 +1,5 @@
 {
-  "code": "function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {\n    throw \"unimplemented\"\n}\n\nlet a = createLabel(\"typescript\");\nlet b = createLabel(2.8);\nlet c = createLabel(Math.random() ? \"hello\" : 42);\n",
+  "code": "function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {\n    throw \"unimplemented\"\n}\n\nlet a = createLabel(\"typescript\");\n\nlet b = createLabel(2.8);\n\nlet c = createLabel(Math.random() ? \"hello\" : 42);\n",
   "tokens": [
     {
       "type": "hover",
@@ -56,6 +56,15 @@
       "character": 71
     },
     {
+      "type": "hover",
+      "text": "let a: NameLabel",
+      "start": 109,
+      "length": 1,
+      "target": "a",
+      "line": 4,
+      "character": 4
+    },
+    {
       "type": "query",
       "text": "let a: NameLabel",
       "start": 109,
@@ -74,59 +83,77 @@
       "character": 8
     },
     {
-      "type": "query",
+      "type": "hover",
       "text": "let b: IdLabel",
-      "start": 144,
+      "start": 145,
       "length": 1,
       "target": "b",
-      "line": 5,
+      "line": 6,
+      "character": 4
+    },
+    {
+      "type": "query",
+      "text": "let b: IdLabel",
+      "start": 145,
+      "length": 1,
+      "target": "b",
+      "line": 6,
       "character": 4
     },
     {
       "type": "hover",
       "text": "function createLabel<2.8>(idOrName: 2.8): IdLabel",
-      "start": 148,
+      "start": 149,
       "length": 11,
       "target": "createLabel",
-      "line": 5,
+      "line": 6,
       "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "let c: IdLabel | NameLabel",
+      "start": 172,
+      "length": 1,
+      "target": "c",
+      "line": 8,
+      "character": 4
     },
     {
       "type": "query",
       "text": "let c: IdLabel | NameLabel",
-      "start": 170,
+      "start": 172,
       "length": 1,
       "target": "c",
-      "line": 6,
+      "line": 8,
       "character": 4
     },
     {
       "type": "hover",
       "text": "function createLabel<\"hello\" | 42>(idOrName: \"hello\" | 42): IdLabel | NameLabel",
-      "start": 174,
+      "start": 176,
       "length": 11,
       "target": "createLabel",
-      "line": 6,
+      "line": 8,
       "character": 8
     },
     {
       "type": "hover",
       "text": "var Math: Math",
       "docs": "An intrinsic object that provides basic mathematics functionality and constants.",
-      "start": 186,
+      "start": 188,
       "length": 4,
       "target": "Math",
-      "line": 6,
+      "line": 8,
       "character": 20
     },
     {
       "type": "hover",
       "text": "(method) Math.random(): number",
       "docs": "Returns a pseudorandom number between 0 and 1.",
-      "start": 191,
+      "start": 193,
       "length": 6,
       "target": "random",
-      "line": 6,
+      "line": 8,
       "character": 25
     }
   ]

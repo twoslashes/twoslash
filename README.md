@@ -37,11 +37,15 @@ Breaking changes from `@typescript/twoslash`:
 
 // TODO:
 
+### Backward Compatibility Layer
+
+// TODO:
+
 ## TODOs
 
 - [ ] Support `showEmit` option
-- [ ] Test coverage
-- [ ] Compat-layer maybe?
+- [x] Test coverage
+- [x] Compat-layer maybe?
 
 ## Benchmark
 

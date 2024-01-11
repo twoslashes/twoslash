@@ -1,5 +1,5 @@
 {
-  "code": "type Either2dOr3d = [number, number, number?]\n\nfunction setCoordinate(coord: Either2dOr3d) {\n  const [x, y, z] = coord\n  console.log(`Provided coordinates had ${coord.length} dimensions`)\n}\n",
+  "code": "type Either2dOr3d = [number, number, number?]\n\nfunction setCoordinate(coord: Either2dOr3d) {\n  const [x, y, z] = coord\n\n  console.log(`Provided coordinates had ${coord.length} dimensions`)\n}\n",
   "tokens": [
     {
       "type": "hover",
@@ -56,6 +56,15 @@
       "character": 12
     },
     {
+      "type": "hover",
+      "text": "const z: number | undefined",
+      "start": 108,
+      "length": 1,
+      "target": "z",
+      "line": 3,
+      "character": 15
+    },
+    {
       "type": "query",
       "text": "const z: number | undefined",
       "start": 108,
@@ -76,38 +85,47 @@
     {
       "type": "hover",
       "text": "var console: Console",
-      "start": 121,
+      "start": 122,
       "length": 7,
       "target": "console",
-      "line": 4,
+      "line": 5,
       "character": 2
     },
     {
       "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "start": 129,
+      "start": 130,
       "length": 3,
       "target": "log",
-      "line": 4,
+      "line": 5,
       "character": 10
     },
     {
       "type": "hover",
       "text": "(parameter) coord: Either2dOr3d",
-      "start": 161,
+      "start": 162,
       "length": 5,
       "target": "coord",
-      "line": 4,
+      "line": 5,
       "character": 42
+    },
+    {
+      "type": "hover",
+      "text": "(property) length: 2 | 3",
+      "start": 168,
+      "length": 6,
+      "target": "length",
+      "line": 5,
+      "character": 48
     },
     {
       "type": "query",
       "text": "(property) length: 2 | 3",
-      "start": 167,
+      "start": 168,
       "length": 6,
       "target": "length",
-      "line": 4,
+      "line": 5,
       "character": 48
     }
   ]
