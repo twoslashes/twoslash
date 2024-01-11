@@ -1,10 +1,10 @@
 import { expect, it } from 'vitest'
 import * as ts from 'typescript/lib/tsserverlibrary'
 import { splitFiles } from '../src/utils'
-import type { TwoSlashReturn } from "../src/types"
+import type { TwoSlashReturn } from '../src/types'
 import { twoslasher } from '../src'
 
-export type TS = typeof import("typescript")
+export type TS = typeof import('typescript')
 
 const code = `
 // @errors: 6133
@@ -31,7 +31,6 @@ let c = createLabel(Math.random() ? "hello" : 42);
 console.log(a.name);
 `
 
-
 function verifyResult(result: TwoSlashReturn) {
   for (const token of result.tokens) {
     if ('target' in token)
@@ -39,7 +38,7 @@ function verifyResult(result: TwoSlashReturn) {
   }
 }
 
-it('split files', ()=>{
+it('split files', () => {
   const files = splitFiles(`
 // @module: esnext
 // @filename: maths.ts
@@ -92,7 +91,7 @@ const value = absolute(-1)
 it('should pass', () => {
   const result = twoslasher(code, 'ts', {
     tsModule: ts,
-    vfsRoot: process.cwd()
+    vfsRoot: process.cwd(),
   })
 
   verifyResult(result)

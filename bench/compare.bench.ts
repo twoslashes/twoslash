@@ -16,16 +16,16 @@ const codes = await fg([
 ], {
   cwd: fileURLToPath(new URL('../test/fixtures', import.meta.url)),
   onlyFiles: true,
-  absolute: true
+  absolute: true,
 })
-  .then((files) => Promise.all(files.sort().map(async (file) => [file, await fs.readFile(file, 'utf8')])))
+  .then(files => Promise.all(files.sort().map(async file => [file, await fs.readFile(file, 'utf8')])))
   .then(i => i.filter(i => !i[1].includes('@showEmit')))
 
 // eslint-disable-next-line no-console
 console.log(`Running benchmarks with ${codes.length} examples`)
 
 const options = {
-  customTags: ["annotate"]
+  customTags: ['annotate'],
 }
 
 const twoslash = createTwoSlasher(options)

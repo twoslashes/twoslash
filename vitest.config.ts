@@ -7,6 +7,6 @@ export default defineConfig({
       // outputFile: {
       //   json: 'bench/results.json'
       // }
-    }
-  }
+    },
+  },
 })

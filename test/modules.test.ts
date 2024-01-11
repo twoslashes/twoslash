@@ -1,6 +1,6 @@
-import { createDefaultMapFromNodeModules } from "@typescript/vfs"
-import { expect,  it } from 'vitest'
-import { twoslasher } from "../src/index"
+import { createDefaultMapFromNodeModules } from '@typescript/vfs'
+import { expect, it } from 'vitest'
+import { twoslasher } from '../src/index'
 
 const dt = `
 declare namespace G {
@@ -9,16 +9,16 @@ declare namespace G {
 export = G;
 `
 
-it("works with a dependency in @types for the project", () => {
+it('works with a dependency in @types for the project', () => {
   const fsMap = createDefaultMapFromNodeModules({})
-  fsMap.set("/node_modules/@types/glob/index.d.ts", dt)
+  fsMap.set('/node_modules/@types/glob/index.d.ts', dt)
 
   const file = `
 import glob from "glob"
 glob.hasMagic("OK")
 //   ^?
   `
-  const result = twoslasher(file, "ts", { fsMap })
+  const result = twoslasher(file, 'ts', { fsMap })
   expect(result.errors).toEqual([])
-  expect(result.queries[0].text!.includes("hasMagic")).toBeTruthy()
+  expect(result.queries[0].text!.includes('hasMagic')).toBeTruthy()
 })

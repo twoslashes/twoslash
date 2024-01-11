@@ -11,8 +11,8 @@ const codes = await fg(['examples/*.ts', 'tests/*.ts'], {
   onlyFiles: true,
   absolute: true,
 })
-  .then((files) => Promise.all(files.sort().map((file) => fs.readFile(file, 'utf8'))))
-  .then((i) => i.filter((i) => !i.includes('@showEmit')))
+  .then(files => Promise.all(files.sort().map(file => fs.readFile(file, 'utf8'))))
+  .then(i => i.filter(i => !i.includes('@showEmit')))
 
 // eslint-disable-next-line no-console
 console.log(`Running benchmarks with ${codes.length} examples`)
@@ -28,7 +28,7 @@ twoslasher(codes[index], 'ts', options)
 old(codes[index], 'ts', options)
 
 // profile
-await new Promise((resolve) => setTimeout(resolve, 300))
+await new Promise(resolve => setTimeout(resolve, 300))
 twoslasher(codes[index], 'ts', options)
-await new Promise((resolve) => setTimeout(resolve, 300))
+await new Promise(resolve => setTimeout(resolve, 300))
 old(codes[index], 'ts', options)

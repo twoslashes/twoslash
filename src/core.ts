@@ -1,75 +1,75 @@
-import type { CompilerOptions, ScriptTarget } from 'typescript';
-import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
+import type { CompilerOptions, ScriptTarget } from 'typescript'
+import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
-import { TwoslashError } from './error';
-import type { CreateTwoSlashOptions, HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from "./types";
-import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
-import { validateCodeForErrors } from './validation';
+import { TwoslashError } from './error'
+import type { CreateTwoSlashOptions, HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
+import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils'
+import { validateCodeForErrors } from './validation'
 
 export * from './error'
-export * from './types';
+export * from './types'
 
-type TS = typeof import("typescript")
+type TS = typeof import('typescript')
 
 // TODO: Make them configurable maybe
-const reConfigBoolean = /^\/\/\s?@(\w+)$/mg;
-const reConfigValue = /^\/\/\s?@(\w+):\s?(.+)$/mg;
-const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?\n?$/mg;
+const reConfigBoolean = /^\/\/\s?@(\w+)$/mg
+const reConfigValue = /^\/\/\s?@(\w+):\s?(.+)$/mg
+const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?\n?$/mg
 
-const cutString = "// ---cut---\n";
-const cutAfterString = "// ---cut-after---\n";
+const cutString = '// ---cut---\n'
+const cutAfterString = '// ---cut-after---\n'
 // TODO: cut range
 
 interface OptionDeclaration {
-  name: string;
-  type: "list" | "boolean" | "number" | "string" | Map<string, any>;
-  element?: OptionDeclaration;
+  name: string
+  type: 'list' | 'boolean' | 'number' | 'string' | Map<string, any>
+  element?: OptionDeclaration
 }
 
 /**
  * Create a TwoSlash instance with cached TS environments
  */
 export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): TwoSlashInstance {
-  const ts: TS = createOptions.tsModule!;
-  const tsOptionDeclarations = ((ts as any).optionDeclarations as OptionDeclaration[])
+  const ts: TS = createOptions.tsModule!
+  const tsOptionDeclarations = (ts as any).optionDeclarations as OptionDeclaration[]
 
   // In a browser we want to DI everything, in node we can use local infra
-  const useFS = !!createOptions.fsMap;
-  const _root = createOptions.vfsRoot!.replace(/\//g, "/"); // Normalize slashes
-  const vfs = useFS && createOptions.fsMap ? createOptions.fsMap : new Map<string, string>();
-  const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory);
-  const fsRoot = useFS ? "/" : `${_root}/`
+  const useFS = !!createOptions.fsMap
+  const _root = createOptions.vfsRoot!.replace(/\//g, '/') // Normalize slashes
+  const vfs = useFS && createOptions.fsMap ? createOptions.fsMap : new Map<string, string>()
+  const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory)
+  const fsRoot = useFS ? '/' : `${_root}/`
 
   const cache = createOptions.cache === false
     ? undefined
-    : createOptions.cache instanceof Map ?
-      createOptions.cache
+    : createOptions.cache instanceof Map
+      ? createOptions.cache
       : new Map<string, ReturnType<typeof createVirtualTypeScriptEnvironment>>()
 
   function getEnv(compilerOptions: CompilerOptions) {
     if (!cache)
       return createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, createOptions.customTransformers)
-    const key = objectHash(compilerOptions);
+    const key = objectHash(compilerOptions)
     if (!cache?.has(key)) {
       const env = createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, createOptions.customTransformers)
-      cache?.set(key, env);
+      cache?.set(key, env)
       return env
     }
-    return cache.get(key)!;
+    return cache.get(key)!
   }
 
   function twoslasher(
     code: string,
     extension = 'ts',
-    options: TwoSlashExecuteOptions = {}
+    options: TwoSlashExecuteOptions = {},
   ): TwoSlashReturn {
-    const ext = typesToExtension(extension);
-    const defaultFilename = `index.${ext}`;
+    const ext = typesToExtension(extension)
+    const defaultFilename = `index.${ext}`
 
-    const _tokens: TokenWithoutPosition[] = [];
+    const _tokens: TokenWithoutPosition[] = []
     /** Array of ranges to be striped from the output code */
-    let removals: Range[] = [];
-    const isInRemoval = (index: number) => isInRanges(index, removals);
+    let removals: Range[] = []
+    const isInRemoval = (index: number) => isInRanges(index, removals)
 
     const compilerOptions: CompilerOptions = {
       strict: true,
@@ -78,7 +78,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       skipDefaultLibCheck: true,
       skipLibCheck: true,
       ...createOptions.compilerOptions,
-      ...options.compilerOptions
+      ...options.compilerOptions,
     }
 
     const handbookOptions: HandbookOptions = {
@@ -91,45 +91,45 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       noErrorValidation: false,
       keepNotations: true,
       ...createOptions.handbookOptions,
-      ...options.handbookOptions
+      ...options.handbookOptions,
     }
 
     const customTags = [
       ...createOptions.customTags || [],
-      ...options.customTags || []
+      ...options.customTags || [],
     ]
 
     function updateOptions(name: string, value: any): false | void {
-      const oc = tsOptionDeclarations.find((d) => d.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+      const oc = tsOptionDeclarations.find(d => d.name.toLocaleLowerCase() === name.toLocaleLowerCase())
       // if it's compilerOptions
       if (oc) {
         switch (oc.type) {
-          case "number":
-          case "string":
-          case "boolean":
-            compilerOptions[oc.name] = parsePrimitive(value, oc.type);
-            break;
-          case "list": {
-            const elementType = oc.element!.type;
-            const strings = value.split(",") as string[];
-            if (typeof elementType === "string") {
-              compilerOptions[oc.name] = strings.map(v => parsePrimitive(v, elementType));
-            } else {
-              compilerOptions[oc.name] = strings.map(v => getOptionValueFromMap(oc.name, v, elementType as Map<string, string>));
-            }
-            break;
+          case 'number':
+          case 'string':
+          case 'boolean':
+            compilerOptions[oc.name] = parsePrimitive(value, oc.type)
+            break
+          case 'list': {
+            const elementType = oc.element!.type
+            const strings = value.split(',') as string[]
+            if (typeof elementType === 'string')
+              compilerOptions[oc.name] = strings.map(v => parsePrimitive(v, elementType))
+            else
+              compilerOptions[oc.name] = strings.map(v => getOptionValueFromMap(oc.name, v, elementType as Map<string, string>))
+
+            break
           }
           default:
             // It's a map
-            compilerOptions[oc.name] = getOptionValueFromMap(oc.name, value, oc.type);
-            break;
+            compilerOptions[oc.name] = getOptionValueFromMap(oc.name, value, oc.type)
+            break
         }
       }
       // if it's handbookOptions
       else if (Object.keys(handbookOptions).includes(name)) {
         // "errors" is a special case, it's a list of numbers
-        if (name === "errors" && typeof value === "string")
-          value = value.split(" ").map(Number);
+        if (name === 'errors' && typeof value === 'string')
+          value = value.split(' ').map(Number);
 
         (handbookOptions as any)[name] = value
       }
@@ -140,66 +140,65 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         throw new TwoslashError(
           `Invalid inline compiler flag`,
           `There isn't a TypeScript compiler flag called '@${name}'.`,
-          `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`
+          `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`,
         )
       }
     }
 
-
     // #extract compiler options
     Array.from(code.matchAll(reConfigBoolean)).forEach((match) => {
-      const index = match.index!;
-      const name = match[1];
+      const index = match.index!
+      const name = match[1]
       if (updateOptions(name, true) === false)
         return
-      removals.push([index, index + match[0].length + 1]);
-    });
+      removals.push([index, index + match[0].length + 1])
+    })
     Array.from(code.matchAll(reConfigValue)).forEach((match) => {
-      const index = match.index!;
-      const name = match[1];
+      const index = match.index!
+      const name = match[1]
       if (name === 'filename')
         return
-      const value = match[2];
+      const value = match[2]
       if (customTags.includes(name)) {
         _tokens.push({
           type: 'tag',
           name,
           start: index + match[0].length + 1,
           length: 0,
-          text: match[0].split(":")[1].trim(),
+          text: match[0].split(':')[1].trim(),
         })
       }
       else {
         if (updateOptions(name, value) === false)
           return
       }
-      removals.push([index, index + match[0].length + 1]);
-    });
+      removals.push([index, index + match[0].length + 1])
+    })
     // #endregion
 
     const env = getEnv(compilerOptions)
-    const ls = env.languageService;
+    const ls = env.languageService
 
-    const targetsQuery: number[] = [];
-    const targetsCompletions: number[] = [];
-    const targetsHighlights: Range[] = [];
-    const pc = createPositionConverter(code);
+    const targetsQuery: number[] = []
+    const targetsCompletions: number[] = []
+    const targetsHighlights: Range[] = []
+    const pc = createPositionConverter(code)
 
     // #region extract cuts
-    if (code.includes(cutString)) {
-      removals.push([0, code.indexOf(cutString) + cutString.length]);
-    }
-    if (code.includes(cutAfterString)) {
-      removals.push([code.indexOf(cutAfterString), code.length]);
-    }
+    if (code.includes(cutString))
+      removals.push([0, code.indexOf(cutString) + cutString.length])
+
+    if (code.includes(cutAfterString))
+      removals.push([code.indexOf(cutAfterString), code.length])
+
     // #endregion
 
-    const supportedFileTyes = ["js", "jsx", "ts", "tsx"]
+    const supportedFileTyes = ['js', 'jsx', 'ts', 'tsx']
     const files = splitFiles(code, defaultFilename, fsRoot)
 
     for (const file of files) {
       // Only run the LSP-y things on source files
-      if (file.extension === "json") {
+      if (file.extension === 'json') {
         if (!compilerOptions.resolveJsonModule)
           continue
       }
@@ -207,47 +206,49 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         continue
       }
 
-      env.createFile(file.filename, file.content);
+      env.createFile(file.filename, file.content)
 
       // #region extract markers
-      if (file.content.includes("//")) {
+      if (file.content.includes('//')) {
         Array.from(file.content.matchAll(reAnnonateMarkers)).forEach((match) => {
           const type = match[1] as '?' | '|' | '^^'
-          const index = match.index! + file.offset;
-          removals.push([index, index + match[0].length + 1]);
-          const markerIndex = match[0].indexOf("^");
-          const targetIndex = pc.getIndexOfLineAbove(index + markerIndex);
+          const index = match.index! + file.offset
+          removals.push([index, index + match[0].length + 1])
+          const markerIndex = match[0].indexOf('^')
+          const targetIndex = pc.getIndexOfLineAbove(index + markerIndex)
           if (type === '?') {
-            targetsQuery.push(targetIndex);
-          } else if (type === '|') {
-            targetsCompletions.push(targetIndex);
-          } else {
-            const markerLength = match[0].lastIndexOf("^") - markerIndex + 1;
+            targetsQuery.push(targetIndex)
+          }
+          else if (type === '|') {
+            targetsCompletions.push(targetIndex)
+          }
+          else {
+            const markerLength = match[0].lastIndexOf('^') - markerIndex + 1
             targetsHighlights.push([
               targetIndex,
               targetIndex + markerLength,
-            ]);
+            ])
           }
-        });
+        })
       }
       // #endregion
 
       // #region get ts info for quick info
-      const source = ls.getProgram()!.getSourceFile(file.filename)!;
-      const identifiers = getIdentifierTextSpans(ts, source);
+      const source = ls.getProgram()!.getSourceFile(file.filename)!
+      const identifiers = getIdentifierTextSpans(ts, source)
       for (const [offset, target] of identifiers) {
         const start = offset + file.offset
         if (isInRemoval(start))
-          continue;
+          continue
 
         // TODO: hooks to filter out some identifiers
-        const quickInfo = ls.getQuickInfoAtPosition(file.filename, offset);
+        const quickInfo = ls.getQuickInfoAtPosition(file.filename, offset)
 
         if (quickInfo && quickInfo.displayParts) {
-          const text = quickInfo.displayParts.map(dp => dp.text).join("");
+          const text = quickInfo.displayParts.map(dp => dp.text).join('')
 
           // TODO: get different type of docs
-          const docs = quickInfo.documentation?.map(d => d.text).join("\n") || undefined;
+          const docs = quickInfo.documentation?.map(d => d.text).join('\n') || undefined
 
           _tokens.push({
             type: 'hover',
@@ -255,73 +256,71 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
             docs,
             start,
             length: target.length,
-            target
-          });
+            target,
+          })
         }
       }
       // #endregion
 
       // #region update token with types
-      _tokens.forEach(token => {
+      _tokens.forEach((token) => {
         if (token.type as any !== 'hover')
-          return undefined;
-        const range: Range = [token.start, token.start + token.length];
+          return undefined
+        const range: Range = [token.start, token.start + token.length]
         // Turn static info to query if in range
-        if (targetsQuery.find(target => isInRanges(target, [range]))) {
-          token.type = 'query';
-        }
+        if (targetsQuery.find(target => isInRanges(target, [range])))
+          token.type = 'query'
+
         // Turn static info to completion if in range
-        else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range]))) {
-          token.type = 'highlight';
-        }
-      });
+        else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range])))
+          token.type = 'highlight'
+      })
       // #endregion
 
       // #region get completions
-      targetsCompletions.forEach(target => {
+      targetsCompletions.forEach((target) => {
         if (isInRemoval(target))
-          return;
-        const completions = ls.getCompletionsAtPosition(file.filename, target - 1, {});
+          return
+        const completions = ls.getCompletionsAtPosition(file.filename, target - 1, {})
         if (!completions && !handbookOptions.noErrorValidation) {
-          const pos = pc.indexToPos(target);
+          const pos = pc.indexToPos(target)
           throw new TwoslashError(
             `Invalid completion query`,
             `The request on line ${pos} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
-            `This is likely that the positioning is off.`
-          );
+            `This is likely that the positioning is off.`,
+          )
         }
 
-        let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || '';
-        prefix = prefix.split('.').pop()!;
+        let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || ''
+        prefix = prefix.split('.').pop()!
 
         _tokens.push({
           type: 'completion',
           start: target,
           length: 0,
           completions: (completions?.entries ?? []).filter(i => i.name.startsWith(prefix)),
-          completionsPrefix: prefix
-        });
-      });
+          completionsPrefix: prefix,
+        })
+      })
       // #endregion
     }
 
     // #region get diagnostics, after all files are mounted
     for (const file of files) {
-      if (!supportedFileTyes.includes(file.extension)) {
+      if (!supportedFileTyes.includes(file.extension))
         continue
-      }
 
       if (!handbookOptions.noErrorValidation && !handbookOptions.noErrors) {
         const diagnostics = [
           ...ls.getSemanticDiagnostics(file.filename),
           ...ls.getSyntacticDiagnostics(file.filename),
         ]
-          .filter(i => i.file?.fileName === file.filename);
+          .filter(i => i.file?.fileName === file.filename)
 
         for (const diagnostic of diagnostics) {
-          const start = diagnostic.start! + file.offset;
-          const renderedMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
-          const id = `err-${diagnostic.code}-${diagnostic.start}-${diagnostic.length}`;
+          const start = diagnostic.start! + file.offset
+          const renderedMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+          const id = `err-${diagnostic.code}-${diagnostic.start}-${diagnostic.length}`
 
           _tokens.push({
             type: 'error',
@@ -332,55 +331,52 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
             id,
             text: renderedMessage,
             level: diagnostic.category,
-          });
+          })
         }
       }
     }
     // #endregion
 
     // A validator that error codes are mentioned, so we can know if something has broken in the future
-    const errors = _tokens.filter(i => i.type === 'error') as TokenError[];
-    if (!handbookOptions.noErrorValidation && errors.length) {
+    const errors = _tokens.filter(i => i.type === 'error') as TokenError[]
+    if (!handbookOptions.noErrorValidation && errors.length)
       validateCodeForErrors(errors, handbookOptions, fsRoot)
-    }
 
     // Sort descending, so that we start removal from the end
     removals = mergeRanges(removals)
-      .sort((a, b) => b[0] - a[0]);
+      .sort((a, b) => b[0] - a[0])
 
-    let outputCode = code;
+    let outputCode = code
     if (handbookOptions.keepNotations) {
       for (const remove of removals) {
-        const removalLength = remove[1] - remove[0];
-        outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1]);
-        _tokens.forEach(token => {
+        const removalLength = remove[1] - remove[0]
+        outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1])
+        _tokens.forEach((token) => {
           // tokens before the range, do nothing
-          if (token.start + token.length <= remove[0]) {
-            return undefined;
-          }
+          if (token.start + token.length <= remove[0])
+            return undefined
+
           // remove tokens that are within in the range
-          else if (token.start < remove[1]) {
-            token.start = -1;
-          }
+          else if (token.start < remove[1])
+            token.start = -1
+
           // move tokens after the range forward
-          else {
-            token.start -= removalLength;
-          }
-        });
+          else
+            token.start -= removalLength
+        })
       }
     }
 
-
     const resultPC = outputCode === code
       ? pc // reuse the converter if nothing changed
-      : createPositionConverter(outputCode);
+      : createPositionConverter(outputCode)
 
     const tokens = _tokens
       .filter(token => token.start >= 0)
-      .sort((a, b) => a.start - b.start) as Token[];
+      .sort((a, b) => a.start - b.start) as Token[]
 
     tokens
-      .forEach(token => {
+      .forEach((token) => {
         Object.assign(token, resultPC.indexToPos(token.start))
       })
 
@@ -412,23 +408,23 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       get tags() {
         return tokens.filter(i => i.type === 'tag') as any
       },
-    };
+    }
   }
 
   twoslasher.dispose = () => {
-    cache?.clear();
+    cache?.clear()
   }
 
   twoslasher.getCacheMap = () => {
-    return cache;
+    return cache
   }
 
-  return twoslasher;
+  return twoslasher
 }
 
 /**
  * Run TwoSlash on a string of code
- * 
+ *
  * It's recommended to use `createTwoSlash` for better performance on multiple runs
  */
 export function twoslasher(code: string, lang?: string, opts?: Partial<TwoSlashOptions>) {

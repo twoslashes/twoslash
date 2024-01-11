@@ -1,7 +1,7 @@
-import type { VirtualTypeScriptEnvironment } from "@typescript/vfs";
-import type { CompilerOptions, CompletionEntry, CustomTransformers } from "typescript"
+import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
+import type { CompilerOptions, CompletionEntry, CustomTransformers } from 'typescript'
 
-type TS = typeof import("typescript")
+type TS = typeof import('typescript')
 
 /**
  * Options for the `twoslasher` function
@@ -33,9 +33,9 @@ export interface CreateTwoSlashOptions extends TwoSlashExecuteOptions {
   tsLibDirectory?: string
 
   /**
-  * An optional Map object which is passed into @typescript/vfs - if you are using twoslash on the
-  * web then you'll need this to set up your lib *.d.ts files. If missing, it will use your fs.
-  */
+   * An optional Map object which is passed into @typescript/vfs - if you are using twoslash on the
+   * web then you'll need this to set up your lib *.d.ts files. If missing, it will use your fs.
+   */
   fsMap?: Map<string, string>
 
   /** The cwd for the folder which the virtual fs should be overlaid on top of when using local fs, opts to process.cwd() if not present */
@@ -51,11 +51,11 @@ export interface TwoSlashInstance {
   /**
    * Run TwoSlash on a string of code, with a particular extension
    */
-  (code: string, extension?: string, options?: TwoSlashExecuteOptions): TwoSlashReturn;
+  (code: string, extension?: string, options?: TwoSlashExecuteOptions): TwoSlashReturn
   /**
    * Clear caches and dispose of the instance
    */
-  dispose(): void;
+  dispose(): void
   /**
    * Get the internal cache map
    */
@@ -64,23 +64,23 @@ export interface TwoSlashInstance {
 
 export interface TwoSlashReturn {
   /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
-  code: string;
+  code: string
 
   /**
    * Tokens contains various bits of information about the code
    */
-  tokens: Token[];
+  tokens: Token[]
 
-  get queries(): TokenQuery[];
-  get completions(): TokenCompletion[];
-  get errors(): TokenError[];
-  get highlights(): TokenHighlight[];
-  get hovers(): TokenHover[];
-  get tags(): TokenTag[];
+  get queries(): TokenQuery[]
+  get completions(): TokenCompletion[]
+  get errors(): TokenError[]
+  get highlights(): TokenHighlight[]
+  get hovers(): TokenHover[]
+  get tags(): TokenTag[]
 
   meta: {
     /** The new extension type for the code, potentially changed if they've requested emitted results */
-    extension: string;
+    extension: string
     /**
      * Ranges of text which should be removed from the output
      */
@@ -95,7 +95,6 @@ export interface TwoSlashReturn {
     handbookOptions: HandbookOptions
   }
 }
-
 
 /** Available inline flags which are not compiler flags */
 export interface HandbookOptions {
@@ -124,71 +123,70 @@ export interface HandbookOptions {
   emit: boolean
 }
 
-
 export interface Position {
   /**
    * 0-indexed line number
    */
-  line: number;
+  line: number
   /**
    * 0-indexed column number
    */
-  character: number;
+  character: number
 }
 
-export type Range = [start: number, end: number];
+export type Range = [start: number, end: number]
 
 export interface TokenBase extends Position {
   /** The length of the token */
-  length: number;
+  length: number
   /** 0-indexed position of the token in the file */
-  start: number;
+  start: number
 }
 
 export interface TokenHover extends TokenBase {
-  type: 'hover';
+  type: 'hover'
   /** The string content of the node this represents (mainly for debugging) */
-  target: string;
+  target: string
   /** The base LSP response (the type) */
-  text: string;
+  text: string
   /** Attached JSDoc info */
   docs?: string
 }
 
 export interface TokenHighlight extends Omit<TokenHover, 'type'> {
-  type: 'highlight';
+  type: 'highlight'
 }
 
 export interface TokenQuery extends Omit<TokenHover, 'type'> {
-  type: 'query';
+  type: 'query'
 }
 
 export interface TokenCompletion extends TokenBase {
-  type: 'completion';
+  type: 'completion'
   /** Results for completions at a particular point */
-  completions?: CompletionEntry[];
+  completions?: CompletionEntry[]
   /* Completion prefix e.g. the letters before the cursor in the word so you can filter */
-  completionsPrefix?: string;
+  completionsPrefix?: string
 }
 
 export interface TokenError extends TokenBase {
-  type: 'error';
-  id: string;
-  level: 0 | 1 | 2 | 3;
-  code: number;
+  type: 'error'
+  id: string
+  level: 0 | 1 | 2 | 3
+  code: number
   text: string
   filename: string
 }
 
 export interface TokenTag extends TokenBase {
-  type: 'tag';
+  type: 'tag'
   /** What was the name of the tag */
-  name: string;
+  name: string
   /** What was the text after the `// @tag: ` string  (optional because you could do // @tag on it's own line without the ':') */
-  text?: string;
+  text?: string
 }
 
-export type Token = TokenHighlight | TokenHover | TokenQuery | TokenCompletion | TokenError | TokenTag;
+export type Token = TokenHighlight | TokenHover | TokenQuery | TokenCompletion | TokenError | TokenTag
 export type TokenWithoutPosition =
   | Omit<TokenHighlight, keyof Position>
   | Omit<TokenHover, keyof Position>

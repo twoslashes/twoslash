@@ -25,7 +25,7 @@ readdirSync(fixturesFolder).forEach(fixtureName => {
   })
 })
   `,
-    ts.ScriptTarget.ES2015
+    ts.ScriptTarget.ES2015,
   )
 
   const allIdentifiers = getIdentifierTextSpans(ts, file)

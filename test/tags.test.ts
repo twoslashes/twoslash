@@ -1,14 +1,14 @@
 import { expect, it } from 'vitest'
-import { twoslasher } from "../src/index"
+import { twoslasher } from '../src/index'
 
-it("extracts custom tags", () => {
+it('extracts custom tags', () => {
   const file = `
 // @thing: OK, sure
 const a = "123"
 // @thingTwo - This should stay (note the no ':')
 const b = 12331234
   `
-  const result = twoslasher(file, "ts", { customTags: ["thing"] })
+  const result = twoslasher(file, 'ts', { customTags: ['thing'] })
   expect(result.tags.length).toEqual(1)
 
   expect(result.code).toMatchInlineSnapshot(`
@@ -33,7 +33,7 @@ const b = 12331234
   `)
 })
 
-it("removes tags which are cut", () => {
+it('removes tags which are cut', () => {
   const file = `
 // @thing: OK, sure
 const a = "123"
@@ -41,7 +41,7 @@ const a = "123"
 // @thing: This one only
 const another = ''
     `
-  const result = twoslasher(file, "ts", { customTags: ["thing"] })
+  const result = twoslasher(file, 'ts', { customTags: ['thing'] })
   expect(result.tags.length).toEqual(1)
 
   expect(result.code).toMatchInlineSnapshot(`
