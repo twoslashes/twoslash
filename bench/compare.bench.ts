@@ -4,6 +4,7 @@ process.env.NODE_ENV = 'production'
 /* eslint-disable test/consistent-test-it */
 import { fileURLToPath } from 'node:url'
 import fs from 'node:fs/promises'
+import { basename } from 'node:path'
 import { bench, describe } from 'vitest'
 import fg from 'fast-glob'
 import { twoslasher as twoslasherOld } from '@typescript/twoslash'
@@ -18,7 +19,7 @@ const codes = await fg([
   absolute: true
 })
   .then((files) => Promise.all(files.sort().map(async (file) => [file, await fs.readFile(file, 'utf8')])))
-  .then(i => i.filter(i => !i.includes('@showEmit')))
+  .then(i => i.filter(i => !i[1].includes('@showEmit')))
 
 // eslint-disable-next-line no-console
 console.log(`Running benchmarks with ${codes.length} examples`)
@@ -30,14 +31,14 @@ const options = {
 const twoslash = createTwoSlasher(options)
 
 for (const [file, code] of codes) {
-  describe(file.replace(process.cwd(), ''), () => {
-    bench('twoslashes (instance)', () => {
+  describe(basename(file), () => {
+    bench('twoslashes', () => {
       twoslash(code, 'ts')
     })
 
-    bench('twoslashes (direct)', () => {
-      twoslasher(code, 'ts', options)
-    })
+    // bench('twoslashes (direct)', () => {
+    //   twoslasher(code, 'ts', options)
+    // })
 
     bench('@typescript/twoslash', () => {
       twoslasherOld(code, 'ts', options)
