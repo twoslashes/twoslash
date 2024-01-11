@@ -1,6 +1,14 @@
 # TwoSlash<sup>es</sup>
 
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![bundle][bundle-src]][bundle-href]
+[![JSDocs][jsdocs-src]][jsdocs-href]
+[![License][license-src]][license-href]
+
 A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher), with improvements:
+
+> [!NOTE]: Working in progress, breaking changes are expected.
 
 - Unified tokens information interface, easier to work with
 - `createTwoslasher` function to create a twoslash instance with cached language servers (6~20x faster)
@@ -108,3 +116,21 @@ Breaking changes from `@typescript/twoslash`:
 ```
 
 </details>
+
+## License
+
+MIT License © Microsoft Corporation
+MIT License © 2023-PRESENT [Anthony Fu](https://github.com/antfu)
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/twoslashes?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-href]: https://npmjs.com/package/twoslashes
+[npm-downloads-src]: https://img.shields.io/npm/dm/twoslashes?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-href]: https://npmjs.com/package/twoslashes
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/twoslashes?style=flat&colorA=080f12&colorB=1fa669&label=minzip
+[bundle-href]: https://bundlephobia.com/result?p=twoslashes
+[license-src]: https://img.shields.io/github/license/antfu/twoslashes.svg?style=flat&colorA=080f12&colorB=1fa669
+[license-href]: https://github.com/antfu/twoslashes/blob/main/LICENSE
+[jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
+[jsdocs-href]: https://www.jsdocs.io/package/twoslashes
