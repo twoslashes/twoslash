@@ -150,7 +150,6 @@ export function twoslasher(
   const targetsHighlights: Range[] = [];
   const pc = createPositionConverter(code);
 
-
   // #region extract cuts
   if (code.includes(cutString)) {
     removals.push([0, code.indexOf(cutString) + cutString.length]);
@@ -162,15 +161,14 @@ export function twoslasher(
 
   const supportedFileTyes = ["js", "jsx", "ts", "tsx"]
   const files = splitFiles(code, defaultFilename, fsRoot)
-  for (const file of files) {
-    const filetype = file.filename.split(".").pop() || ""
 
+  for (const file of files) {
     // Only run the LSP-y things on source files
-    if (filetype === "json") {
+    if (file.extension === "json") {
       if (!compilerOptions.resolveJsonModule)
         continue
     }
-    else if (!supportedFileTyes.includes(filetype)) {
+    else if (!supportedFileTyes.includes(file.extension)) {
       continue
     }
 
@@ -278,8 +276,16 @@ export function twoslasher(
       });
     });
     // #endregion
+  }
 
-    // #region get diagnostics
+
+  // #region get diagnostics, after all files are mounted
+
+  for (const file of files) {
+    if (!supportedFileTyes.includes(file.extension)) {
+      continue
+    }
+
     if (!handbookOptions.noErrorValidation && !handbookOptions.noErrors) {
       const diagnostics = [
         ...ls.getSemanticDiagnostics(file.filename),
@@ -304,12 +310,11 @@ export function twoslasher(
         });
       }
     }
-    // #endregion
   }
-
-  const errors = _tokens.filter(i => i.type === 'error') as TokenError[];
+  // #endregion
 
   // A validator that error codes are mentioned, so we can know if something has broken in the future
+  const errors = _tokens.filter(i => i.type === 'error') as TokenError[];
   if (!handbookOptions.noErrorValidation && errors.length) {
     validateCodeForErrors(errors, handbookOptions, fsRoot)
   }

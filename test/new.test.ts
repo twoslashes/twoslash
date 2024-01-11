@@ -59,6 +59,7 @@ const value = absolute(-1)
         "content": "
     // @module: esnext
     ",
+        "extension": "ts",
         "filename": "test.ts",
         "offset": 0,
       },
@@ -69,6 +70,7 @@ const value = absolute(-1)
       return num;
     }
     ",
+        "extension": "ts",
         "filename": "maths.ts",
         "offset": 20,
       },
@@ -79,6 +81,7 @@ const value = absolute(-1)
     const value = absolute(-1)
     //    ^?
     ",
+        "extension": "ts",
         "filename": "index.ts",
         "offset": 131,
       },

@@ -176,4 +176,5 @@ export interface TemporaryFile {
   offset: number
   filename: string
   content: string
+  extension: string
 }

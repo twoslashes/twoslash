@@ -1,0 +1,96 @@
+{
+  "code": "// @filename: Component.tsx\nimport React from \"react\"\n\nexport function Hello() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n    </div>\n  )\n}\n\n// @filename: index.ts\nimport { Hello } from \"./Component\"\nconsole.log(Hello)\n",
+  "tokens": [
+    {
+      "type": "hover",
+      "text": "(alias) namespace React\nimport React",
+      "start": 35,
+      "length": 5,
+      "target": "React",
+      "line": 1,
+      "character": 7
+    },
+    {
+      "type": "hover",
+      "text": "function Hello(): React.JSX.Element",
+      "start": 71,
+      "length": 5,
+      "target": "Hello",
+      "line": 3,
+      "character": 16
+    },
+    {
+      "type": "hover",
+      "text": "(property) JSX.IntrinsicElements.div: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>",
+      "start": 97,
+      "length": 3,
+      "target": "div",
+      "line": 5,
+      "character": 5
+    },
+    {
+      "type": "hover",
+      "text": "(property) JSX.IntrinsicElements.h1: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>",
+      "start": 109,
+      "length": 2,
+      "target": "h1",
+      "line": 6,
+      "character": 7
+    },
+    {
+      "type": "hover",
+      "text": "(property) JSX.IntrinsicElements.h1: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>",
+      "start": 125,
+      "length": 2,
+      "target": "h1",
+      "line": 6,
+      "character": 23
+    },
+    {
+      "type": "hover",
+      "text": "(property) JSX.IntrinsicElements.div: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>",
+      "start": 135,
+      "length": 3,
+      "target": "div",
+      "line": 7,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(alias) function Hello(): React.JSX.Element\nimport Hello",
+      "start": 179,
+      "length": 5,
+      "target": "Hello",
+      "line": 12,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "var console: Console",
+      "start": 206,
+      "length": 7,
+      "target": "console",
+      "line": 13,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(method) Console.log(...data: any[]): void",
+      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
+      "start": 214,
+      "length": 3,
+      "target": "log",
+      "line": 13,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "(alias) function Hello(): React.JSX.Element\nimport Hello",
+      "start": 218,
+      "length": 5,
+      "target": "Hello",
+      "line": 13,
+      "character": 12
+    }
+  ]
+}

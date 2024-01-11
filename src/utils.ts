@@ -1,5 +1,5 @@
 import { TwoslashError } from "./error"
-import type {Position, Range, TemporaryFile} from "./types"
+import type { Position, Range, TemporaryFile } from "./types"
 
 export function parsePrimitive(value: string, type: string): any {
   // eslint-disable-next-line valid-typeof
@@ -148,15 +148,29 @@ export function splitFiles(code: string, defaultFileName: string, rootPath: stri
     const offset = match.index!
     const content = code.slice(index, offset)
     if (content)
-      files.push({ offset: index, filename: currentFileName, content })
+      files.push({
+        offset: index,
+         filename: currentFileName,
+         content,
+        extension: getExtension(currentFileName)
+      })
     currentFileName = rootPath + match[1].trimEnd()
     index = offset
   }
-  
+
   if (index < code.length) {
     const content = code.slice(index)
-    files.push({ offset: index, filename: currentFileName, content })
+    files.push({
+      offset: index,
+       filename: currentFileName,
+       content,
+      extension: getExtension(currentFileName)
+    })
   }
-  
+
   return files
+}
+
+export function getExtension(fileName: string) {
+  return fileName.split(".").pop()!
 }
