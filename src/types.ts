@@ -3,6 +3,8 @@ import type { CompilerOptions, CompletionEntry, CustomTransformers } from 'types
 
 type TS = typeof import('typescript')
 
+export type TwoSlashFunction = (code: string, extension?: string, options?: TwoSlashExecuteOptions) => TwoSlashReturn
+
 /**
  * Options for the `twoslasher` function
  */
@@ -164,9 +166,9 @@ export interface TokenQuery extends Omit<TokenHover, 'type'> {
 export interface TokenCompletion extends TokenBase {
   type: 'completion'
   /** Results for completions at a particular point */
-  completions?: CompletionEntry[]
+  completions: CompletionEntry[]
   /* Completion prefix e.g. the letters before the cursor in the word so you can filter */
-  completionsPrefix?: string
+  completionsPrefix: string
 }
 
 export interface TokenError extends TokenBase {

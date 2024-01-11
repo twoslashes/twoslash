@@ -126,7 +126,12 @@ export function convertLegacyReturn(result: TwoSlashReturn): TwoSlashReturnLegac
         targetString: i.target,
       })),
 
-    tags: result.tags,
+    tags: result.tags
+      .map((t): TwoSlashReturnLegacy['tags'][0] => ({
+        name: t.name,
+        line: t.line,
+        annotation: t.text,
+      })),
 
     highlights: result.highlights
       .map((h): TwoSlashReturnLegacy['highlights'][0] => ({
