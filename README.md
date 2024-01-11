@@ -3,9 +3,9 @@
 A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher), with improvements:
 
 - Unified tokens information interface, easier to work with
-- `createTwoslasher` function to create a twoslash instance with cached language services (6~20x faster)
+- `createTwoslasher` function to create a twoslash instance with cached language servers (6~20x faster)
 - ESM-first, dual CJS/ESM builds
-- [ ] Optional read-only mode to preserve notations, for better mapping and support custom languages (see `twoslash-vue` integration)
+- `keepNotations` flag for better support of custom languages (see `twoslash-vue` integration)
 - Lighter, no longer deps on `lz-string` and `debug`
 
 ## Breaking Changes
@@ -15,6 +15,8 @@ Breaking changes from `@typescript/twoslash`:
 1. The returned information items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `tokens` with a `type` property to differentiate (TODO: explain more)
 2. Main entry point `import "twoslashes"` bundles `typescript`, while a new sub-entry `import "twoslashes/core"` is dependency-free and requires providing your own typescript instance.
 3. `showEmit` option is not supported yet.
+4. `defaultOptions` is renamed to `handbookOptions`
+5. `defaultCompilerOptions` is renamed to `compilerOptions`
 
 ## Features
 
@@ -25,6 +27,12 @@ Breaking changes from `@typescript/twoslash`:
 ### `createTwoslasher`
 
 // TODO:
+
+## TODOs
+
+- [ ] Support `showEmit` option
+- [ ] Test coverage
+- [ ] Compat-layer maybe?
 
 ## Benchmark
 

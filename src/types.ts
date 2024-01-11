@@ -6,23 +6,23 @@ type TS = typeof import("typescript")
 /**
  * Options for the `twoslasher` function
  */
-export interface TwoSlashOptions extends CreateTwoSlashOptions, TwoSlashExecuteOptions {}
+export interface TwoSlashOptions extends CreateTwoSlashOptions, TwoSlashExecuteOptions { }
 
 /**
  * Options for twoslash instance
  */
 export interface TwoSlashExecuteOptions {
+  /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
+  handbookOptions?: Partial<HandbookOptions>
+
+  /** Allows setting any of the compiler options from outside the function */
+  compilerOptions?: CompilerOptions
+
   /** A set of known `// @[tags]` tags to extract and not treat as a comment */
   customTags?: string[]
 }
 
-export interface CreateTwoSlashOptions {
-  /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
-  defaultOptions?: Partial<HandbookOptions>
-
-  /** Allows setting any of the compiler options from outside the function */
-  defaultCompilerOptions?: CompilerOptions
-
+export interface CreateTwoSlashOptions extends TwoSlashExecuteOptions {
   /** Allows applying custom transformers to the emit result, only useful with the showEmit output */
   customTransformers?: CustomTransformers
 
@@ -40,7 +40,7 @@ export interface CreateTwoSlashOptions {
 
   /** The cwd for the folder which the virtual fs should be overlaid on top of when using local fs, opts to process.cwd() if not present */
   vfsRoot?: string
-  
+
   /**
    * Cache the ts envs based on compiler options, defaults to true
    */
@@ -99,10 +99,20 @@ export interface TwoSlashReturn {
 
 /** Available inline flags which are not compiler flags */
 export interface HandbookOptions {
-  /** Lets the sample suppress all error diagnostics */
-  noErrors: boolean
   /** An array of TS error codes, which you write as space separated - this is so the tool can know about unexpected errors */
   errors: number[]
+  /** Lets the sample suppress all error diagnostics */
+  noErrors: boolean
+  /** Declare that you don't need to validate that errors have corresponding annotations, defaults to false */
+  noErrorValidation: boolean
+  /**
+   * Keep TwoSlash notations in the code, the tokens will have the position of the input code.
+   * @default false
+   */
+  keepNotations?: boolean
+  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
+  noStaticSemanticInfo: boolean
+
   /** Shows the JS equivalent of the TypeScript code instead */
   showEmit: boolean
   /**
@@ -110,13 +120,8 @@ export interface HandbookOptions {
    * means when you just use `showEmit` above it shows the transpiled JS.
    */
   showEmittedFile?: string
-
-  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
-  noStaticSemanticInfo: boolean
   /** Declare that the TypeScript program should edit the fsMap which is passed in, this is only useful for tool-makers, defaults to false */
   emit: boolean
-  /** Declare that you don't need to validate that errors have corresponding annotations, defaults to false */
-  noErrorValidation: boolean
 }
 
 

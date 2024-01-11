@@ -13,8 +13,8 @@ import {helloWorld} from "./file-with-export"
 console.log(helloWorld)
 `
   const result = twoslasher(files, "ts", {
-    defaultOptions: { showEmit: true },
-    defaultCompilerOptions: { module: ModuleKind.CommonJS }
+    handbookOptions: { showEmit: true },
+    compilerOptions: { module: ModuleKind.CommonJS }
   })
   expect(result.errors).toEqual([])
   expect(result.code!).toContain('require("./file-with-export")')

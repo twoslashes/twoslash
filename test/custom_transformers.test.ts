@@ -18,7 +18,7 @@ it.skipIf(!FEAT_SHOW_EMIT)("applies custom transformers", () => {
   };
 
   const result = twoslasher(code, "ts", {
-    defaultOptions: { showEmit: true },
+    handbookOptions: { showEmit: true },
     customTransformers: {
       before: [transformer]
     }

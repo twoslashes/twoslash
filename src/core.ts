@@ -31,26 +31,6 @@ interface OptionDeclaration {
  */
 export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): TwoSlashInstance {
   const ts: TS = createOptions.tsModule!;
-  const defaultCompilerOptions: CompilerOptions = {
-    strict: true,
-    target: 99 satisfies ScriptTarget.ESNext,
-    allowJs: true,
-    skipDefaultLibCheck: true,
-    skipLibCheck: true,
-    ...(createOptions.defaultCompilerOptions ?? {}),
-  };
-
-  const defaultHandbookOptions: HandbookOptions = {
-    errors: [],
-    noErrors: false,
-    showEmit: false,
-    showEmittedFile: undefined,
-    noStaticSemanticInfo: false,
-    emit: false,
-    noErrorValidation: false,
-    ...createOptions.defaultOptions
-  };
-
   const tsOptionDeclarations = ((ts as any).optionDeclarations as OptionDeclaration[])
 
   // In a browser we want to DI everything, in node we can use local infra
@@ -87,21 +67,41 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     const defaultFilename = `index.${ext}`;
 
     const _tokens: TokenWithoutPosition[] = [];
+    /** Array of ranges to be striped from the output code */
     let removals: Range[] = [];
-    function isInRemoval(index: number) {
-      return isInRanges(index, removals);
-    }
+    const isInRemoval = (index: number) => isInRanges(index, removals);
 
     const compilerOptions: CompilerOptions = {
-      ...defaultCompilerOptions,
+      strict: true,
+      target: 99 satisfies ScriptTarget.ESNext,
+      allowJs: true,
+      skipDefaultLibCheck: true,
+      skipLibCheck: true,
+      ...createOptions.compilerOptions,
+      ...options.compilerOptions
     }
 
     const handbookOptions: HandbookOptions = {
-      ...defaultHandbookOptions,
+      errors: [],
+      noErrors: false,
+      showEmit: false,
+      showEmittedFile: undefined,
+      noStaticSemanticInfo: false,
+      emit: false,
+      noErrorValidation: false,
+      keepNotations: true,
+      ...createOptions.handbookOptions,
+      ...options.handbookOptions
     }
+
+    const customTags = [
+      ...createOptions.customTags || [],
+      ...options.customTags || []
+    ]
 
     function updateOptions(name: string, value: any): false | void {
       const oc = tsOptionDeclarations.find((d) => d.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+      // if it's compilerOptions
       if (oc) {
         switch (oc.type) {
           case "number":
@@ -125,13 +125,15 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
             break;
         }
       }
-      else if (Object.keys(defaultHandbookOptions).includes(name)) {
+      // if it's handbookOptions
+      else if (Object.keys(handbookOptions).includes(name)) {
         // "errors" is a special case, it's a list of numbers
         if (name === "errors" && typeof value === "string")
           value = value.split(" ").map(Number);
 
         (handbookOptions as any)[name] = value
       }
+      // throw errors if it's not a valid compiler flag
       else {
         if (handbookOptions.noErrorValidation)
           return false
@@ -142,6 +144,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         )
       }
     }
+
 
     // #extract compiler options
     Array.from(code.matchAll(reConfigBoolean)).forEach((match) => {
@@ -157,7 +160,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       if (name === 'filename')
         return
       const value = match[2];
-      if (options.customTags?.includes(name)) {
+      if (customTags.includes(name)) {
         _tokens.push({
           type: 'tag',
           name,
@@ -193,7 +196,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 
     const supportedFileTyes = ["js", "jsx", "ts", "tsx"]
     const files = splitFiles(code, defaultFilename, fsRoot)
-    
+
     for (const file of files) {
       // Only run the LSP-y things on source files
       if (file.extension === "json") {
@@ -345,25 +348,26 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     removals = mergeRanges(removals)
       .sort((a, b) => b[0] - a[0]);
 
-    // TODO: option to disable removals
     let outputCode = code;
-    for (const remove of removals) {
-      const removalLength = remove[1] - remove[0];
-      outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1]);
-      _tokens.forEach(token => {
-        // tokens before the range, do nothing
-        if (token.start + token.length <= remove[0]) {
-          return undefined;
-        }
-        // remove tokens that are within in the range
-        else if (token.start < remove[1]) {
-          token.start = -1;
-        }
-        // move tokens after the range forward
-        else {
-          token.start -= removalLength;
-        }
-      });
+    if (handbookOptions.keepNotations) {
+      for (const remove of removals) {
+        const removalLength = remove[1] - remove[0];
+        outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1]);
+        _tokens.forEach(token => {
+          // tokens before the range, do nothing
+          if (token.start + token.length <= remove[0]) {
+            return undefined;
+          }
+          // remove tokens that are within in the range
+          else if (token.start < remove[1]) {
+            token.start = -1;
+          }
+          // move tokens after the range forward
+          else {
+            token.start -= removalLength;
+          }
+        });
+      }
     }
 
 
