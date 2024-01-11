@@ -1,6 +1,5 @@
-import type { VirtualTypeScriptEnvironment} from "@typescript/vfs";
-import { createVirtualTypeScriptEnvironment } from "@typescript/vfs"
-import type { CompilerOptions, CompletionEntry , CustomTransformers } from "typescript"
+import type { VirtualTypeScriptEnvironment } from "@typescript/vfs";
+import type { CompilerOptions, CompletionEntry, CustomTransformers } from "typescript"
 
 type TS = typeof import("typescript")
 
@@ -33,6 +32,13 @@ export interface TwoSlashOptions {
   customTags?: string[]
 }
 
+export interface CreateTwoSlashOptions extends TwoSlashOptions {
+  /**
+   * Cache the ts envs based on compiler options, defaults to true
+   */
+  cache?: boolean | Map<string, VirtualTypeScriptEnvironment>
+}
+
 export interface TwoSlashInstance {
   /**
    * Run TwoSlash on a string of code, with a particular extension
@@ -45,7 +51,7 @@ export interface TwoSlashInstance {
   /**
    * Get the internal cache map
    */
-  getCacheMap(): Map<string, VirtualTypeScriptEnvironment>;
+  getCacheMap(): Map<string, VirtualTypeScriptEnvironment> | undefined
 }
 
 export interface TwoSlashReturn {
@@ -170,7 +176,7 @@ export interface TokenTag extends TokenBase {
 }
 
 export type Token = TokenHighlight | TokenHover | TokenQuery | TokenCompletion | TokenError | TokenTag;
-export type TokenWithoutPosition = 
+export type TokenWithoutPosition =
   | Omit<TokenHighlight, keyof Position>
   | Omit<TokenHover, keyof Position>
   | Omit<TokenQuery, keyof Position>

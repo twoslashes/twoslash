@@ -1,8 +1,9 @@
 
 import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
+import { objectHash } from 'ohash'
 import { TwoslashError } from './error';
-import type { HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from "./types";
+import type { CreateTwoSlashOptions, HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from "./types";
 import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
 
@@ -14,14 +15,11 @@ type TS = typeof import("typescript")
 // TODO: Make them configurable maybe
 const reConfigBoolean = /^\/\/\s?@(\w+)$/mg;
 const reConfigValue = /^\/\/\s?@(\w+):\s?(.+)$/mg;
-const reMarkerHighlight = /^\s*\/\/\s*(\^+)( .+)?$/mg;
-const reMarkerQuery = /^\s*\/\/\s*\^\?\s*$/mg;
-const reMarkerCompletions = /^\s*\/\/\s*\^\|\s*$/mg;
+const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?\n?$/mg;
 
 const cutString = "// ---cut---\n";
 const cutAfterString = "// ---cut-after---\n";
 // TODO: cut range
-
 
 interface OptionDeclaration {
   name: string;
@@ -32,7 +30,7 @@ interface OptionDeclaration {
 /**
  * Create a TwoSlash instance with cached TS environments
  */
-export function createTwoSlasher(options: Partial<TwoSlashOptions> = {}): TwoSlashInstance {
+export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): TwoSlashInstance {
   const ts: TS = options.tsModule!;
   const defaultCompilerOptions: CompilerOptions = {
     strict: true,
@@ -61,12 +59,20 @@ export function createTwoSlasher(options: Partial<TwoSlashOptions> = {}): TwoSla
   const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, options.tsLibDirectory);
   const fsRoot = useFS ? "/" : `${_root}/`
 
-  const cache = new Map<string, ReturnType<typeof createVirtualTypeScriptEnvironment>>();
+  const cache = options.cache === false
+    ? undefined
+    : options.cache instanceof Map ?
+      options.cache
+      : new Map<string, ReturnType<typeof createVirtualTypeScriptEnvironment>>()
 
   function getEnv(compilerOptions: CompilerOptions) {
-    const key = JSON.stringify(compilerOptions);
-    if (!cache.has(key)) {
-      cache.set(key, createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, options.customTransformers));
+    if (!cache)
+      return createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, options.customTransformers)
+    const key = objectHash(compilerOptions);
+    if (!cache?.has(key)) {
+      const env = createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, options.customTransformers)
+      cache?.set(key, env);
+      return env
     }
     return cache.get(key)!;
   }
@@ -200,30 +206,23 @@ export function createTwoSlasher(options: Partial<TwoSlashOptions> = {}): TwoSla
 
       // #region extract markers
       if (file.content.includes("//")) {
-        Array.from(file.content.matchAll(reMarkerQuery)).forEach((match) => {
+        Array.from(file.content.matchAll(reAnnonateMarkers)).forEach((match) => {
+          const type = match[1] as '?' | '|' | '^^'
           const index = match.index! + file.offset;
           removals.push([index, index + match[0].length + 1]);
-          const markerIndex = index + match[0].indexOf("^");
-          targetsQuery.push(pc.getIndexOfLineAbove(markerIndex));
-        });
-
-        Array.from(file.content.matchAll(reMarkerCompletions)).forEach((match) => {
-          const index = match.index! + file.offset;
-          removals.push([index, index + match[0].length + 1]);
-          const markerIndex = index + match[0].indexOf("^");
-          targetsCompletions.push(pc.getIndexOfLineAbove(markerIndex));
-        });
-
-        Array.from(file.content.matchAll(reMarkerHighlight)).forEach((match) => {
-          const index = match.index! + file.offset;
-          removals.push([index, index + match[0].length + 1]);
-          const markerIndex = index + match[0].indexOf("^") + file.offset;
-          const markerLength = match[1].length;
-          const targetIndex = pc.getIndexOfLineAbove(markerIndex);
-          targetsHighlights.push([
-            targetIndex,
-            targetIndex + markerLength,
-          ]);
+          const markerIndex = match[0].indexOf("^");
+          const targetIndex = pc.getIndexOfLineAbove(index + markerIndex);
+          if (type === '?') {
+            targetsQuery.push(targetIndex);
+          } else if (type === '|') {
+            targetsCompletions.push(targetIndex);
+          } else {
+            const markerLength = match[0].lastIndexOf("^") - markerIndex + 1;
+            targetsHighlights.push([
+              targetIndex,
+              targetIndex + markerLength,
+            ]);
+          }
         });
       }
       // #endregion
@@ -304,7 +303,6 @@ export function createTwoSlasher(options: Partial<TwoSlashOptions> = {}): TwoSla
 
 
     // #region get diagnostics, after all files are mounted
-
     for (const file of files) {
       if (!supportedFileTyes.includes(file.extension)) {
         continue
@@ -369,16 +367,17 @@ export function createTwoSlasher(options: Partial<TwoSlashOptions> = {}): TwoSla
     }
 
 
-    const resultPC = outputCode === code ? pc : createPositionConverter(outputCode);
+    const resultPC = outputCode === code
+      ? pc // reuse the converter if nothing changed
+      : createPositionConverter(outputCode);
 
     const tokens = _tokens
       .filter(token => token.start >= 0)
-      .sort((a, b) => a.start - b.start)
-      .map(token => {
-        return {
-          ...token,
-          ...resultPC.indexToPos(token.start),
-        } as Token;
+      .sort((a, b) => a.start - b.start) as Token[];
+
+    tokens
+      .forEach(token => {
+        Object.assign(token, resultPC.indexToPos(token.start))
       })
 
     return {
@@ -413,7 +412,7 @@ export function createTwoSlasher(options: Partial<TwoSlashOptions> = {}): TwoSla
   }
 
   twoslasher.dispose = () => {
-    cache.clear();
+    cache?.clear();
   }
 
   twoslasher.getCacheMap = () => {
@@ -428,6 +427,9 @@ export function createTwoSlasher(options: Partial<TwoSlashOptions> = {}): TwoSla
  * 
  * It's recommended to use `createTwoSlash` for better performance on multiple runs
  */
-export function twoslasher(code: string, lang?: string, opts?: TwoSlashOptions) {
-  return createTwoSlasher(opts)(code, lang)
+export function twoslasher(code: string, lang?: string, opts?: Partial<TwoSlashOptions>) {
+  return createTwoSlasher({
+    ...opts,
+    cache: false,
+  })(code, lang)
 }

@@ -1,5 +1,5 @@
 {
-  "code": "type Result = \"pass\" | \"fail\"\n\nconst hello = \"OK\"\n",
+  "code": "type Result = \"pass\" | \"fail\"\nconst hello = \"OK\"\n",
   "tokens": [
     {
       "type": "highlight",
@@ -13,10 +13,10 @@
     {
       "type": "highlight",
       "text": "const hello: \"OK\"",
-      "start": 37,
+      "start": 36,
       "length": 5,
       "target": "hello",
-      "line": 2,
+      "line": 1,
       "character": 6
     }
   ]
