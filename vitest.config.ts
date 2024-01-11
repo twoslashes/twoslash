@@ -8,5 +8,8 @@ export default defineConfig({
       //   json: 'bench/results.json'
       // }
     },
+    coverage: {
+      include: ['src/**/*.ts'],
+    },
   },
 })
