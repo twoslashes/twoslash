@@ -194,10 +194,3 @@ export type TokenWithoutPosition =
   | Omit<TokenCompletion, keyof Position>
   | Omit<TokenError, keyof Position>
   | Omit<TokenTag, keyof Position>
-
-export interface TemporaryFile {
-  offset: number
-  filename: string
-  content: string
-  extension: string
-}

@@ -1,6 +1,13 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { Position, Range, TemporaryFile } from './types'
+import type { Position, Range } from './types'
+
+export interface TemporaryFile {
+  offset: number
+  filename: string
+  content: string
+  extension: string
+}
 
 export function parsePrimitive(value: string, type: string): any {
   // eslint-disable-next-line valid-typeof

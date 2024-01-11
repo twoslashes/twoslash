@@ -6,8 +6,7 @@ import type { CreateTwoSlashOptions, HandbookOptions, Range, Token, TokenError, 
 import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 
-export * from './error'
-export * from './types'
+export * from './public'
 
 type TS = typeof import('typescript')
 

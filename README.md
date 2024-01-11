@@ -8,7 +8,8 @@
 
 A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher), with improvements:
 
-> [!NOTE]: Working in progress, breaking changes are expected.
+> [!NOTE]
+> Working in progress, breaking changes are expected.
 
 - Unified tokens information interface, easier to work with
 - `createTwoslasher` function to create a twoslash instance with cached language servers (6~20x faster)
