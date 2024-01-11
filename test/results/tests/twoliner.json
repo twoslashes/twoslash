@@ -1,74 +1,69 @@
 {
   "code": "// @filename: getStringLength.ts\nexport const getStringLength = (str: string) => str.length\n// @filename: index.ts\nimport { getStringLength } from './getStringLength'\nconst b = getStringLength('string')\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "hover",
       "text": "const getStringLength: (str: string) => number",
-      "docs": "",
       "start": 46,
       "length": 15,
+      "target": "getStringLength",
       "line": 1,
-      "character": 13,
-      "targetString": "getStringLength"
+      "character": 13
     },
     {
+      "type": "hover",
       "text": "(parameter) str: string",
-      "docs": "",
       "start": 65,
       "length": 3,
+      "target": "str",
       "line": 1,
-      "character": 32,
-      "targetString": "str"
+      "character": 32
     },
     {
+      "type": "hover",
       "text": "(parameter) str: string",
-      "docs": "",
       "start": 81,
       "length": 3,
+      "target": "str",
       "line": 1,
-      "character": 48,
-      "targetString": "str"
+      "character": 48
     },
     {
+      "type": "hover",
       "text": "(property) String.length: number",
       "docs": "Returns the length of a String object.",
       "start": 85,
       "length": 6,
+      "target": "length",
       "line": 1,
-      "character": 52,
-      "targetString": "length"
+      "character": 52
     },
     {
+      "type": "hover",
       "text": "(alias) const getStringLength: (str: string) => number\nimport getStringLength",
-      "docs": "",
       "start": 124,
       "length": 15,
+      "target": "getStringLength",
       "line": 3,
-      "character": 9,
-      "targetString": "getStringLength"
+      "character": 9
     },
     {
+      "type": "hover",
       "text": "const b: number",
-      "docs": "",
       "start": 173,
       "length": 1,
+      "target": "b",
       "line": 4,
-      "character": 6,
-      "targetString": "b"
+      "character": 6
     },
     {
+      "type": "hover",
       "text": "(alias) getStringLength(str: string): number\nimport getStringLength",
-      "docs": "",
       "start": 177,
       "length": 15,
+      "target": "getStringLength",
       "line": 4,
-      "character": 10,
-      "targetString": "getStringLength"
+      "character": 10
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

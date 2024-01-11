@@ -1,141 +1,11 @@
-import type { CompilerOptions, CustomTransformers } from "typescript"
+import type { VirtualTypeScriptEnvironment } from "@typescript/vfs";
+import type { CompilerOptions, CompletionEntry, CustomTransformers } from "typescript"
+
 type TS = typeof import("typescript")
-
-// Hacking in some internal stuff
-
-declare module "typescript" {
-  interface Option {
-    name: string;
-    type: "list" | "boolean" | "number" | "string" | Map<string, any>;
-    element?: Option;
-  }
-
-  const optionDeclarations: Array<Option>;
-}
-
-export interface TokenBase {
-  /** 0-indexed position of the token in the file */
-  start: number
-  /** The length of the token */
-  length: number
-}
-
-export interface TokenHightlight extends TokenBase {
-  type: 'highlight'
-  /** The text of the token which is highlighted */
-  text?: string
-}
-
-export interface TokenQuickInfo extends TokenBase {
-  type: 'quick-info'
-  /** The string content of the node this represents (mainly for debugging) */
-  targetString: string
-  /** The base LSP response (the type) */
-  text: string
-  /** Attached JSDoc info */
-  docs: string | undefined
-}
-
-export interface TokenQuery extends TokenBase {
-  type: 'query'
-  /** The text of the token which is highlighted */
-  text?: string
-  /** Any attached JSDocs */
-  docs?: string | undefined
-}
-
-
-
-export interface TwoSlashReturn {
-  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
-  code: string
-
-  /** The new extension type for the code, potentially changed if they've requested emitted results */
-  extension: string
-
-  /** Requests to highlight a particular part of the code */
-  highlights: {
-    kind: "highlight"
-    /** The index of the text in the file */
-    start: number
-    /** What line is the highlighted identifier on? */
-    line: number
-    /** At what index in the line does the caret represent  */
-    offset: number
-    /** The text of the token which is highlighted */
-    text?: string
-    /** The length of the token */
-    length: number
-  }[]
-
-  /** An array of LSP responses identifiers in the sample  */
-  staticQuickInfos: {
-    /** The string content of the node this represents (mainly for debugging) */
-    targetString: string
-    /** The base LSP response (the type) */
-    text: string
-    /** Attached JSDoc info */
-    docs: string | undefined
-    /** The index of the text in the file */
-    start: number
-    /** how long the identifier */
-    length: number
-    /** line number where this is found */
-    line: number
-    /** The character on the line */
-    character: number
-  }[]
-
-  /** Requests to use the LSP to get info for a particular symbol in the source */
-  queries: {
-    kind: "query" | "completions"
-    /** What line is the highlighted identifier on? */
-    line: number
-    /** At what index in the line does the caret represent  */
-    offset: number
-    /** The text of the token which is highlighted */
-    text?: string
-    /** Any attached JSDocs */
-    docs?: string | undefined
-    /** The token start which the query indicates  */
-    start: number
-    /** The length of the token */
-    length: number
-    /** Results for completions at a particular point */
-    completions?: import("typescript").CompletionEntry[]
-    /* Completion prefix e.g. the letters before the cursor in the word so you can filter */
-    completionsPrefix?: string
-  }[]
-
-  /** The extracted twoslash commands for any custom tags passed in via customTags */
-  tags: {
-    /** What was the name of the tag */
-    name: string
-    /** Where was it located in the original source file */
-    line: number
-    /** What was the text after the `// @tag: ` string  (optional because you could do // @tag on it's own line without the ':') */
-    annotation?: string
-  }[]
-
-  /** Diagnostic error messages which came up when creating the program */
-  errors: {
-    renderedMessage: string
-    id: string
-    category: 0 | 1 | 2 | 3
-    code: number
-    start: number | undefined
-    length: number | undefined
-    line: number | undefined
-    character: number | undefined
-  }[]
-
-  /** The URL for this sample in the playground */
-  playgroundURL: string
-}
 
 export interface TwoSlashOptions {
   /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
-  defaultOptions?: Partial<ExampleOptions>
+  defaultOptions?: Partial<HandbookOptions>
 
   /** Allows setting any of the compiler options from outside the function */
   defaultCompilerOptions?: CompilerOptions
@@ -162,35 +32,65 @@ export interface TwoSlashOptions {
   customTags?: string[]
 }
 
-export interface QueryPosition {
-  kind: "query" | "completion";
-  offset: number;
-  text: string | undefined;
-  docs: string | undefined;
-  line: number;
+export interface CreateTwoSlashOptions extends TwoSlashOptions {
+  /**
+   * Cache the ts envs based on compiler options, defaults to true
+   */
+  cache?: boolean | Map<string, VirtualTypeScriptEnvironment>
 }
-export interface PartialQueryResults {
-  kind: "query";
-  text: string;
-  docs: string | undefined;
-  line: number;
-  offset: number;
-  file: string;
-}
-export interface PartialCompletionResults {
-  kind: "completions";
-  completions: import("typescript").CompletionEntry[];
-  completionPrefix: string;
 
-  line: number;
-  offset: number;
-  file: string;
+export interface TwoSlashInstance {
+  /**
+   * Run TwoSlash on a string of code, with a particular extension
+   */
+  (code: string, extension?: string): TwoSlashReturn;
+  /**
+   * Clear caches and dispose of the instance
+   */
+  dispose(): void;
+  /**
+   * Get the internal cache map
+   */
+  getCacheMap(): Map<string, VirtualTypeScriptEnvironment> | undefined
 }
-export type HighlightPosition = TwoSlashReturn["highlights"][number];
+
+export interface TwoSlashReturn {
+  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
+  code: string;
+
+  /**
+   * Tokens contains various bits of information about the code
+   */
+  tokens: Token[];
+
+  get queries(): TokenQuery[];
+  get completions(): TokenCompletion[];
+  get errors(): TokenError[];
+  get highlights(): TokenHighlight[];
+  get hovers(): TokenHover[];
+  get tags(): TokenTag[];
+
+  meta: {
+    /** The new extension type for the code, potentially changed if they've requested emitted results */
+    extension: string;
+    /**
+     * Ranges of text which should be removed from the output
+     */
+    removals: Range[]
+    /**
+     * Resolved compiler options
+     */
+    compilerOptions: CompilerOptions
+    /**
+     * Resolved handbook options
+     */
+    handbookOptions: HandbookOptions
+  }
+}
 
 
 /** Available inline flags which are not compiler flags */
-export interface ExampleOptions {
+export interface HandbookOptions {
   /** Lets the sample suppress all error diagnostics */
   noErrors: boolean
   /** An array of TS error codes, which you write as space separated - this is so the tool can know about unexpected errors */
@@ -201,7 +101,7 @@ export interface ExampleOptions {
    * Must be used with showEmit, lets you choose the file to present instead of the source - defaults to index.js which
    * means when you just use `showEmit` above it shows the transpiled JS.
    */
-  showEmittedFile: string
+  showEmittedFile?: string
 
   /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
   noStaticSemanticInfo: boolean
@@ -209,4 +109,84 @@ export interface ExampleOptions {
   emit: boolean
   /** Declare that you don't need to validate that errors have corresponding annotations, defaults to false */
   noErrorValidation: boolean
+}
+
+
+export interface Position {
+  /**
+   * 0-indexed line number
+   */
+  line: number;
+  /**
+   * 0-indexed column number
+   */
+  character: number;
+}
+
+export type Range = [start: number, end: number];
+
+export interface TokenBase extends Position {
+  /** The length of the token */
+  length: number;
+  /** 0-indexed position of the token in the file */
+  start: number;
+}
+
+export interface TokenHover extends TokenBase {
+  type: 'hover';
+  /** The string content of the node this represents (mainly for debugging) */
+  target: string;
+  /** The base LSP response (the type) */
+  text: string;
+  /** Attached JSDoc info */
+  docs?: string
+}
+
+export interface TokenHighlight extends Omit<TokenHover, 'type'> {
+  type: 'highlight';
+}
+
+export interface TokenQuery extends Omit<TokenHover, 'type'> {
+  type: 'query';
+}
+
+export interface TokenCompletion extends TokenBase {
+  type: 'completion';
+  /** Results for completions at a particular point */
+  completions?: CompletionEntry[];
+  /* Completion prefix e.g. the letters before the cursor in the word so you can filter */
+  completionsPrefix?: string;
+}
+
+export interface TokenError extends TokenBase {
+  type: 'error';
+  id: string;
+  level: 0 | 1 | 2 | 3;
+  code: number;
+  text: string
+  filename: string
+}
+
+export interface TokenTag extends TokenBase {
+  type: 'tag';
+  /** What was the name of the tag */
+  name: string;
+  /** What was the text after the `// @tag: ` string  (optional because you could do // @tag on it's own line without the ':') */
+  text?: string;
+}
+
+export type Token = TokenHighlight | TokenHover | TokenQuery | TokenCompletion | TokenError | TokenTag;
+export type TokenWithoutPosition =
+  | Omit<TokenHighlight, keyof Position>
+  | Omit<TokenHover, keyof Position>
+  | Omit<TokenQuery, keyof Position>
+  | Omit<TokenCompletion, keyof Position>
+  | Omit<TokenError, keyof Position>
+  | Omit<TokenTag, keyof Position>
+
+export interface TemporaryFile {
+  offset: number
+  filename: string
+  content: string
+  extension: string
 }

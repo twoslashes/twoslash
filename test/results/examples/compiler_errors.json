@@ -1,84 +1,81 @@
 {
   "code": "\nfunction fn(s) {\n  console.log(s.subtr(3))\n}\n\nfn(42)\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "hover",
       "text": "function fn(s: any): void",
-      "docs": "",
       "start": 10,
       "length": 2,
+      "target": "fn",
       "line": 1,
-      "character": 9,
-      "targetString": "fn"
+      "character": 9
     },
     {
+      "type": "hover",
       "text": "(parameter) s: any",
-      "docs": "",
       "start": 13,
       "length": 1,
+      "target": "s",
       "line": 1,
-      "character": 12,
-      "targetString": "s"
+      "character": 12
     },
     {
+      "type": "error",
+      "start": 13,
+      "length": 1,
+      "code": 7006,
+      "filename": "[home]/index.ts",
+      "id": "err-7006-49-1",
+      "text": "Parameter 's' implicitly has an 'any' type.",
+      "level": 1,
+      "line": 1,
+      "character": 12
+    },
+    {
+      "type": "hover",
       "text": "var console: Console",
-      "docs": "",
       "start": 20,
       "length": 7,
+      "target": "console",
       "line": 2,
-      "character": 2,
-      "targetString": "console"
+      "character": 2
     },
     {
+      "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
       "start": 28,
       "length": 3,
+      "target": "log",
       "line": 2,
-      "character": 10,
-      "targetString": "log"
+      "character": 10
     },
     {
+      "type": "hover",
       "text": "(parameter) s: any",
-      "docs": "",
       "start": 32,
       "length": 1,
+      "target": "s",
       "line": 2,
-      "character": 14,
-      "targetString": "s"
+      "character": 14
     },
     {
+      "type": "hover",
       "text": "any",
       "start": 34,
       "length": 5,
+      "target": "subtr",
       "line": 2,
-      "character": 16,
-      "targetString": "subtr"
+      "character": 16
     },
     {
+      "type": "hover",
       "text": "function fn(s: any): void",
-      "docs": "",
       "start": 47,
       "length": 2,
+      "target": "fn",
       "line": 5,
-      "character": 0,
-      "targetString": "fn"
+      "character": 0
     }
-  ],
-  "errors": [
-    {
-      "category": 1,
-      "code": 7006,
-      "length": 1,
-      "start": 13,
-      "line": 1,
-      "character": 12,
-      "renderedMessage": "Parameter 's' implicitly has an 'any' type.",
-      "id": "err-7006-13-1"
-    }
-  ],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

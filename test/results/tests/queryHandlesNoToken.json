@@ -1,138 +1,114 @@
 {
-  "code": "type Either2dOr3d = [number, number, number?]\n\nfunction setCoordinate(coord: Either2dOr3d) {\n  const [x, y, z] = coord\n\n  console.log(`Provided coordinates had ${coord.length} dimensions`)\n}\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [
+  "code": "type Either2dOr3d = [number, number, number?]\n\nfunction setCoordinate(coord: Either2dOr3d) {\n  const [x, y, z] = coord\n  console.log(`Provided coordinates had ${coord.length} dimensions`)\n}\n",
+  "tokens": [
     {
-      "docs": "",
-      "kind": "query",
-      "start": 108,
-      "length": 27,
-      "text": "const z: number | undefined",
-      "offset": 15,
-      "line": 4
-    },
-    {
-      "docs": "",
-      "kind": "query",
-      "start": 168,
-      "length": 24,
-      "text": "(property) length: 2 | 3",
-      "offset": 48,
-      "line": 6
-    }
-  ],
-  "staticQuickInfos": [
-    {
+      "type": "hover",
       "text": "type Either2dOr3d = [number, number, (number | undefined)?]",
-      "docs": "",
       "start": 5,
       "length": 12,
+      "target": "Either2dOr3d",
       "line": 0,
-      "character": 5,
-      "targetString": "Either2dOr3d"
+      "character": 5
     },
     {
+      "type": "hover",
       "text": "function setCoordinate(coord: Either2dOr3d): void",
-      "docs": "",
       "start": 56,
       "length": 13,
+      "target": "setCoordinate",
       "line": 2,
-      "character": 9,
-      "targetString": "setCoordinate"
+      "character": 9
     },
     {
+      "type": "hover",
       "text": "(parameter) coord: Either2dOr3d",
-      "docs": "",
       "start": 70,
       "length": 5,
+      "target": "coord",
       "line": 2,
-      "character": 23,
-      "targetString": "coord"
+      "character": 23
     },
     {
+      "type": "hover",
       "text": "type Either2dOr3d = [number, number, (number | undefined)?]",
-      "docs": "",
       "start": 77,
       "length": 12,
+      "target": "Either2dOr3d",
       "line": 2,
-      "character": 30,
-      "targetString": "Either2dOr3d"
+      "character": 30
     },
     {
+      "type": "hover",
       "text": "const x: number",
-      "docs": "",
       "start": 102,
       "length": 1,
+      "target": "x",
       "line": 3,
-      "character": 9,
-      "targetString": "x"
+      "character": 9
     },
     {
+      "type": "hover",
       "text": "const y: number",
-      "docs": "",
       "start": 105,
       "length": 1,
+      "target": "y",
       "line": 3,
-      "character": 12,
-      "targetString": "y"
+      "character": 12
     },
     {
+      "type": "query",
       "text": "const z: number | undefined",
-      "docs": "",
       "start": 108,
       "length": 1,
+      "target": "z",
       "line": 3,
-      "character": 15,
-      "targetString": "z"
+      "character": 15
     },
     {
+      "type": "hover",
       "text": "(parameter) coord: Either2dOr3d",
-      "docs": "",
       "start": 113,
       "length": 5,
+      "target": "coord",
       "line": 3,
-      "character": 20,
-      "targetString": "coord"
+      "character": 20
     },
     {
+      "type": "hover",
       "text": "var console: Console",
-      "docs": "",
-      "start": 122,
+      "start": 121,
       "length": 7,
-      "line": 5,
-      "character": 2,
-      "targetString": "console"
+      "target": "console",
+      "line": 4,
+      "character": 2
     },
     {
+      "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
       "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
-      "start": 130,
+      "start": 129,
       "length": 3,
-      "line": 5,
-      "character": 10,
-      "targetString": "log"
+      "target": "log",
+      "line": 4,
+      "character": 10
     },
     {
+      "type": "hover",
       "text": "(parameter) coord: Either2dOr3d",
-      "docs": "",
-      "start": 162,
+      "start": 161,
       "length": 5,
-      "line": 5,
-      "character": 42,
-      "targetString": "coord"
+      "target": "coord",
+      "line": 4,
+      "character": 42
     },
     {
+      "type": "query",
       "text": "(property) length: 2 | 3",
-      "docs": "",
-      "start": 168,
+      "start": 167,
       "length": 6,
-      "line": 5,
-      "character": 48,
-      "targetString": "length"
+      "target": "length",
+      "line": 4,
+      "character": 48
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

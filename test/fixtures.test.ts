@@ -1,15 +1,19 @@
 import fs from "node:fs/promises"
 import { extname, join, parse } from "node:path"
-import { format } from "prettier"
 import { describe, expect, it } from 'vitest'
-import type { TwoSlashReturn } from "../src/index";
-import { twoslasher } from "../src/index"
+import type { TwoSlashReturn } from "../src/types";
+import { createTwoSlasher } from "../src/index";
+import { FEAT_SHOW_EMIT } from "./FEATURES";
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
 
 const fixturesFolder = join(__dirname, "fixtures")
 const resultsFolder = join(__dirname, "results")
+
+const twoslasher = createTwoSlasher({
+  customTags: ["annotate"]
+})
 
 describe("fixtures", async () => {
   const fixturesTests = await fs.readdir(join(fixturesFolder, "tests"))
@@ -24,23 +28,25 @@ describe("fixtures", async () => {
       // if(!fixtureName.includes("imports")) return
       it(fixtureName, async () => {
         const resultName = `${parse(fixtureName).name}.json`
-        const result = join(resultsFolder, "tests", resultName)
-
         const file = await fs.readFile(fixture, "utf8")
 
-        const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
-        const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-        expect(jsonString).toMatchFileSnapshot(result)
+        if (!FEAT_SHOW_EMIT && file.includes("@showEmit"))
+          return
+
+        const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
+        expect(cleanFixture(fourslashed))
+          .toMatchFileSnapshot(join(resultsFolder, "tests", resultName))
       })
     })
   )
 })
 
-describe("fixtures readme", async () => {
+describe("fixtures examples", async () => {
+  const fixturesFolder = join(__dirname, "fixtures", "examples")
   const fixturesRoot = await fs.readdir(join(fixturesFolder))
 
   await Promise.all(
-    fixturesRoot.map(async fixtureName => {
+    fixturesRoot.map(async (fixtureName) => {
       const fixture = join(fixturesFolder, fixtureName)
       if (await fs.lstat(fixture).then(r => r.isDirectory())) {
         return
@@ -49,13 +55,14 @@ describe("fixtures readme", async () => {
       // if(!fixtureName.includes("compiler_fl")) return
       it(fixtureName, async () => {
         const resultName = `${parse(fixtureName).name}.json`
-        const result = join(resultsFolder, resultName)
 
         const file = await fs.readFile(fixture, "utf8")
+        if (!FEAT_SHOW_EMIT && file.includes("@showEmit"))
+          return
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
-        const jsonString = format(JSON.stringify(cleanFixture(fourslashed)), { parser: "json" })
-        expect(jsonString).toMatchFileSnapshot(result)
+        expect(cleanFixture(fourslashed))
+          .toMatchFileSnapshot(join(resultsFolder, "examples", resultName))
       })
     })
   )
@@ -74,8 +81,7 @@ describe("fixtures throws", async () => {
       }
 
       it(fixtureName, async () => {
-        const resultName = `${parse(fixtureName).name}.json`
-        const result = join(resultsFolder, resultName)
+        const resultName = `${parse(fixtureName).name}.txt`
 
         const file = await fs.readFile(fixture, "utf8")
 
@@ -85,7 +91,7 @@ describe("fixtures throws", async () => {
         } catch (err) {
           thrown = true
           if (err instanceof Error)
-            expect(err.message).toMatchFileSnapshot(result)
+            expect(err.message).toMatchFileSnapshot(join(resultsFolder, "throws", resultName))
         }
 
         if (!thrown) throw new Error("Did not throw")
@@ -95,9 +101,9 @@ describe("fixtures throws", async () => {
 })
 
 function cleanFixture(ts: TwoSlashReturn) {
-  const wd = process.cwd();
-  ts.staticQuickInfos.forEach(info => {
-    info.text = info.text.replace(new RegExp(wd, "g"), "[home]");
-  });
-  return ts;
+  return JSON.stringify({
+    code: ts.code,
+    tokens: ts.tokens,
+    // compilerOptions: ts.meta.compilerOptions
+  }, null, 2).replaceAll(process.cwd(), "[home]")
 }

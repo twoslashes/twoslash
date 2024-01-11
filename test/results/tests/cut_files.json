@@ -1,20 +1,14 @@
 {
   "code": "const bye = 'globe'\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "hover",
       "text": "const bye: \"globe\"",
-      "docs": "",
       "start": 6,
       "length": 3,
+      "target": "bye",
       "line": 0,
-      "character": 6,
-      "targetString": "bye"
+      "character": 6
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

@@ -1,0 +1,40 @@
+{
+  "code": "console.log\n",
+  "tokens": [
+    {
+      "type": "hover",
+      "text": "var console: Console",
+      "start": 0,
+      "length": 7,
+      "target": "console",
+      "line": 0,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(method) Console.log(...data: any[]): void",
+      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
+      "start": 8,
+      "length": 3,
+      "target": "log",
+      "line": 0,
+      "character": 8
+    },
+    {
+      "type": "completion",
+      "start": 9,
+      "length": 0,
+      "completions": [
+        {
+          "name": "log",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "completionsPrefix": "l",
+      "line": 0,
+      "character": 9
+    }
+  ]
+}

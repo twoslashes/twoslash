@@ -1,30 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "esnext",
     "jsx": "react",
-    "lib": ["dom", "esnext"],
-    "baseUrl": "./src",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "module": "esnext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "paths": {
-      "*": ["src/*", "node_modules/*"]
+      "twoslashes": [
+        "./src/index"
+      ]
     },
     "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "alwaysStrict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "declaration": true,
-    "importHelpers": true,
-    "sourceMap": true,
     "esModuleInterop": true
   },
-  "include": ["src", "types", "test"],
-  "exclude": ["test/fixtures"]
+  "exclude": [
+    "test/fixtures",
+    "dist"
+  ]
 }

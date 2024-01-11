@@ -1,0 +1,14 @@
+{
+  "code": "let foo = \"hello there!\";\n",
+  "tokens": [
+    {
+      "type": "query",
+      "text": "let foo: string",
+      "start": 4,
+      "length": 3,
+      "target": "foo",
+      "line": 0,
+      "character": 4
+    }
+  ]
+}

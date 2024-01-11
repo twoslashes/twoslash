@@ -1,17 +1,16 @@
+import type { TokenError } from "./types"
 import { TwoslashError } from "./error"
 
 /** To ensure that errors are matched up right */
 export function validateCodeForErrors(
-  relevantErrors: import("typescript").Diagnostic[],
+  relevantErrors: TokenError[],
   handbookOptions: { errors: number[] },
-  extension: string,
-  originalCode: string,
   vfsRoot: string
 ) {
-  const inErrsButNotFoundInTheHeader = relevantErrors.filter(e => !handbookOptions.errors.includes(e.code))
-  const errorsFound = Array.from(new Set(inErrsButNotFoundInTheHeader.map(e => e.code))).join(" ")
+  const unspecifiedErrors = relevantErrors.filter(e => !handbookOptions.errors.includes(e.code))
+  const errorsFound = Array.from(new Set(unspecifiedErrors.map(e => e.code))).join(" ")
 
-  if (inErrsButNotFoundInTheHeader.length) {
+  if (unspecifiedErrors.length) {
     const errorsToShow = new Set(relevantErrors.map(e => e.code))
     const codeToAdd = `// @errors: ${Array.from(errorsToShow).join(" ")}`
 
@@ -20,11 +19,11 @@ export function validateCodeForErrors(
       : `\nExpected: ${codeToAdd}`
 
     // These get filled by below
-    const filesToErrors: Record<string, import("typescript").Diagnostic[]> = {}
-    const noFiles: import("typescript").Diagnostic[] = []
+    const filesToErrors: Record<string, TokenError[]> = {}
+    const noFiles: TokenError[] = []
 
-    inErrsButNotFoundInTheHeader.forEach(d => {
-      const fileRef = d.file?.fileName && d.file.fileName.replace(vfsRoot, "")
+    unspecifiedErrors.forEach(d => {
+      const fileRef = d.filename?.replace(vfsRoot, "")
       if (!fileRef) noFiles.push(d)
       else {
         const existing = filesToErrors[fileRef]
@@ -33,15 +32,10 @@ export function validateCodeForErrors(
       }
     })
 
-    const showDiagnostics = (title: string, diags: import("typescript").Diagnostic[]) => {
-      return (
-        `${title}\n  ${ 
-        diags
-          .map(e => {
-            const msg = typeof e.messageText === "string" ? e.messageText : e.messageText.messageText
-            return `[${e.code}] ${e.start} - ${msg}`
-          })
-          .join("\n  ")}`
+    const showDiagnostics = (title: string, diags: TokenError[]) => {
+      return (`${title}\n  ${diags
+        .map(e => `[${e.code}] ${e.start} - ${e.text}`)
+        .join("\n  ")}`
       )
     }
 
@@ -61,7 +55,6 @@ export function validateCodeForErrors(
       `Compiler Errors:\n\n${allMessages}`
     )
 
-    newErr.code = `## Code\n\n'''${extension}\n${originalCode}\n'''`
     throw newErr
   }
 }

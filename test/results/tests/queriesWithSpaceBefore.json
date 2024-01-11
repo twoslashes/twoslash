@@ -1,57 +1,41 @@
 {
   "code": "const a: string = \"242342\"\nconst b = \"hello\"\nif (a === b) {\n}\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [
+  "tokens": [
     {
-      "docs": "",
-      "kind": "query",
-      "start": 55,
-      "length": 16,
-      "text": "const b: \"hello\"",
-      "offset": 10,
-      "line": 3
-    }
-  ],
-  "staticQuickInfos": [
-    {
+      "type": "hover",
       "text": "const a: string",
-      "docs": "",
       "start": 6,
       "length": 1,
+      "target": "a",
       "line": 0,
-      "character": 6,
-      "targetString": "a"
+      "character": 6
     },
     {
+      "type": "hover",
       "text": "const b: \"hello\"",
-      "docs": "",
       "start": 33,
       "length": 1,
+      "target": "b",
       "line": 1,
-      "character": 6,
-      "targetString": "b"
+      "character": 6
     },
     {
+      "type": "hover",
       "text": "const a: string",
-      "docs": "",
       "start": 49,
       "length": 1,
+      "target": "a",
       "line": 2,
-      "character": 4,
-      "targetString": "a"
+      "character": 4
     },
     {
+      "type": "query",
       "text": "const b: \"hello\"",
-      "docs": "",
       "start": 55,
       "length": 1,
+      "target": "b",
       "line": 2,
-      "character": 10,
-      "targetString": "b"
+      "character": 10
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

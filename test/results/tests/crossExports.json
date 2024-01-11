@@ -1,109 +1,104 @@
 {
   "code": "// @filename: utilFunctions.js\nconst getStringLength = str => str.length\nmodule.exports = {\n  getStringLength,\n}\n\n// @filename: index.ts\nimport utils from './utilFunctions'\nconst count = utils.getStringLength('Check JS')\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "hover",
       "text": "const getStringLength: (str: any) => any",
-      "docs": "",
       "start": 37,
       "length": 15,
+      "target": "getStringLength",
       "line": 1,
-      "character": 6,
-      "targetString": "getStringLength"
+      "character": 6
     },
     {
+      "type": "hover",
       "text": "(parameter) str: any",
-      "docs": "",
       "start": 55,
       "length": 3,
+      "target": "str",
       "line": 1,
-      "character": 24,
-      "targetString": "str"
+      "character": 24
     },
     {
+      "type": "hover",
       "text": "(parameter) str: any",
-      "docs": "",
       "start": 62,
       "length": 3,
+      "target": "str",
       "line": 1,
-      "character": 31,
-      "targetString": "str"
+      "character": 31
     },
     {
+      "type": "hover",
       "text": "any",
       "start": 66,
       "length": 6,
+      "target": "length",
       "line": 1,
-      "character": 35,
-      "targetString": "length"
+      "character": 35
     },
     {
+      "type": "hover",
       "text": "var module: {\n    exports: typeof module.exports;\n}",
-      "docs": "",
       "start": 73,
       "length": 6,
+      "target": "module",
       "line": 2,
-      "character": 0,
-      "targetString": "module"
+      "character": 0
     },
     {
+      "type": "hover",
       "text": "module module.exports",
-      "docs": "",
       "start": 80,
       "length": 7,
+      "target": "exports",
       "line": 2,
-      "character": 7,
-      "targetString": "exports"
+      "character": 7
     },
     {
+      "type": "hover",
       "text": "(property) getStringLength: (str: any) => any",
-      "docs": "",
       "start": 94,
       "length": 15,
+      "target": "getStringLength",
       "line": 3,
-      "character": 2,
-      "targetString": "getStringLength"
+      "character": 2
     },
     {
+      "type": "hover",
       "text": "import utils",
-      "docs": "",
       "start": 144,
       "length": 5,
+      "target": "utils",
       "line": 7,
-      "character": 7,
-      "targetString": "utils"
+      "character": 7
     },
     {
+      "type": "hover",
       "text": "const count: any",
-      "docs": "",
       "start": 179,
       "length": 5,
+      "target": "count",
       "line": 8,
-      "character": 6,
-      "targetString": "count"
+      "character": 6
     },
     {
+      "type": "hover",
       "text": "import utils",
-      "docs": "",
       "start": 187,
       "length": 5,
+      "target": "utils",
       "line": 8,
-      "character": 14,
-      "targetString": "utils"
+      "character": 14
     },
     {
+      "type": "hover",
       "text": "(alias) getStringLength(str: any): any\nimport getStringLength",
-      "docs": "",
       "start": 193,
       "length": 15,
+      "target": "getStringLength",
       "line": 8,
-      "character": 20,
-      "targetString": "getStringLength"
+      "character": 20
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

@@ -1,67 +1,74 @@
 {
   "code": "// @filename: settings.json\n{\n    \"repo\": \"TypeScript\",\n    \"dry\": false,\n    \"debug\": false\n}\n// @filename: index.ts\nimport settings from \"./settings.json\";\n\nsettings.debug === true;\nsettings.dry === 2;\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "error",
+      "start": 2,
+      "length": 18,
+      "code": 2367,
+      "filename": "[home]/index.ts",
+      "id": "err-2367-89-18",
+      "text": "This comparison appears to be unintentional because the types 'boolean' and 'number' have no overlap.",
+      "level": 1,
+      "line": 0,
+      "character": 2
+    },
+    {
+      "type": "hover",
       "text": "import settings",
-      "docs": "",
       "start": 125,
       "length": 8,
+      "target": "settings",
       "line": 7,
-      "character": 7,
-      "targetString": "settings"
+      "character": 7
     },
     {
+      "type": "hover",
       "text": "import settings",
-      "docs": "",
       "start": 159,
       "length": 8,
+      "target": "settings",
       "line": 9,
-      "character": 0,
-      "targetString": "settings"
+      "character": 0
     },
     {
+      "type": "hover",
       "text": "(property) \"debug\": boolean",
-      "docs": "",
       "start": 168,
       "length": 5,
+      "target": "debug",
       "line": 9,
-      "character": 9,
-      "targetString": "debug"
+      "character": 9
     },
     {
+      "type": "hover",
       "text": "import settings",
-      "docs": "",
       "start": 184,
       "length": 8,
+      "target": "settings",
       "line": 10,
-      "character": 0,
-      "targetString": "settings"
+      "character": 0
     },
     {
+      "type": "error",
+      "start": 184,
+      "length": 18,
+      "code": 2367,
+      "filename": "[home]/index.ts",
+      "id": "err-2367-89-18",
+      "text": "This comparison appears to be unintentional because the types 'boolean' and 'number' have no overlap.",
+      "level": 1,
+      "line": 10,
+      "character": 0
+    },
+    {
+      "type": "hover",
       "text": "(property) \"dry\": boolean",
-      "docs": "",
       "start": 193,
       "length": 3,
+      "target": "dry",
       "line": 10,
-      "character": 9,
-      "targetString": "dry"
+      "character": 9
     }
-  ],
-  "errors": [
-    {
-      "category": 1,
-      "code": 2367,
-      "length": 18,
-      "start": 184,
-      "line": 10,
-      "character": 0,
-      "renderedMessage": "This comparison appears to be unintentional because the types 'boolean' and 'number' have no overlap.",
-      "id": "err-2367-66-18"
-    }
-  ],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

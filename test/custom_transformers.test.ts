@@ -2,8 +2,9 @@ import type { Node, SourceFile, TransformationContext, TransformerFactory } from
 import { isSourceFile, isStringLiteral, visitEachChild, visitNode } from "typescript"
 import { expect, it } from 'vitest'
 import { twoslasher } from "../src/index"
+import { FEAT_SHOW_EMIT } from "./FEATURES";
 
-it("applies custom transformers", () => {
+it.skipIf(!FEAT_SHOW_EMIT)("applies custom transformers", () => {
   const code = "console.log('Hello World!')"
   // A simple transformer that uppercases all string literals
   const transformer: TransformerFactory<SourceFile> = (ctx: TransformationContext) => {

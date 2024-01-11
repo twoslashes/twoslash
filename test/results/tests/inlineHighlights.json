@@ -1,46 +1,23 @@
 {
-  "code": "type Result = \"pass\" | \"fail\"\n\nconst hello = \"OK\"\n",
-  "extension": "ts",
-  "highlights": [
+  "code": "type Result = \"pass\" | \"fail\"\nconst hello = \"OK\"\n",
+  "tokens": [
     {
-      "kind": "highlight",
-      "offset": 5,
-      "length": 6,
-      "text": "",
-      "line": 0,
-      "start": 5
-    },
-    {
-      "kind": "highlight",
-      "offset": 37,
-      "length": 2,
-      "text": "Sure",
-      "line": 3,
-      "start": 6
-    }
-  ],
-  "queries": [],
-  "staticQuickInfos": [
-    {
+      "type": "highlight",
       "text": "type Result = \"pass\" | \"fail\"",
-      "docs": "",
       "start": 5,
       "length": 6,
+      "target": "Result",
       "line": 0,
-      "character": 5,
-      "targetString": "Result"
+      "character": 5
     },
     {
+      "type": "highlight",
       "text": "const hello: \"OK\"",
-      "docs": "",
-      "start": 37,
+      "start": 36,
       "length": 5,
-      "line": 2,
-      "character": 6,
-      "targetString": "hello"
+      "target": "hello",
+      "line": 1,
+      "character": 6
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

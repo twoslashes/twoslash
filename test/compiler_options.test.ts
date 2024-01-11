@@ -1,8 +1,9 @@
 import { ModuleKind } from "typescript"
 import { expect, it } from 'vitest'
 import { twoslasher } from "../src/index"
+import { FEAT_SHOW_EMIT } from "./FEATURES"
 
-it("emits CommonJS", () => {
+it.skipIf(!FEAT_SHOW_EMIT)("emits CommonJS", () => {
   const files = `
 // @filename: file-with-export.ts
 export const helloWorld = "Example string";

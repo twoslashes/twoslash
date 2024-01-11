@@ -1,74 +1,70 @@
 {
   "code": "// The testing infra has set up `annotate` to be a customTag\n\n// @annotate - left - You can use JSDoc comments to provide type information to your editor\nfunction compact(arr: string[]) {\n  if (arr.length > 10) return arr.length\n  // @annotate - right - You can use JSDoc comments to provide type information to your editor\n  return arr\n}\n",
-  "extension": "ts",
-  "highlights": [],
-  "queries": [],
-  "staticQuickInfos": [
+  "tokens": [
     {
+      "type": "hover",
       "text": "function compact(arr: string[]): number | string[]",
-      "docs": "",
       "start": 163,
       "length": 7,
+      "target": "compact",
       "line": 3,
-      "character": 9,
-      "targetString": "compact"
+      "character": 9
     },
     {
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "docs": "",
       "start": 171,
       "length": 3,
+      "target": "arr",
       "line": 3,
-      "character": 17,
-      "targetString": "arr"
+      "character": 17
     },
     {
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "docs": "",
       "start": 194,
       "length": 3,
+      "target": "arr",
       "line": 4,
-      "character": 6,
-      "targetString": "arr"
+      "character": 6
     },
     {
+      "type": "hover",
       "text": "(property) Array<string>.length: number",
       "docs": "Gets or sets the length of the array. This is a number one higher than the highest index in the array.",
       "start": 198,
       "length": 6,
+      "target": "length",
       "line": 4,
-      "character": 10,
-      "targetString": "length"
+      "character": 10
     },
     {
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "docs": "",
       "start": 218,
       "length": 3,
+      "target": "arr",
       "line": 4,
-      "character": 30,
-      "targetString": "arr"
+      "character": 30
     },
     {
+      "type": "hover",
       "text": "(property) Array<string>.length: number",
       "docs": "Gets or sets the length of the array. This is a number one higher than the highest index in the array.",
       "start": 222,
       "length": 6,
+      "target": "length",
       "line": 4,
-      "character": 34,
-      "targetString": "length"
+      "character": 34
     },
     {
+      "type": "hover",
       "text": "(parameter) arr: string[]",
-      "docs": "",
       "start": 333,
       "length": 3,
+      "target": "arr",
       "line": 6,
-      "character": 9,
-      "targetString": "arr"
+      "character": 9
     }
-  ],
-  "errors": [],
-  "tags": [],
-  "playgroundURL": ""
+  ]
 }

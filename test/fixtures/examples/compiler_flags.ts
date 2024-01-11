@@ -3,7 +3,7 @@
 
 // This will not throw because of the noImplicitAny
 function fn(s) {
-  console.log(s.subtr(3))
+  console.log(s.slice(3))
 }
 
 fn(42);
