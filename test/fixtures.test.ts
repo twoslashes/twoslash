@@ -1,9 +1,12 @@
 import fs from 'node:fs/promises'
 import { extname, join, parse } from 'node:path'
+import process from 'node:process'
 import { describe, expect, it } from 'vitest'
 import type { TwoSlashReturn } from '../src/types'
 import { createTwoSlasher } from '../src/index'
 import { FEAT_SHOW_EMIT } from './FEATURES'
+
+const isWindows = process.platform === 'win32'
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
@@ -13,7 +16,7 @@ const resultsFolder = join(__dirname, 'results')
 
 const twoslasher = createTwoSlasher()
 
-describe('fixtures', async () => {
+describe.skipIf(isWindows)('fixtures', async () => {
   const fixturesTests = await fs.readdir(join(fixturesFolder, 'tests'))
 
   await Promise.all(
