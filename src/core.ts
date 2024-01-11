@@ -1,4 +1,3 @@
-
 import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { objectHash } from 'ohash'
@@ -191,7 +190,7 @@ export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): 
 
     const supportedFileTyes = ["js", "jsx", "ts", "tsx"]
     const files = splitFiles(code, defaultFilename, fsRoot)
-
+    
     for (const file of files) {
       // Only run the LSP-y things on source files
       if (file.extension === "json") {
@@ -230,14 +229,13 @@ export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): 
       // #region get ts info for quick info
       const source = ls.getProgram()!.getSourceFile(file.filename)!;
       const identifiers = getIdentifierTextSpans(ts, source);
-      for (const identifier of identifiers) {
-        const start = identifier.span.start + file.offset
+      for (const [offset, target] of identifiers) {
+        const start = offset + file.offset
         if (isInRemoval(start))
           continue;
 
         // TODO: hooks to filter out some identifiers
-        const span = identifier.span;
-        const quickInfo = ls.getQuickInfoAtPosition(file.filename, span.start);
+        const quickInfo = ls.getQuickInfoAtPosition(file.filename, offset);
 
         if (quickInfo && quickInfo.displayParts) {
           const text = quickInfo.displayParts.map(dp => dp.text).join("");
@@ -250,8 +248,8 @@ export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): 
             text,
             docs,
             start,
-            length: span.length,
-            target: identifier.text
+            length: target.length,
+            target
           });
         }
       }
@@ -300,7 +298,6 @@ export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): 
       });
       // #endregion
     }
-
 
     // #region get diagnostics, after all files are mounted
     for (const file of files) {

@@ -1,4 +1,4 @@
-import * as ts from "typescript/lib/tsserverlibrary"
+import ts from "typescript"
 import type { TwoSlashOptions } from "./core";
 import { createTwoSlasher as _createTwoSlasher, twoslasher as _twoslasher } from "./core"
 

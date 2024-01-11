@@ -1,3 +1,4 @@
+import type { SourceFile } from "typescript"
 import { TwoslashError } from "./error"
 import type { Position, Range, TemporaryFile } from "./types"
 
@@ -42,16 +43,15 @@ export function typesToExtension(types: string) {
   )
 }
 
-export function getIdentifierTextSpans(ts: typeof import("typescript"), sourceFile: import("typescript").SourceFile) {
-  const textSpans: { span: import("typescript").TextSpan; text: string }[] = []
+export function getIdentifierTextSpans(ts: typeof import("typescript"), sourceFile: SourceFile) {
+  const textSpans: [start: number, text: string][] = []
   checkChildren(sourceFile)
   return textSpans
 
   function checkChildren(node: import("typescript").Node) {
     ts.forEachChild(node, child => {
       if (ts.isIdentifier(child)) {
-        const start = child.getStart(sourceFile, false)
-        textSpans.push({ span: ts.createTextSpan(start, child.end - start), text: child.getText(sourceFile) })
+        textSpans.push([child.getStart(sourceFile, false), child.getText(sourceFile)])
       }
       checkChildren(child)
     })

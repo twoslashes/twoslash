@@ -3,7 +3,7 @@
 A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher), with improvements:
 
 - Unified tokens information interface, easier to work with
-- `createTwoslasher` function to create a twoslash instance with cached language services (~3x faster)
+- `createTwoslasher` function to create a twoslash instance with cached language services (10x ~ 20x faster)
 - ESM-first, dual CJS/ESM builds
 - [ ] Optional read-only mode to preserve notations, for better mapping and support custom languages (see `twoslash-vue` integration)
 - Lighter, no longer deps on `lz-string` and `debug`

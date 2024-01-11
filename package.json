@@ -34,7 +34,7 @@
     "build": "unbuild",
     "test": "vitest",
     "lint": "eslint .",
-    "bench": "vitest bench",
+    "bench": "vitest bench --run",
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
