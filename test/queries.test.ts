@@ -1,5 +1,7 @@
 import { expect, it } from 'vitest'
-import { twoslasher } from "../src/index"
+import { createTwoSlasher } from "../src/index"
+
+const twoslasher = createTwoSlasher()
 
 it("works in a trivial case", () => {
   const file = `

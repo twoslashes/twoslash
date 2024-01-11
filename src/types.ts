@@ -1,3 +1,5 @@
+import type { VirtualTypeScriptEnvironment} from "@typescript/vfs";
+import { createVirtualTypeScriptEnvironment } from "@typescript/vfs"
 import type { CompilerOptions, CompletionEntry , CustomTransformers } from "typescript"
 
 type TS = typeof import("typescript")
@@ -30,6 +32,56 @@ export interface TwoSlashOptions {
   /** A set of known `// @[tags]` tags to extract and not treat as a comment */
   customTags?: string[]
 }
+
+export interface TwoSlashInstance {
+  /**
+   * Run TwoSlash on a string of code, with a particular extension
+   */
+  (code: string, extension?: string): TwoSlashReturn;
+  /**
+   * Clear caches and dispose of the instance
+   */
+  dispose(): void;
+  /**
+   * Get the internal cache map
+   */
+  getCacheMap(): Map<string, VirtualTypeScriptEnvironment>;
+}
+
+export interface TwoSlashReturn {
+  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
+  code: string;
+
+  /**
+   * Tokens contains various bits of information about the code
+   */
+  tokens: Token[];
+
+  get queries(): TokenQuery[];
+  get completions(): TokenCompletion[];
+  get errors(): TokenError[];
+  get highlights(): TokenHighlight[];
+  get hovers(): TokenHover[];
+  get tags(): TokenTag[];
+
+  meta: {
+    /** The new extension type for the code, potentially changed if they've requested emitted results */
+    extension: string;
+    /**
+     * Ranges of text which should be removed from the output
+     */
+    removals: Range[]
+    /**
+     * Resolved compiler options
+     */
+    compilerOptions: CompilerOptions
+    /**
+     * Resolved handbook options
+     */
+    handbookOptions: HandbookOptions
+  }
+}
+
 
 /** Available inline flags which are not compiler flags */
 export interface HandbookOptions {
@@ -125,41 +177,6 @@ export type TokenWithoutPosition =
   | Omit<TokenCompletion, keyof Position>
   | Omit<TokenError, keyof Position>
   | Omit<TokenTag, keyof Position>
-
-export interface TwoSlashReturn {
-  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
-  code: string;
-
-  /**
-   * Tokens contains various bits of information about the code
-   */
-  tokens: Token[];
-
-  get queries(): TokenQuery[];
-  get completions(): TokenCompletion[];
-  get errors(): TokenError[];
-  get highlights(): TokenHighlight[];
-  get hovers(): TokenHover[];
-  get tags(): TokenTag[];
-
-  meta: {
-    /** The new extension type for the code, potentially changed if they've requested emitted results */
-    extension: string;
-    /**
-     * Ranges of text which should be removed from the output
-     */
-    removals: Range[]
-    /**
-     * Resolved compiler options
-     */
-    compilerOptions: CompilerOptions
-    /**
-     * Resolved handbook options
-     */
-    handbookOptions: HandbookOptions
-  }
-}
-
 
 export interface TemporaryFile {
   offset: number

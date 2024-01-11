@@ -2,7 +2,7 @@ import fs from "node:fs/promises"
 import { extname, join, parse } from "node:path"
 import { describe, expect, it } from 'vitest'
 import type { TwoSlashReturn } from "../src/types";
-import { twoslasher } from "../src/index"
+import { createTwoSlasher } from "../src/index";
 import { FEAT_SHOW_EMIT } from "./FEATURES";
 
 // To add a test, create a file in the fixtures folder and it will will run through
@@ -10,6 +10,10 @@ import { FEAT_SHOW_EMIT } from "./FEATURES";
 
 const fixturesFolder = join(__dirname, "fixtures")
 const resultsFolder = join(__dirname, "results")
+
+const twoslasher = createTwoSlasher({
+  customTags: ["annotate"]
+})
 
 describe("fixtures", async () => {
   const fixturesTests = await fs.readdir(join(fixturesFolder, "tests"))
@@ -29,7 +33,7 @@ describe("fixtures", async () => {
         if (!FEAT_SHOW_EMIT && file.includes("@showEmit")) 
           return
 
-        const fourslashed = twoslasher(file, extname(fixtureName).substr(1), { customTags: ["annotate"] })
+        const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
         expect(cleanFixture(fourslashed))
           .toMatchFileSnapshot(join(resultsFolder, "tests", resultName))
       })

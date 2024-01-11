@@ -15,12 +15,12 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.mts",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./core": {
-      "types": "./dist/core.d.mts",
-      "import": "./dist/core.mjs"
+      "import": "./dist/core.mjs",
+      "require": "./dist/core.cjs"
     }
   },
   "main": "dist/index.mjs",
