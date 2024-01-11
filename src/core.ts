@@ -1,3 +1,4 @@
+
 import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { TwoslashError } from './error';
@@ -9,7 +10,6 @@ export * from './error'
 export * from './types';
 
 type TS = typeof import("typescript")
-
 
 // TODO: Make them configurable maybe
 const reConfigBoolean = /^\/\/\s?@(\w+)$/mg;
@@ -60,8 +60,14 @@ export function twoslasher(
     ...options.defaultOptions
   };
 
+  interface OptionDeclarationDefine {
+    name: string;
+    type: "list" | "boolean" | "number" | "string" | Map<string, any>;
+    element?: OptionDeclarationDefine;
+  }
   function updateOptions(name: string, value: any): false | void {
-    const oc = ts.optionDeclarations.find((d) => d.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+    const oc = ((ts as any).optionDeclarations as OptionDeclarationDefine[])
+      .find((d) => d.name.toLocaleLowerCase() === name.toLocaleLowerCase());
     if (oc) {
       switch (oc.type) {
         case "number":

@@ -2,17 +2,6 @@ import type { CompilerOptions, CompletionEntry , CustomTransformers } from "type
 
 type TS = typeof import("typescript")
 
-// Hacking in some internal stuff
-declare module "typescript" {
-  interface Option {
-    name: string;
-    type: "list" | "boolean" | "number" | "string" | Map<string, any>;
-    element?: Option;
-  }
-
-  const optionDeclarations: Array<Option>;
-}
-
 export interface TwoSlashOptions {
   /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
   defaultOptions?: Partial<HandbookOptions>

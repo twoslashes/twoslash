@@ -2,11 +2,17 @@
   "compilerOptions": {
     "target": "esnext",
     "jsx": "react",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true
   },
-  "exclude": ["test/fixtures"]
+  "exclude": [
+    "test/fixtures",
+    "dist"
+  ]
 }
