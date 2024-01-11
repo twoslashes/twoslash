@@ -1,11 +1,13 @@
-import process from "node:process";
 import * as ts from "typescript/lib/tsserverlibrary"
 import type { TwoSlashOptions } from "./core";
 import { createTwoSlasher as _createTwoSlasher, twoslasher as _twoslasher } from "./core"
 
+// eslint-disable-next-line node/prefer-global/process
+const cwd = /* @__PURE__ */ typeof process !== "undefined" && typeof process.cwd === 'function' ? process.cwd() : ""
+
 export function twoslasher(code: string, lang: string, opts?: TwoSlashOptions) {
   return _twoslasher(code, lang, {
-    vfsRoot: process.cwd(),
+    vfsRoot:cwd,
     tsModule: ts,
     ...opts
   })
@@ -13,7 +15,7 @@ export function twoslasher(code: string, lang: string, opts?: TwoSlashOptions) {
 
 export function createTwoSlasher(opts?: TwoSlashOptions) {
   return _createTwoSlasher({
-    vfsRoot: process.cwd(),
+    vfsRoot: cwd,
     tsModule: ts,
     ...opts
   })
