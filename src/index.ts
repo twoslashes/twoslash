@@ -7,7 +7,7 @@ const cwd = /* @__PURE__ */ typeof process !== "undefined" && typeof process.cwd
 
 export function twoslasher(code: string, lang: string, opts?: TwoSlashOptions) {
   return _twoslasher(code, lang, {
-    vfsRoot:cwd,
+    vfsRoot: cwd,
     tsModule: ts,
     ...opts
   })

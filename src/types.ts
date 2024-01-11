@@ -3,7 +3,20 @@ import type { CompilerOptions, CompletionEntry, CustomTransformers } from "types
 
 type TS = typeof import("typescript")
 
-export interface TwoSlashOptions {
+/**
+ * Options for the `twoslasher` function
+ */
+export interface TwoSlashOptions extends CreateTwoSlashOptions, TwoSlashExecuteOptions {}
+
+/**
+ * Options for twoslash instance
+ */
+export interface TwoSlashExecuteOptions {
+  /** A set of known `// @[tags]` tags to extract and not treat as a comment */
+  customTags?: string[]
+}
+
+export interface CreateTwoSlashOptions {
   /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
   defaultOptions?: Partial<HandbookOptions>
 
@@ -20,19 +33,14 @@ export interface TwoSlashOptions {
   tsLibDirectory?: string
 
   /**
-   * An optional Map object which is passed into @typescript/vfs - if you are using twoslash on the
-   * web then you'll need this to set up your lib *.d.ts files. If missing, it will use your fs.
-   */
+  * An optional Map object which is passed into @typescript/vfs - if you are using twoslash on the
+  * web then you'll need this to set up your lib *.d.ts files. If missing, it will use your fs.
+  */
   fsMap?: Map<string, string>
 
   /** The cwd for the folder which the virtual fs should be overlaid on top of when using local fs, opts to process.cwd() if not present */
   vfsRoot?: string
-
-  /** A set of known `// @[tags]` tags to extract and not treat as a comment */
-  customTags?: string[]
-}
-
-export interface CreateTwoSlashOptions extends TwoSlashOptions {
+  
   /**
    * Cache the ts envs based on compiler options, defaults to true
    */
@@ -43,7 +51,7 @@ export interface TwoSlashInstance {
   /**
    * Run TwoSlash on a string of code, with a particular extension
    */
-  (code: string, extension?: string): TwoSlashReturn;
+  (code: string, extension?: string, options?: TwoSlashExecuteOptions): TwoSlashReturn;
   /**
    * Clear caches and dispose of the instance
    */

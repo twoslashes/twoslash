@@ -2,7 +2,7 @@ import type { CompilerOptions, ScriptTarget } from 'typescript';
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs';
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error';
-import type { CreateTwoSlashOptions, HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from "./types";
+import type { CreateTwoSlashOptions, HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from "./types";
 import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils';
 import { validateCodeForErrors } from './validation';
 
@@ -29,13 +29,15 @@ interface OptionDeclaration {
 /**
  * Create a TwoSlash instance with cached TS environments
  */
-export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): TwoSlashInstance {
-  const ts: TS = options.tsModule!;
+export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): TwoSlashInstance {
+  const ts: TS = createOptions.tsModule!;
   const defaultCompilerOptions: CompilerOptions = {
     strict: true,
     target: 99 satisfies ScriptTarget.ESNext,
     allowJs: true,
-    ...(options.defaultCompilerOptions ?? {}),
+    skipDefaultLibCheck: true,
+    skipLibCheck: true,
+    ...(createOptions.defaultCompilerOptions ?? {}),
   };
 
   const defaultHandbookOptions: HandbookOptions = {
@@ -46,30 +48,30 @@ export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): 
     noStaticSemanticInfo: false,
     emit: false,
     noErrorValidation: false,
-    ...options.defaultOptions
+    ...createOptions.defaultOptions
   };
 
   const tsOptionDeclarations = ((ts as any).optionDeclarations as OptionDeclaration[])
 
   // In a browser we want to DI everything, in node we can use local infra
-  const useFS = !!options.fsMap;
-  const _root = options.vfsRoot!.replace(/\//g, "/"); // Normalize slashes
-  const vfs = useFS && options.fsMap ? options.fsMap : new Map<string, string>();
-  const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, options.tsLibDirectory);
+  const useFS = !!createOptions.fsMap;
+  const _root = createOptions.vfsRoot!.replace(/\//g, "/"); // Normalize slashes
+  const vfs = useFS && createOptions.fsMap ? createOptions.fsMap : new Map<string, string>();
+  const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory);
   const fsRoot = useFS ? "/" : `${_root}/`
 
-  const cache = options.cache === false
+  const cache = createOptions.cache === false
     ? undefined
-    : options.cache instanceof Map ?
-      options.cache
+    : createOptions.cache instanceof Map ?
+      createOptions.cache
       : new Map<string, ReturnType<typeof createVirtualTypeScriptEnvironment>>()
 
   function getEnv(compilerOptions: CompilerOptions) {
     if (!cache)
-      return createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, options.customTransformers)
+      return createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, createOptions.customTransformers)
     const key = objectHash(compilerOptions);
     if (!cache?.has(key)) {
-      const env = createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, options.customTransformers)
+      const env = createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, createOptions.customTransformers)
       cache?.set(key, env);
       return env
     }
@@ -79,6 +81,7 @@ export function createTwoSlasher(options: Partial<CreateTwoSlashOptions> = {}): 
   function twoslasher(
     code: string,
     extension = 'ts',
+    options: TwoSlashExecuteOptions = {}
   ): TwoSlashReturn {
     const ext = typesToExtension(extension);
     const defaultFilename = `index.${ext}`;

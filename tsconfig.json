@@ -14,7 +14,9 @@
       ]
     },
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "test/fixtures",

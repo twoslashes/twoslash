@@ -11,15 +11,13 @@ import { FEAT_SHOW_EMIT } from "./FEATURES";
 const fixturesFolder = join(__dirname, "fixtures")
 const resultsFolder = join(__dirname, "results")
 
-const twoslasher = createTwoSlasher({
-  customTags: ["annotate"]
-})
+const twoslasher = createTwoSlasher()
 
 describe("fixtures", async () => {
   const fixturesTests = await fs.readdir(join(fixturesFolder, "tests"))
 
   await Promise.all(
-    fixturesTests.map(async fixtureName => {
+    fixturesTests.map(async (fixtureName): Promise<void> => {
       const fixture = join(fixturesFolder, "tests", fixtureName)
       if (await fs.lstat(fixture).then(r => r.isDirectory())) {
         return
@@ -33,7 +31,9 @@ describe("fixtures", async () => {
         if (!FEAT_SHOW_EMIT && file.includes("@showEmit"))
           return
 
-        const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
+        const fourslashed = twoslasher(file, extname(fixtureName).substr(1),{
+          customTags: ["annotate"]
+        })
         expect(cleanFixture(fourslashed))
           .toMatchFileSnapshot(join(resultsFolder, "tests", resultName))
       })
