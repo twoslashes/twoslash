@@ -1,6 +1,5 @@
 import type { CompilerOptions } from 'typescript'
-import type { HandbookOptions, TwoSlashExecuteOptions, TwoSlashOptions, TwoSlashReturn } from './types'
-import { createPositionConverter } from './utils'
+import type { HandbookOptions, TwoSlashExecuteOptions, TwoSlashReturn } from './types'
 
 export interface TwoSlashOptionsLegacy extends TwoSlashExecuteOptions {
   /**
