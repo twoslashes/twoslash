@@ -1,7 +1,7 @@
 {
   "name": "twoslashes",
   "type": "module",
-  "version": "0.0.0-1",
+  "version": "0.0.1",
   "description": "Rewrite of TypeScript TwoSlash",
   "author": "TypeScript team",
   "license": "MIT",
