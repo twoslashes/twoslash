@@ -88,7 +88,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       noStaticSemanticInfo: false,
       emit: false,
       noErrorValidation: false,
-      keepNotations: true,
+      keepNotations: false,
       ...createOptions.handbookOptions,
       ...options.handbookOptions,
     }
@@ -354,7 +354,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       .sort((a, b) => b[0] - a[0])
 
     let outputCode = code
-    if (handbookOptions.keepNotations) {
+    if (!handbookOptions.keepNotations) {
       for (const remove of removals) {
         const removalLength = remove[1] - remove[0]
         outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1])
