@@ -29,7 +29,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 
   // In a browser we want to DI everything, in node we can use local infra
   const useFS = !!createOptions.fsMap
-  const _root = createOptions.vfsRoot!.replace(/\//g, '/') // Normalize slashes
+  const _root = createOptions.vfsRoot!.replace(/\\/g, '/') // Normalize slashes
   const vfs = useFS && createOptions.fsMap ? createOptions.fsMap : new Map<string, string>()
   const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory)
   const fsRoot = useFS ? '/' : `${_root}/`
