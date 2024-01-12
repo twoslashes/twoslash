@@ -156,12 +156,17 @@ export interface Position {
 
 export type Range = [start: number, end: number]
 
-export interface TokenBase extends Position {
-  /** The length of the token */
-  length: number
+/**
+ * Basic token with start and length to represent a range in the code
+ */
+export interface TokenStartLength {
   /** 0-indexed position of the token in the file */
   start: number
+  /** The length of the token */
+  length: number
 }
+
+export interface TokenBase extends TokenStartLength, Position {}
 
 export interface TokenHover extends TokenBase {
   type: 'hover'

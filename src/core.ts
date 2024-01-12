@@ -344,7 +344,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       const removed = removeCodeRanges(outputCode, removals, tokens)
       outputCode = removed.code
       removals = removed.removals
-      tokens = removed.tokens!
+      tokens = removed.tokens
     }
 
     const indexToPos = outputCode === code

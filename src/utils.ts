@@ -1,6 +1,6 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, ParsedFlagNotation, Position, Range, Token, TokenWithoutPosition } from './types'
+import type { CompilerOptionDeclaration, ParsedFlagNotation, Position, Range, Token, TokenStartLength, TokenWithoutPosition } from './types'
 import { defaultHandbookOptions } from './core'
 
 export interface TemporaryFile {
@@ -187,7 +187,9 @@ export function getExtension(fileName: string) {
  *
  * Note that items in `tokens` will be mutated
  */
-export function removeCodeRanges(code: string, removals: Range[], tokens?: TokenWithoutPosition[]) {
+export function removeCodeRanges<T extends TokenStartLength>(code: string, removals: Range[], tokens: T[]): { code: string, removals: Range[], tokens: T[] }
+export function removeCodeRanges(code: string, removals: Range[]): { code: string, removals: Range[], tokens: undefined }
+export function removeCodeRanges(code: string, removals: Range[], tokens?: TokenStartLength[]) {
   // Sort descending, so that we start removal from the end
   const ranges = mergeRanges(removals)
     .sort((a, b) => b[0] - a[0])
