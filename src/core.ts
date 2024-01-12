@@ -2,8 +2,8 @@ import type { CompilerOptions, ModuleKind, ScriptTarget } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { CreateTwoSlashOptions, HandbookOptions, Position, Range, Token, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
-import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, parsePrimitive, removeCodeRanges, splitFiles, typesToExtension } from './utils'
+import type { CompilerOptionDeclaration, CreateTwoSlashOptions, HandbookOptions, ParsedFlagNotation, Position, Range, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
+import { createPositionConverter, getIdentifierTextSpans, isInRanges, parseFlag, removeCodeRanges, resolveTokenPositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 
 export * from './public'
@@ -18,12 +18,6 @@ const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?$/mg
 const cutString = '// ---cut---\n'
 const cutAfterString = '// ---cut-after---\n'
 // TODO: cut range
-
-interface OptionDeclaration {
-  name: string
-  type: 'list' | 'boolean' | 'number' | 'string' | Map<string, any>
-  element?: OptionDeclaration
-}
 
 export const defaultCompilerOptions: CompilerOptions = {
   strict: true,
@@ -51,7 +45,7 @@ export const defaultHandbookOptions: HandbookOptions = {
  */
 export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): TwoSlashInstance {
   const ts: TS = createOptions.tsModule!
-  const tsOptionDeclarations = (ts as any).optionDeclarations as OptionDeclaration[]
+  const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 
   // In a browser we want to DI everything, in node we can use local infra
   const useFS = !!createOptions.fsMap
@@ -108,81 +102,63 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       ...options.customTags || [],
     ]
 
-    function updateOptions(name: string, value: any): false | void {
-      const oc = tsOptionDeclarations.find(d => d.name.toLocaleLowerCase() === name.toLocaleLowerCase())
-      // if it's compilerOptions
-      if (oc) {
-        switch (oc.type) {
-          case 'number':
-          case 'string':
-          case 'boolean':
-            compilerOptions[oc.name] = parsePrimitive(value, oc.type)
-            break
-          case 'list': {
-            const elementType = oc.element!.type
-            const strings = value.split(',') as string[]
-            if (typeof elementType === 'string')
-              compilerOptions[oc.name] = strings.map(v => parsePrimitive(v, elementType))
-            else
-              compilerOptions[oc.name] = strings.map(v => getOptionValueFromMap(oc.name, v, elementType as Map<string, string>))
-
-            break
-          }
-          default:
-            // It's a map
-            compilerOptions[oc.name] = getOptionValueFromMap(oc.name, value, oc.type)
-            break
-        }
-      }
-      // if it's handbookOptions
-      else if (Object.keys(handbookOptions).includes(name)) {
-        // "errors" is a special case, it's a list of numbers
-        if (name === 'errors' && typeof value === 'string')
-          value = value.split(' ').map(Number);
-
-        (handbookOptions as any)[name] = value
-      }
-      // throw errors if it's not a valid compiler flag
-      else {
-        if (handbookOptions.noErrorValidation)
-          return false
-        throw new TwoslashError(
-          `Invalid inline compiler flag`,
-          `There isn't a TypeScript compiler flag called '@${name}'.`,
-          `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`,
-        )
-      }
-    }
+    const flagNotations: ParsedFlagNotation[] = []
 
     // #extract compiler options
     Array.from(code.matchAll(reConfigBoolean)).forEach((match) => {
       const index = match.index!
       const name = match[1]
-      if (updateOptions(name, true) === false)
-        return
-      removals.push([index, index + match[0].length + 1])
+      flagNotations.push(
+        parseFlag(name, true, index, index + match[0].length + 1, customTags, tsOptionDeclarations),
+      )
     })
     Array.from(code.matchAll(reConfigValue)).forEach((match) => {
-      const index = match.index!
       const name = match[1]
       if (name === 'filename')
         return
+      const index = match.index!
       const value = match[2]
-      if (customTags.includes(name)) {
-        tokens.push({
-          type: 'tag',
-          name,
-          start: index + match[0].length + 1,
-          length: 0,
-          text: match[0].split(':')[1].trim(),
-        })
-      }
-      else {
-        if (updateOptions(name, value) === false)
-          return
-      }
-      removals.push([index, index + match[0].length + 1])
+      flagNotations.push(
+        parseFlag(name, value, index, index + match[0].length + 1, customTags, tsOptionDeclarations),
+      )
     })
+
+    for (const flag of flagNotations) {
+      switch (flag.type) {
+        case 'unknown':
+          continue
+
+        case 'compilerOptions':
+          compilerOptions[flag.name] = flag.value
+          break
+        case 'handbookOptions':
+          // @ts-expect-error -- this is fine
+          handbookOptions[flag.name] = flag.value
+          break
+        case 'tag':
+          tokens.push({
+            type: 'tag',
+            name: flag.name,
+            start: flag.end,
+            length: 0,
+            text: flag.value,
+          })
+          break
+      }
+      removals.push([flag.start, flag.end])
+    }
+
+    if (!handbookOptions.noErrorValidation) {
+      const unknownFlags = flagNotations.filter(i => i.type === 'unknown')
+
+      if (unknownFlags.length) {
+        throw new TwoslashError(
+          `Unknown inline compiler flags`,
+          unknownFlags.map(i => `@${i.name}`).join(', '),
+          `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`,
+        )
+      }
+    }
     // #endregion
 
     const env = getEnv(compilerOptions)
@@ -371,27 +347,19 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       tokens = removed.tokens!
     }
 
-    const resultPC = outputCode === code
-      ? pc // reuse the converter if nothing changed
-      : createPositionConverter(outputCode)
-
-    const resolvedTokens = tokens
-      .filter(token => token.start >= 0)
-      .sort((a, b) => a.start - b.start) as Token[]
-
-    resolvedTokens
-      .forEach((token) => {
-        Object.assign(token, resultPC.indexToPos(token.start))
-      })
+    const indexToPos = outputCode === code
+      ? pc.indexToPos
+      : createPositionConverter(outputCode).indexToPos
 
     return {
       code: outputCode,
-      tokens: resolvedTokens,
+      tokens: resolveTokenPositions(tokens, indexToPos),
       meta: {
         extension: ext,
         compilerOptions,
         handbookOptions,
         removals,
+        flagNotations,
       },
 
       get queries() {

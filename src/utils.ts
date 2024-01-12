@@ -1,6 +1,7 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { Position, Range, TokenWithoutPosition } from './types'
+import type { CompilerOptionDeclaration, ParsedFlagNotation, Position, Range, Token, TokenWithoutPosition } from './types'
+import { defaultHandbookOptions } from './core'
 
 export interface TemporaryFile {
   offset: number
@@ -214,5 +215,113 @@ export function removeCodeRanges(code: string, removals: Range[], tokens?: Token
     code: outputCode,
     removals: ranges,
     tokens,
+  }
+}
+
+/**
+ * - Calculate tokens `line` and `character` properties to match the code
+ * - Remove tokens that has negative `start` property
+ * - Sort tokens by `start`
+ *
+ * Note that the token items will be mutated, clone them beforehand if not desired
+ */
+export function resolveTokenPositions(tokens: TokenWithoutPosition[], code: string): Token[]
+export function resolveTokenPositions(tokens: TokenWithoutPosition[], indexToPos: (index: number) => Position): Token[]
+export function resolveTokenPositions(tokens: TokenWithoutPosition[], options: string | ((index: number) => Position)): Token[] {
+  const indexToPos = typeof options === 'string'
+    ? createPositionConverter(options).indexToPos
+    : options
+
+  const resolvedTokens = tokens
+    .filter(token => token.start >= 0)
+    .sort((a, b) => a.start - b.start) as Token[]
+
+  resolvedTokens
+    .forEach(token => Object.assign(token, indexToPos(token.start)))
+
+  return resolvedTokens
+}
+
+export function parseFlag(
+  name: string,
+  value: any,
+  start: number,
+  end: number,
+  customTags: string[],
+  tsOptionDeclarations: CompilerOptionDeclaration[],
+): ParsedFlagNotation {
+  if (customTags.includes(name)) {
+    return {
+      type: 'tag',
+      name,
+      value,
+      start,
+      end,
+    }
+  }
+
+  const compilerDecl = tsOptionDeclarations.find(d => d.name.toLocaleLowerCase() === name.toLocaleLowerCase())
+  // if it's compilerOptions
+  if (compilerDecl) {
+    switch (compilerDecl.type) {
+      case 'number':
+      case 'string':
+      case 'boolean':
+        return {
+          type: 'compilerOptions',
+          name: compilerDecl.name,
+          value: parsePrimitive(value, compilerDecl.type),
+          start,
+          end,
+        }
+      case 'list': {
+        const elementType = compilerDecl.element!.type
+        const strings = value.split(',') as string[]
+        const resolved = typeof elementType === 'string'
+          ? strings.map(v => parsePrimitive(v, elementType))
+          : strings.map(v => getOptionValueFromMap(compilerDecl.name, v, elementType as Map<string, string>))
+        return {
+          type: 'compilerOptions',
+          name: compilerDecl.name,
+          value: resolved,
+          start,
+          end,
+        }
+      }
+      default: {
+        // It's a map
+        return {
+          type: 'compilerOptions',
+          name: compilerDecl.name,
+          value: getOptionValueFromMap(compilerDecl.name, value, compilerDecl.type),
+          start,
+          end,
+        }
+      }
+    }
+  }
+
+  // if it's handbookOptions
+  if (Object.keys(defaultHandbookOptions).includes(name)) {
+    // "errors" is a special case, it's a list of numbers
+    if (name === 'errors' && typeof value === 'string')
+      value = value.split(' ').map(Number)
+
+    return {
+      type: 'handbookOptions',
+      name,
+      value,
+      start,
+      end,
+    }
+  }
+
+  // unknown compiler flag
+  return {
+    type: 'unknown',
+    name,
+    value,
+    start,
+    end,
   }
 }

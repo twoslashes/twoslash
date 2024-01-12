@@ -5,6 +5,7 @@ export * from './types'
 export {
   createPositionConverter,
   removeCodeRanges,
+  resolveTokenPositions,
 } from './utils'
 
 export {

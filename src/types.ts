@@ -95,7 +95,17 @@ export interface TwoSlashReturn {
      * Resolved handbook options
      */
     handbookOptions: HandbookOptions
+    /**
+     * Flags which were parsed from the code
+     */
+    flagNotations: ParsedFlagNotation[]
   }
+}
+
+export interface CompilerOptionDeclaration {
+  name: string
+  type: 'list' | 'boolean' | 'number' | 'string' | Map<string, any>
+  element?: CompilerOptionDeclaration
 }
 
 /** Available inline flags which are not compiler flags */
@@ -131,7 +141,6 @@ export interface HandbookOptions {
   showEmittedFile?: string
   /** Declare that the TypeScript program should edit the fsMap which is passed in, this is only useful for tool-makers, defaults to false */
   emit: boolean
-
 }
 
 export interface Position {
@@ -195,6 +204,14 @@ export interface TokenTag extends TokenBase {
   name: string
   /** What was the text after the `// @tag: ` string  (optional because you could do // @tag on it's own line without the ':') */
   text?: string
+}
+
+export interface ParsedFlagNotation {
+  type: 'compilerOptions' | 'handbookOptions' | 'tag' | 'unknown'
+  name: string
+  value: any
+  start: number
+  end: number
 }
 
 export type Token = TokenHighlight | TokenHover | TokenQuery | TokenCompletion | TokenError | TokenTag
