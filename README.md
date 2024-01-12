@@ -86,11 +86,11 @@ export interface TwoSlashReturn {
   nodes: TwoSlashNode[]
 
   /** Getters */
-  get queries(): NodeQuery[]
-  get completions(): NodeCompletion[]
+  get hovers(): NodeHover[] // was `staticQuickInfos`
+  get queries(): NodeQuery[] // was `queries` with `kind: 'query'`
+  get completions(): NodeCompletion[] // was `queries` with `kind: 'completion'`
   get errors(): NodeError[]
   get highlights(): NodeHighlight[]
-  get hovers(): NodeHover[]
   get tags(): NodeTag[]
 
   /**
@@ -116,9 +116,11 @@ const result1 = twoslasher('import { ref } from "vue"', 'ts')
 const result2 = twoslasher('import { computed } from "vue"', 'ts')
 ```
 
+This would result in a [5-20 times faster](#benchmark) performance in repetitive usage.
+
 To avoid getting interference across runs, it will reuse the language server with the same `compilerOptions`. Internally it holds a map of hashed `compilerOptions` to the language server instances.
 
-To avoid memory leaks, you can retrieve the cached map and clear them when necessary:
+You can retrieve the cached map and clear it when necessary, to avoid memory leaks:
 
 ```ts
 import { createTwoSlasher } from 'twoslashes'
@@ -133,7 +135,27 @@ twoSlasher.getCacheMap()?.clear()
 
 ### Backward Compatibility Layer
 
-// TODO:
+To make it easier to migrate from `@typescript/twoslash`, TwoSlash<sup>es</sup> provides a backward compatibility layer that allows you to use the old interface with the new implementation.
+
+```ts
+import { twoslasherLegacy } from 'twoslashes'
+
+const result = twoslasherLegacy('import { ref } from "vue"', 'ts')
+
+console.log(result.staticQuickInfos) // the old interface
+```
+
+You can also compose it your own by only converting the return value:
+
+```ts
+import { convertLegacyReturn, twoslasher } from 'twoslashes'
+
+const result = twoslasher('import { ref } from "vue"', 'ts') // new interface
+
+const legacy = convertLegacyReturn(result) // <--
+
+console.log(legacy.staticQuickInfos) // the old interface
+```
 
 ## Benchmark
 

@@ -28,6 +28,6 @@ readdirSync(fixturesFolder).forEach(fixtureName => {
     ts.ScriptTarget.ES2015,
   )
 
-  const allIdentifiers = getIdentifierTextSpans(ts, file)
+  const allIdentifiers = getIdentifierTextSpans(ts, file, 0)
   expect(allIdentifiers.length).toEqual(40)
 })
