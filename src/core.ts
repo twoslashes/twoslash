@@ -25,6 +25,26 @@ interface OptionDeclaration {
   element?: OptionDeclaration
 }
 
+export const defaultCompilerOptions: CompilerOptions = {
+  strict: true,
+  target: 99 satisfies ScriptTarget.ESNext,
+  allowJs: true,
+  skipDefaultLibCheck: true,
+  skipLibCheck: true,
+}
+
+export const defaultHandbookOptions: HandbookOptions = {
+  errors: [],
+  noErrors: false,
+  showEmit: false,
+  showEmittedFile: undefined,
+  noStaticSemanticInfo: false,
+  emit: false,
+  noErrorValidation: false,
+  keepNotations: false,
+  noCuttedErrors: false,
+}
+
 /**
  * Create a TwoSlash instance with cached TS environments
  */
@@ -71,24 +91,13 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     const isInRemoval = (index: number) => isInRanges(index, removals)
 
     const compilerOptions: CompilerOptions = {
-      strict: true,
-      target: 99 satisfies ScriptTarget.ESNext,
-      allowJs: true,
-      skipDefaultLibCheck: true,
-      skipLibCheck: true,
+      ...defaultCompilerOptions,
       ...createOptions.compilerOptions,
       ...options.compilerOptions,
     }
 
     const handbookOptions: HandbookOptions = {
-      errors: [],
-      noErrors: false,
-      showEmit: false,
-      showEmittedFile: undefined,
-      noStaticSemanticInfo: false,
-      emit: false,
-      noErrorValidation: false,
-      keepNotations: false,
+      ...defaultHandbookOptions,
       ...createOptions.handbookOptions,
       ...options.handbookOptions,
     }
@@ -317,7 +326,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       if (!supportedFileTyes.includes(file.extension))
         continue
 
-      if (!handbookOptions.noErrorValidation && !handbookOptions.noErrors) {
+      if (!handbookOptions.noErrors) {
         const diagnostics = [
           ...ls.getSemanticDiagnostics(file.filename),
           ...ls.getSyntacticDiagnostics(file.filename),
@@ -326,6 +335,8 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 
         for (const diagnostic of diagnostics) {
           const start = diagnostic.start! + file.offset
+          if (handbookOptions.noCuttedErrors && isInRemoval(start))
+            continue
           const renderedMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
           const id = `err-${diagnostic.code}-${diagnostic.start}-${diagnostic.length}`
 

@@ -106,14 +106,22 @@ export interface HandbookOptions {
   noErrors: boolean
   /** Declare that you don't need to validate that errors have corresponding annotations, defaults to false */
   noErrorValidation: boolean
+  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
+  noStaticSemanticInfo: boolean
+
+  // ==== New in twoslashes ====
   /**
    * Keep TwoSlash notations in the code, the tokens will have the position of the input code.
    * @default false
    */
-  keepNotations?: boolean
-  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
-  noStaticSemanticInfo: boolean
+  keepNotations: boolean
+  /**
+   * Do not check errors in the cutted code.
+   * @default false
+   */
+  noCuttedErrors: boolean
 
+  // ==== Not yet supported ====
   /** Shows the JS equivalent of the TypeScript code instead */
   showEmit: boolean
   /**
@@ -123,6 +131,7 @@ export interface HandbookOptions {
   showEmittedFile?: string
   /** Declare that the TypeScript program should edit the fsMap which is passed in, this is only useful for tool-makers, defaults to false */
   emit: boolean
+
 }
 
 export interface Position {
