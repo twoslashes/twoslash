@@ -398,22 +398,22 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       },
 
       get queries() {
-        return tokens.filter(i => i.type === 'query') as any
+        return this.tokens.filter(i => i.type === 'query') as any
       },
       get completions() {
-        return tokens.filter(i => i.type === 'completion') as any
+        return this.tokens.filter(i => i.type === 'completion') as any
       },
       get errors() {
-        return tokens.filter(i => i.type === 'error') as any
+        return this.tokens.filter(i => i.type === 'error') as any
       },
       get highlights() {
-        return tokens.filter(i => i.type === 'highlight') as any
+        return this.tokens.filter(i => i.type === 'highlight') as any
       },
       get hovers() {
-        return tokens.filter(i => i.type === 'hover') as any
+        return this.tokens.filter(i => i.type === 'hover') as any
       },
       get tags() {
-        return tokens.filter(i => i.type === 'tag') as any
+        return this.tokens.filter(i => i.type === 'tag') as any
       },
     }
   }
