@@ -24,7 +24,7 @@
       "start": 13,
       "length": 1,
       "code": 7006,
-      "filename": "[home]/index.ts",
+      "filename": "index.ts",
       "id": "err-7006-49-1",
       "text": "Parameter 's' implicitly has an 'any' type.",
       "level": 1,

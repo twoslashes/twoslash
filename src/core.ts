@@ -157,7 +157,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     // #endregion
 
     const supportedFileTyes = ['js', 'jsx', 'ts', 'tsx']
-    const files = splitFiles(code, defaultFilename, fsRoot)
+    const files = splitFiles(code, defaultFilename)
 
     for (const file of files) {
       // Only run the LSP-y things on source files
@@ -172,7 +172,8 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       const targetsQuery: number[] = []
       const targetsCompletions: number[] = []
       const targetsHighlights: Range[] = []
-      env.createFile(file.filename, file.content)
+      const filepath = fsRoot + file.filename
+      env.createFile(filepath, file.content)
 
       // #region extract markers
       if (file.content.includes('//')) {
@@ -201,7 +202,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 
       // #region get ts info for quick info
       function getQuickInfo(start: number, target: string): TokenWithoutPosition | undefined {
-        const quickInfo = ls.getQuickInfoAtPosition(file.filename, start - file.offset)
+        const quickInfo = ls.getQuickInfoAtPosition(filepath, start - file.offset)
 
         if (quickInfo && quickInfo.displayParts) {
           const text = quickInfo.displayParts.map(dp => dp.text).join('')
@@ -220,7 +221,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         }
       }
 
-      const source = ls.getProgram()!.getSourceFile(file.filename)!
+      const source = ls.getProgram()!.getSourceFile(filepath)!
       let identifiers: ReturnType<typeof getIdentifierTextSpans> | undefined
       if (!handbookOptions.noStaticSemanticInfo) {
         identifiers = getIdentifierTextSpans(ts, source, file.offset)
@@ -254,7 +255,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           const pos = pc.indexToPos(query)
           throw new TwoslashError(
             `Invalid quick info query`,
-            `The request on line ${pos.line + 2} in ${file.filename} for quickinfo via ^? returned no from the compiler.`,
+            `The request on line ${pos.line + 2} in ${file.filename} for quickinfo via ^? returned nothing from the compiler.`,
             `This is likely that the x positioning is off.`,
           )
         }
@@ -267,20 +268,18 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           identifiers = getIdentifierTextSpans(ts, source, file.offset)
 
         const ids = identifiers.filter(i => areRangesIntersecting(i as unknown as Range, highlight))
-        if (ids.length) {
-          for (const [start, _end, target] of ids) {
-            const token = getQuickInfo(start, target)
-            if (token) {
-              token.type = 'highlight'
-              tokens.push(token)
-            }
+        const _tokens = ids.map(i => getQuickInfo(i[0], i[2])).filter(Boolean) as TokenWithoutPosition[]
+        if (_tokens.length) {
+          for (const token of _tokens) {
+            token.type = 'highlight'
+            tokens.push(token)
           }
         }
         else {
           const pos = pc.indexToPos(highlight[0])
           throw new TwoslashError(
             `Invalid highlight query`,
-            `The request on line ${pos.line + 2} in ${file.filename} for quickinfo via ^^^ returned no from the compiler.`,
+            `The request on line ${pos.line + 2} in ${file.filename} for highlight via ^^^ returned nothing from the compiler.`,
             `This is likely that the x positioning is off.`,
           )
         }
@@ -291,7 +290,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       targetsCompletions.forEach((target) => {
         if (isInRemoval(target))
           return
-        const completions = ls.getCompletionsAtPosition(file.filename, target - 1, {})
+        const completions = ls.getCompletionsAtPosition(filepath, target - 1, {})
         if (!completions && !handbookOptions.noErrorValidation) {
           const pos = pc.indexToPos(target)
           throw new TwoslashError(
@@ -322,13 +321,14 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       if (!supportedFileTyes.includes(file.extension))
         continue
 
+      const filepath = fsRoot + file.filename
       if (!handbookOptions.noErrors) {
         const diagnostics = [
-          ...ls.getSemanticDiagnostics(file.filename),
-          ...ls.getSyntacticDiagnostics(file.filename),
+          ...ls.getSemanticDiagnostics(filepath),
+          ...ls.getSyntacticDiagnostics(filepath),
         ]
         for (const diagnostic of diagnostics) {
-          if (diagnostic.file?.fileName !== file.filename)
+          if (diagnostic.file?.fileName !== filepath)
             continue
           const start = diagnostic.start! + file.offset
           if (handbookOptions.noErrorsCutted && isInRemoval(start))

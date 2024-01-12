@@ -155,10 +155,10 @@ export function createPositionConverter(code: string) {
 
 const reFilenamesMakers = /^\/\/\s?@filename: (.+)$/mg
 
-export function splitFiles(code: string, defaultFileName: string, rootPath: string) {
+export function splitFiles(code: string, defaultFileName: string) {
   const matches = Array.from(code.matchAll(reFilenamesMakers))
 
-  let currentFileName = rootPath + defaultFileName
+  let currentFileName = defaultFileName
   const files: TemporaryFile[] = []
 
   let index = 0
@@ -173,7 +173,7 @@ export function splitFiles(code: string, defaultFileName: string, rootPath: stri
         extension: getExtension(currentFileName),
       })
     }
-    currentFileName = rootPath + match[1].trimEnd()
+    currentFileName = match[1].trimEnd()
     index = offset
   }
 
