@@ -102,6 +102,15 @@
       "target": "Date",
       "line": 4,
       "character": 22
+    },
+    {
+      "type": "highlight",
+      "text": "var Date: DateConstructor\nnew () => Date (+4 overloads)",
+      "start": 138,
+      "length": 4,
+      "target": "Date",
+      "line": 4,
+      "character": 22
     }
   ]
 }

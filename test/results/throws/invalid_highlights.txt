@@ -1,0 +1,6 @@
+
+## Invalid highlight query
+
+The request on line 2 in /Users/antfu/i/twoslashes/index.ts for quickinfo via ^^^ returned no from the compiler.
+
+This is likely that the x positioning is off.

@@ -52,23 +52,35 @@ export function typesToExtension(types: string) {
   )
 }
 
-export function getIdentifierTextSpans(ts: typeof import('typescript'), sourceFile: SourceFile) {
-  const textSpans: [start: number, text: string][] = []
+export function getIdentifierTextSpans(ts: typeof import('typescript'), sourceFile: SourceFile, fileOffset: number) {
+  const textSpans: [start: number, end: number, text: string][] = []
   checkChildren(sourceFile)
   return textSpans
 
   function checkChildren(node: import('typescript').Node) {
     ts.forEachChild(node, (child) => {
-      if (ts.isIdentifier(child))
-        textSpans.push([child.getStart(sourceFile, false), child.getText(sourceFile)])
+      if (ts.isIdentifier(child)) {
+        const text = child.getText(sourceFile)
+        const start = child.getStart(sourceFile, false) + fileOffset
+        const end = start + text.length
+        textSpans.push([start, end, text])
+      }
 
       checkChildren(child)
     })
   }
 }
 
+export function isInRange(index: number, range: Range) {
+  return range[0] <= index && index <= range[1]
+}
+
 export function isInRanges(index: number, ranges: Range[]) {
-  return ranges.find(([start, end]) => start <= index && index <= end)
+  return ranges.find(range => isInRange(index, range))
+}
+
+export function areRangesIntersecting(a: Range, b: Range) {
+  return isInRange(a[0], b) || isInRange(a[1], b) || isInRange(b[0], a) || isInRange(b[1], a)
 }
 
 /**

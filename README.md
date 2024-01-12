@@ -44,7 +44,7 @@ Breaking changes from `@typescript/twoslash`:
 ## TODOs
 
 - [ ] Support `showEmit` option
-- [ ] Support `noStaticSemanticInfo` option
+- [x] Support `noStaticSemanticInfo` option
 - [x] Test coverage
 - [x] Compat-layer maybe?
 

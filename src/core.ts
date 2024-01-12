@@ -2,8 +2,8 @@ import type { CompilerOptions } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, CreateTwoSlashOptions, HandbookOptions, ParsedFlagNotation, Position, Range, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
-import { createPositionConverter, getIdentifierTextSpans, isInRanges, parseFlag, removeCodeRanges, resolveTokenPositions, splitFiles, typesToExtension } from './utils'
+import type { CompilerOptionDeclaration, CreateTwoSlashOptions, HandbookOptions, ParsedFlagNotation, Position, Range, TokenError, TokenErrorWithoutPosition, TokenHover, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
+import { areRangesIntersecting, createPositionConverter, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveTokenPositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 
@@ -145,9 +145,6 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     const env = getEnv(compilerOptions)
     const ls = env.languageService
 
-    const targetsQuery: number[] = []
-    const targetsCompletions: number[] = []
-    const targetsHighlights: Range[] = []
     const pc = createPositionConverter(code)
 
     // #region extract cuts
@@ -172,6 +169,9 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         continue
       }
 
+      const targetsQuery: number[] = []
+      const targetsCompletions: number[] = []
+      const targetsHighlights: Range[] = []
       env.createFile(file.filename, file.content)
 
       // #region extract markers
@@ -200,17 +200,8 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       // #endregion
 
       // #region get ts info for quick info
-      const source = ls.getProgram()!.getSourceFile(file.filename)!
-      const identifiers = getIdentifierTextSpans(ts, source)
-      for (const [offset, target] of identifiers) {
-        const start = offset + file.offset
-        if (isInRemoval(start))
-          continue
-
-        if (!shouldGetHoverInfo(target, offset, file.filename))
-          continue
-
-        const quickInfo = ls.getQuickInfoAtPosition(file.filename, offset)
+      function getQuickInfo(start: number, target: string): TokenWithoutPosition | undefined {
+        const quickInfo = ls.getQuickInfoAtPosition(file.filename, start - file.offset)
 
         if (quickInfo && quickInfo.displayParts) {
           const text = quickInfo.displayParts.map(dp => dp.text).join('')
@@ -218,41 +209,82 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           // TODO: get different type of docs
           const docs = quickInfo.documentation?.map(d => d.text).join('\n') || undefined
 
-          tokens.push({
+          return {
             type: 'hover',
             text,
             docs,
             start,
             length: target.length,
             target,
-          })
+          }
+        }
+      }
+
+      const source = ls.getProgram()!.getSourceFile(file.filename)!
+      let identifiers: ReturnType<typeof getIdentifierTextSpans> | undefined
+      if (!handbookOptions.noStaticSemanticInfo) {
+        identifiers = getIdentifierTextSpans(ts, source, file.offset)
+        for (const [start, _end, target] of identifiers) {
+          if (isInRemoval(start))
+            continue
+          if (!shouldGetHoverInfo(target, start, file.filename))
+            continue
+
+          const token = getQuickInfo(start, target)
+          if (token)
+            tokens.push(token)
         }
       }
       // #endregion
 
-      // #region update token with types
-      tokens.forEach((token) => {
-        if (token.type as any !== 'hover')
-          return undefined
-        const range: Range = [token.start, token.start + token.length]
-        // Turn static info to query if in range
-        if (targetsQuery.find(target => isInRanges(target, [range]))) {
-          tokens.push({
-            ...token,
-            type: 'query',
-          } as any)
-          // TODO: warn when there is no type info
-        }
+      // #region query
+      for (const query of targetsQuery) {
+        if (!identifiers)
+          identifiers = getIdentifierTextSpans(ts, source, file.offset)
 
-        // Turn static info to completion if in range
-        else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range]))) {
-          tokens.push({
-            ...token,
-            type: 'highlight',
-          } as any)
-          // TODO: warn when there is no type info
+        const id = identifiers.find(i => isInRange(query, i as unknown as Range))
+        let token: TokenWithoutPosition | undefined
+        if (id)
+          token = getQuickInfo(query, id[2])
+        if (token) {
+          token.type = 'query'
+          tokens.push(token)
         }
-      })
+        else {
+          const pos = pc.indexToPos(query)
+          throw new TwoslashError(
+            `Invalid quick info query`,
+            `The request on line ${pos.line + 2} in ${file.filename} for quickinfo via ^? returned no from the compiler.`,
+            `This is likely that the x positioning is off.`,
+          )
+        }
+      }
+      // #endregion
+
+      // #region highlights
+      for (const highlight of targetsHighlights) {
+        if (!identifiers)
+          identifiers = getIdentifierTextSpans(ts, source, file.offset)
+
+        const ids = identifiers.filter(i => areRangesIntersecting(i as unknown as Range, highlight))
+        if (ids.length) {
+          for (const [start, _end, target] of ids) {
+            const token = getQuickInfo(start, target)
+            if (token) {
+              token.type = 'highlight'
+              tokens.push(token)
+            }
+          }
+        }
+        else {
+          const pos = pc.indexToPos(highlight[0])
+          throw new TwoslashError(
+            `Invalid highlight query`,
+            `The request on line ${pos.line + 2} in ${file.filename} for quickinfo via ^^^ returned no from the compiler.`,
+            `This is likely that the x positioning is off.`,
+          )
+        }
+      }
       // #endregion
 
       // #region get completions
