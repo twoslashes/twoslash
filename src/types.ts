@@ -28,9 +28,9 @@ export interface TwoSlashExecuteOptions {
    */
   shouldGetHoverInfo?: (identifier: string, start: number, filename: string) => boolean
   /**
-   * A custom predicate to filter out tokens for further processing
+   * A custom predicate to filter out nodes for further processing
    */
-  filterToken?: (token: TokenWithoutPosition) => boolean
+  filterNode?: (node: NodeWithoutPosition) => boolean
 }
 
 export interface CreateTwoSlashOptions extends TwoSlashExecuteOptions {
@@ -74,21 +74,21 @@ export interface TwoSlashReturn {
   code: string
 
   /**
-   * Tokens contains various bits of information about the code
+   * Nodes containing various bits of information about the code
    */
-  tokens: Token[]
+  nodes: TwoSlashNode[]
 
   /**
    * The meta information the twoslash run
    */
   meta: TwoSlashReturnMeta
 
-  get queries(): TokenQuery[]
-  get completions(): TokenCompletion[]
-  get errors(): TokenError[]
-  get highlights(): TokenHighlight[]
-  get hovers(): TokenHover[]
-  get tags(): TokenTag[]
+  get queries(): NodeQuery[]
+  get completions(): NodeCompletion[]
+  get errors(): NodeError[]
+  get highlights(): NodeHighlight[]
+  get hovers(): NodeHover[]
+  get tags(): NodeTag[]
 }
 
 export interface TwoSlashReturnMeta {
@@ -148,7 +148,7 @@ export interface HandbookOptions {
 
   // ==== New in twoslashes ====
   /**
-   * Keep TwoSlash notations in the code, the tokens will have the position of the input code.
+   * Do not remove twoslash notations from output code, the nodes will have the position of the input code.
    * @default false
    */
   keepNotations: boolean
@@ -173,18 +173,18 @@ export interface Position {
 export type Range = [start: number, end: number]
 
 /**
- * Basic token with start and length to represent a range in the code
+ * Basic node with start and length to represent a range in the code
  */
-export interface TokenStartLength {
-  /** 0-indexed position of the token in the file */
+export interface NodeStartLength {
+  /** 0-indexed position of the node in the file */
   start: number
-  /** The length of the token */
+  /** The length of the node */
   length: number
 }
 
-export interface TokenBase extends TokenStartLength, Position {}
+export interface NodeBase extends NodeStartLength, Position {}
 
-export interface TokenHover extends TokenBase {
+export interface NodeHover extends NodeBase {
   type: 'hover'
   /** The string content of the node this represents (mainly for debugging) */
   target: string
@@ -194,15 +194,15 @@ export interface TokenHover extends TokenBase {
   docs?: string
 }
 
-export interface TokenHighlight extends Omit<TokenHover, 'type'> {
+export interface NodeHighlight extends Omit<NodeHover, 'type'> {
   type: 'highlight'
 }
 
-export interface TokenQuery extends Omit<TokenHover, 'type'> {
+export interface NodeQuery extends Omit<NodeHover, 'type'> {
   type: 'query'
 }
 
-export interface TokenCompletion extends TokenBase {
+export interface NodeCompletion extends NodeBase {
   type: 'completion'
   /** Results for completions at a particular point */
   completions: CompletionEntry[]
@@ -210,7 +210,7 @@ export interface TokenCompletion extends TokenBase {
   completionsPrefix: string
 }
 
-export interface TokenError extends TokenBase {
+export interface NodeError extends NodeBase {
   type: 'error'
   id: string
   level: 0 | 1 | 2 | 3
@@ -219,7 +219,7 @@ export interface TokenError extends TokenBase {
   filename: string
 }
 
-export interface TokenTag extends TokenBase {
+export interface NodeTag extends NodeBase {
   type: 'tag'
   /** What was the name of the tag */
   name: string
@@ -235,13 +235,13 @@ export interface ParsedFlagNotation {
   end: number
 }
 
-export type Token = TokenHighlight | TokenHover | TokenQuery | TokenCompletion | TokenError | TokenTag
-export type TokenWithoutPosition =
-  | Omit<TokenHighlight, keyof Position>
-  | Omit<TokenHover, keyof Position>
-  | Omit<TokenQuery, keyof Position>
-  | Omit<TokenCompletion, keyof Position>
-  | Omit<TokenError, keyof Position>
-  | Omit<TokenTag, keyof Position>
+export type TwoSlashNode = NodeHighlight | NodeHover | NodeQuery | NodeCompletion | NodeError | NodeTag
+export type NodeWithoutPosition =
+  | Omit<NodeHighlight, keyof Position>
+  | Omit<NodeHover, keyof Position>
+  | Omit<NodeQuery, keyof Position>
+  | Omit<NodeCompletion, keyof Position>
+  | Omit<NodeError, keyof Position>
+  | Omit<NodeTag, keyof Position>
 
-export type TokenErrorWithoutPosition = Omit<TokenError, keyof Position>
+export type NodeErrorWithoutPosition = Omit<NodeError, keyof Position>

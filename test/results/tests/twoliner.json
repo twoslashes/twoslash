@@ -1,6 +1,6 @@
 {
   "code": "// @filename: getStringLength.ts\nexport const getStringLength = (str: string) => str.length\n// @filename: index.ts\nimport { getStringLength } from './getStringLength'\nconst b = getStringLength('string')\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "const getStringLength: (str: string) => number",
@@ -65,5 +65,6 @@
       "line": 4,
       "character": 10
     }
-  ]
+  ],
+  "flags": []
 }

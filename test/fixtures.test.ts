@@ -97,7 +97,8 @@ describe('fixtures throws', async () => {
 function cleanFixture(ts: TwoSlashReturn) {
   return JSON.stringify({
     code: ts.code,
-    tokens: ts.tokens,
+    nodes: ts.nodes,
+    flags: ts.meta.flagNotations,
     // compilerOptions: ts.meta.compilerOptions
   }, null, 2).replaceAll(process.cwd(), '[home]')
 }

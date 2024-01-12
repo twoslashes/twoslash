@@ -1,6 +1,6 @@
 {
   "code": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState\n\nfunction networkStatus(state: NetworkState): string {\n  // Right now we don't know  which of the three potential\n  // types state could be.\n\n  // Trying to access a property which isn't shared\n  // across all types will raise an error\n  state.code\n\n  // By switching on state, we can discriminate the\n  switch (state.state) {\n    case 'loading':\n      return 'Downloading...'\n    case 'failed':\n      return `Error ${state.code} downloading`\n    case 'success':\n      return `Error ${state.response} downloading`\n  }\n}\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
@@ -147,6 +147,17 @@
       "target": "response",
       "line": 17,
       "character": 28
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        2339
+      ],
+      "start": 0,
+      "end": 17
     }
   ]
 }

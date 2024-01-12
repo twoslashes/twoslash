@@ -6,7 +6,7 @@ export * from './defaults'
 export {
   createPositionConverter,
   removeCodeRanges,
-  resolveTokenPositions,
+  resolveNodePositions,
 } from './utils'
 export {
   validateCodeForErrors,

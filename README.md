@@ -11,8 +11,8 @@ A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeSc
 > [!NOTE]
 > Working in progress, breaking changes are expected.
 
-- Unified tokens information interface, easier to work with
-- `createTwoslasher` function to create a twoslash instance with cached language servers (6~20x faster)
+- Unified information interface, consistent and easier to manipulate
+- `createTwoslasher` function to create a twoslash instance with cached language servers (5-20 times faster!)
 - ESM-first, dual CJS/ESM builds
 - `keepNotations` flag for better support of custom languages (see `twoslash-vue` integration)
 - Lighter, no longer deps on `lz-string` and `debug`
@@ -21,20 +21,115 @@ A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeSc
 
 Breaking changes from `@typescript/twoslash`:
 
-1. The returned items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `tokens`. Learn more at the [Information Tokens](#information-tokens) section.
+1. The returned items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `nodes`. Learn more at the [Information Nodes](#information-nodes) section.
 2. Main entry point `import "twoslashes"` bundles `typescript`, while a new sub-entry `import "twoslashes/core"` is dependency-free and requires providing your own typescript instance.
 4. `defaultOptions` is renamed to `handbookOptions`
 5. `defaultCompilerOptions` is renamed to `compilerOptions`
 
 ## Features
 
-### Information Tokens
+### Information Nodes
 
-// TODO:
+TwoSlash<sup>es</sup> returns all types of information in the `nodes` array.
 
-### `createTwoslasher`
+With some common properties:
 
-// TODO:
+- `type`: the type of the node. Can be `hover`, `query`, `error`, `tag`, `highlight` or `completion` (in some entries was `kind` in `@typescript/twoslash`)
+- `start`: the 0-indexed start position of the node in the output code
+- `line`: a 0-indexed line number of the node in the output code
+- `character`: a 0-indexed character number of the node in the output code (in some entries it was `offset` in `@typescript/twoslash`)
+- `length`: length of the node
+
+For different types of nodes, they have some extra properties:
+
+#### `hover`
+
+- `text`: the text of the hover, usually the type information of the given node
+- `docs`: the jsdoc of the given node, can be `undefined`
+
+#### `query`
+
+Same as `hover`
+
+#### `highlight`
+
+- `text`: the extra annotation text of the highlight, can be `undefined`
+
+#### `completion`
+
+- `completion`: the completion entries
+- `completionPrefix`: the prefix of the completion
+
+#### `error`
+
+- `text`: the error message (was `renderedMessage` in `@typescript/twoslash`)
+- `level`: the error level (was `category` in `@typescript/twoslash`)
+- `code`: TypeScript error code
+- `id`: a generated based on the code and position of the error
+
+#### `tag`
+
+- `text`: the text of the tag (was `annotation` in `@typescript/twoslash`)
+
+#### Getters
+
+To make it easier to access, we also provide some getters shortcuts to each type of the nodes:
+
+```ts
+export interface TwoSlashReturn {
+  /** The output code */
+  code: string
+
+  /**
+   * Nodes containing various bits of information about the code
+   */
+  nodes: TwoSlashNode[]
+
+  /** Getters */
+  get queries(): NodeQuery[]
+  get completions(): NodeCompletion[]
+  get errors(): NodeError[]
+  get highlights(): NodeHighlight[]
+  get hovers(): NodeHover[]
+  get tags(): NodeTag[]
+
+  /**
+   * The meta information
+   */
+  meta: TwoSlashReturnMeta
+}
+```
+
+### `createTwoSlasher`
+
+TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash<sup>es</sup> provides a `createTwoslasher` factory function allows you to cache the language servers and reuse the already initialized files.
+
+```ts
+import { createTwoSlasher } from 'twoslashes'
+
+const twoslasher = createTwoSlasher({
+  // you can have some default options here
+})
+
+const result1 = twoslasher('import { ref } from "vue"', 'ts')
+// the second time will be much faster as the types from `vue` is already
+const result2 = twoslasher('import { computed } from "vue"', 'ts')
+```
+
+To avoid getting interference across runs, it will reuse the language server with the same `compilerOptions`. Internally it holds a map of hashed `compilerOptions` to the language server instances.
+
+To avoid memory leaks, you can retrieve the cached map and clear them when necessary:
+
+```ts
+import { createTwoSlasher } from 'twoslashes'
+
+const twoslasher = createTwoSlasher()
+
+// do something
+
+// Clear the cached language servers, free the memory
+twoSlasher.getCacheMap()?.clear()
+```
 
 ### Backward Compatibility Layer
 

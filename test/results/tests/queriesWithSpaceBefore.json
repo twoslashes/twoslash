@@ -1,6 +1,6 @@
 {
   "code": "const a: string = \"242342\"\nconst b = \"hello\"\nif (a === b) {\n}\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "const a: string",
@@ -46,5 +46,6 @@
       "line": 2,
       "character": 10
     }
-  ]
+  ],
+  "flags": []
 }

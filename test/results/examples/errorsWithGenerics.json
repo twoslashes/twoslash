@@ -1,6 +1,6 @@
 {
   "code": "const a: Record<string, string> = {}\nlet b: Record<string, number> = {}\nb = a\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "const a: Record<string, string>",
@@ -68,6 +68,17 @@
       "target": "a",
       "line": 2,
       "character": 4
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        2322
+      ],
+      "start": 0,
+      "end": 17
     }
   ]
 }

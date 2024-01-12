@@ -1,6 +1,6 @@
 {
   "code": "\nfunction fn(s) {\n  console.log(s.subtr(3))\n}\n\nfn(42)\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "function fn(s: any): void",
@@ -76,6 +76,24 @@
       "target": "fn",
       "line": 5,
       "character": 0
+    }
+  ],
+  "flags": [
+    {
+      "type": "compilerOptions",
+      "name": "target",
+      "value": 2,
+      "start": 0,
+      "end": 19
+    },
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        7006
+      ],
+      "start": 19,
+      "end": 36
     }
   ]
 }

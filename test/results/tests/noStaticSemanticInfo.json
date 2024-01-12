@@ -1,6 +1,6 @@
 {
   "code": "\nconst hello = 'world'\nconst bye = 'bye'\n\n// `hello` should not have type info, while the `bye` should\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "query",
       "text": "const bye: \"bye\"",
@@ -9,6 +9,15 @@
       "target": "bye",
       "line": 2,
       "character": 6
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noStaticSemanticInfo",
+      "value": true,
+      "start": 0,
+      "end": 25
     }
   ]
 }

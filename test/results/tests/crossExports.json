@@ -1,6 +1,6 @@
 {
   "code": "// @filename: utilFunctions.js\nconst getStringLength = str => str.length\nmodule.exports = {\n  getStringLength,\n}\n\n// @filename: index.ts\nimport utils from './utilFunctions'\nconst count = utils.getStringLength('Check JS')\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "const getStringLength: (str: any) => any",
@@ -100,5 +100,6 @@
       "line": 8,
       "character": 20
     }
-  ]
+  ],
+  "flags": []
 }

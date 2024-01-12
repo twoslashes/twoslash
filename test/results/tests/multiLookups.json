@@ -1,6 +1,6 @@
 {
   "code": "function paintShape(opts: PaintOptions) {\n  let xPos = opts.xPos\n  let yPos = opts.yPos\n  // ...\n}\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "function paintShape(opts: PaintOptions): void",
@@ -100,5 +100,6 @@
       "line": 2,
       "character": 18
     }
-  ]
+  ],
+  "flags": []
 }

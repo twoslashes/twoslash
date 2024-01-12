@@ -1,6 +1,6 @@
 {
   "code": "// @filename: sum.ts\nexport function sum(a: number, b: number): number {\n  return a + b\n}\n\n// @filename: ok.ts\nimport { sum } from \"./sum\"\nsum(1, 2)\n\n// @filename: error.ts\nimport { sum } from \"./sum\"\nsum(4, \"woops\")\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "function sum(a: number, b: number): number",
@@ -93,6 +93,17 @@
       "level": 1,
       "line": 11,
       "character": 7
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        2345
+      ],
+      "start": 173,
+      "end": 190
     }
   ]
 }

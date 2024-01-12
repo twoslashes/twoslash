@@ -1,6 +1,6 @@
 {
   "code": "// The testing infra has set up `annotate` to be a customTag\n\n// @annotate - left - You can use JSDoc comments to provide type information to your editor\nfunction compact(arr: string[]) {\n  if (arr.length > 10) return arr.length\n  // @annotate - right - You can use JSDoc comments to provide type information to your editor\n  return arr\n}\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "function compact(arr: string[]): number | string[]",
@@ -66,5 +66,6 @@
       "line": 6,
       "character": 9
     }
-  ]
+  ],
+  "flags": []
 }

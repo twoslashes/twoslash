@@ -1,6 +1,6 @@
 {
   "code": "const map = new Map<string, Set<number>>()\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "const map: Map<string, Set<number>>",
@@ -27,6 +27,17 @@
       "target": "Set",
       "line": 0,
       "character": 28
+    }
+  ],
+  "flags": [
+    {
+      "type": "compilerOptions",
+      "name": "lib",
+      "value": [
+        "lib.es2015.d.ts"
+      ],
+      "start": 0,
+      "end": 16
     }
   ]
 }

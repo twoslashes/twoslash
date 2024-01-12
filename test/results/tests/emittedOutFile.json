@@ -1,4 +1,41 @@
 {
   "code": "declare module \"nested/base\" {\n    export const a = \"123\";\n}\ndeclare module \"index\" {\n    export * from \"nested/base\";\n}\n",
-  "tokens": []
+  "nodes": [],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "showEmit",
+      "value": true,
+      "start": 191,
+      "end": 204
+    },
+    {
+      "type": "compilerOptions",
+      "name": "module",
+      "value": 2,
+      "start": 131,
+      "end": 147
+    },
+    {
+      "type": "compilerOptions",
+      "name": "outFile",
+      "value": "index.js",
+      "start": 147,
+      "end": 169
+    },
+    {
+      "type": "compilerOptions",
+      "name": "declaration",
+      "value": true,
+      "start": 169,
+      "end": 191
+    },
+    {
+      "type": "handbookOptions",
+      "name": "showEmittedFile",
+      "value": "index.d.ts",
+      "start": 204,
+      "end": 236
+    }
+  ]
 }

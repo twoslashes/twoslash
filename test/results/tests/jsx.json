@@ -1,4 +1,27 @@
 {
   "code": "export const helloWorld = () => <h1>Hello world</h1>;\n",
-  "tokens": []
+  "nodes": [],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "showEmit",
+      "value": true,
+      "start": 149,
+      "end": 162
+    },
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": true,
+      "start": 162,
+      "end": 175
+    },
+    {
+      "type": "compilerOptions",
+      "name": "jsx",
+      "value": 1,
+      "start": 175,
+      "end": 193
+    }
+  ]
 }

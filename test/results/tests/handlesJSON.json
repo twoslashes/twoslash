@@ -1,6 +1,6 @@
 {
   "code": "// @filename: settings.json\n{\n    \"repo\": \"TypeScript\",\n    \"dry\": false,\n    \"debug\": false\n}\n// @filename: index.ts\nimport settings from \"./settings.json\";\n\nsettings.debug === true;\nsettings.dry === 2;\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "error",
       "start": 2,
@@ -69,6 +69,38 @@
       "target": "dry",
       "line": 10,
       "character": 9
+    }
+  ],
+  "flags": [
+    {
+      "type": "compilerOptions",
+      "name": "resolveJsonModule",
+      "value": true,
+      "start": 17,
+      "end": 39
+    },
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        2367
+      ],
+      "start": 0,
+      "end": 17
+    },
+    {
+      "type": "compilerOptions",
+      "name": "module",
+      "value": 1,
+      "start": 39,
+      "end": 60
+    },
+    {
+      "type": "compilerOptions",
+      "name": "moduleResolution",
+      "value": 2,
+      "start": 60,
+      "end": 87
     }
   ]
 }

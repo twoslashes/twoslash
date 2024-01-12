@@ -1,6 +1,6 @@
 {
   "code": "function greet(person: string, date: Date) {\n  console.log(`Hello ${person}, today is ${date.toDateString()}!`);\n}\n\ngreet(\"Maddison\", new Date());\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "function greet(person: string, date: Date): void",
@@ -112,5 +112,6 @@
       "line": 4,
       "character": 22
     }
-  ]
+  ],
+  "flags": []
 }

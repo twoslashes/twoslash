@@ -1,6 +1,6 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, ParsedFlagNotation, Position, Range, Token, TokenStartLength, TokenWithoutPosition } from './types'
+import type { CompilerOptionDeclaration, NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashNode } from './types'
 import { defaultHandbookOptions } from './defaults'
 
 export interface TemporaryFile {
@@ -195,13 +195,13 @@ export function getExtension(fileName: string) {
 }
 
 /**
- * Remove ranages for a string, and update tokens' `start` property accordingly
+ * Remove ranages for a string, and update nodes' `start` property accordingly
  *
- * Note that items in `tokens` will be mutated
+ * Note that items in `nodes` will be mutated
  */
-export function removeCodeRanges<T extends TokenStartLength>(code: string, removals: Range[], tokens: T[]): { code: string, removals: Range[], tokens: T[] }
-export function removeCodeRanges(code: string, removals: Range[]): { code: string, removals: Range[], tokens: undefined }
-export function removeCodeRanges(code: string, removals: Range[], tokens?: TokenStartLength[]) {
+export function removeCodeRanges<T extends NodeStartLength>(code: string, removals: Range[], nodes: T[]): { code: string, removals: Range[], nodes: T[] }
+export function removeCodeRanges(code: string, removals: Range[]): { code: string, removals: Range[], nodes: undefined }
+export function removeCodeRanges(code: string, removals: Range[], nodes?: NodeStartLength[]) {
   // Sort descending, so that we start removal from the end
   const ranges = mergeRanges(removals)
     .sort((a, b) => b[0] - a[0])
@@ -210,50 +210,50 @@ export function removeCodeRanges(code: string, removals: Range[], tokens?: Token
   for (const remove of ranges) {
     const removalLength = remove[1] - remove[0]
     outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1])
-    tokens?.forEach((token) => {
-      // tokens before the range, do nothing
-      if (token.start + token.length <= remove[0])
+    nodes?.forEach((node) => {
+      // nodes before the range, do nothing
+      if (node.start + node.length <= remove[0])
         return undefined
 
-      // remove tokens that are within in the range
-      else if (token.start < remove[1])
-        token.start = -1
+      // remove nodes that are within in the range
+      else if (node.start < remove[1])
+        node.start = -1
 
-      // move tokens after the range forward
+      // move nodes after the range forward
       else
-        token.start -= removalLength
+        node.start -= removalLength
     })
   }
 
   return {
     code: outputCode,
     removals: ranges,
-    tokens,
+    nodes,
   }
 }
 
 /**
- * - Calculate tokens `line` and `character` properties to match the code
- * - Remove tokens that has negative `start` property
- * - Sort tokens by `start`
+ * - Calculate nodes `line` and `character` properties to match the code
+ * - Remove nodes that has negative `start` property
+ * - Sort nodes by `start`
  *
- * Note that the token items will be mutated, clone them beforehand if not desired
+ * Note that the nodes items will be mutated, clone them beforehand if not desired
  */
-export function resolveTokenPositions(tokens: TokenWithoutPosition[], code: string): Token[]
-export function resolveTokenPositions(tokens: TokenWithoutPosition[], indexToPos: (index: number) => Position): Token[]
-export function resolveTokenPositions(tokens: TokenWithoutPosition[], options: string | ((index: number) => Position)): Token[] {
+export function resolveNodePositions(nodes: NodeWithoutPosition[], code: string): TwoSlashNode[]
+export function resolveNodePositions(nodes: NodeWithoutPosition[], indexToPos: (index: number) => Position): TwoSlashNode[]
+export function resolveNodePositions(nodes: NodeWithoutPosition[], options: string | ((index: number) => Position)): TwoSlashNode[] {
   const indexToPos = typeof options === 'string'
     ? createPositionConverter(options).indexToPos
     : options
 
-  const resolvedTokens = tokens
-    .filter(token => token.start >= 0)
-    .sort((a, b) => a.start - b.start) as Token[]
+  const resolved = nodes
+    .filter(node => node.start >= 0)
+    .sort((a, b) => a.start - b.start) as TwoSlashNode[]
 
-  resolvedTokens
-    .forEach(token => Object.assign(token, indexToPos(token.start)))
+  resolved
+    .forEach(node => Object.assign(node, indexToPos(node.start)))
 
-  return resolvedTokens
+  return resolved
 }
 
 export function parseFlag(

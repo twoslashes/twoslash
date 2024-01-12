@@ -1,6 +1,6 @@
 {
   "code": "type Either2dOr3d = [number, number, number?]\n\nfunction setCoordinate(coord: Either2dOr3d) {\n  const [x, y, z] = coord\n\n  console.log(`Provided coordinates had ${coord.length} dimensions`)\n}\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "type Either2dOr3d = [number, number, (number | undefined)?]",
@@ -128,5 +128,6 @@
       "line": 5,
       "character": 48
     }
-  ]
+  ],
+  "flags": []
 }

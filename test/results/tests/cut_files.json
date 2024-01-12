@@ -1,6 +1,6 @@
 {
   "code": "const bye = 'globe'\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "const bye: \"globe\"",
@@ -10,5 +10,6 @@
       "line": 0,
       "character": 6
     }
-  ]
+  ],
+  "flags": []
 }

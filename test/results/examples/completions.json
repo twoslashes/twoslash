@@ -1,6 +1,6 @@
 {
   "code": "console.log\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "var console: Console",
@@ -36,5 +36,6 @@
       "line": 0,
       "character": 9
     }
-  ]
+  ],
+  "flags": []
 }

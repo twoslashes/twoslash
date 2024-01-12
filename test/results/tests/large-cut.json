@@ -1,6 +1,6 @@
 {
   "code": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState\n\nfunction networkStatus(state: NetworkState): string {\n  // Right now TypeScript does not know which of the three\n  // potential types state could be.\n\n  // Trying to access a property which isn't shared\n  // across all types will raise an error\n  state.code\n\n  // By switching on state, TypeScript can narrow the union\n  // down in code flow analysis\n  switch (state.state) {\n    case 'loading':\n      return 'Downloading...'\n    case 'failed':\n      // The type must be NetworkFailedState here,\n      // so accessing the `code` field is safe\n      return `Error ${state.code} downloading`\n    case 'success':\n      return `Downloaded ${state.response.title} - ${state.response.summary}`\n  }\n}\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState",
@@ -183,6 +183,17 @@
       "target": "summary",
       "line": 20,
       "character": 68
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        2339
+      ],
+      "start": 0,
+      "end": 17
     }
   ]
 }

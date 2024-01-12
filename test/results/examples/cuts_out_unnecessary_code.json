@@ -1,6 +1,6 @@
 {
   "code": "function createLabel<T extends number | string>(idOrName: T): NameOrId<T> {\n    throw \"unimplemented\"\n}\n\nlet a = createLabel(\"typescript\");\n\nlet b = createLabel(2.8);\n\nlet c = createLabel(Math.random() ? \"hello\" : 42);\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "function createLabel<T extends string | number>(idOrName: T): NameOrId<T>",
@@ -156,5 +156,6 @@
       "line": 8,
       "character": 25
     }
-  ]
+  ],
+  "flags": []
 }

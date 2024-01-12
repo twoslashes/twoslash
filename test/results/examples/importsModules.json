@@ -1,6 +1,6 @@
 {
   "code": "// @filename: Component.tsx\nimport React from \"react\"\n\nexport function Hello() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n    </div>\n  )\n}\n\n// @filename: index.ts\nimport { Hello } from \"./Component\"\nconsole.log(Hello)\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "(alias) namespace React\nimport React",
@@ -92,5 +92,6 @@
       "line": 13,
       "character": 12
     }
-  ]
+  ],
+  "flags": []
 }

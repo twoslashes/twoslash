@@ -1,6 +1,6 @@
 {
   "code": "// @filename: file-with-export.ts\nexport const helloWorld = \"Example string\";\n\n// @filename: index.ts\nimport {helloWorld} from \"./file-with-export\"\nconsole.log(helloWorld)\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "const helloWorld: \"Example string\"",
@@ -47,5 +47,6 @@
       "line": 5,
       "character": 12
     }
-  ]
+  ],
+  "flags": []
 }

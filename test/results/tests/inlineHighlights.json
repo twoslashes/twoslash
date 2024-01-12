@@ -1,6 +1,6 @@
 {
   "code": "type Result = \"pass\" | \"fail\"\n\nconst hello = \"OK\"\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "type Result = \"pass\" | \"fail\"",
@@ -37,5 +37,6 @@
       "line": 2,
       "character": 6
     }
-  ]
+  ],
+  "flags": []
 }

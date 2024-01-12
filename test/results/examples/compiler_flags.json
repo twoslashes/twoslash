@@ -1,6 +1,6 @@
 {
   "code": "\n// This will not throw because of the noImplicitAny\nfunction fn(s) {\n  console.log(s.slice(3))\n}\n\nfn(42);\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "function fn(s: any): void",
@@ -64,6 +64,22 @@
       "target": "fn",
       "line": 6,
       "character": 0
+    }
+  ],
+  "flags": [
+    {
+      "type": "compilerOptions",
+      "name": "noImplicitAny",
+      "value": false,
+      "start": 0,
+      "end": 25
+    },
+    {
+      "type": "compilerOptions",
+      "name": "target",
+      "value": 2,
+      "start": 25,
+      "end": 44
     }
   ]
 }

@@ -2,8 +2,8 @@ import type { CompilerOptions, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, CreateTwoSlashOptions, HandbookOptions, ParsedFlagNotation, Position, Range, TokenError, TokenErrorWithoutPosition, TokenHover, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
-import { areRangesIntersecting, createPositionConverter, getExtension, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveTokenPositions, splitFiles, typesToExtension } from './utils'
+import type { CompilerOptionDeclaration, CreateTwoSlashOptions, HandbookOptions, NodeError, NodeErrorWithoutPosition, NodeHover, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
+import { areRangesIntersecting, createPositionConverter, getExtension, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 
@@ -75,11 +75,11 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     const {
       customTags = createOptions.customTags || [],
       shouldGetHoverInfo = createOptions.shouldGetHoverInfo || (() => true),
-      filterToken = createOptions.filterToken,
+      filterNode = createOptions.filterNode,
     } = options
 
     const defaultFilename = `index.${meta.extension}`
-    let tokens: TokenWithoutPosition[] = []
+    let nodes: NodeWithoutPosition[] = []
     const isInRemoval = (index: number) => isInRanges(index, meta.removals)
 
     meta.flagNotations = findFlagNotations(code, customTags, tsOptionDeclarations)
@@ -98,7 +98,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           meta.handbookOptions[flag.name] = flag.value
           break
         case 'tag':
-          tokens.push({
+          nodes.push({
             type: 'tag',
             name: flag.name,
             start: flag.end,
@@ -183,7 +183,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         // #endregion
 
         // #region get ts info for quick info
-        function getQuickInfo(start: number, target: string): TokenWithoutPosition | undefined {
+        function getQuickInfo(start: number, target: string): NodeWithoutPosition | undefined {
           const quickInfo = ls.getQuickInfoAtPosition(filepath, start - file.offset)
 
           if (quickInfo && quickInfo.displayParts) {
@@ -212,9 +212,9 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
             if (!shouldGetHoverInfo(target, start, file.filename))
               continue
 
-            const token = getQuickInfo(start, target)
-            if (token)
-              tokens.push(token)
+            const node = getQuickInfo(start, target)
+            if (node)
+              nodes.push(node)
           }
         }
         // #endregion
@@ -225,12 +225,12 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
             identifiers = getIdentifierTextSpans(ts, source, file.offset)
 
           const id = identifiers.find(i => isInRange(query, i as unknown as Range))
-          let token: TokenWithoutPosition | undefined
+          let node: NodeWithoutPosition | undefined
           if (id)
-            token = getQuickInfo(query, id[2])
-          if (token) {
-            token.type = 'query'
-            tokens.push(token)
+            node = getQuickInfo(query, id[2])
+          if (node) {
+            node.type = 'query'
+            nodes.push(node)
           }
           else {
             const pos = pc.indexToPos(query)
@@ -249,11 +249,11 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
             identifiers = getIdentifierTextSpans(ts, source, file.offset)
 
           const ids = identifiers.filter(i => areRangesIntersecting(i as unknown as Range, highlight))
-          const _tokens = ids.map(i => getQuickInfo(i[0], i[2])).filter(Boolean) as TokenWithoutPosition[]
-          if (_tokens.length) {
-            for (const token of _tokens) {
-              token.type = 'highlight'
-              tokens.push(token)
+          const matched = ids.map(i => getQuickInfo(i[0], i[2])).filter(Boolean) as NodeWithoutPosition[]
+          if (matched.length) {
+            for (const node of matched) {
+              node.type = 'highlight'
+              nodes.push(node)
             }
           }
           else {
@@ -284,7 +284,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || ''
           prefix = prefix.split('.').pop()!
 
-          tokens.push({
+          nodes.push({
             type: 'completion',
             start: target,
             length: 0,
@@ -296,7 +296,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       }
     }
 
-    let errorTokens: Omit<TokenError, keyof Position>[] = []
+    let errorNodes: Omit<NodeError, keyof Position>[] = []
 
     // #region get diagnostics, after all files are mounted
     for (const file of files) {
@@ -315,7 +315,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           const start = diagnostic.start! + file.offset
           if (meta.handbookOptions.noErrorsCutted && isInRemoval(start))
             continue
-          errorTokens.push({
+          errorNodes.push({
             type: 'error',
             start,
             length: diagnostic.length!,
@@ -330,15 +330,15 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     }
     // #endregion
 
-    if (filterToken) {
-      tokens = tokens.filter(filterToken)
-      errorTokens = errorTokens.filter(filterToken)
+    if (filterNode) {
+      nodes = nodes.filter(filterNode)
+      errorNodes = errorNodes.filter(filterNode)
     }
-    tokens.push(...errorTokens)
+    nodes.push(...errorNodes)
 
     // A validator that error codes are mentioned, so we can know if something has broken in the future
-    if (!meta.handbookOptions.noErrorValidation && errorTokens.length)
-      validateCodeForErrors(errorTokens as TokenError[], meta.handbookOptions, fsRoot)
+    if (!meta.handbookOptions.noErrorValidation && errorNodes.length)
+      validateCodeForErrors(errorNodes as NodeError[], meta.handbookOptions, fsRoot)
 
     let outputCode = code
     if (meta.handbookOptions.showEmit) {
@@ -391,13 +391,13 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       outputCode = outfile.text
       meta.extension = getExtension(outfile.name)
       meta.removals.length = 0
-      tokens.length = 0
+      nodes.length = 0
     }
 
     if (!meta.handbookOptions.keepNotations) {
-      const removed = removeCodeRanges(outputCode, meta.removals, tokens)
+      const removed = removeCodeRanges(outputCode, meta.removals, nodes)
       outputCode = removed.code
-      tokens = removed.tokens
+      nodes = removed.nodes
       meta.removals = removed.removals
     }
 
@@ -405,30 +405,30 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       ? pc.indexToPos
       : createPositionConverter(outputCode).indexToPos
 
-    const resolvedTokens = resolveTokenPositions(tokens, indexToPos)
+    const resolvedNodes = resolveNodePositions(nodes, indexToPos)
 
     return {
       code: outputCode,
-      tokens: resolvedTokens,
+      nodes: resolvedNodes,
       meta,
 
       get queries() {
-        return this.tokens.filter(i => i.type === 'query') as any
+        return this.nodes.filter(i => i.type === 'query') as any
       },
       get completions() {
-        return this.tokens.filter(i => i.type === 'completion') as any
+        return this.nodes.filter(i => i.type === 'completion') as any
       },
       get errors() {
-        return this.tokens.filter(i => i.type === 'error') as any
+        return this.nodes.filter(i => i.type === 'error') as any
       },
       get highlights() {
-        return this.tokens.filter(i => i.type === 'highlight') as any
+        return this.nodes.filter(i => i.type === 'highlight') as any
       },
       get hovers() {
-        return this.tokens.filter(i => i.type === 'hover') as any
+        return this.nodes.filter(i => i.type === 'hover') as any
       },
       get tags() {
-        return this.tokens.filter(i => i.type === 'tag') as any
+        return this.nodes.filter(i => i.type === 'tag') as any
       },
     }
   }

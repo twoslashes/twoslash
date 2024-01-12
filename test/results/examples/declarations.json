@@ -1,4 +1,27 @@
 {
   "code": "/**\n * Gets the length of a string\n * @param value a string\n */\nexport declare function getStringLength(value: string): number;\n",
-  "tokens": []
+  "nodes": [],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "showEmit",
+      "value": true,
+      "start": 22,
+      "end": 35
+    },
+    {
+      "type": "compilerOptions",
+      "name": "declaration",
+      "value": true,
+      "start": 0,
+      "end": 22
+    },
+    {
+      "type": "handbookOptions",
+      "name": "showEmittedFile",
+      "value": "index.d.ts",
+      "start": 35,
+      "end": 67
+    }
+  ]
 }

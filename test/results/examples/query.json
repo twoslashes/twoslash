@@ -1,6 +1,6 @@
 {
   "code": "let foo = \"hello there!\";\n",
-  "tokens": [
+  "nodes": [
     {
       "type": "hover",
       "text": "let foo: string",
@@ -19,5 +19,6 @@
       "line": 0,
       "character": 4
     }
-  ]
+  ],
+  "flags": []
 }

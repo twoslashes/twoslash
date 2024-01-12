@@ -59,13 +59,13 @@ export interface TwoSlashReturnLegacy {
     line: number
     /** At what index in the line does the caret represent  */
     offset: number
-    /** The text of the token which is highlighted */
+    /** The text of the node which is highlighted */
     text?: string
     /** Any attached JSDocs */
     docs?: string | undefined
-    /** The token start which the query indicates  */
+    /** The node start which the query indicates  */
     start: number
-    /** The length of the token */
+    /** The length of the node */
     length: number
     /** Results for completions at a particular point */
     completions?: import('typescript').CompletionEntry[]
