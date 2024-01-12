@@ -14,8 +14,8 @@ A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeSc
 - Unified information interface, consistent and easier to manipulate
 - `createTwoslasher` function to create a twoslash instance with cached language servers (5-20 times faster!)
 - ESM-first, dual CJS/ESM builds
-- `keepNotations` flag for better support of custom languages (see `twoslash-vue` integration)
 - Lighter, no longer deps on `lz-string` and `debug`
+- Additional options for better custom languages support (e.g. [`twoslash-vue`](https://github.com/antfu/twoslash-vue) integration)
 
 ## Breaking Changes
 
@@ -27,6 +27,39 @@ Breaking changes from `@typescript/twoslash`:
 5. `defaultCompilerOptions` is renamed to `compilerOptions`
 
 ## Features
+
+### `createTwoSlasher`
+
+TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash<sup>es</sup> provides a `createTwoslasher` factory function allows you to cache the language servers and reuse the already initialized files.
+
+```ts
+import { createTwoSlasher } from 'twoslashes'
+
+const twoslasher = createTwoSlasher({
+  // you can have some default options here
+})
+
+const result1 = twoslasher('import { ref } from "vue"', 'ts')
+// the second time will be much faster as the types from `vue` is already
+const result2 = twoslasher('import { computed } from "vue"', 'ts')
+```
+
+This would result in a [5-20 times faster](#benchmark) performance in repetitive usage.
+
+To avoid getting interference across runs, it will reuse the language server with the same `compilerOptions`. Internally it holds a map of hashed `compilerOptions` to the language server instances.
+
+You can retrieve the cached map and clear it when necessary, to avoid memory leaks:
+
+```ts
+import { createTwoSlasher } from 'twoslashes'
+
+const twoslasher = createTwoSlasher()
+
+// do something
+
+// Clear the cached language servers, free the memory
+twoSlasher.getCacheMap()?.clear()
+```
 
 ### Information Nodes
 
@@ -100,39 +133,6 @@ export interface TwoSlashReturn {
 }
 ```
 
-### `createTwoSlasher`
-
-TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash<sup>es</sup> provides a `createTwoslasher` factory function allows you to cache the language servers and reuse the already initialized files.
-
-```ts
-import { createTwoSlasher } from 'twoslashes'
-
-const twoslasher = createTwoSlasher({
-  // you can have some default options here
-})
-
-const result1 = twoslasher('import { ref } from "vue"', 'ts')
-// the second time will be much faster as the types from `vue` is already
-const result2 = twoslasher('import { computed } from "vue"', 'ts')
-```
-
-This would result in a [5-20 times faster](#benchmark) performance in repetitive usage.
-
-To avoid getting interference across runs, it will reuse the language server with the same `compilerOptions`. Internally it holds a map of hashed `compilerOptions` to the language server instances.
-
-You can retrieve the cached map and clear it when necessary, to avoid memory leaks:
-
-```ts
-import { createTwoSlasher } from 'twoslashes'
-
-const twoslasher = createTwoSlasher()
-
-// do something
-
-// Clear the cached language servers, free the memory
-twoSlasher.getCacheMap()?.clear()
-```
-
 ### Backward Compatibility Layer
 
 To make it easier to migrate from `@typescript/twoslash`, TwoSlash<sup>es</sup> provides a backward compatibility layer that allows you to use the old interface with the new implementation.
@@ -156,6 +156,42 @@ const legacy = convertLegacyReturn(result) // <--
 
 console.log(legacy.staticQuickInfos) // the old interface
 ```
+
+### Additional Handbook Options
+
+In addition to the options provided by `@typescript/twoslash`, TwoSlash<sup>es</sup> provides some additional options:
+
+#### `keepNotations`
+
+Tell TwoSlash to not remove any notations, and keep the original code untouched. The `nodes` will have the position information of the original code. Useful for better source mapping combing with `meta.removals`.
+
+Default: `false`
+
+#### `noErrorsCutted`
+
+Ignore errors that occurred in the cutted code.
+
+Default: `false`
+
+### Additional Meta Information
+
+An additional `meta` property is returned providing additional information about the result.
+
+#### `meta.flagNotations`
+
+The list of options flag notation that is detected from the code.
+
+#### `meta.removals`
+
+A list of the index ranges of the code removed by TwoSlash from the original code, useful for better source mapping.
+
+#### `meta.compilerOptions`
+
+The final resolved `compilerOptions`
+
+#### `meta.handbookOptions`
+
+The final resolved `handbookOptions`
 
 ## Benchmark
 
