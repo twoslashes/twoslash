@@ -51,7 +51,7 @@ export function absolute(num: number) {
 import {absolute} from "./maths"
 const value = absolute(-1)
 //    ^?
-`, 'test.ts')
+`, 'test.ts', '')
   expect(files).toMatchInlineSnapshot(`
     [
       {
@@ -60,6 +60,7 @@ const value = absolute(-1)
     ",
         "extension": "ts",
         "filename": "test.ts",
+        "filepath": "test.ts",
         "offset": 0,
       },
       {
@@ -71,6 +72,7 @@ const value = absolute(-1)
     ",
         "extension": "ts",
         "filename": "maths.ts",
+        "filepath": "maths.ts",
         "offset": 20,
       },
       {
@@ -82,6 +84,7 @@ const value = absolute(-1)
     ",
         "extension": "ts",
         "filename": "index.ts",
+        "filepath": "index.ts",
         "offset": 131,
       },
     ]

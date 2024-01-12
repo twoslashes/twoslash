@@ -3,9 +3,10 @@ import { TwoslashError } from './error'
 import type { CompilerOptionDeclaration, NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashNode } from './types'
 import { defaultHandbookOptions } from './defaults'
 
-export interface TemporaryFile {
+export interface VirtualFile {
   offset: number
   filename: string
+  filepath: string
   content: string
   extension: string
 }
@@ -155,11 +156,11 @@ export function createPositionConverter(code: string) {
 
 const reFilenamesMakers = /^\/\/\s?@filename: (.+)$/mg
 
-export function splitFiles(code: string, defaultFileName: string) {
+export function splitFiles(code: string, defaultFileName: string, root: string) {
   const matches = Array.from(code.matchAll(reFilenamesMakers))
 
   let currentFileName = defaultFileName
-  const files: TemporaryFile[] = []
+  const files: VirtualFile[] = []
 
   let index = 0
   for (const match of matches) {
@@ -169,6 +170,7 @@ export function splitFiles(code: string, defaultFileName: string) {
       files.push({
         offset: index,
         filename: currentFileName,
+        filepath: root + currentFileName,
         content,
         extension: getExtension(currentFileName),
       })
@@ -182,6 +184,7 @@ export function splitFiles(code: string, defaultFileName: string) {
     files.push({
       offset: index,
       filename: currentFileName,
+      filepath: root + currentFileName,
       content,
       extension: getExtension(currentFileName),
     })

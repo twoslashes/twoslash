@@ -1,5 +1,6 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { CompilerOptions, CompletionEntry, CustomTransformers } from 'typescript'
+import type { VirtualFile } from './utils'
 
 type TS = typeof import('typescript')
 
@@ -13,7 +14,7 @@ export interface TwoSlashOptions extends CreateTwoSlashOptions, TwoSlashExecuteO
 /**
  * Options for twoslash instance
  */
-export interface TwoSlashExecuteOptions {
+export interface TwoSlashExecuteOptions extends Partial<Pick<TwoSlashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights'>> {
   /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
   handbookOptions?: Partial<HandbookOptions>
 
@@ -112,6 +113,22 @@ export interface TwoSlashReturnMeta {
    * Flags which were parsed from the code
    */
   flagNotations: ParsedFlagNotation[]
+  /**
+   * The virtual files which were created
+   */
+  virtualFiles: VirtualFile[]
+  /**
+   * Positions of queries in the code
+   */
+  positionQueries: number[]
+  /**
+   * Positions of completions in the code
+   */
+  positionCompletions: number[]
+  /**
+   * Positions of errors in the code
+   */
+  positionHighlights: Range[]
 }
 
 export interface CompilerOptionDeclaration {

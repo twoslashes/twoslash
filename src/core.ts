@@ -1,4 +1,4 @@
-import type { CompilerOptions, JsxEmit } from 'typescript'
+import type { CompilerOptions, JsxEmit, SourceFile } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
@@ -71,6 +71,10 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       },
       removals: [],
       flagNotations: [],
+      virtualFiles: [],
+      positionQueries: options.positionQueries || [],
+      positionCompletions: options.positionCompletions || [],
+      positionHighlights: options.positionHighlights || [],
     }
     const {
       customTags = createOptions.customTags || [],
@@ -134,10 +138,60 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       meta.removals.push([code.indexOf(cutAfterString), code.length])
     // #endregion
 
-    const supportedFileTyes = ['js', 'jsx', 'ts', 'tsx']
-    const files = splitFiles(code, defaultFilename)
+    // #region extract markers
+    if (code.includes('//')) {
+      Array.from(code.matchAll(reAnnonateMarkers)).forEach((match) => {
+        const type = match[1] as '?' | '|' | '^^'
+        const index = match.index!
+        meta.removals.push([index, index + match[0].length + 1])
+        const markerIndex = match[0].indexOf('^')
+        const targetIndex = pc.getIndexOfLineAbove(index + markerIndex)
+        if (type === '?') {
+          meta.positionQueries.push(targetIndex)
+        }
+        else if (type === '|') {
+          meta.positionCompletions.push(targetIndex)
+        }
+        else {
+          const markerLength = match[0].lastIndexOf('^') - markerIndex + 1
+          meta.positionHighlights.push([
+            targetIndex,
+            targetIndex + markerLength,
+          ])
+        }
+      })
+    }
+    // #endregion
 
-    for (const file of files) {
+    const supportedFileTyes = ['js', 'jsx', 'ts', 'tsx']
+    meta.virtualFiles = splitFiles(code, defaultFilename, fsRoot)
+
+    function getFileAtPosition(pos: number) {
+      return meta.virtualFiles.find(i => isInRange(pos, [i.offset, i.offset + i.content.length]))
+    }
+
+    function getQuickInfo(start: number, target: string): NodeWithoutPosition | undefined {
+      const file = getFileAtPosition(start)!
+      const quickInfo = ls.getQuickInfoAtPosition(file.filepath, start - file.offset)
+
+      if (quickInfo && quickInfo.displayParts) {
+        const text = quickInfo.displayParts.map(dp => dp.text).join('')
+
+        // TODO: get different type of docs
+        const docs = quickInfo.documentation?.map(d => d.text).join('\n') || undefined
+
+        return {
+          type: 'hover',
+          text,
+          docs,
+          start,
+          length: target.length,
+          target,
+        }
+      }
+    }
+
+    for (const file of meta.virtualFiles) {
       // Only run the LSP-y things on source files
       if (file.extension === 'json') {
         if (!meta.compilerOptions.resolveJsonModule)
@@ -148,60 +202,16 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       }
 
       const filepath = fsRoot + file.filename
-
       env.createFile(filepath, file.content)
 
+      const fileEnd = file.offset + file.content.length
+      function isInFile(pos: number) {
+        return file.offset <= pos && pos < fileEnd
+      }
+
       if (!meta.handbookOptions.showEmit) {
-        const targetsQuery: number[] = []
-        const targetsCompletions: number[] = []
-        const targetsHighlights: Range[] = []
-        const source = ls.getProgram()!.getSourceFile(filepath)!
-
-        // #region extract markers
-        if (file.content.includes('//')) {
-          Array.from(file.content.matchAll(reAnnonateMarkers)).forEach((match) => {
-            const type = match[1] as '?' | '|' | '^^'
-            const index = match.index! + file.offset
-            meta.removals.push([index, index + match[0].length + 1])
-            const markerIndex = match[0].indexOf('^')
-            const targetIndex = pc.getIndexOfLineAbove(index + markerIndex)
-            if (type === '?') {
-              targetsQuery.push(targetIndex)
-            }
-            else if (type === '|') {
-              targetsCompletions.push(targetIndex)
-            }
-            else {
-              const markerLength = match[0].lastIndexOf('^') - markerIndex + 1
-              targetsHighlights.push([
-                targetIndex,
-                targetIndex + markerLength,
-              ])
-            }
-          })
-        }
-        // #endregion
-
         // #region get ts info for quick info
-        function getQuickInfo(start: number, target: string): NodeWithoutPosition | undefined {
-          const quickInfo = ls.getQuickInfoAtPosition(filepath, start - file.offset)
-
-          if (quickInfo && quickInfo.displayParts) {
-            const text = quickInfo.displayParts.map(dp => dp.text).join('')
-
-            // TODO: get different type of docs
-            const docs = quickInfo.documentation?.map(d => d.text).join('\n') || undefined
-
-            return {
-              type: 'hover',
-              text,
-              docs,
-              start,
-              length: target.length,
-              target,
-            }
-          }
-        }
+        const source = env.getSourceFile(filepath)!
 
         let identifiers: ReturnType<typeof getIdentifierTextSpans> | undefined
         if (!meta.handbookOptions.noStaticSemanticInfo) {
@@ -220,7 +230,9 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         // #endregion
 
         // #region get query
-        for (const query of targetsQuery) {
+        for (const query of meta.positionQueries) {
+          if (!isInFile(query))
+            continue
           if (!identifiers)
             identifiers = getIdentifierTextSpans(ts, source, file.offset)
 
@@ -244,7 +256,9 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         // #endregion
 
         // #region get highlights
-        for (const highlight of targetsHighlights) {
+        for (const highlight of meta.positionHighlights) {
+          if (!isInFile(highlight[0]))
+            continue
           if (!identifiers)
             identifiers = getIdentifierTextSpans(ts, source, file.offset)
 
@@ -268,9 +282,11 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         // #endregion
 
         // #region get completions
-        targetsCompletions.forEach((target) => {
+        for (const target of meta.positionCompletions) {
+          if (!isInFile(target))
+            continue
           if (isInRemoval(target))
-            return
+            continue
           const completions = ls.getCompletionsAtPosition(filepath, target - 1, {})
           if (!completions && !meta.handbookOptions.noErrorValidation) {
             const pos = pc.indexToPos(target)
@@ -291,7 +307,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
             completions: (completions?.entries ?? []).filter(i => i.name.startsWith(prefix)),
             completionsPrefix: prefix,
           })
-        })
+        }
         // #endregion
       }
     }
@@ -299,7 +315,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     let errorNodes: Omit<NodeError, keyof Position>[] = []
 
     // #region get diagnostics, after all files are mounted
-    for (const file of files) {
+    for (const file of meta.virtualFiles) {
       if (!supportedFileTyes.includes(file.extension))
         continue
 
@@ -342,28 +358,32 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 
     let outputCode = code
     if (meta.handbookOptions.showEmit) {
+      if (meta.handbookOptions.keepNotations) {
+        throw new TwoslashError(
+          `Option 'showEmit' cannot be used with 'keepNotations'`,
+          'With `showEmit` enabled, the output will always be the emitted code',
+          'Remove either option to continue',
+        )
+      }
       if (!meta.handbookOptions.keepNotations) {
         const { code: removedCode } = removeCodeRanges(outputCode, meta.removals)
-        const files = splitFiles(removedCode, defaultFilename)
-        for (const file of files) {
-          const filepath = fsRoot + file.filename
-          env.updateFile(filepath, file.content)
-        }
+        const files = splitFiles(removedCode, defaultFilename, fsRoot)
+        for (const file of files)
+          env.updateFile(file.filepath, file.content)
       }
       function removeExt(filename: string) {
         return filename.replace(/\.[^/.]+$/, '').replace(/\.d$/, '')
       }
 
-      const filenames = files.map(i => i.filename)
       const emitFilename = meta.handbookOptions.showEmittedFile
         ? meta.handbookOptions.showEmittedFile
         : meta.compilerOptions.jsx === 1 satisfies JsxEmit.Preserve
           ? 'index.jsx'
           : 'index.js'
-      let emitSource = files.find(i => removeExt(i.filename) === removeExt(emitFilename))?.filename
+      let emitSource = meta.virtualFiles.find(i => removeExt(i.filename) === removeExt(emitFilename))?.filename
 
       if (!emitSource && !meta.compilerOptions.outFile) {
-        const allFiles = filenames.join(', ')
+        const allFiles = meta.virtualFiles.map(i => i.filename).join(', ')
         throw new TwoslashError(
           `Could not find source file to show the emit for`,
           `Cannot find the corresponding **source** file  ${emitFilename} for completions via ^| returned no quickinfo from the compiler.`,
@@ -373,7 +393,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 
       // Allow outfile, in which case you need any file.
       if (meta.compilerOptions.outFile)
-        emitSource = filenames[0]
+        emitSource = meta.virtualFiles[0].filename
 
       const output = ls.getEmitOutput(fsRoot + emitSource)
       const outfile = output.outputFiles
