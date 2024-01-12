@@ -1,0 +1,4 @@
+{
+  "code": "\n// --importHelpers on: Spread helper will be imported from 'tslib'\n\nexport function fn(arr: number[]) {\n  const arr2 = [1, ...arr]\n}\n",
+  "tokens": []
+}

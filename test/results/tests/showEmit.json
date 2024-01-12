@@ -1,0 +1,4 @@
+{
+  "code": "\n// @filename: service.ts\nexport class Service {}\n\n// @filename: component.ts\nimport type { Service } from \"./service\"\n\ndeclare var decorator: any\n\n@decorator\nclass MyComponent {\n  constructor(public Service: Service) {}\n\n  @decorator\n  method(x: this) {}\n}\n",
+  "tokens": []
+}

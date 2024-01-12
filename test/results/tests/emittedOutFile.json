@@ -1,0 +1,4 @@
+{
+  "code": "// @filename: projectRoot/index.ts\nexport * from \"./nested/base\"\n\n// @filename: projectRoot/nested/base.ts\nexport const a = \"123\"\n\n",
+  "tokens": []
+}

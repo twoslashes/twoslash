@@ -64,10 +64,6 @@ export interface TwoSlashInstance {
    */
   (code: string, extension?: string, options?: TwoSlashExecuteOptions): TwoSlashReturn
   /**
-   * Clear caches and dispose of the instance
-   */
-  dispose(): void
-  /**
    * Get the internal cache map
    */
   getCacheMap(): Map<string, VirtualTypeScriptEnvironment> | undefined
@@ -82,33 +78,40 @@ export interface TwoSlashReturn {
    */
   tokens: Token[]
 
+  /**
+   * The meta information the twoslash run
+   */
+  meta: TwoSlashReturnMeta
+
   get queries(): TokenQuery[]
   get completions(): TokenCompletion[]
   get errors(): TokenError[]
   get highlights(): TokenHighlight[]
   get hovers(): TokenHover[]
   get tags(): TokenTag[]
+}
 
-  meta: {
-    /** The new extension type for the code, potentially changed if they've requested emitted results */
-    extension: string
-    /**
-     * Ranges of text which should be removed from the output
-     */
-    removals: Range[]
-    /**
-     * Resolved compiler options
-     */
-    compilerOptions: CompilerOptions
-    /**
-     * Resolved handbook options
-     */
-    handbookOptions: HandbookOptions
-    /**
-     * Flags which were parsed from the code
-     */
-    flagNotations: ParsedFlagNotation[]
-  }
+export interface TwoSlashReturnMeta {
+  /**
+   * The new extension type for the code, potentially changed if they've requested emitted results
+   */
+  extension: string
+  /**
+   * Ranges of text which should be removed from the output
+   */
+  removals: Range[]
+  /**
+   * Resolved compiler options
+   */
+  compilerOptions: CompilerOptions
+  /**
+   * Resolved handbook options
+   */
+  handbookOptions: HandbookOptions
+  /**
+   * Flags which were parsed from the code
+   */
+  flagNotations: ParsedFlagNotation[]
 }
 
 export interface CompilerOptionDeclaration {

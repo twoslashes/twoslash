@@ -1,0 +1,4 @@
+{
+  "code": "\n/**\n * Gets the length of a string\n * @param value a string\n */\nexport function getStringLength(value: string) {\n  return value.length\n}\n",
+  "tokens": []
+}
