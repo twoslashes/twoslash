@@ -6,16 +6,16 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher), with improvements:
-
 > [!NOTE]
 > Working in progress, breaking changes are expected.
 
-- Unified information interface, consistent and easier to manipulate
-- `createTwoslasher` function to create a twoslash instance with cached language servers (5-20 times faster!)
-- ESM-first, dual CJS/ESM builds
-- Lighter, no longer deps on `lz-string` and `debug`
-- Additional options for better custom languages support (e.g. [`twoslash-vue`](https://github.com/antfu/twoslash-vue) integration)
+A fork and rewrite of [`@typescript/twoslash`](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher), with improvements:
+
+- [Unified information interface](#information-nodes), consistent and easier to manipulate.
+- [`createTwoslasher`](#createtwoslasher) to create a twoslash instance with cached language servers (🚀 **5-20 times faster**!)
+- ESM-first, dual CJS/ESM builds.
+- Lighter, no longer deps on `lz-string` and `debug`.
+- [Additional options](#additional-handbook-options) for better custom language support (e.g. [`twoslash-vue`](https://github.com/antfu/twoslash-vue))
 
 ## Breaking Changes
 
@@ -67,10 +67,12 @@ TwoSlash<sup>es</sup> returns all types of information in the `nodes` array.
 
 With some common properties:
 
-- `type`: the type of the node. Can be `hover`, `query`, `error`, `tag`, `highlight` or `completion` (in some entries was `kind` in `@typescript/twoslash`)
+- `type`: the type of the node. Can be `hover`, `query`, `error`, `tag`, `highlight` or `completion`
+  - was `kind` in `@typescript/twoslash` for some entries
 - `start`: the 0-indexed start position of the node in the output code
 - `line`: a 0-indexed line number of the node in the output code
-- `character`: a 0-indexed character number of the node in the output code (in some entries it was `offset` in `@typescript/twoslash`)
+- `character`: a 0-indexed character number of the node in the output code
+  - was `offset` in `@typescript/twoslash` for some entries
 - `length`: length of the node
 
 For different types of nodes, they have some extra properties:
@@ -95,14 +97,17 @@ Same as `hover`
 
 #### `error`
 
-- `text`: the error message (was `renderedMessage` in `@typescript/twoslash`)
-- `level`: the error level (was `category` in `@typescript/twoslash`)
+- `text`: the error message
+  - was `renderedMessage` in `@typescript/twoslash`
+- `level`: the error level
+  - was `category` in `@typescript/twoslash`
 - `code`: TypeScript error code
 - `id`: a generated based on the code and position of the error
 
 #### `tag`
 
-- `text`: the text of the tag (was `annotation` in `@typescript/twoslash`)
+- `text`: the text of the tag
+  - was `annotation` in `@typescript/twoslash`
 
 #### Getters
 
@@ -271,6 +276,7 @@ The final resolved `handbookOptions`
 ## License
 
 MIT License © Microsoft Corporation
+
 MIT License © 2023-PRESENT [Anthony Fu](https://github.com/antfu)
 
 <!-- Badges -->
