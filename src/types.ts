@@ -119,7 +119,7 @@ export interface HandbookOptions {
    * Do not check errors in the cutted code.
    * @default false
    */
-  noCuttedErrors: boolean
+  noErrorsCutted: boolean
 
   // ==== Not yet supported ====
   /** Shows the JS equivalent of the TypeScript code instead */
@@ -205,3 +205,5 @@ export type TokenWithoutPosition =
   | Omit<TokenCompletion, keyof Position>
   | Omit<TokenError, keyof Position>
   | Omit<TokenTag, keyof Position>
+
+export type TokenErrorWithoutPosition = Omit<TokenError, keyof Position>

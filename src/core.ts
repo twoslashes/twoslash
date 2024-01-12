@@ -1,9 +1,9 @@
-import type { CompilerOptions, ScriptTarget } from 'typescript'
+import type { CompilerOptions, ModuleKind, ScriptTarget } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { CreateTwoSlashOptions, HandbookOptions, Range, Token, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
-import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, mergeRanges, parsePrimitive, splitFiles, typesToExtension } from './utils'
+import type { CreateTwoSlashOptions, HandbookOptions, Position, Range, Token, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
+import { createPositionConverter, getIdentifierTextSpans, getOptionValueFromMap, isInRanges, parsePrimitive, removeCodeRanges, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 
 export * from './public'
@@ -27,6 +27,7 @@ interface OptionDeclaration {
 
 export const defaultCompilerOptions: CompilerOptions = {
   strict: true,
+  module: 99 satisfies ModuleKind.ESNext,
   target: 99 satisfies ScriptTarget.ESNext,
   allowJs: true,
   skipDefaultLibCheck: true,
@@ -42,7 +43,7 @@ export const defaultHandbookOptions: HandbookOptions = {
   emit: false,
   noErrorValidation: false,
   keepNotations: false,
-  noCuttedErrors: false,
+  noErrorsCutted: false,
 }
 
 /**
@@ -85,7 +86,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     const ext = typesToExtension(extension)
     const defaultFilename = `index.${ext}`
 
-    const _tokens: TokenWithoutPosition[] = []
+    let tokens: TokenWithoutPosition[] = []
     /** Array of ranges to be striped from the output code */
     let removals: Range[] = []
     const isInRemoval = (index: number) => isInRanges(index, removals)
@@ -168,7 +169,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         return
       const value = match[2]
       if (customTags.includes(name)) {
-        _tokens.push({
+        tokens.push({
           type: 'tag',
           name,
           start: index + match[0].length + 1,
@@ -258,7 +259,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           // TODO: get different type of docs
           const docs = quickInfo.documentation?.map(d => d.text).join('\n') || undefined
 
-          _tokens.push({
+          tokens.push({
             type: 'hover',
             text,
             docs,
@@ -271,24 +272,26 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       // #endregion
 
       // #region update token with types
-      _tokens.forEach((token) => {
+      tokens.forEach((token) => {
         if (token.type as any !== 'hover')
           return undefined
         const range: Range = [token.start, token.start + token.length]
         // Turn static info to query if in range
         if (targetsQuery.find(target => isInRanges(target, [range]))) {
-          _tokens.push({
+          tokens.push({
             ...token,
             type: 'query',
           } as any)
+          // TODO: warn when there is no type info
         }
 
         // Turn static info to completion if in range
         else if (targetsHighlights.find(target => isInRanges(target[0], [range]) || isInRanges(target[1], [range]))) {
-          _tokens.push({
+          tokens.push({
             ...token,
             type: 'highlight',
           } as any)
+          // TODO: warn when there is no type info
         }
       })
       // #endregion
@@ -310,7 +313,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || ''
         prefix = prefix.split('.').pop()!
 
-        _tokens.push({
+        tokens.push({
           type: 'completion',
           start: target,
           length: 0,
@@ -320,6 +323,8 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       })
       // #endregion
     }
+
+    const errorTokens: Omit<TokenError, keyof Position>[] = []
 
     // #region get diagnostics, after all files are mounted
     for (const file of files) {
@@ -331,23 +336,20 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
           ...ls.getSemanticDiagnostics(file.filename),
           ...ls.getSyntacticDiagnostics(file.filename),
         ]
-          .filter(i => i.file?.fileName === file.filename)
-
         for (const diagnostic of diagnostics) {
-          const start = diagnostic.start! + file.offset
-          if (handbookOptions.noCuttedErrors && isInRemoval(start))
+          if (diagnostic.file?.fileName !== file.filename)
             continue
-          const renderedMessage = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
-          const id = `err-${diagnostic.code}-${diagnostic.start}-${diagnostic.length}`
-
-          _tokens.push({
+          const start = diagnostic.start! + file.offset
+          if (handbookOptions.noErrorsCutted && isInRemoval(start))
+            continue
+          errorTokens.push({
             type: 'error',
             start,
             length: diagnostic.length!,
             code: diagnostic.code,
             filename: file.filename,
-            id,
-            text: renderedMessage,
+            id: `err-${diagnostic.code}-${start}-${diagnostic.length}`,
+            text: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
             level: diagnostic.category,
           })
         }
@@ -356,51 +358,35 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     // #endregion
 
     // A validator that error codes are mentioned, so we can know if something has broken in the future
-    const errors = _tokens.filter(i => i.type === 'error') as TokenError[]
-    if (!handbookOptions.noErrorValidation && errors.length)
-      validateCodeForErrors(errors, handbookOptions, fsRoot)
+    if (!handbookOptions.noErrorValidation && errorTokens.length)
+      validateCodeForErrors(errorTokens as TokenError[], handbookOptions, fsRoot)
 
-    // Sort descending, so that we start removal from the end
-    removals = mergeRanges(removals)
-      .sort((a, b) => b[0] - a[0])
+    tokens.push(...errorTokens)
 
     let outputCode = code
     if (!handbookOptions.keepNotations) {
-      for (const remove of removals) {
-        const removalLength = remove[1] - remove[0]
-        outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1])
-        _tokens.forEach((token) => {
-          // tokens before the range, do nothing
-          if (token.start + token.length <= remove[0])
-            return undefined
-
-          // remove tokens that are within in the range
-          else if (token.start < remove[1])
-            token.start = -1
-
-          // move tokens after the range forward
-          else
-            token.start -= removalLength
-        })
-      }
+      const removed = removeCodeRanges(outputCode, removals, tokens)
+      outputCode = removed.code
+      removals = removed.removals
+      tokens = removed.tokens!
     }
 
     const resultPC = outputCode === code
       ? pc // reuse the converter if nothing changed
       : createPositionConverter(outputCode)
 
-    const tokens = _tokens
+    const resolvedTokens = tokens
       .filter(token => token.start >= 0)
       .sort((a, b) => a.start - b.start) as Token[]
 
-    tokens
+    resolvedTokens
       .forEach((token) => {
         Object.assign(token, resultPC.indexToPos(token.start))
       })
 
     return {
       code: outputCode,
-      tokens,
+      tokens: resolvedTokens,
       meta: {
         extension: ext,
         compilerOptions,

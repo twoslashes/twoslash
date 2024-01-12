@@ -1,9 +1,9 @@
-import type { TokenError } from './types'
+import type { TokenErrorWithoutPosition } from './types'
 import { TwoslashError } from './error'
 
 /** To ensure that errors are matched up right */
 export function validateCodeForErrors(
-  relevantErrors: TokenError[],
+  relevantErrors: TokenErrorWithoutPosition[],
   handbookOptions: { errors: number[] },
   vfsRoot: string,
 ) {
@@ -19,8 +19,8 @@ export function validateCodeForErrors(
       : `\nExpected: ${codeToAdd}`
 
     // These get filled by below
-    const filesToErrors: Record<string, TokenError[]> = {}
-    const noFiles: TokenError[] = []
+    const filesToErrors: Record<string, TokenErrorWithoutPosition[]> = {}
+    const noFiles: TokenErrorWithoutPosition[] = []
 
     unspecifiedErrors.forEach((d) => {
       const fileRef = d.filename?.replace(vfsRoot, '')
@@ -35,7 +35,7 @@ export function validateCodeForErrors(
       }
     })
 
-    const showDiagnostics = (title: string, diags: TokenError[]) => {
+    const showDiagnostics = (title: string, diags: TokenErrorWithoutPosition[]) => {
       return (`${title}\n  ${diags
         .map(e => `[${e.code}] ${e.start} - ${e.text}`)
         .join('\n  ')}`

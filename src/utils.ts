@@ -1,6 +1,6 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { Position, Range } from './types'
+import type { Position, Range, TokenWithoutPosition } from './types'
 
 export interface TemporaryFile {
   offset: number
@@ -179,4 +179,40 @@ export function splitFiles(code: string, defaultFileName: string, rootPath: stri
 
 export function getExtension(fileName: string) {
   return fileName.split('.').pop()!
+}
+
+/**
+ * Remove ranages for a string, and update tokens' `start` property accordingly
+ *
+ * Note that items in `tokens` will be mutated
+ */
+export function removeCodeRanges(code: string, removals: Range[], tokens?: TokenWithoutPosition[]) {
+  // Sort descending, so that we start removal from the end
+  const ranges = mergeRanges(removals)
+    .sort((a, b) => b[0] - a[0])
+
+  let outputCode = code
+  for (const remove of ranges) {
+    const removalLength = remove[1] - remove[0]
+    outputCode = outputCode.slice(0, remove[0]) + outputCode.slice(remove[1])
+    tokens?.forEach((token) => {
+      // tokens before the range, do nothing
+      if (token.start + token.length <= remove[0])
+        return undefined
+
+      // remove tokens that are within in the range
+      else if (token.start < remove[1])
+        token.start = -1
+
+      // move tokens after the range forward
+      else
+        token.start -= removalLength
+    })
+  }
+
+  return {
+    code: outputCode,
+    removals: ranges,
+    tokens,
+  }
 }

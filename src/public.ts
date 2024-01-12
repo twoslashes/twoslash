@@ -2,4 +2,11 @@
 
 export * from './error'
 export * from './types'
-export { createPositionConverter } from './utils'
+export {
+  createPositionConverter,
+  removeCodeRanges,
+} from './utils'
+
+export {
+  validateCodeForErrors,
+} from './validation'
