@@ -22,6 +22,15 @@ export interface TwoSlashExecuteOptions {
 
   /** A set of known `// @[tags]` tags to extract and not treat as a comment */
   customTags?: string[]
+
+  /**
+   * A custom hook to filter out hover info for certain identifiers
+   */
+  shouldGetHoverInfo?: (identifier: string, start: number, filename: string) => boolean
+  /**
+   * A custom predicate to filter out tokens for further processing
+   */
+  filterToken?: (token: TokenWithoutPosition) => boolean
 }
 
 export interface CreateTwoSlashOptions extends TwoSlashExecuteOptions {

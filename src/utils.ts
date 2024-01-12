@@ -1,7 +1,7 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
 import type { CompilerOptionDeclaration, ParsedFlagNotation, Position, Range, Token, TokenStartLength, TokenWithoutPosition } from './types'
-import { defaultHandbookOptions } from './core'
+import { defaultHandbookOptions } from './defaults'
 
 export interface TemporaryFile {
   offset: number

@@ -1,10 +1,11 @@
-import type { CompilerOptions, ModuleKind, ScriptTarget } from 'typescript'
+import type { CompilerOptions } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
 import type { CompilerOptionDeclaration, CreateTwoSlashOptions, HandbookOptions, ParsedFlagNotation, Position, Range, TokenError, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn } from './types'
 import { createPositionConverter, getIdentifierTextSpans, isInRanges, parseFlag, removeCodeRanges, resolveTokenPositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
+import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 
 export * from './public'
 
@@ -18,27 +19,6 @@ const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?$/mg
 const cutString = '// ---cut---\n'
 const cutAfterString = '// ---cut-after---\n'
 // TODO: cut range
-
-export const defaultCompilerOptions: CompilerOptions = {
-  strict: true,
-  module: 99 satisfies ModuleKind.ESNext,
-  target: 99 satisfies ScriptTarget.ESNext,
-  allowJs: true,
-  skipDefaultLibCheck: true,
-  skipLibCheck: true,
-}
-
-export const defaultHandbookOptions: HandbookOptions = {
-  errors: [],
-  noErrors: false,
-  showEmit: false,
-  showEmittedFile: undefined,
-  noStaticSemanticInfo: false,
-  emit: false,
-  noErrorValidation: false,
-  keepNotations: false,
-  noErrorsCutted: false,
-}
 
 /**
  * Create a TwoSlash instance with cached TS environments
@@ -97,10 +77,11 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       ...options.handbookOptions,
     }
 
-    const customTags = [
-      ...createOptions.customTags || [],
-      ...options.customTags || [],
-    ]
+    const {
+      customTags = createOptions.customTags || [],
+      shouldGetHoverInfo = createOptions.shouldGetHoverInfo || (() => true),
+      filterToken = createOptions.filterToken,
+    } = options
 
     const flagNotations: ParsedFlagNotation[] = []
 
@@ -226,7 +207,9 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         if (isInRemoval(start))
           continue
 
-        // TODO: hooks to filter out some identifiers
+        if (!shouldGetHoverInfo(target, offset, file.filename))
+          continue
+
         const quickInfo = ls.getQuickInfoAtPosition(file.filename, offset)
 
         if (quickInfo && quickInfo.displayParts) {
@@ -300,7 +283,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       // #endregion
     }
 
-    const errorTokens: Omit<TokenError, keyof Position>[] = []
+    let errorTokens: Omit<TokenError, keyof Position>[] = []
 
     // #region get diagnostics, after all files are mounted
     for (const file of files) {
@@ -332,6 +315,11 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       }
     }
     // #endregion
+
+    if (filterToken) {
+      tokens = tokens.filter(filterToken)
+      errorTokens = errorTokens.filter(filterToken)
+    }
 
     // A validator that error codes are mentioned, so we can know if something has broken in the future
     if (!handbookOptions.noErrorValidation && errorTokens.length)
