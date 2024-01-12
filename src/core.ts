@@ -154,7 +154,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       if (unknownFlags.length) {
         throw new TwoslashError(
           `Unknown inline compiler flags`,
-          unknownFlags.map(i => `@${i.name}`).join(', '),
+          `The following flags are either valid TSConfig nor handbook options:\n${unknownFlags.map(i => `@${i.name}`).join(', ')}`,
           `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`,
         )
       }

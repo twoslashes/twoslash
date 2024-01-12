@@ -116,8 +116,6 @@ export interface HandbookOptions {
   noErrors: boolean
   /** Declare that you don't need to validate that errors have corresponding annotations, defaults to false */
   noErrorValidation: boolean
-  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
-  noStaticSemanticInfo: boolean
 
   // ==== New in twoslashes ====
   /**
@@ -132,6 +130,8 @@ export interface HandbookOptions {
   noErrorsCutted: boolean
 
   // ==== Not yet supported ====
+  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
+  noStaticSemanticInfo: boolean
   /** Shows the JS equivalent of the TypeScript code instead */
   showEmit: boolean
   /**

@@ -53,7 +53,7 @@ export function validateCodeForErrors(
     const allMessages = innerDiags.join('\n\n')
 
     const newErr = new TwoslashError(
-      `Errors were thrown in the sample, but not included in an errors tag`,
+      `Errors were thrown in the sample, but not included in an error tag`,
       `These errors were not marked as being expected: ${errorsFound}. ${missing}`,
       `Compiler Errors:\n\n${allMessages}`,
     )
