@@ -1,4 +1,4 @@
 {
-  "code": "// @filename: projectRoot/index.ts\nexport * from \"./nested/base\"\n\n// @filename: projectRoot/nested/base.ts\nexport const a = \"123\"\n\n",
+  "code": "declare module \"nested/base\" {\n    export const a = \"123\";\n}\ndeclare module \"index\" {\n    export * from \"nested/base\";\n}\n",
   "tokens": []
 }

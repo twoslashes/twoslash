@@ -21,9 +21,8 @@ A fork and rewrite of [@typescript/twoslash](https://github.com/microsoft/TypeSc
 
 Breaking changes from `@typescript/twoslash`:
 
-1. The returned information items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `tokens` with a `type` property to differentiate (TODO: explain more)
+1. The returned items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `tokens`. Learn more at the [Information Tokens](#information-tokens) section.
 2. Main entry point `import "twoslashes"` bundles `typescript`, while a new sub-entry `import "twoslashes/core"` is dependency-free and requires providing your own typescript instance.
-3. `showEmit` option is not supported yet.
 4. `defaultOptions` is renamed to `handbookOptions`
 5. `defaultCompilerOptions` is renamed to `compilerOptions`
 
@@ -40,13 +39,6 @@ Breaking changes from `@typescript/twoslash`:
 ### Backward Compatibility Layer
 
 // TODO:
-
-## TODOs
-
-- [ ] Support `showEmit` option
-- [x] Support `noStaticSemanticInfo` option
-- [x] Test coverage
-- [x] Compat-layer maybe?
 
 ## Benchmark
 

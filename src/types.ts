@@ -128,6 +128,23 @@ export interface HandbookOptions {
   noErrors: boolean
   /** Declare that you don't need to validate that errors have corresponding annotations, defaults to false */
   noErrorValidation: boolean
+  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
+  noStaticSemanticInfo: boolean
+
+  /** Shows the JS equivalent of the TypeScript code instead */
+  showEmit: boolean
+  /**
+   * Must be used with showEmit, lets you choose the file to present instead of the source - defaults to index.js which
+   * means when you just use `showEmit` above it shows the transpiled JS.
+   */
+  showEmittedFile?: string
+
+  /**
+   * Declare that the TypeScript program should edit the fsMap which is passed in, this is only useful for tool-makers, defaults to false
+   *
+   * @deprecated not suppported yet
+   */
+  emit: boolean
 
   // ==== New in twoslashes ====
   /**
@@ -140,19 +157,6 @@ export interface HandbookOptions {
    * @default false
    */
   noErrorsCutted: boolean
-
-  // ==== Not yet supported ====
-  /** Whether to disable the pre-cache of LSP calls for interesting identifiers, defaults to false */
-  noStaticSemanticInfo: boolean
-  /** Shows the JS equivalent of the TypeScript code instead */
-  showEmit: boolean
-  /**
-   * Must be used with showEmit, lets you choose the file to present instead of the source - defaults to index.js which
-   * means when you just use `showEmit` above it shows the transpiled JS.
-   */
-  showEmittedFile?: string
-  /** Declare that the TypeScript program should edit the fsMap which is passed in, this is only useful for tool-makers, defaults to false */
-  emit: boolean
 }
 
 export interface Position {

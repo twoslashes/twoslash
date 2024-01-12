@@ -1,9 +1,9 @@
-import type { CompilerOptions } from 'typescript'
+import type { CompilerOptions, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
 import type { CompilerOptionDeclaration, CreateTwoSlashOptions, HandbookOptions, ParsedFlagNotation, Position, Range, TokenError, TokenErrorWithoutPosition, TokenHover, TokenWithoutPosition, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
-import { areRangesIntersecting, createPositionConverter, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveTokenPositions, splitFiles, typesToExtension } from './utils'
+import { areRangesIntersecting, createPositionConverter, getExtension, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveTokenPositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 
@@ -334,14 +334,66 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       tokens = tokens.filter(filterToken)
       errorTokens = errorTokens.filter(filterToken)
     }
+    tokens.push(...errorTokens)
 
     // A validator that error codes are mentioned, so we can know if something has broken in the future
     if (!meta.handbookOptions.noErrorValidation && errorTokens.length)
       validateCodeForErrors(errorTokens as TokenError[], meta.handbookOptions, fsRoot)
 
-    tokens.push(...errorTokens)
-
     let outputCode = code
+    if (meta.handbookOptions.showEmit) {
+      if (!meta.handbookOptions.keepNotations) {
+        const { code: removedCode } = removeCodeRanges(outputCode, meta.removals)
+        const files = splitFiles(removedCode, defaultFilename)
+        for (const file of files) {
+          const filepath = fsRoot + file.filename
+          env.updateFile(filepath, file.content)
+        }
+      }
+      function removeExt(filename: string) {
+        return filename.replace(/\.[^/.]+$/, '').replace(/\.d$/, '')
+      }
+
+      const filenames = files.map(i => i.filename)
+      const emitFilename = meta.handbookOptions.showEmittedFile
+        ? meta.handbookOptions.showEmittedFile
+        : meta.compilerOptions.jsx === 1 satisfies JsxEmit.Preserve
+          ? 'index.jsx'
+          : 'index.js'
+      let emitSource = files.find(i => removeExt(i.filename) === removeExt(emitFilename))?.filename
+
+      if (!emitSource && !meta.compilerOptions.outFile) {
+        const allFiles = filenames.join(', ')
+        throw new TwoslashError(
+          `Could not find source file to show the emit for`,
+          `Cannot find the corresponding **source** file  ${emitFilename} for completions via ^| returned no quickinfo from the compiler.`,
+          `Looked for: ${emitFilename} in the vfs - which contains: ${allFiles}`,
+        )
+      }
+
+      // Allow outfile, in which case you need any file.
+      if (meta.compilerOptions.outFile)
+        emitSource = filenames[0]
+
+      const output = ls.getEmitOutput(fsRoot + emitSource)
+      const outfile = output.outputFiles
+        .find(o => o.name === fsRoot + emitFilename || o.name === emitFilename)
+
+      if (!outfile) {
+        const allFiles = output.outputFiles.map(o => o.name).join(', ')
+        throw new TwoslashError(
+          `Cannot find the output file in the Twoslash VFS`,
+          `Looking for ${emitFilename} in the Twoslash vfs after compiling`,
+          `Looked for" ${fsRoot + emitFilename} in the vfs - which contains ${allFiles}.`,
+        )
+      }
+
+      outputCode = outfile.text
+      meta.extension = getExtension(outfile.name)
+      meta.removals.length = 0
+      tokens.length = 0
+    }
+
     if (!meta.handbookOptions.keepNotations) {
       const removed = removeCodeRanges(outputCode, meta.removals, tokens)
       outputCode = removed.code

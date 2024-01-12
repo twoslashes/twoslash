@@ -1,4 +1,4 @@
 {
-  "code": "// @filename: index.tsx\n// This doesn't work!\ndeclare module JSX {\n  interface Element {}\n  interface IntrinsicElements {\n    [s: string]: any\n  }\n}\nexport const helloWorld = () => <h1>Hello world</h1>\n",
+  "code": "export const helloWorld = () => <h1>Hello world</h1>;\n",
   "tokens": []
 }

@@ -4,7 +4,6 @@ import process from 'node:process'
 import { describe, expect, it } from 'vitest'
 import type { TwoSlashReturn } from '../src/types'
 import { createTwoSlasher } from '../src/index'
-import { FEAT_SHOW_EMIT } from './FEATURES'
 
 const isWindows = process.platform === 'win32'
 
@@ -30,9 +29,6 @@ describe.skipIf(isWindows)('fixtures', async () => {
         const resultName = `${parse(fixtureName).name}.json`
         const file = await fs.readFile(fixture, 'utf8')
 
-        if (!FEAT_SHOW_EMIT && file.includes('@showEmit'))
-          return
-
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1), {
           customTags: ['annotate'],
         })
@@ -56,10 +52,7 @@ describe('fixtures examples', async () => {
       // if(!fixtureName.includes("compiler_fl")) return
       it(fixtureName, async () => {
         const resultName = `${parse(fixtureName).name}.json`
-
         const file = await fs.readFile(fixture, 'utf8')
-        if (!FEAT_SHOW_EMIT && file.includes('@showEmit'))
-          return
 
         const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
         expect(cleanFixture(fourslashed))

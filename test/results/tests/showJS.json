@@ -1,4 +1,4 @@
 {
-  "code": "/** The translation of 'Hello world' into Portuguese */\nexport const helloWorldPTBR = 'Olá Mundo'\n",
+  "code": "export const helloWorldPTBR = 'Olá Mundo';\n",
   "tokens": []
 }
