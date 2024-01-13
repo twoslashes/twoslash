@@ -1,4 +1,4 @@
-import type { CompilerOptions, JsxEmit, SourceFile } from 'typescript'
+import type { CompilerOptions, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'

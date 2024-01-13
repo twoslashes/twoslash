@@ -1,0 +1,52 @@
+{
+  "name": "twoslashes",
+  "type": "module",
+  "version": "0.0.5",
+  "packageManager": "pnpm@8.14.1",
+  "description": "Rewrite of TypeScript TwoSlash",
+  "author": "TypeScript team",
+  "license": "MIT",
+  "homepage": "https://github.com/antfu/twoslashes",
+  "repository": {
+    "url": "https://github.com/antfu/twoslashes",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/antfu/twoslashes/issues"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "import": "./dist/core.mjs",
+      "require": "./dist/core.cjs"
+    }
+  },
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "prepublishOnly": "nr build"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  },
+  "dependencies": {
+    "@typescript/vfs": "1.5.0"
+  },
+  "devDependencies": {
+    "ohash": "^1.1.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}

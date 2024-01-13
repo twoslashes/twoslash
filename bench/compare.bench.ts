@@ -14,7 +14,7 @@ const codes = await fg([
   'examples/*.ts',
   'tests/*.ts',
 ], {
-  cwd: fileURLToPath(new URL('../test/fixtures', import.meta.url)),
+  cwd: fileURLToPath(new URL('../packages/twoslash/test/fixtures', import.meta.url)),
   onlyFiles: true,
   absolute: true,
 })
