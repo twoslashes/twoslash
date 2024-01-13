@@ -5,4 +5,9 @@ export default antfu({
     '**/test/fixtures/**/*',
     '**/test/results/**/*',
   ],
+  markdown: {
+    overrides: {
+      'prefer-const': 'off',
+    },
+  },
 })

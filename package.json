@@ -10,6 +10,8 @@
     "lint": "eslint .",
     "bench": "vitest bench --run",
     "release": "bumpp -r && pnpm -r publish",
+    "docs": "pnpm -C docs run docs:dev",
+    "docs:build": "pnpm -C docs run docs:build",
     "prepare": "simple-git-hooks"
   },
   "devDependencies": {
@@ -22,20 +24,29 @@
     "bumpp": "^9.2.1",
     "eslint": "^8.56.0",
     "fast-glob": "^3.3.2",
+    "jiti": "^1.21.0",
     "lint-staged": "^15.2.0",
     "lz-string": "^1.5.0",
+    "mlly": "^1.5.0",
+    "pretty-format": "^29.7.0",
     "react": "^18.2.0",
     "simple-git-hooks": "^2.9.0",
     "tslib": "^2.6.2",
     "twoslash": "workspace:*",
+    "twoslash-vue": "workspace:*",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.2.0"
   },
   "pnpm": {
     "patchedDependencies": {
-      "shikiji-twoslash@0.9.19": "patches/shikiji-twoslash@0.9.19.patch"
+      "shikiji-twoslash@0.9.19": "patches/shikiji-twoslash@0.9.19.patch",
+      "vitepress-plugin-twoslash@0.9.19": "patches/vitepress-plugin-twoslash@0.9.19.patch"
     }
+  },
+  "resolutions": {
+    "twoslash": "workspace:*",
+    "twoslash-vue": "workspace:*"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
