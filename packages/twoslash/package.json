@@ -1,7 +1,7 @@
 {
   "name": "twoslash",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Markup for generating rich type information in your documentations ahead of time",
   "author": "TypeScript team",
   "license": "MIT",
