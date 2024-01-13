@@ -17,9 +17,10 @@ const reConfigBoolean = /^\/\/\s?@(\w+)$/mg
 const reConfigValue = /^\/\/\s?@(\w+):\s?(.+)$/mg
 const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?$/mg
 
-const cutString = '// ---cut---\n'
-const cutAfterString = '// ---cut-after---\n'
-// TODO: feat cut range
+const reCutBefore = /^\/\/\s?---cut(-before)?---$/mg
+const reCutAfter = /^\/\/\s?---cut-after---$/mg
+const reCutStart = /^\/\/\s?---cut-start---$/mg
+const reCutEnd = /^\/\/\s?---cut-end---$/mg
 
 /**
  * Create a TwoSlash instance with cached TS environments
@@ -132,11 +133,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     const pc = createPositionConverter(code)
 
     // #region extract cuts
-    if (code.includes(cutString))
-      meta.removals.push([0, code.indexOf(cutString) + cutString.length])
-
-    if (code.includes(cutAfterString))
-      meta.removals.push([code.indexOf(cutAfterString), code.length])
+    meta.removals.push(...extractCuts(code))
     // #endregion
 
     // #region extract markers
@@ -459,6 +456,44 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
   }
 
   return twoslasher
+}
+
+function extractCuts(code: string) {
+  const removals: Range[] = []
+
+  const cutBefore = [...code.matchAll(reCutBefore)]
+  const cutAfter = [...code.matchAll(reCutAfter)]
+  const cutStart = [...code.matchAll(reCutStart)]
+  const cutEnd = [...code.matchAll(reCutEnd)]
+
+  if (cutBefore.length) {
+    const last = cutBefore[cutBefore.length - 1]
+    removals.push([0, last.index! + last[0].length + 1])
+  }
+  if (cutAfter.length) {
+    const first = cutAfter[0]
+    removals.push([first.index!, code.length])
+  }
+  if (cutStart.length !== cutEnd.length) {
+    throw new TwoslashError(
+      `Mismatched cut markers`,
+      `You have ${cutStart.length} cut-starts and ${cutEnd.length} cut-ends`,
+      `Make sure you have a matching pair for each.`,
+    )
+  }
+  for (let i = 0; i < cutStart.length; i++) {
+    const start = cutStart[i]
+    const end = cutEnd[i]
+    if (start.index! > end.index!) {
+      throw new TwoslashError(
+        `Mismatched cut markers`,
+        `You have a cut-start at ${start.index} which is after the cut-end at ${end.index}`,
+        `Make sure you have a matching pair for each.`,
+      )
+    }
+    removals.push([start.index!, end.index! + end[0].length + 1])
+  }
+  return removals
 }
 
 /**
