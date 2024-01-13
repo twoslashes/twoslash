@@ -13,3 +13,7 @@ hero:
       text: Get Started
       link: /guide/
 ---
+
+::: warning
+This site is still under construction.
+:::

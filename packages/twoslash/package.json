@@ -2,7 +2,6 @@
   "name": "twoslash",
   "type": "module",
   "version": "0.0.5",
-  "packageManager": "pnpm@8.14.1",
   "description": "Rewrite of TypeScript TwoSlash",
   "author": "TypeScript team",
   "license": "MIT",

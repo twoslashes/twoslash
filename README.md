@@ -1,3 +1,5 @@
+<img src="./docs/public/logo.svg" alt="TwoSlash Logo" width="150">
+
 # TwoSlash
 
 [![npm version][npm-version-src]][npm-version-href]
@@ -165,86 +167,11 @@ The final resolved `compilerOptions`
 
 The final resolved `handbookOptions`
 
-## Benchmark
-
-<details>
-<summary> Benchmark generated at 2024-01-11</summary>
-
-```
-  twoslash - bench/compare.bench.ts > compiler_errors.ts
-    18.28x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > compiler_flags.ts
-    20.41x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > completions.ts
-    11.08x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > cuts_out_unnecessary_code.ts
-    9.72x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > errorsWithGenerics.ts
-    11.08x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > highlighting.ts
-    10.90x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > import_files.ts
-    6.62x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > importsModules.ts
-    6.06x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > multiFileErrors.ts
-    4.35x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > query.ts
-    13.15x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > arbitraryCommands.ts
-    10.98x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > crossExports.ts
-    6.16x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > cut_file_errors.ts
-    10.34x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > cut_files.ts
-    13.73x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > handlesJSON.ts
-    4.16x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > inlineHighlights.ts
-    13.28x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > large-cut.ts
-    10.23x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > lib.ts
-    12.57x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > multiLookups.ts
-    11.82x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > queriesWithSpaceBefore.ts
-    12.51x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > queryHandlesNoToken.ts
-    10.36x faster than @typescript/twoslash
-
-  twoslash - bench/compare.bench.ts > twoliner.ts
-    6.58x faster than @typescript/twoslash
-```
-
-</details>
-
 ## License
 
+MIT License © 2019-PRESENT [Orta Therox](https://github.com/orta)<br>
+MIT License © 2023-PRESENT [Anthony Fu](https://github.com/antfu)<br>
 MIT License © Microsoft Corporation
-
-MIT License © 2023-PRESENT [Anthony Fu](https://github.com/antfu)
 
 <!-- Badges -->
 
