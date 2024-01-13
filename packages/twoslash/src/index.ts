@@ -10,16 +10,22 @@ export * from './legacy'
 // eslint-disable-next-line node/prefer-global/process
 const cwd = /* @__PURE__ */ typeof process !== 'undefined' && typeof process.cwd === 'function' ? process.cwd() : ''
 
-export function twoslasher(code: string, lang: string, opts?: TwoSlashOptions) {
-  return _twoslasher(code, lang, {
+/**
+ * Create a TwoSlash instance with cached TS environments
+ */
+export function createTwoSlasher(opts?: TwoSlashOptions) {
+  return _createTwoSlasher({
     vfsRoot: cwd,
     tsModule: ts,
     ...opts,
   })
 }
 
-export function createTwoSlasher(opts?: TwoSlashOptions) {
-  return _createTwoSlasher({
+/**
+ * Get type results from a code sample
+ */
+export function twoslasher(code: string, lang: string, opts?: TwoSlashOptions) {
+  return _twoslasher(code, lang, {
     vfsRoot: cwd,
     tsModule: ts,
     ...opts,

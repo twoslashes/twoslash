@@ -1,15 +1,29 @@
 import { SourceMap, createVueLanguage, sharedTypes } from '@vue/language-core'
 import ts from 'typescript'
-import type { CreateTwoSlashOptions, Range, TwoSlashExecuteOptions, TwoSlashInstance } from 'twoslash'
-import { createTwoSlasher, defaultCompilerOptions, removeCodeRanges, resolveNodePositions } from 'twoslash'
+import type {
+  CreateTwoSlashOptions,
+  Range,
+  TwoSlashExecuteOptions,
+  TwoSlashInstance,
+} from 'twoslash'
+import {
+  createTwoSlasher as createTwoSlasherBase,
+  defaultCompilerOptions,
+  removeCodeRanges,
+  resolveNodePositions,
+} from 'twoslash'
 
-export function createTwoSlasherVue(createOptions: CreateTwoSlashOptions = {}, flag = true): TwoSlashInstance {
-  const twoslasher = createTwoSlasher(createOptions)
+/**
+ * Create a twoslasher instance that add additional support for Vue SFC.
+ */
+export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag = true): TwoSlashInstance {
+  const twoslasherBase = createTwoSlasherBase(createOptions)
 
-  function twoslasherVue(code: string, extension?: string, options: TwoSlashExecuteOptions = {}) {
+  function twoslasher(code: string, extension?: string, options: TwoSlashExecuteOptions = {}) {
     if (extension !== 'vue')
-      return twoslasher(code, extension, options)
+      return twoslasherBase(code, extension, options)
 
+    // TODO: use cache like twoslasherBase
     const lang = createVueLanguage(
       ts,
       {
@@ -28,7 +42,7 @@ export function createTwoSlasherVue(createOptions: CreateTwoSlashOptions = {}, f
     ].join('\n')
 
     // Pass compiled to TS file to twoslash
-    const result = twoslasher(compiled, 'tsx', {
+    const result = twoslasherBase(compiled, 'tsx', {
       ...options,
       compilerOptions: {
         jsx: 4 satisfies ts.JsxEmit.ReactJSX,
@@ -86,10 +100,15 @@ export function createTwoSlasherVue(createOptions: CreateTwoSlashOptions = {}, f
     return result
   }
 
-  twoslasherVue.getCacheMap = twoslasher.getCacheMap
+  twoslasher.getCacheMap = twoslasherBase.getCacheMap
 
-  return twoslasherVue
+  return twoslasher
 }
+
+/**
+ * @deprecated Use `createTwoSlasher` instead.
+ */
+export const createTwoSlasherVue = createTwoSlasher
 
 function isNotNull<T>(x: T | null | undefined): x is T {
   return x != null
