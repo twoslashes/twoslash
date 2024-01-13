@@ -1,4 +1,4 @@
-<img src="./docs/public/logo.svg" alt="TwoSlash Logo" width="150">
+<img src="https://twoslash.netlify.app/logo.svg" alt="TwoSlash Logo" width="150">
 
 # TwoSlash
 
@@ -7,6 +7,8 @@
 [![bundle][bundle-src]][bundle-href]
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
+
+[📚 Documentation](https://twoslash.netlify.app/) | [⚙️ Migration Guide](https://twoslash.netlify.app/guide/migrate)
 
 > [!IMPORTANT]
 > Working in progress, breaking changes are expected.
