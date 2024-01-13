@@ -14,8 +14,9 @@ const GUIDES: DefaultTheme.NavItemWithLink[] = [
 
 const REFERENCES: DefaultTheme.NavItemWithLink[] = [
   { text: 'TwoSlash Notations', link: '/refs/notations' },
-  { text: 'Result Object', link: '/refs/result' },
-  { text: 'Options', link: '/refs/options' },
+  { text: 'API References', link: '/refs/api' },
+  { text: 'Options References', link: '/refs/options' },
+  { text: 'Result References', link: '/refs/result' },
 ]
 
 const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
