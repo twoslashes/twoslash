@@ -5,9 +5,11 @@ export interface HandbookOptions {
    */
   errors: number[]
   /**
-   * Lets the sample suppress all error diagnostics
+   * Suppress errors for diagnostics and display
+   *
+   * Setting true to suppress all errors, or an array of error codes to suppress
    */
-  noErrors: boolean
+  noErrors: boolean | number[]
   /**
    * Declare that you don't need to validate that errors have corresponding annotations, defaults to false
    */

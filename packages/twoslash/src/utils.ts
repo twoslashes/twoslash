@@ -313,9 +313,19 @@ export function parseFlag(
 
   // if it's handbookOptions
   if (Object.keys(defaultHandbookOptions).includes(name)) {
-    // "errors" is a special case, it's a list of numbers
+    // "errors" is a list of numbers
     if (name === 'errors' && typeof value === 'string')
       value = value.split(' ').map(Number)
+
+    // "noErrors" can be a boolean or a list of numbers
+    if (name === 'noErrors' && typeof value === 'string') {
+      if (value === 'true')
+        value = true
+      else if (value === 'false')
+        value = false
+      else
+        value = value.split(' ').map(Number)
+    }
 
     return {
       type: 'handbookOptions',

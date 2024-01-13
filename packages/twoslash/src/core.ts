@@ -318,13 +318,18 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         continue
 
       const filepath = fsRoot + file.filename
-      if (!meta.handbookOptions.noErrors) {
+      if (meta.handbookOptions.noErrors !== true) {
         const diagnostics = [
           ...ls.getSemanticDiagnostics(filepath),
           ...ls.getSyntacticDiagnostics(filepath),
         ]
+        const ignores = Array.isArray(meta.handbookOptions.noErrors)
+          ? meta.handbookOptions.noErrors
+          : []
         for (const diagnostic of diagnostics) {
           if (diagnostic.file?.fileName !== filepath)
+            continue
+          if (ignores.includes(diagnostic.code))
             continue
           const start = diagnostic.start! + file.offset
           if (meta.handbookOptions.noErrorsCutted && isInRemoval(start))
