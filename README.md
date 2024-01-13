@@ -13,11 +13,13 @@
 
 A markup format for TypeScript code, ideal for creating self-contained code samples which let the TypeScript compiler do the extra leg-work. Inspired by the [fourslash test system](https://github.com/orta/typescript-notes/blob/master/systems/testing/fourslash.md). This repo is the successor of [`@typescript/twoslash`](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher).
 
+<!--
+
 - [Unified information interface](#information-nodes), consistent and easier to manipulate.
 - [`createTwoslasher`](#createtwoslasher) to create a twoslash instance with cached language servers (🚀 **5-20 times faster**!)
 - ESM-first, dual CJS/ESM builds.
 - Lighter, no longer deps on `lz-string` and `debug`.
-- [Additional options](#additional-handbook-options) for better custom language support (e.g. [`twoslash-vue`](https://github.com/antfu/twoslash-vue))
+- [Additional options](#additional-handbook-options) for better custom language support (e.g. [`twoslash-vue`]https://github.com/antfu/twoslashes/blob/main/packages/twoslash-vue))
 
 ## Features
 
@@ -167,6 +169,8 @@ The final resolved `compilerOptions`
 
 The final resolved `handbookOptions`
 
+-->
+
 ## License
 
 MIT License © 2019-PRESENT [Orta Therox](https://github.com/orta)<br>
@@ -181,7 +185,7 @@ MIT License © Microsoft Corporation
 [npm-downloads-href]: https://npmjs.com/package/twoslash
 [bundle-src]: https://img.shields.io/bundlephobia/minzip/twoslash?style=flat&colorA=080f12&colorB=1fa669&label=minzip
 [bundle-href]: https://bundlephobia.com/result?p=twoslash
-[license-src]: https://img.shields.io/github/license/antfu/twoslash.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/antfu/twoslash/blob/main/LICENSE
+[license-src]: https://img.shields.io/github/license/twoslashes/twoslash.svg?style=flat&colorA=080f12&colorB=1fa669
+[license-href]: https://github.com/twoslashes/twoslash/blob/main/LICENSE
 [jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
 [jsdocs-href]: https://www.jsdocs.io/package/twoslash

@@ -2,16 +2,17 @@
   "name": "twoslash",
   "type": "module",
   "version": "0.0.5",
-  "description": "Rewrite of TypeScript TwoSlash",
+  "description": "Markup for generating rich type information in your documentations ahead of time",
   "author": "TypeScript team",
   "license": "MIT",
-  "homepage": "https://github.com/antfu/twoslash",
+  "homepage": "https://github.com/twoslashes/twoslash",
   "repository": {
-    "url": "https://github.com/antfu/twoslash",
-    "type": "git"
+    "url": "https://github.com/twoslashes/twoslash",
+    "type": "git",
+    "directory": "packages/twoslash"
   },
   "bugs": {
-    "url": "https://github.com/antfu/twoslash/issues"
+    "url": "https://github.com/twoslashes/twoslash/issues"
   },
   "exports": {
     ".": {
