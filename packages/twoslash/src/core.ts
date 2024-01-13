@@ -3,24 +3,15 @@ import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment 
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
 import type { CreateTwoSlashOptions, NodeError, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
-import { areRangesIntersecting, createPositionConverter, getExtension, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
+import { areRangesIntersecting, createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 import type { CompilerOptionDeclaration } from './types/internal'
+import { reAnnonateMarkers, reCutAfter, reCutBefore, reCutEnd, reCutStart } from './regexp'
 
 export * from './public'
 
 type TS = typeof import('typescript')
-
-// TODO: Make them configurable maybe
-const reConfigBoolean = /^\/\/\s?@(\w+)$/mg
-const reConfigValue = /^\/\/\s?@(\w+):\s?(.+)$/mg
-const reAnnonateMarkers = /^\s*\/\/\s*\^(\?|\||\^+)( .*)?$/mg
-
-const reCutBefore = /^\/\/\s?---cut(-before)?---$/mg
-const reCutAfter = /^\/\/\s?---cut-after---$/mg
-const reCutStart = /^\/\/\s?---cut-start---$/mg
-const reCutEnd = /^\/\/\s?---cut-end---$/mg
 
 /**
  * Create a TwoSlash instance with cached TS environments
@@ -132,34 +123,10 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
     const ls = env.languageService
     const pc = createPositionConverter(code)
 
-    // #region extract cuts
-    meta.removals.push(...extractCuts(code))
-    // #endregion
-
-    // #region extract markers
-    if (code.includes('//')) {
-      Array.from(code.matchAll(reAnnonateMarkers)).forEach((match) => {
-        const type = match[1] as '?' | '|' | '^^'
-        const index = match.index!
-        meta.removals.push([index, index + match[0].length + 1])
-        const markerIndex = match[0].indexOf('^')
-        const targetIndex = pc.getIndexOfLineAbove(index + markerIndex)
-        if (type === '?') {
-          meta.positionQueries.push(targetIndex)
-        }
-        else if (type === '|') {
-          meta.positionCompletions.push(targetIndex)
-        }
-        else {
-          const markerLength = match[0].lastIndexOf('^') - markerIndex + 1
-          meta.positionHighlights.push([
-            targetIndex,
-            targetIndex + markerLength,
-          ])
-        }
-      })
-    }
-    // #endregion
+    // extract cuts
+    meta.removals.push(...findCutNotations(code))
+    // extract markers
+    findQueryMarkers(code, meta, pc.getIndexOfLineAbove)
 
     const supportedFileTyes = ['js', 'jsx', 'ts', 'tsx']
     meta.virtualFiles = splitFiles(code, defaultFilename, fsRoot)
@@ -463,44 +430,6 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
   return twoslasher
 }
 
-function extractCuts(code: string) {
-  const removals: Range[] = []
-
-  const cutBefore = [...code.matchAll(reCutBefore)]
-  const cutAfter = [...code.matchAll(reCutAfter)]
-  const cutStart = [...code.matchAll(reCutStart)]
-  const cutEnd = [...code.matchAll(reCutEnd)]
-
-  if (cutBefore.length) {
-    const last = cutBefore[cutBefore.length - 1]
-    removals.push([0, last.index! + last[0].length + 1])
-  }
-  if (cutAfter.length) {
-    const first = cutAfter[0]
-    removals.push([first.index!, code.length])
-  }
-  if (cutStart.length !== cutEnd.length) {
-    throw new TwoslashError(
-      `Mismatched cut markers`,
-      `You have ${cutStart.length} cut-starts and ${cutEnd.length} cut-ends`,
-      `Make sure you have a matching pair for each.`,
-    )
-  }
-  for (let i = 0; i < cutStart.length; i++) {
-    const start = cutStart[i]
-    const end = cutEnd[i]
-    if (start.index! > end.index!) {
-      throw new TwoslashError(
-        `Mismatched cut markers`,
-        `You have a cut-start at ${start.index} which is after the cut-end at ${end.index}`,
-        `Make sure you have a matching pair for each.`,
-      )
-    }
-    removals.push([start.index!, end.index! + end[0].length + 1])
-  }
-  return removals
-}
-
 /**
  * Run TwoSlash on a string of code
  *
@@ -511,28 +440,4 @@ export function twoslasher(code: string, lang?: string, opts?: Partial<TwoSlashO
     ...opts,
     cache: false,
   })(code, lang)
-}
-
-function findFlagNotations(code: string, customTags: string[], tsOptionDeclarations: CompilerOptionDeclaration[]) {
-  const flagNotations: ParsedFlagNotation[] = []
-
-  // #extract compiler options
-  Array.from(code.matchAll(reConfigBoolean)).forEach((match) => {
-    const index = match.index!
-    const name = match[1]
-    flagNotations.push(
-      parseFlag(name, true, index, index + match[0].length + 1, customTags, tsOptionDeclarations),
-    )
-  })
-  Array.from(code.matchAll(reConfigValue)).forEach((match) => {
-    const name = match[1]
-    if (name === 'filename')
-      return
-    const index = match.index!
-    const value = match[2]
-    flagNotations.push(
-      parseFlag(name, value, index, index + match[0].length + 1, customTags, tsOptionDeclarations),
-    )
-  })
-  return flagNotations
 }

@@ -1,8 +1,9 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashNode, VirtualFile } from './types'
+import type { NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashNode, TwoSlashReturnMeta, VirtualFile } from './types'
 import { defaultHandbookOptions } from './defaults'
 import type { CompilerOptionDeclaration } from './types/internal'
+import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart } from './regexp'
 
 export function parsePrimitive(value: string, type: string): any {
   // eslint-disable-next-line valid-typeof
@@ -344,4 +345,96 @@ export function parseFlag(
     start,
     end,
   }
+}
+
+export function findFlagNotations(code: string, customTags: string[], tsOptionDeclarations: CompilerOptionDeclaration[]) {
+  const flagNotations: ParsedFlagNotation[] = []
+
+  // #extract compiler options
+  Array.from(code.matchAll(reConfigBoolean)).forEach((match) => {
+    const index = match.index!
+    const name = match[1]
+    flagNotations.push(
+      parseFlag(name, true, index, index + match[0].length + 1, customTags, tsOptionDeclarations),
+    )
+  })
+  Array.from(code.matchAll(reConfigValue)).forEach((match) => {
+    const name = match[1]
+    if (name === 'filename')
+      return
+    const index = match.index!
+    const value = match[2]
+    flagNotations.push(
+      parseFlag(name, value, index, index + match[0].length + 1, customTags, tsOptionDeclarations),
+    )
+  })
+  return flagNotations
+}
+
+export function findCutNotations(code: string) {
+  const removals: Range[] = []
+
+  const cutBefore = [...code.matchAll(reCutBefore)]
+  const cutAfter = [...code.matchAll(reCutAfter)]
+  const cutStart = [...code.matchAll(reCutStart)]
+  const cutEnd = [...code.matchAll(reCutEnd)]
+
+  if (cutBefore.length) {
+    const last = cutBefore[cutBefore.length - 1]
+    removals.push([0, last.index! + last[0].length + 1])
+  }
+  if (cutAfter.length) {
+    const first = cutAfter[0]
+    removals.push([first.index!, code.length])
+  }
+  if (cutStart.length !== cutEnd.length) {
+    throw new TwoslashError(
+      `Mismatched cut markers`,
+      `You have ${cutStart.length} cut-starts and ${cutEnd.length} cut-ends`,
+      `Make sure you have a matching pair for each.`,
+    )
+  }
+  for (let i = 0; i < cutStart.length; i++) {
+    const start = cutStart[i]
+    const end = cutEnd[i]
+    if (start.index! > end.index!) {
+      throw new TwoslashError(
+        `Mismatched cut markers`,
+        `You have a cut-start at ${start.index} which is after the cut-end at ${end.index}`,
+        `Make sure you have a matching pair for each.`,
+      )
+    }
+    removals.push([start.index!, end.index! + end[0].length + 1])
+  }
+  return removals
+}
+
+export function findQueryMarkers(
+  code: string,
+  meta: Pick<TwoSlashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights' | 'removals'>,
+  getIndexOfLineAbove: (index: number) => number,
+) {
+  if (code.includes('//')) {
+    Array.from(code.matchAll(reAnnonateMarkers)).forEach((match) => {
+      const type = match[1] as '?' | '|' | '^^'
+      const index = match.index!
+      meta.removals.push([index, index + match[0].length + 1])
+      const markerIndex = match[0].indexOf('^')
+      const targetIndex = getIndexOfLineAbove(index + markerIndex)
+      if (type === '?') {
+        meta.positionQueries.push(targetIndex)
+      }
+      else if (type === '|') {
+        meta.positionCompletions.push(targetIndex)
+      }
+      else {
+        const markerLength = match[0].lastIndexOf('^') - markerIndex + 1
+        meta.positionHighlights.push([
+          targetIndex,
+          targetIndex + markerLength,
+        ])
+      }
+    })
+  }
+  return meta
 }
