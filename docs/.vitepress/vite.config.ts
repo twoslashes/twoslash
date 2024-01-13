@@ -1,11 +1,9 @@
-import { fileURLToPath, pathToFileURL } from 'node:url'
-import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import fs from 'node:fs/promises'
-import { transferableAbortSignal } from 'node:util'
 import { defineConfig } from 'vite'
 import UnoCSS from 'unocss/vite'
 import Components from 'unplugin-vue-components/vite'
-import { evalModule } from 'mlly'
 import { format } from 'pretty-format'
 import JITI from 'jiti'
 

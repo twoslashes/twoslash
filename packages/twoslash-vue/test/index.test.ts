@@ -162,7 +162,7 @@ it('highlight vue', async () => {
   })
 
   expect(styleHeader + result)
-    .toMatchFileSnapshot('./out/example.vue.html')
+    .toMatchFileSnapshot('./results/example.vue.html')
 })
 
 const twoslasherRaw = createTwoSlasherVue(undefined, false)
@@ -181,5 +181,5 @@ it('highlight raw', async () => {
   })
 
   expect(styleHeader + result)
-    .toMatchFileSnapshot('./out/example.raw.html')
+    .toMatchFileSnapshot('./results/example.raw.html')
 })

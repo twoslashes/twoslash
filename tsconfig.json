@@ -10,7 +10,7 @@
     "moduleResolution": "node",
     "paths": {
       "twoslash": [
-        "./src/index"
+        "./packages/twoslash/src/index.ts"
       ]
     },
     "strict": true,
@@ -19,7 +19,8 @@
     "skipLibCheck": true
   },
   "exclude": [
-    "test/fixtures",
-    "dist"
+    "**/test/fixtures",
+    "**/test/results",
+    "**/dist"
   ]
 }

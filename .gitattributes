@@ -1,1 +1,3 @@
 * text=auto eol=lf
+docs/* linguist-documentation
+**/test/results/** linguist-generated

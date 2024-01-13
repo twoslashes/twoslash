@@ -3,7 +3,7 @@
   "nodes": [
     {
       "type": "hover",
-      "text": "function App(): any",
+      "text": "function App(): JSXInternal.Element",
       "start": 41,
       "length": 3,
       "target": "App",
@@ -12,7 +12,7 @@
     },
     {
       "type": "hover",
-      "text": "any",
+      "text": "(property) JSXInternal.IntrinsicElements.h1: JSXInternal.HTMLAttributes<HTMLHeadingElement>",
       "start": 59,
       "length": 2,
       "target": "h1",
@@ -21,7 +21,7 @@
     },
     {
       "type": "hover",
-      "text": "any",
+      "text": "(property) JSXInternal.IntrinsicElements.h1: JSXInternal.HTMLAttributes<HTMLHeadingElement>",
       "start": 75,
       "length": 2,
       "target": "h1",
