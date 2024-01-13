@@ -30,7 +30,7 @@ Breaking changes from `@typescript/twoslash`:
 
 ### `createTwoSlasher`
 
-TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash<sup>es</sup> provides a `createTwoslasher` factory function allows you to cache the language servers and reuse the already initialized files.
+TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash<sup>es</sup> provides a `createTwoSlasher` factory function allows you to cache the language servers and reuse the already initialized files.
 
 ```ts
 import { createTwoSlasher } from 'twoslashes'
@@ -58,7 +58,7 @@ const twoslasher = createTwoSlasher()
 // do something
 
 // Clear the cached language servers, free the memory
-twoSlasher.getCacheMap()?.clear()
+twoslasher.getCacheMap()?.clear()
 ```
 
 ### Information Nodes
