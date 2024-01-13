@@ -1,4 +1,4 @@
-# TwoSlash<sup>es</sup>
+# TwoSlash
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -9,7 +9,7 @@
 > [!NOTE]
 > Working in progress, breaking changes are expected.
 
-A fork and rewrite of [`@typescript/twoslash`](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher), with improvements:
+A markup format for TypeScript code, ideal for creating self-contained code samples which let the TypeScript compiler do the extra leg-work. Inspired by the [fourslash test system](https://github.com/orta/typescript-notes/blob/master/systems/testing/fourslash.md). This repo is the successor of [`@typescript/twoslash`](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher).
 
 - [Unified information interface](#information-nodes), consistent and easier to manipulate.
 - [`createTwoslasher`](#createtwoslasher) to create a twoslash instance with cached language servers (🚀 **5-20 times faster**!)
@@ -22,18 +22,19 @@ A fork and rewrite of [`@typescript/twoslash`](https://github.com/microsoft/Type
 Breaking changes from `@typescript/twoslash`:
 
 1. The returned items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `nodes`. Learn more at the [Information Nodes](#information-nodes) section.
-2. Main entry point `import "twoslashes"` bundles `typescript`, while a new sub-entry `import "twoslashes/core"` is dependency-free and requires providing your own typescript instance.
-4. `defaultOptions` is renamed to `handbookOptions`
-5. `defaultCompilerOptions` is renamed to `compilerOptions`
+2. Main entry point `import "twoslash"` bundles `typescript`, while a new sub-entry `import "twoslash/core"` is dependency-free and requires providing your own typescript instance.
+3. `defaultOptions` is renamed to `handbookOptions`
+4. `defaultCompilerOptions` is renamed to `compilerOptions`
+5. `playgroundURL` is removed
 
 ## Features
 
 ### `createTwoSlasher`
 
-TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash<sup>es</sup> provides a `createTwoSlasher` factory function allows you to cache the language servers and reuse the already initialized files.
+TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash provides a `createTwoSlasher` factory function allows you to cache the language servers and reuse the already initialized files.
 
 ```ts
-import { createTwoSlasher } from 'twoslashes'
+import { createTwoSlasher } from 'twoslash'
 
 const twoslasher = createTwoSlasher({
   // you can have some default options here
@@ -51,7 +52,7 @@ To avoid getting interference across runs, it will reuse the language server wit
 You can retrieve the cached map and clear it when necessary, to avoid memory leaks:
 
 ```ts
-import { createTwoSlasher } from 'twoslashes'
+import { createTwoSlasher } from 'twoslash'
 
 const twoslasher = createTwoSlasher()
 
@@ -143,7 +144,7 @@ export interface TwoSlashReturn {
 To make it easier to migrate from `@typescript/twoslash`, TwoSlash<sup>es</sup> provides a backward compatibility layer that allows you to use the old interface with the new implementation.
 
 ```ts
-import { twoslasherLegacy } from 'twoslashes'
+import { twoslasherLegacy } from 'twoslash'
 
 const result = twoslasherLegacy('import { ref } from "vue"', 'ts')
 
@@ -153,7 +154,7 @@ console.log(result.staticQuickInfos) // the old interface
 You can also compose it your own by only converting the return value:
 
 ```ts
-import { convertLegacyReturn, twoslasher } from 'twoslashes'
+import { convertLegacyReturn, twoslasher } from 'twoslash'
 
 const result = twoslasher('import { ref } from "vue"', 'ts') // new interface
 
@@ -204,70 +205,70 @@ The final resolved `handbookOptions`
 <summary> Benchmark generated at 2024-01-11</summary>
 
 ```
-  twoslashes - bench/compare.bench.ts > compiler_errors.ts
+  twoslash - bench/compare.bench.ts > compiler_errors.ts
     18.28x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > compiler_flags.ts
+  twoslash - bench/compare.bench.ts > compiler_flags.ts
     20.41x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > completions.ts
+  twoslash - bench/compare.bench.ts > completions.ts
     11.08x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > cuts_out_unnecessary_code.ts
+  twoslash - bench/compare.bench.ts > cuts_out_unnecessary_code.ts
     9.72x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > errorsWithGenerics.ts
+  twoslash - bench/compare.bench.ts > errorsWithGenerics.ts
     11.08x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > highlighting.ts
+  twoslash - bench/compare.bench.ts > highlighting.ts
     10.90x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > import_files.ts
+  twoslash - bench/compare.bench.ts > import_files.ts
     6.62x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > importsModules.ts
+  twoslash - bench/compare.bench.ts > importsModules.ts
     6.06x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > multiFileErrors.ts
+  twoslash - bench/compare.bench.ts > multiFileErrors.ts
     4.35x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > query.ts
+  twoslash - bench/compare.bench.ts > query.ts
     13.15x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > arbitraryCommands.ts
+  twoslash - bench/compare.bench.ts > arbitraryCommands.ts
     10.98x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > crossExports.ts
+  twoslash - bench/compare.bench.ts > crossExports.ts
     6.16x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > cut_file_errors.ts
+  twoslash - bench/compare.bench.ts > cut_file_errors.ts
     10.34x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > cut_files.ts
+  twoslash - bench/compare.bench.ts > cut_files.ts
     13.73x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > handlesJSON.ts
+  twoslash - bench/compare.bench.ts > handlesJSON.ts
     4.16x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > inlineHighlights.ts
+  twoslash - bench/compare.bench.ts > inlineHighlights.ts
     13.28x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > large-cut.ts
+  twoslash - bench/compare.bench.ts > large-cut.ts
     10.23x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > lib.ts
+  twoslash - bench/compare.bench.ts > lib.ts
     12.57x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > multiLookups.ts
+  twoslash - bench/compare.bench.ts > multiLookups.ts
     11.82x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > queriesWithSpaceBefore.ts
+  twoslash - bench/compare.bench.ts > queriesWithSpaceBefore.ts
     12.51x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > queryHandlesNoToken.ts
+  twoslash - bench/compare.bench.ts > queryHandlesNoToken.ts
     10.36x faster than @typescript/twoslash
 
-  twoslashes - bench/compare.bench.ts > twoliner.ts
+  twoslash - bench/compare.bench.ts > twoliner.ts
     6.58x faster than @typescript/twoslash
 ```
 
@@ -281,13 +282,13 @@ MIT License © 2023-PRESENT [Anthony Fu](https://github.com/antfu)
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/twoslashes?style=flat&colorA=080f12&colorB=1fa669
-[npm-version-href]: https://npmjs.com/package/twoslashes
-[npm-downloads-src]: https://img.shields.io/npm/dm/twoslashes?style=flat&colorA=080f12&colorB=1fa669
-[npm-downloads-href]: https://npmjs.com/package/twoslashes
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/twoslashes?style=flat&colorA=080f12&colorB=1fa669&label=minzip
-[bundle-href]: https://bundlephobia.com/result?p=twoslashes
-[license-src]: https://img.shields.io/github/license/antfu/twoslashes.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/antfu/twoslashes/blob/main/LICENSE
+[npm-version-src]: https://img.shields.io/npm/v/twoslash?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-href]: https://npmjs.com/package/twoslash
+[npm-downloads-src]: https://img.shields.io/npm/dm/twoslash?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-href]: https://npmjs.com/package/twoslash
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/twoslash?style=flat&colorA=080f12&colorB=1fa669&label=minzip
+[bundle-href]: https://bundlephobia.com/result?p=twoslash
+[license-src]: https://img.shields.io/github/license/antfu/twoslash.svg?style=flat&colorA=080f12&colorB=1fa669
+[license-href]: https://github.com/antfu/twoslash/blob/main/LICENSE
 [jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
-[jsdocs-href]: https://www.jsdocs.io/package/twoslashes
+[jsdocs-href]: https://www.jsdocs.io/package/twoslash

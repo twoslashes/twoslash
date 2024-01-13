@@ -27,7 +27,7 @@
     "react": "^18.2.0",
     "simple-git-hooks": "^2.9.0",
     "tslib": "^2.6.2",
-    "twoslashes": "workspace:*",
+    "twoslash": "workspace:*",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.2.0"

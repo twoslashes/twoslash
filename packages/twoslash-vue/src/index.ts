@@ -1,7 +1,7 @@
 import { SourceMap, createVueLanguage, sharedTypes } from '@vue/language-core'
 import ts from 'typescript'
-import type { CreateTwoSlashOptions, Range, TwoSlashExecuteOptions, TwoSlashInstance } from 'twoslashes'
-import { createTwoSlasher, defaultCompilerOptions, removeCodeRanges, resolveNodePositions } from 'twoslashes'
+import type { CreateTwoSlashOptions, Range, TwoSlashExecuteOptions, TwoSlashInstance } from 'twoslash'
+import { createTwoSlasher, defaultCompilerOptions, removeCodeRanges, resolveNodePositions } from 'twoslash'
 
 export function createTwoSlasherVue(createOptions: CreateTwoSlashOptions = {}, flag = true): TwoSlashInstance {
   const twoslasher = createTwoSlasher(createOptions)

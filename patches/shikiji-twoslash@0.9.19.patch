@@ -4,7 +4,7 @@ index 3bdb064d18e80b248270d4e6862ef79c6e98cd79..67385c25d892ad815e2492795bee6b4d
 +++ b/dist/core.d.mts
 @@ -1,4 +1,4 @@
 -import { TwoSlashReturn, twoslasher, TwoSlashOptions } from '@typescript/twoslash';
-+import { TwoSlashReturn, twoslasher, TwoSlashOptions, NodeError, NodeTag, NodeQuery, NodeCompletion, NodeHover, TwoSlashExecuteOptions } from 'twoslashes';
++import { TwoSlashReturn, twoslasher, TwoSlashOptions, NodeError, NodeTag, NodeQuery, NodeCompletion, NodeHover, TwoSlashExecuteOptions } from 'twoslash';
  import { CodeToHastOptions, ShikijiTransformerContext, ShikijiTransformer } from 'shikiji-core';
  import { ElementContent, Element, Text } from 'hast';
  
@@ -91,7 +91,7 @@ index 3bdb064d18e80b248270d4e6862ef79c6e98cd79..67385c25d892ad815e2492795bee6b4d
 +++ b/dist/core.d.ts
 @@ -1,4 +1,4 @@
 -import { TwoSlashReturn, twoslasher, TwoSlashOptions } from '@typescript/twoslash';
-+import { TwoSlashReturn, twoslasher, TwoSlashOptions, NodeError, NodeTag, NodeQuery, NodeCompletion, NodeHover, TwoSlashExecuteOptions } from 'twoslashes';
++import { TwoSlashReturn, twoslasher, TwoSlashOptions, NodeError, NodeTag, NodeQuery, NodeCompletion, NodeHover, TwoSlashExecuteOptions } from 'twoslash';
  import { CodeToHastOptions, ShikijiTransformerContext, ShikijiTransformer } from 'shikiji-core';
  import { ElementContent, Element, Text } from 'hast';
  
@@ -677,7 +677,7 @@ index 9f506977f3a862fd7284d2ffb4a597c4173ce20e..04c928881123f1d4c3ed22dba706cb67
 -export { CompletionItem, RendererRichOptions, TwoSlashRenderers, createTransformerFactory, defaultCompletionIcons, defaultCustomTagIcons, defaultHoverInfoProcessor, defaultTwoSlashOptions, rendererClassic, rendererRich } from './core.mjs';
 -import '@typescript/twoslash';
 +export { CompletionItem, RendererRichOptions, TwoSlashRenderer, createTransformerFactory, defaultCompletionIcons, defaultCustomTagIcons, defaultHoverInfoProcessor, defaultTwoSlashOptions, rendererClassic, rendererRich } from './core.mjs';
-+import 'twoslashes';
++import 'twoslash';
  import 'hast';
  
  /**
@@ -691,7 +691,7 @@ index 3edb7bde0b311d15fd1357fa904d71665d4d49c9..89e4d2600efb5cc41d4c19ec2e1b175f
 -export { CompletionItem, RendererRichOptions, TwoSlashRenderers, createTransformerFactory, defaultCompletionIcons, defaultCustomTagIcons, defaultHoverInfoProcessor, defaultTwoSlashOptions, rendererClassic, rendererRich } from './core.js';
 -import '@typescript/twoslash';
 +export { CompletionItem, RendererRichOptions, TwoSlashRenderer, createTransformerFactory, defaultCompletionIcons, defaultCustomTagIcons, defaultHoverInfoProcessor, defaultTwoSlashOptions, rendererClassic, rendererRich } from './core.js';
-+import 'twoslashes';
++import 'twoslash';
  import 'hast';
  
  /**
@@ -703,7 +703,7 @@ index a81db0b2d9bccc71ff3edab4044b93d4a65aa7d2..082d6b90e9299c5439be8aa3d783c52c
 -import { twoslasher } from '@typescript/twoslash';
 -import { createTransformerFactory } from './core.mjs';
 -export { defaultCompletionIcons, defaultCustomTagIcons, defaultHoverInfoProcessor, defaultTwoSlashOptions, rendererClassic, rendererRich } from './core.mjs';
-+import { createTwoSlasher } from 'twoslashes';
++import { createTwoSlasher } from 'twoslash';
 +import { createTransformerFactory, rendererClassic } from './core.mjs';
 +export { defaultCompletionIcons, defaultCustomTagIcons, defaultHoverInfoProcessor, defaultTwoSlashOptions, rendererRich } from './core.mjs';
  import 'shikiji-core';

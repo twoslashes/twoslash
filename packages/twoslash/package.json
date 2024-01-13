@@ -1,18 +1,18 @@
 {
-  "name": "twoslashes",
+  "name": "twoslash",
   "type": "module",
   "version": "0.0.5",
   "packageManager": "pnpm@8.14.1",
   "description": "Rewrite of TypeScript TwoSlash",
   "author": "TypeScript team",
   "license": "MIT",
-  "homepage": "https://github.com/antfu/twoslashes",
+  "homepage": "https://github.com/antfu/twoslash",
   "repository": {
-    "url": "https://github.com/antfu/twoslashes",
+    "url": "https://github.com/antfu/twoslash",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/antfu/twoslashes/issues"
+    "url": "https://github.com/antfu/twoslash/issues"
   },
   "exports": {
     ".": {

@@ -163,7 +163,7 @@ export interface HandbookOptions {
    */
   emit: boolean
 
-  // ==== New in twoslashes ====
+  // ==== New in twoslash ====
   /**
    * Do not remove twoslash notations from output code, the nodes will have the position of the input code.
    * @default false

@@ -9,7 +9,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
-      "twoslashes": [
+      "twoslash": [
         "./src/index"
       ]
     },

@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   shikiji-twoslash@0.9.19:
-    hash: bmpchiicftn3vp4gmggbxhpvpa
+    hash: 7ooxnd6omaifraqm76abhqewgy
     path: patches/shikiji-twoslash@0.9.19.patch
 
 importers:
@@ -55,7 +55,7 @@ importers:
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
-      twoslashes:
+      twoslash:
         specifier: workspace:*
         version: link:packages/twoslash
       typescript:
@@ -86,7 +86,7 @@ importers:
       '@vue/language-core':
         specifier: ^1.8.27
         version: 1.8.27(typescript@5.3.3)
-      twoslashes:
+      twoslash:
         specifier: workspace:*
         version: link:../twoslash
       typescript:
@@ -107,7 +107,7 @@ importers:
         version: 0.9.19
       shikiji-twoslash:
         specifier: ^0.9.19
-        version: 0.9.19(patch_hash=bmpchiicftn3vp4gmggbxhpvpa)(typescript@5.3.3)
+        version: 0.9.19(patch_hash=7ooxnd6omaifraqm76abhqewgy)(typescript@5.3.3)
 
 packages:
 
@@ -4323,7 +4323,7 @@ packages:
     resolution: {integrity: sha512-AFJu/vcNT21t0e6YrfadZ+9q86gvPum6iywRyt1OtIPjPFe25RQnYJyxHQPMLKCCWA992TPxmEmbNcOZCAJclw==}
     dev: true
 
-  /shikiji-twoslash@0.9.19(patch_hash=bmpchiicftn3vp4gmggbxhpvpa)(typescript@5.3.3):
+  /shikiji-twoslash@0.9.19(patch_hash=7ooxnd6omaifraqm76abhqewgy)(typescript@5.3.3):
     resolution: {integrity: sha512-wwF5GWEZuIFWjGioqPygcnnQmEduK5bdV9L2AzjmEVJD7Xt1Zg/K8bN7StxPBR/1xmbJ9RnHYeFvqCxySpXEsw==}
     dependencies:
       '@typescript/twoslash': 3.2.4(typescript@5.3.3)
