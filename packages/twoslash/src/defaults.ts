@@ -13,11 +13,10 @@ export const defaultCompilerOptions: CompilerOptions = {
 export const defaultHandbookOptions: HandbookOptions = {
   errors: [],
   noErrors: false,
+  noErrorsCutted: false,
+  noErrorValidation: false,
+  noStaticSemanticInfo: false,
   showEmit: false,
   showEmittedFile: undefined,
-  noStaticSemanticInfo: false,
-  emit: false,
-  noErrorValidation: false,
   keepNotations: false,
-  noErrorsCutted: false,
 }

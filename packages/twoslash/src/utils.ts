@@ -1,15 +1,8 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashNode } from './types'
+import type { NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashNode, VirtualFile } from './types'
 import { defaultHandbookOptions } from './defaults'
-
-export interface VirtualFile {
-  offset: number
-  filename: string
-  filepath: string
-  content: string
-  extension: string
-}
+import type { CompilerOptionDeclaration } from './types/internal'
 
 export function parsePrimitive(value: string, type: string): any {
   // eslint-disable-next-line valid-typeof

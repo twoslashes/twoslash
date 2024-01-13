@@ -2,10 +2,11 @@ import type { CompilerOptions, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, CreateTwoSlashOptions, NodeError, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
+import type { CreateTwoSlashOptions, NodeError, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
 import { areRangesIntersecting, createPositionConverter, getExtension, getIdentifierTextSpans, isInRange, isInRanges, parseFlag, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
+import type { CompilerOptionDeclaration } from './types/internal'
 
 export * from './public'
 
