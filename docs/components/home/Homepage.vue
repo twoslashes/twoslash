@@ -11,7 +11,7 @@
           the npm modules of
         </p>
         <h1 class="title">
-          Shiki-Twoslash
+          Twoslash
         </h1>
         <p>
           In which markdown code samples are powered by
