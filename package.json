@@ -34,6 +34,7 @@
     "simple-git-hooks": "^2.9.0",
     "tslib": "^2.6.2",
     "twoslash": "workspace:*",
+    "twoslash-cdn": "workspace:*",
     "twoslash-vue": "workspace:*",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",

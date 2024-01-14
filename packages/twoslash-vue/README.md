@@ -8,29 +8,7 @@ Extended TwoSlash for Vue SFC support.
 > [!IMPORTANT]
 > Working in Progress.
 
-## Install
-
-```bash
-npm i twoslash-vue
-```
-
-## Usage
-
-The function supercharges `twoslasher` function from `twoslash` to support the `vue` extension, while fallback to the original behavior for other extensions.
-
-## TODOs
-
-- [x] Support Vue SFC
-- [ ] Support marker in Vue SFC (because the compile code no longer have the same position, we need a way to mark it back)
-- [ ] Support markers in Vue Template (via html comment maybe?)
-
-## Sponsors
-
-<p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
-  </a>
-</p>
+[📚 Documentation](https://twoslash.netlify.app/packages/vue)
 
 ## License
 
