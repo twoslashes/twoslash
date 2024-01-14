@@ -4,11 +4,33 @@ outline: deep
 
 # Result References
 
-// TODO: add more fields
+The return value of TwoSlash contains the following information:
+
+```ts twoslash
+import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoSlashNode, TwoSlashReturnMeta } from 'twoslash'
+// ---cut---
+export interface TwoSlashReturn {
+  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
+  code: string
+  /** Nodes containing various bits of information about the code */
+  nodes: TwoSlashNode[]
+  /** The meta information the twoslash run */
+  meta: TwoSlashReturnMeta
+  /** Getters shorthand */
+  get queries(): NodeQuery[]
+  get completions(): NodeCompletion[]
+  get errors(): NodeError[]
+  get highlights(): NodeHighlight[]
+  get hovers(): NodeHover[]
+  get tags(): NodeTag[]
+}
+```
+
+Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packages/twoslash/src/types/returns.ts) for all the fields.
 
 ## Information Nodes
 
-TwoSlash returns all types of information in the `nodes` array.
+TwoSlash returns all types of information in the `nodes` array. Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packages/twoslash/src/types/nodes.ts) for all the fields.
 
 ### Properties
 
@@ -61,33 +83,24 @@ Same as `hover`
 To make it easier to access, we also provide some getters shortcuts to each type of the nodes:
 
 ```ts
+import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoSlashNode, TwoSlashReturnMeta } from 'twoslash'
+// ---cut---
 export interface TwoSlashReturn {
-  /** The output code */
-  code: string
-
-  /**
-   * Nodes containing various bits of information about the code
-   */
   nodes: TwoSlashNode[]
 
-  /** Getters */
   get hovers(): NodeHover[] // was `staticQuickInfos`
   get queries(): NodeQuery[] // was `queries` with `kind: 'query'`
   get completions(): NodeCompletion[] // was `queries` with `kind: 'completion'`
   get errors(): NodeError[]
   get highlights(): NodeHighlight[]
   get tags(): NodeTag[]
-
-  /**
-   * The meta information
-   */
-  meta: TwoSlashReturnMeta
+  // ....
 }
 ```
 
 ## Meta Information
 
-An additional `meta` property is returned providing additional information about the result.
+An additional `meta` property is returned providing additional information about the result. Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packages/twoslash/src/types/returns.ts) for all the fields.
 
 ### `meta.flagNotations`
 
@@ -99,8 +112,8 @@ A list of the index ranges of the code removed by TwoSlash from the original cod
 
 ### `meta.compilerOptions`
 
-The final resolved `compilerOptions`
+The final resolved [`compilerOptions`](/refs/options#compiler-options)
 
 ### `meta.handbookOptions`
 
-The final resolved `handbookOptions`
+The final resolved [`handbookOptions`](/refs/options#handbook-options)
