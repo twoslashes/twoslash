@@ -45,7 +45,7 @@
         </div>
 
         <div style="margin-top: 3rem">
-          <img style="margin: 0 auto" src="/svgs/logo.svg" alt="Shiki Logo" width="167" height="238">
+          <img style="margin: 0 auto" src="/logo.svg" alt="Shiki Logo" width="167" height="238">
         </div>
       </div>
     </article>
