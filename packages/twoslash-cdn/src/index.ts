@@ -1,4 +1,4 @@
-import type { TwoSlashOptions, TwoSlashReturn } from 'twoslash'
+import type { TwoSlashExecuteOptions, TwoSlashFunction, TwoSlashOptions, TwoSlashReturn } from 'twoslash'
 import { createTwoSlasher } from 'twoslash'
 import * as ts from 'typescript/lib/tsserverlibrary'
 import { createDefaultMapFromCDN } from '@typescript/vfs'
@@ -50,12 +50,12 @@ export interface TwoSlashCdnReturn {
   /**
    * Run auto type acquisition and then twoslash on the given code
    */
-  run: (source: string, extension: string, localOptions?: TwoSlashOptions) => Promise<TwoSlashReturn>
+  run: (code: string, extension?: string, options?: TwoSlashExecuteOptions) => Promise<TwoSlashReturn>
 
   /**
    * Run twoslasher on the given code, without running ATA
    */
-  runSync: (source: string, extension: string, localOptions?: TwoSlashOptions) => TwoSlashReturn
+  runSync: TwoSlashFunction
 
   /**
    * Runs Auto-Type-Acquisition (ATA) on the given code, the async operation before running twoslash
@@ -130,12 +130,12 @@ export function createTwoSlashFromCDN(options: TwoSlashCdnOptions = {}): TwoSlas
     fsMap,
   })
 
-  async function run(source: string, extension: string, localOptions?: TwoSlashOptions) {
+  async function run(source: string, extension?: string, localOptions?: TwoSlashExecuteOptions) {
     await prepareTypes(source)
     return runSync(source, extension, localOptions)
   }
 
-  function runSync(source: string, extension: string, localOptions?: TwoSlashOptions) {
+  function runSync(source: string, extension?: string, localOptions?: TwoSlashExecuteOptions) {
     return twoslasher(source, extension, {
       ...options.twoSlashOptionsOverrides,
       ...localOptions,
