@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@iconify-json/svg-spinners": "^1.1.2",
+    "sass": "^1.69.7",
     "shikiji": "^0.9.19",
     "shikiji-transformers": "^0.9.19",
     "shikiji-twoslash": "^0.9.19",

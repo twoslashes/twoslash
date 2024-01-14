@@ -1,19 +1,10 @@
 ---
 layout: home
-
-hero:
-  name: "TwoSlash"
-  text: "Types in Docs"
-  tagline: Markup for generating rich type information in your documentations ahead of time
-  image:
-    src: /logo.svg
-    alt: TwoSlash Logo
-  actions:
-    - theme: brand
-      text: Get Started
-      link: /guide/
 ---
 
-::: warning
-This site is still under construction.
-:::
+<script setup>
+import Homepage from './components/home/Homepage.vue'
+</script>
+
+<link rel="stylesheet" href="homepage.scss">
+<Homepage />
