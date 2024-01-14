@@ -5,16 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  shikiji: ^0.10.0-beta.0
+  shikiji-transformers: ^0.10.0-beta.0
+  shikiji-twoslash: ^0.10.0-beta.0
   twoslash: workspace:*
   twoslash-vue: workspace:*
-
-patchedDependencies:
-  shikiji-twoslash@0.9.19:
-    hash: 7ooxnd6omaifraqm76abhqewgy
-    path: patches/shikiji-twoslash@0.9.19.patch
-  vitepress-plugin-twoslash@0.9.19:
-    hash: fxzax42xzjby5t777wjmxescz4
-    path: patches/vitepress-plugin-twoslash@0.9.19.patch
+  vitepress-plugin-twoslash: ^0.10.0-beta.0
 
 importers:
 
@@ -23,6 +19,9 @@ importers:
       '@antfu/eslint-config':
         specifier: ^2.6.2
         version: 2.6.2(@vue/compiler-sfc@3.4.13)(eslint@8.56.0)(typescript@5.3.3)(vitest@1.2.0)
+      '@iconify-json/svg-spinners':
+        specifier: ^1.1.2
+        version: 1.1.2
       '@types/node':
         specifier: ^20.11.0
         version: 20.11.0
@@ -44,6 +43,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      esno:
+        specifier: ^4.0.0
+        version: 4.0.0
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
@@ -65,6 +67,15 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      shikiji:
+        specifier: ^0.10.0-beta.0
+        version: 0.10.0-beta.0
+      shikiji-transformers:
+        specifier: ^0.10.0-beta.0
+        version: 0.10.0-beta.0
+      shikiji-twoslash:
+        specifier: ^0.10.0-beta.0
+        version: 0.10.0-beta.0
       simple-git-hooks:
         specifier: ^2.9.0
         version: 2.9.0
@@ -86,6 +97,12 @@ importers:
       unbuild:
         specifier: ^2.0.0
         version: 2.0.0(typescript@5.3.3)
+      unplugin-vue-components:
+        specifier: ^0.26.0
+        version: 0.26.0(rollup@3.29.4)(vue@3.4.13)
+      vitepress-plugin-twoslash:
+        specifier: ^0.10.0-beta.0
+        version: 0.10.0-beta.0(typescript@5.3.3)
       vitest:
         specifier: ^1.2.0
         version: 1.2.0(@types/node@20.11.0)
@@ -96,8 +113,8 @@ importers:
         specifier: ^0.58.3
         version: 0.58.3
       '@vueuse/core':
-        specifier: ^10.7.1
-        version: 10.7.1(vue@3.4.13)
+        specifier: ^10.7.2
+        version: 10.7.2(vue@3.4.13)
       floating-vue:
         specifier: ^5.0.3
         version: 5.0.3(vue@3.4.13)
@@ -113,25 +130,6 @@ importers:
       vue:
         specifier: ^3.4.13
         version: 3.4.13(typescript@5.3.3)
-    devDependencies:
-      '@iconify-json/svg-spinners':
-        specifier: ^1.1.2
-        version: 1.1.2
-      shikiji:
-        specifier: ^0.9.19
-        version: 0.9.19
-      shikiji-transformers:
-        specifier: ^0.9.19
-        version: 0.9.19
-      shikiji-twoslash:
-        specifier: ^0.9.19
-        version: 0.9.19(patch_hash=7ooxnd6omaifraqm76abhqewgy)(typescript@5.3.3)
-      unplugin-vue-components:
-        specifier: ^0.26.0
-        version: 0.26.0(rollup@3.29.4)(vue@3.4.13)
-      vitepress-plugin-twoslash:
-        specifier: ^0.9.19
-        version: 0.9.19(patch_hash=fxzax42xzjby5t777wjmxescz4)(typescript@5.3.3)
 
   packages/twoslash:
     dependencies:
@@ -188,19 +186,6 @@ importers:
       typescript:
         specifier: '*'
         version: 5.3.3
-    devDependencies:
-      esno:
-        specifier: ^4.0.0
-        version: 4.0.0
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.5
-      shikiji:
-        specifier: ^0.9.19
-        version: 0.9.19
-      shikiji-twoslash:
-        specifier: ^0.9.19
-        version: 0.9.19(patch_hash=7ooxnd6omaifraqm76abhqewgy)(typescript@5.3.3)
 
 packages:
 
@@ -1095,18 +1080,6 @@ packages:
     resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}
     dev: true
 
-  /@isaacs/cliui@8.0.2:
-    resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
-    engines: {node: '>=12'}
-    dependencies:
-      string-width: 5.1.2
-      string-width-cjs: /string-width@4.2.3
-      strip-ansi: 7.1.0
-      strip-ansi-cjs: /strip-ansi@6.0.1
-      wrap-ansi: 8.1.0
-      wrap-ansi-cjs: /wrap-ansi@7.0.0
-    dev: true
-
   /@istanbuljs/schema@0.1.3:
     resolution: {integrity: sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==}
     engines: {node: '>=8'}
@@ -1312,13 +1285,6 @@ packages:
       '@parcel/watcher-win32-ia32': 2.3.0
       '@parcel/watcher-win32-x64': 2.3.0
     dev: true
-
-  /@pkgjs/parseargs@0.11.0:
-    resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
-    engines: {node: '>=14'}
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@polka/url@1.0.0-next.24:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
@@ -2247,6 +2213,18 @@ packages:
       - vue
     dev: false
 
+  /@vueuse/core@10.7.2(vue@3.4.13):
+    resolution: {integrity: sha512-AOyAL2rK0By62Hm+iqQn6Rbu8bfmbgaIMXcE3TSr7BdQ42wnSFlwIdPjInO62onYsEMK/yDMU8C6oGfDAtZ2qQ==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 10.7.2
+      '@vueuse/shared': 10.7.2(vue@3.4.13)
+      vue-demi: 0.14.6(vue@3.4.13)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/integrations@10.7.1(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.4.13):
     resolution: {integrity: sha512-cKo5LEeKVHdBRBtMTOrDPdR0YNtrmN9IBfdcnY2P3m5LHVrsD0xiHUtAH1WKjHQRIErZG6rJUa6GA4tWZt89Og==}
     peerDependencies:
@@ -2302,8 +2280,21 @@ packages:
     resolution: {integrity: sha512-jX8MbX5UX067DYVsbtrmKn6eG6KMcXxLRLlurGkZku5ZYT3vxgBjui2zajvUZ18QLIjrgBkFRsu7CqTAg18QFw==}
     dev: false
 
+  /@vueuse/metadata@10.7.2:
+    resolution: {integrity: sha512-kCWPb4J2KGrwLtn1eJwaJD742u1k5h6v/St5wFe8Quih90+k2a0JP8BS4Zp34XUuJqS2AxFYMb1wjUL8HfhWsQ==}
+    dev: false
+
   /@vueuse/shared@10.7.1(vue@3.4.13):
     resolution: {integrity: sha512-v0jbRR31LSgRY/C5i5X279A/WQjD6/JsMzGa+eqt658oJ75IvQXAeONmwvEMrvJQKnRElq/frzBR7fhmWY5uLw==}
+    dependencies:
+      vue-demi: 0.14.6(vue@3.4.13)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/shared@10.7.2(vue@3.4.13):
+    resolution: {integrity: sha512-qFbXoxS44pi2FkgFjPvF4h7c9oMDutpyBdcJdMYIMg9XyXli2meFMuaKn+UMgsClo//Th6+beeCgqweT/79BVA==}
     dependencies:
       vue-demi: 0.14.6(vue@3.4.13)
     transitivePeerDependencies:
@@ -3003,10 +2994,6 @@ packages:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
     dev: false
 
-  /eastasianwidth@0.2.0:
-    resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
-    dev: true
-
   /electron-to-chromium@1.4.628:
     resolution: {integrity: sha512-2k7t5PHvLsufpP6Zwk0nof62yLOsCf032wZx7/q0mv8gwlXjhcxI3lz6f0jBr0GrnWKcm3burXzI3t5IrcdUxw==}
 
@@ -3016,10 +3003,6 @@ packages:
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
-    dev: true
-
-  /emoji-regex@9.2.2:
-    resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
     dev: true
 
   /entities@4.5.0:
@@ -3658,14 +3641,6 @@ packages:
       tabbable: 6.2.0
     dev: false
 
-  /foreground-child@3.1.1:
-    resolution: {integrity: sha512-TMKDUnIte6bfb5nWv7V/caI169OHgvwjb7V4WkeUvbQQdjr5rWKqHFiKWb/fcOwB+CzBT+qbWjvj+DVwRskpIg==}
-    engines: {node: '>=14'}
-    dependencies:
-      cross-spawn: 7.0.3
-      signal-exit: 4.1.0
-    dev: true
-
   /fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
     dev: true
@@ -3769,18 +3744,6 @@ packages:
     engines: {node: '>=10.13.0'}
     dependencies:
       is-glob: 4.0.3
-    dev: true
-
-  /glob@10.3.10:
-    resolution: {integrity: sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    hasBin: true
-    dependencies:
-      foreground-child: 3.1.1
-      jackspeak: 2.3.6
-      minimatch: 9.0.3
-      minipass: 5.0.0
-      path-scurry: 1.10.1
     dev: true
 
   /glob@7.2.3:
@@ -4131,15 +4094,6 @@ packages:
     dependencies:
       html-escaper: 2.0.2
       istanbul-lib-report: 3.0.1
-    dev: true
-
-  /jackspeak@2.3.6:
-    resolution: {integrity: sha512-N3yCS/NegsOBokc8GAdM8UcmfsKiSS8cipheD/nivzr700H+nsMOxJjQnvwOcRYVuFkdH0wGUvW2WbXGmrZGbQ==}
-    engines: {node: '>=14'}
-    dependencies:
-      '@isaacs/cliui': 8.0.2
-    optionalDependencies:
-      '@pkgjs/parseargs': 0.11.0
     dev: true
 
   /jiti@1.21.0:
@@ -5132,14 +5086,6 @@ packages:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
     dev: true
 
-  /path-scurry@1.10.1:
-    resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    dependencies:
-      lru-cache: 10.1.0
-      minipass: 5.0.0
-    dev: true
-
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
@@ -5648,14 +5594,6 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rimraf@5.0.5:
-    resolution: {integrity: sha512-CqDakW+hMe/Bz202FPEymy68P+G50RfMQK+Qo5YUqc9SPipvbGjCGKd0RSKEelbsfQuw3g5NZDSrlZZAJurH1A==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dependencies:
-      glob: 10.3.10
-    dev: true
-
   /rollup-plugin-dts@6.1.0(rollup@3.29.4)(typescript@5.3.3):
     resolution: {integrity: sha512-ijSCPICkRMDKDLBK9torss07+8dl9UpY9z1N/zTeA1cIqdzMlpkV3MOOC7zukyvQfDyxa1s3Dl2+DeiP/G6DOw==}
     engines: {node: '>=16'}
@@ -5739,29 +5677,29 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
+  /shikiji-core@0.10.0-beta.0:
+    resolution: {integrity: sha512-B/GskyFUjnYttwJaRCSAChW5k6Y90nirKvJRnFQ1hxiApvlHdQo8q5le2fjEoFCRIdUo6mb0YBECVZvewqCkiw==}
+
   /shikiji-core@0.9.19:
     resolution: {integrity: sha512-AFJu/vcNT21t0e6YrfadZ+9q86gvPum6iywRyt1OtIPjPFe25RQnYJyxHQPMLKCCWA992TPxmEmbNcOZCAJclw==}
+    dev: false
 
-  /shikiji-transformers@0.9.19:
-    resolution: {integrity: sha512-lGLI7Z8frQrIBbhZ74/eiJtxMoCQRbpaHEB+gcfvdIy+ZFaAtXncJGnc52932/UET+Y4GyKtwwC/vjWUCp+c/Q==}
+  /shikiji-transformers@0.10.0-beta.0:
+    resolution: {integrity: sha512-XC5A4f8orLbmwxIJ+Rj7hFO7ix3FitzgE4aOrNkG1GXjFJVbqWbU8XUBuDITen97o29jueQkWvWg7mYzsIsa0g==}
     dependencies:
-      shikiji: 0.9.19
+      shikiji: 0.10.0-beta.0
 
-  /shikiji-twoslash@0.9.19(patch_hash=7ooxnd6omaifraqm76abhqewgy)(typescript@5.3.3):
-    resolution: {integrity: sha512-wwF5GWEZuIFWjGioqPygcnnQmEduK5bdV9L2AzjmEVJD7Xt1Zg/K8bN7StxPBR/1xmbJ9RnHYeFvqCxySpXEsw==}
+  /shikiji-twoslash@0.10.0-beta.0:
+    resolution: {integrity: sha512-/Act3mHiJlO2nMr0Zqy02EyHpc4FsKJjrwBB2n+ySViBmvr410l8/M6iErwpNFg8hz4fVfASVHgsbuBiqwoh6A==}
     dependencies:
-      '@typescript/twoslash': 3.2.4(typescript@5.3.3)
-      shikiji-core: 0.9.19
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
+      shikiji-core: 0.10.0-beta.0
+      twoslash: link:packages/twoslash
     dev: true
-    patched: true
 
-  /shikiji@0.9.19:
-    resolution: {integrity: sha512-Kw2NHWktdcdypCj1GkKpXH4o6Vxz8B8TykPlPuLHOGSV8VkhoCLcFOH4k19K4LXAQYRQmxg+0X/eM+m2sLhAkg==}
+  /shikiji@0.10.0-beta.0:
+    resolution: {integrity: sha512-Fc2uREZAptVR7BvNYoV67PS/M3KeWNKfC3J9UCiF9a9isbddrY75KFnNq1xMTOQDhOk1kQAxTEnZP3GEGAnZWA==}
     dependencies:
-      shikiji-core: 0.9.19
+      shikiji-core: 0.10.0-beta.0
 
   /siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
@@ -5882,15 +5820,6 @@ packages:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
       strip-ansi: 6.0.1
-    dev: true
-
-  /string-width@5.1.2:
-    resolution: {integrity: sha512-HnLOCR3vjcY8beoNLtcjZ5/nxn2afmME6lhrDrebokqMap+XbeW8n9TXpPDOqdGK5qcI3oT0GKTW6wC7EMiVqA==}
-    engines: {node: '>=12'}
-    dependencies:
-      eastasianwidth: 0.2.0
-      emoji-regex: 9.2.2
-      strip-ansi: 7.1.0
     dev: true
 
   /string-width@7.0.0:
@@ -6503,22 +6432,22 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitepress-plugin-twoslash@0.9.19(patch_hash=fxzax42xzjby5t777wjmxescz4)(typescript@5.3.3):
-    resolution: {integrity: sha512-i/FFo1o5OfnLHHusnssti3P/GMSB3LInUkzTBmzp6UN0vKksJb3Gin9PDACxwHpRrRZQXY7BH51Xg8ZPPUccNw==}
+  /vitepress-plugin-twoslash@0.10.0-beta.0(typescript@5.3.3):
+    resolution: {integrity: sha512-ZNpMl/th2wcagpxJLxYBGGYoqv1MdBvL0sWg4Bs8TntgoZpIkyxmqwvWSPR6bA5F5QRispvcMDXtmbjq/qVrjg==}
     dependencies:
       floating-vue: 5.0.3(vue@3.4.13)
       mdast-util-from-markdown: 2.0.0
       mdast-util-gfm: 3.0.0
       mdast-util-to-hast: 13.1.0
-      shikiji: 0.9.19
-      shikiji-twoslash: 0.9.19(patch_hash=7ooxnd6omaifraqm76abhqewgy)(typescript@5.3.3)
+      shikiji: 0.10.0-beta.0
+      shikiji-twoslash: 0.10.0-beta.0
+      twoslash-vue: link:packages/twoslash-vue
       vue: 3.4.13(typescript@5.3.3)
     transitivePeerDependencies:
       - '@nuxt/kit'
       - supports-color
       - typescript
     dev: true
-    patched: true
 
   /vitepress@1.0.0-rc.36(@algolia/client-search@4.22.1)(@types/node@20.11.0)(@types/react@18.2.47)(fuse.js@7.0.0)(postcss@8.4.33)(react@18.2.0)(search-insights@2.13.0)(typescript@5.3.3):
     resolution: {integrity: sha512-2z4dpM9PplN/yvTifhavOIAazlCR6OJ5PvLoRbc+7LdcFeIlCsuDGENLX4HjMW18jQZF5/j7++PNqdBfeazxUA==}
@@ -6537,15 +6466,15 @@ packages:
       '@types/markdown-it': 13.0.7
       '@vitejs/plugin-vue': 5.0.3(vite@5.0.11)(vue@3.4.13)
       '@vue/devtools-api': 6.5.1
-      '@vueuse/core': 10.7.1(vue@3.4.13)
+      '@vueuse/core': 10.7.2(vue@3.4.13)
       '@vueuse/integrations': 10.7.1(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.4.13)
       focus-trap: 7.5.4
       mark.js: 8.11.1
       minisearch: 6.3.0
       postcss: 8.4.33
-      shikiji: 0.9.19
+      shikiji: 0.10.0-beta.0
       shikiji-core: 0.9.19
-      shikiji-transformers: 0.9.19
+      shikiji-transformers: 0.10.0-beta.0
       vite: 5.0.11(@types/node@20.11.0)
       vue: 3.4.13(typescript@5.3.3)
     transitivePeerDependencies:
@@ -6727,15 +6656,6 @@ packages:
       ansi-styles: 4.3.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
-    dev: true
-
-  /wrap-ansi@8.1.0:
-    resolution: {integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      ansi-styles: 6.2.1
-      string-width: 5.1.2
-      strip-ansi: 7.1.0
     dev: true
 
   /wrap-ansi@9.0.0:
