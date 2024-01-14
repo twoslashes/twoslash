@@ -36,7 +36,7 @@
           </p>
 
           <p class="by" style="margin-top: 1rem">
-            And <a href="https://orta.io">Anthony Fu</a>
+            And <a href="https://antfu.me">Anthony Fu</a>
           </p>
 
           <p>
