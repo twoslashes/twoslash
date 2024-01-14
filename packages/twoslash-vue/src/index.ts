@@ -5,10 +5,13 @@ import type {
   Range,
   TwoSlashExecuteOptions,
   TwoSlashInstance,
+  TwoSlashReturnMeta,
 } from 'twoslash'
 import {
+  createPositionConverter,
   createTwoSlasher as createTwoSlasherBase,
   defaultCompilerOptions,
+  findQueryMarkers,
   removeCodeRanges,
   resolveNodePositions,
 } from 'twoslash'
@@ -32,7 +35,27 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag
       },
     )
 
-    const fileSource = lang.createVirtualFile('index.vue', ts.ScriptSnapshot.fromString(code), 'vue')!
+    const sourceMeta = {
+      removals: [] as Range[],
+      positionCompletions: [] as number[],
+      positionQueries: [] as number[],
+      positionHighlights: [] as Range[],
+    } satisfies Partial<TwoSlashReturnMeta>
+
+    const pc = createPositionConverter(code)
+    // we get the markers with the original code so the position is correct
+    findQueryMarkers(code, sourceMeta, pc.getIndexOfLineAbove)
+
+    // replace non-whitespace in the already extracted markers
+    let strippedCode = code
+    for (const [start, end] of sourceMeta.removals) {
+      strippedCode
+       = strippedCode.slice(0, start)
+       + strippedCode.slice(start, end).replace(/\S/g, ' ')
+       + strippedCode.slice(end)
+    }
+
+    const fileSource = lang.createVirtualFile('index.vue', ts.ScriptSnapshot.fromString(strippedCode), 'vue')!
     const fileCompiled = fileSource.getEmbeddedFiles()[0]
     const typeHelpers = sharedTypes.getTypesCode(fileSource.vueCompilerOptions)
     const compiled = [
@@ -40,6 +63,8 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag
       '// ---cut-after---',
       typeHelpers,
     ].join('\n')
+
+    const map = new SourceMap(fileCompiled.mappings)
 
     // Pass compiled to TS file to twoslash
     const result = twoslasherBase(compiled, 'tsx', {
@@ -59,12 +84,16 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag
         // ignore internal types
         return !id.startsWith('__VLS')
       },
+      positionCompletions: sourceMeta.positionCompletions
+        .map(p => map.toGeneratedOffset(p)![0]),
+      positionQueries: sourceMeta.positionQueries
+        .map(p => map.toGeneratedOffset(p)![0]),
+      positionHighlights: sourceMeta.positionHighlights
+        .map(([start, end]) => [map.toGeneratedOffset(start)![0], map.toGeneratedOffset(end)![0]] as Range),
     })
 
     if (!flag)
       return result
-
-    const map = new SourceMap(fileCompiled.mappings)
 
     // Map the tokens
     const mappedNodes = result.nodes
@@ -83,19 +112,28 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag
       })
       .filter(isNotNull)
 
-    const mappedRemovals = result.meta.removals
-      .map((r) => {
-        const start = map.toSourceOffset(r[0])?.[0]
-        const end = map.toSourceOffset(r[1])?.[0]
-        if (start == null || end == null || start < 0 || end < 0 || start >= end)
-          return undefined
-        return [start, end] as Range
-      })
-      .filter(isNotNull)
+    const mappedRemovals = [
+      ...sourceMeta.removals,
+      ...result.meta.removals
+        .map((r) => {
+          const start = map.toSourceOffset(r[0])?.[0]
+          const end = map.toSourceOffset(r[1])?.[0]
+          if (start == null || end == null || start < 0 || end < 0 || start >= end)
+            return undefined
+          return [start, end] as Range
+        })
+        .filter(isNotNull),
+    ]
 
-    const removed = removeCodeRanges(code, mappedRemovals, mappedNodes)
-    result.code = removed.code
-    result.nodes = resolveNodePositions(removed.nodes, result.code)
+    if (!options.handbookOptions?.keepNotations) {
+      const removed = removeCodeRanges(code, mappedRemovals, mappedNodes)
+      result.code = removed.code
+      result.meta.removals = removed.removals
+      result.nodes = resolveNodePositions(removed.nodes, result.code)
+    }
+    else {
+      result.meta.removals = mappedRemovals
+    }
 
     return result
   }
