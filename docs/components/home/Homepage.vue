@@ -22,7 +22,7 @@
         </p>
 
         <div style="margin-top: 3rem; margin-bottom:3rem">
-          <img style="margin: 0 auto" src="/svgs/squiggle.svg" alt="Decoration" width="70" height="25.5">
+          <img class="dark:invert" style="margin: 0 auto" src="/svgs/squiggle.svg" alt="Decoration" width="70" height="25.5">
         </div>
 
         <div class="intro">
