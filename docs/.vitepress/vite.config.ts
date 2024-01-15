@@ -3,21 +3,20 @@ import { resolve } from 'node:path'
 import fs from 'node:fs/promises'
 import { defineConfig } from 'vite'
 import UnoCSS from 'unocss/vite'
-
-// import Components from 'unplugin-vue-components/vite'
+import Components from 'unplugin-vue-components/vite'
 import { format } from 'pretty-format'
 import JITI from 'jiti'
 
 export default defineConfig({
   plugins: [
-    // Components({
-    //   dirs: [
-    //     fileURLToPath(new URL('./components', import.meta.url)),
-    //   ],
-    //   dts: fileURLToPath(new URL('../components.d.ts', import.meta.url)),
-    //   include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-    //   extensions: ['vue', 'md'],
-    // }),
+    Components({
+      dirs: [
+        fileURLToPath(new URL('./components', import.meta.url)),
+      ],
+      dts: fileURLToPath(new URL('../components.d.ts', import.meta.url)),
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      extensions: ['vue', 'md'],
+    }),
     UnoCSS(
       fileURLToPath(new URL('./uno.config.ts', import.meta.url)),
     ),
@@ -34,18 +33,22 @@ export default defineConfig({
             return _
 
           return [
-            '::: code-group',
+            '<TwoSlashRenderTabs>',
+            '<template #rendered>',
             '',
             `${quotes}${lang} twoslash${options} [TwoSlash Rendered]`,
             code,
             quotes,
             '',
+            '</template>',
+            '<template #source>',
             '',
             `${quotes}${lang} ${options} [Input Code]`,
             code,
             quotes,
             '',
-            ':::',
+            '</template>',
+            '</TwoSlashRenderTabs>',
           ].join('\n')
         })
       },

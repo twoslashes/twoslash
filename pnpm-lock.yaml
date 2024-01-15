@@ -5,12 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  shikiji: ^0.10.0-beta.1
-  shikiji-transformers: ^0.10.0-beta.1
-  shikiji-twoslash: ^0.10.0-beta.1
+  shikiji: ^0.10.0-beta.2
+  shikiji-transformers: ^0.10.0-beta.2
+  shikiji-twoslash: ^0.10.0-beta.2
   twoslash: workspace:*
   twoslash-vue: workspace:*
-  vitepress-plugin-twoslash: ^0.10.0-beta.1
+  vitepress-plugin-twoslash: ^0.10.0-beta.2
 
 importers:
 
@@ -19,15 +19,18 @@ importers:
       '@antfu/eslint-config':
         specifier: ^2.6.2
         version: 2.6.2(@vue/compiler-sfc@3.4.13)(eslint@8.56.0)(typescript@5.3.3)(vitest@1.2.0)
+      '@iconify-json/ri':
+        specifier: ^1.1.19
+        version: 1.1.19
       '@iconify-json/svg-spinners':
         specifier: ^1.1.2
         version: 1.1.2
       '@types/node':
-        specifier: ^20.11.0
-        version: 20.11.0
+        specifier: ^20.11.2
+        version: 20.11.2
       '@types/react':
-        specifier: ^18.2.47
-        version: 18.2.47
+        specifier: ^18.2.48
+        version: 18.2.48
       '@typescript/twoslash':
         specifier: ^3.2.4
         version: 3.2.4(typescript@5.3.3)
@@ -68,14 +71,14 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       shikiji:
-        specifier: ^0.10.0-beta.1
-        version: 0.10.0-beta.1
+        specifier: ^0.10.0-beta.2
+        version: 0.10.0-beta.2
       shikiji-transformers:
-        specifier: ^0.10.0-beta.1
-        version: 0.10.0-beta.1
+        specifier: ^0.10.0-beta.2
+        version: 0.10.0-beta.2
       shikiji-twoslash:
-        specifier: ^0.10.0-beta.1
-        version: 0.10.0-beta.1
+        specifier: ^0.10.0-beta.2
+        version: 0.10.0-beta.2
       simple-git-hooks:
         specifier: ^2.9.0
         version: 2.9.0
@@ -98,11 +101,11 @@ importers:
         specifier: ^0.26.0
         version: 0.26.0(rollup@3.29.4)(vue@3.4.13)
       vitepress-plugin-twoslash:
-        specifier: ^0.10.0-beta.1
-        version: 0.10.0-beta.1(typescript@5.3.3)
+        specifier: ^0.10.0-beta.2
+        version: 0.10.0-beta.2(typescript@5.3.3)
       vitest:
         specifier: ^1.2.0
-        version: 1.2.0(@types/node@20.11.0)
+        version: 1.2.0(@types/node@20.11.2)
 
   docs:
     dependencies:
@@ -126,7 +129,7 @@ importers:
         version: 0.58.3(postcss@8.4.33)(rollup@3.29.4)(vite@5.0.11)
       vitepress:
         specifier: ^1.0.0-rc.36
-        version: 1.0.0-rc.36(@algolia/client-search@4.22.1)(@types/node@20.11.0)(@types/react@18.2.47)(fuse.js@7.0.0)(postcss@8.4.33)(react@18.2.0)(sass@1.69.7)(search-insights@2.13.0)(typescript@5.3.3)
+        version: 1.0.0-rc.36(@algolia/client-search@4.22.1)(@types/node@20.11.2)(@types/react@18.2.48)(fuse.js@7.0.0)(postcss@8.4.33)(react@18.2.0)(sass@1.69.7)(search-insights@2.13.0)(typescript@5.3.3)
       vue:
         specifier: ^3.4.13
         version: 3.4.13(typescript@5.3.3)
@@ -707,10 +710,10 @@ packages:
     resolution: {integrity: sha512-SPiDHaWKQZpwR2siD0KQUwlStvIAnEyK6tAE2h2Wuoq8ue9skzhlyVQ1ddzOxX6khULnAALDiR/isSF3bnuciA==}
     dev: false
 
-  /@docsearch/js@3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.47)(react@18.2.0)(search-insights@2.13.0):
+  /@docsearch/js@3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.48)(react@18.2.0)(search-insights@2.13.0):
     resolution: {integrity: sha512-p1YFTCDflk8ieHgFJYfmyHBki1D61+U9idwrLh+GQQMrBSP3DLGKpy0XUJtPjAOPltcVbqsTjiPFfH7JImjUNg==}
     dependencies:
-      '@docsearch/react': 3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.47)(react@18.2.0)(search-insights@2.13.0)
+      '@docsearch/react': 3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.48)(react@18.2.0)(search-insights@2.13.0)
       preact: 10.19.3
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -720,7 +723,7 @@ packages:
       - search-insights
     dev: false
 
-  /@docsearch/react@3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.47)(react@18.2.0)(search-insights@2.13.0):
+  /@docsearch/react@3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.48)(react@18.2.0)(search-insights@2.13.0):
     resolution: {integrity: sha512-9Ahcrs5z2jq/DcAvYtvlqEBHImbm4YJI8M9y0x6Tqg598P40HTEkX7hsMcIuThI+hTFxRGZ9hll0Wygm2yEjng==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 19.0.0'
@@ -740,7 +743,7 @@ packages:
       '@algolia/autocomplete-core': 1.9.3(@algolia/client-search@4.22.1)(algoliasearch@4.22.1)(search-insights@2.13.0)
       '@algolia/autocomplete-preset-algolia': 1.9.3(@algolia/client-search@4.22.1)(algoliasearch@4.22.1)
       '@docsearch/css': 3.5.2
-      '@types/react': 18.2.47
+      '@types/react': 18.2.48
       algoliasearch: 4.22.1
       react: 18.2.0
       search-insights: 2.13.0
@@ -1021,6 +1024,12 @@ packages:
 
   /@humanwhocodes/object-schema@2.0.2:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
+    dev: true
+
+  /@iconify-json/ri@1.1.19:
+    resolution: {integrity: sha512-S9usTucQOY//J3LGIGZ+A6i8AYGCStDcLKjmWzI2UPnWJo+Xd5dESMQGkhOI5BlG3W4AtH6RmiXcpbPy3krmjQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: true
 
   /@iconify-json/svg-spinners@1.1.2:
@@ -1431,8 +1440,8 @@ packages:
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
     dev: true
 
-  /@types/node@20.11.0:
-    resolution: {integrity: sha512-o9bjXmDNcF7GbM4CNQpmi+TutCgap/K3w1JyKgxAjqx41zp9qlIAVFi0IhCNsJcXolEqLWhbFbEeL0PvYm4pcQ==}
+  /@types/node@20.11.2:
+    resolution: {integrity: sha512-cZShBaVa+UO1LjWWBPmWRR4+/eY/JR/UIEcDlVsw3okjWEu+rB7/mH6X3B/L+qJVHDLjk9QW/y2upp9wp1yDXA==}
     dependencies:
       undici-types: 5.26.5
 
@@ -1443,8 +1452,8 @@ packages:
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
 
-  /@types/react@18.2.47:
-    resolution: {integrity: sha512-xquNkkOirwyCgoClNk85BjP+aqnIS+ckAJ8i37gAbDs14jfW/J23f2GItAf33oiUPQnqNMALiFeoM9Y5mbjpVQ==}
+  /@types/react@18.2.48:
+    resolution: {integrity: sha512-qboRCl6Ie70DQQG9hhNREz81jqC1cs9EVNcjQ1AU+jH6NFfSAhVVbrrY/+nSF+Bsk4AOwm9Qa61InvMCyV+H3w==}
     dependencies:
       '@types/prop-types': 15.7.11
       '@types/scheduler': 0.16.8
@@ -1641,7 +1650,7 @@ packages:
       '@unocss/core': 0.58.3
       '@unocss/reset': 0.58.3
       '@unocss/vite': 0.58.3(rollup@3.29.4)(vite@5.0.11)
-      vite: 5.0.11(@types/node@20.11.0)(sass@1.69.7)
+      vite: 5.0.11(@types/node@20.11.2)(sass@1.69.7)
     transitivePeerDependencies:
       - rollup
     dev: false
@@ -1839,7 +1848,7 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.3.2
       magic-string: 0.30.5
-      vite: 5.0.11(@types/node@20.11.0)(sass@1.69.7)
+      vite: 5.0.11(@types/node@20.11.2)(sass@1.69.7)
     transitivePeerDependencies:
       - rollup
     dev: false
@@ -1851,7 +1860,7 @@ packages:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.0.11(@types/node@20.11.0)(sass@1.69.7)
+      vite: 5.0.11(@types/node@20.11.2)(sass@1.69.7)
       vue: 3.4.13(typescript@5.3.3)
     dev: false
 
@@ -1873,7 +1882,7 @@ packages:
       std-env: 3.7.0
       test-exclude: 6.0.0
       v8-to-istanbul: 9.2.0
-      vitest: 1.2.0(@types/node@20.11.0)
+      vitest: 1.2.0(@types/node@20.11.2)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3138,7 +3147,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 6.18.1(@typescript-eslint/parser@6.18.1)(eslint@8.56.0)(typescript@5.3.3)
       '@typescript-eslint/utils': 6.18.1(eslint@8.56.0)(typescript@5.3.3)
       eslint: 8.56.0
-      vitest: 1.2.0(@types/node@20.11.0)
+      vitest: 1.2.0(@types/node@20.11.2)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -5339,29 +5348,29 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  /shikiji-core@0.10.0-beta.1:
-    resolution: {integrity: sha512-u7rlf6PEtUCnjmuuVbt9HPEhvt+pcLkIin2yijCZAthPA7+nzUB+ourl9y/dg7AnhLssZU6LNIHZ4i3++/sj0g==}
+  /shikiji-core@0.10.0-beta.2:
+    resolution: {integrity: sha512-ZGBEcf67jikAlCsjnzFmVS9Cy5/6cVA4yU2DSRinTN22q8+Vqaf4Gk4eL6hEbXWzkP60NnikF0Z6F3ANMpVS1A==}
 
   /shikiji-core@0.9.19:
     resolution: {integrity: sha512-AFJu/vcNT21t0e6YrfadZ+9q86gvPum6iywRyt1OtIPjPFe25RQnYJyxHQPMLKCCWA992TPxmEmbNcOZCAJclw==}
     dev: false
 
-  /shikiji-transformers@0.10.0-beta.1:
-    resolution: {integrity: sha512-176HAjcVETtMKkBsqWfzWaegk6D+vlo2Kn3TBjoEDzjvOFrUo05tUxcrGX6C9PwV/aFwJ/4Xx3TFAtx++uD/yQ==}
+  /shikiji-transformers@0.10.0-beta.2:
+    resolution: {integrity: sha512-DYlAU+z9uHEmOophhd+lGIlJm171+3Oet+TnWimf3q4TOi23sMQqscIcx2Y871KRSbQmE/3h/iv6HWPWqmTulg==}
     dependencies:
-      shikiji: 0.10.0-beta.1
+      shikiji: 0.10.0-beta.2
 
-  /shikiji-twoslash@0.10.0-beta.1:
-    resolution: {integrity: sha512-iudh3dCEwPdUtf2C5EwK5avfbkle31Q5zSuZaIf2cLIzf2rpKuexWxfEAILC4ytWrSG4vvWx3on2Iw3ncnzgog==}
+  /shikiji-twoslash@0.10.0-beta.2:
+    resolution: {integrity: sha512-El7vY7RWVbAbvjzySn987Mjh4EwITWptGR+G0mlFVD52L3V6sKcrkzoOAaVxniB9pOczBMuO0tW1lZE+0oEpvQ==}
     dependencies:
-      shikiji-core: 0.10.0-beta.1
+      shikiji-core: 0.10.0-beta.2
       twoslash: link:packages/twoslash
     dev: true
 
-  /shikiji@0.10.0-beta.1:
-    resolution: {integrity: sha512-MP1366ldLpuq+iQstEto/p5dRV1gA2BChkVdz6HydgChfEebIA8BDREBF3BY5YhWwnU/o1u0N96N5erxe6P3Cw==}
+  /shikiji@0.10.0-beta.2:
+    resolution: {integrity: sha512-tqZIMPoRhBHxNFUKf37jjR4EyffJfNOCmck2sgSke7wPreiNZhfoXWmet/qtsFVmyEHV+uaQkxCUwD+ngeXaBA==}
     dependencies:
-      shikiji-core: 0.10.0-beta.1
+      shikiji-core: 0.10.0-beta.2
 
   /siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
@@ -5835,7 +5844,7 @@ packages:
       '@unocss/transformer-directives': 0.58.3
       '@unocss/transformer-variant-group': 0.58.3
       '@unocss/vite': 0.58.3(rollup@3.29.4)(vite@5.0.11)
-      vite: 5.0.11(@types/node@20.11.0)(sass@1.69.7)
+      vite: 5.0.11(@types/node@20.11.2)(sass@1.69.7)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -5946,7 +5955,7 @@ packages:
       vfile-message: 4.0.2
     dev: true
 
-  /vite-node@1.2.0(@types/node@20.11.0):
+  /vite-node@1.2.0(@types/node@20.11.2):
     resolution: {integrity: sha512-ETnQTHeAbbOxl7/pyBck9oAPZZZo+kYnFt1uQDD+hPReOc+wCjXw4r4jHriBRuVDB5isHmPXxrfc1yJnfBERqg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -5955,7 +5964,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.0.11(@types/node@20.11.0)(sass@1.69.7)
+      vite: 5.0.11(@types/node@20.11.2)(sass@1.69.7)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -5967,7 +5976,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.11(@types/node@20.11.0)(sass@1.69.7):
+  /vite@5.0.11(@types/node@20.11.2)(sass@1.69.7):
     resolution: {integrity: sha512-XBMnDjZcNAw/G1gEiskiM1v6yzM4GE5aMGvhWTlHAYYhxb7S3/V1s3m2LDHa8Vh6yIWYYB0iJwsEaS523c4oYA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -5995,7 +6004,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.0
+      '@types/node': 20.11.2
       esbuild: 0.19.11
       postcss: 8.4.33
       rollup: 4.9.4
@@ -6003,15 +6012,15 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitepress-plugin-twoslash@0.10.0-beta.1(typescript@5.3.3):
-    resolution: {integrity: sha512-aSJUaJjaKYPEt4ZJG4PQT8+Q+RQO9QWXHoVo5eK/bNXmfJo6xWTKP7v37BMr9HwDGwCVPKVLDdu+SFxDYEuZ/g==}
+  /vitepress-plugin-twoslash@0.10.0-beta.2(typescript@5.3.3):
+    resolution: {integrity: sha512-Ad6nqzFp+7a9UzA/8U6yaLAz5Ulwia80nZeNb77n8INybu04BQfJBIgX1S/qdWXa/GCdLXsg01lfBtAwD7Y7dQ==}
     dependencies:
       floating-vue: 5.0.3(vue@3.4.13)
       mdast-util-from-markdown: 2.0.0
       mdast-util-gfm: 3.0.0
       mdast-util-to-hast: 13.1.0
-      shikiji: 0.10.0-beta.1
-      shikiji-twoslash: 0.10.0-beta.1
+      shikiji: 0.10.0-beta.2
+      shikiji-twoslash: 0.10.0-beta.2
       twoslash-vue: link:packages/twoslash-vue
       vue: 3.4.13(typescript@5.3.3)
     transitivePeerDependencies:
@@ -6020,7 +6029,7 @@ packages:
       - typescript
     dev: true
 
-  /vitepress@1.0.0-rc.36(@algolia/client-search@4.22.1)(@types/node@20.11.0)(@types/react@18.2.47)(fuse.js@7.0.0)(postcss@8.4.33)(react@18.2.0)(sass@1.69.7)(search-insights@2.13.0)(typescript@5.3.3):
+  /vitepress@1.0.0-rc.36(@algolia/client-search@4.22.1)(@types/node@20.11.2)(@types/react@18.2.48)(fuse.js@7.0.0)(postcss@8.4.33)(react@18.2.0)(sass@1.69.7)(search-insights@2.13.0)(typescript@5.3.3):
     resolution: {integrity: sha512-2z4dpM9PplN/yvTifhavOIAazlCR6OJ5PvLoRbc+7LdcFeIlCsuDGENLX4HjMW18jQZF5/j7++PNqdBfeazxUA==}
     hasBin: true
     peerDependencies:
@@ -6033,7 +6042,7 @@ packages:
         optional: true
     dependencies:
       '@docsearch/css': 3.5.2
-      '@docsearch/js': 3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.47)(react@18.2.0)(search-insights@2.13.0)
+      '@docsearch/js': 3.5.2(@algolia/client-search@4.22.1)(@types/react@18.2.48)(react@18.2.0)(search-insights@2.13.0)
       '@types/markdown-it': 13.0.7
       '@vitejs/plugin-vue': 5.0.3(vite@5.0.11)(vue@3.4.13)
       '@vue/devtools-api': 6.5.1
@@ -6043,10 +6052,10 @@ packages:
       mark.js: 8.11.1
       minisearch: 6.3.0
       postcss: 8.4.33
-      shikiji: 0.10.0-beta.1
+      shikiji: 0.10.0-beta.2
       shikiji-core: 0.9.19
-      shikiji-transformers: 0.10.0-beta.1
-      vite: 5.0.11(@types/node@20.11.0)(sass@1.69.7)
+      shikiji-transformers: 0.10.0-beta.2
+      vite: 5.0.11(@types/node@20.11.2)(sass@1.69.7)
       vue: 3.4.13(typescript@5.3.3)
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -6076,7 +6085,7 @@ packages:
       - universal-cookie
     dev: false
 
-  /vitest@1.2.0(@types/node@20.11.0):
+  /vitest@1.2.0(@types/node@20.11.2):
     resolution: {integrity: sha512-Ixs5m7BjqvLHXcibkzKRQUvD/XLw0E3rvqaCMlrm/0LMsA0309ZqYvTlPzkhh81VlEyVZXFlwWnkhb6/UMtcaQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -6101,7 +6110,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/node': 20.11.0
+      '@types/node': 20.11.2
       '@vitest/expect': 1.2.0
       '@vitest/runner': 1.2.0
       '@vitest/snapshot': 1.2.0
@@ -6120,8 +6129,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.11(@types/node@20.11.0)(sass@1.69.7)
-      vite-node: 1.2.0(@types/node@20.11.0)
+      vite: 5.0.11(@types/node@20.11.2)(sass@1.69.7)
+      vite-node: 1.2.0(@types/node@20.11.2)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

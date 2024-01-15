@@ -4,7 +4,7 @@
 
 One of the key reasons for making Twoslash is the ability to use the TypeScript compiler to pull out type information about your code mechanically. Twoslash comes with two different ways to query your code: `?^` and `?|`.
 
-#### Extract Type
+### Extract Type
 
 Using `^?` you can pull out type information about a particular identifier in the line of code above it.
 
@@ -14,7 +14,7 @@ const msg = `${hi}, world`
 //    ^?
 ```
 
-#### Completions
+### Completions
 
 Using `^|` you can pull out information about a what the auto-complete looks like at a particular location.
 
