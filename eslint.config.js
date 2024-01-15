@@ -8,6 +8,7 @@ export default antfu({
   markdown: {
     overrides: {
       'prefer-const': 'off',
+      'import/first': 'off',
     },
   },
 })

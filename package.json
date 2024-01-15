@@ -1,7 +1,7 @@
 {
   "name": "@twoslash/monorepo",
   "type": "module",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "packageManager": "pnpm@8.14.1",
   "scripts": {
@@ -33,9 +33,9 @@
     "mlly": "^1.5.0",
     "pretty-format": "^29.7.0",
     "react": "^18.2.0",
-    "shikiji": "^0.10.0-beta.0",
-    "shikiji-transformers": "^0.10.0-beta.0",
-    "shikiji-twoslash": "^0.10.0-beta.0",
+    "shikiji": "^0.10.0-beta.1",
+    "shikiji-transformers": "^0.10.0-beta.1",
+    "shikiji-twoslash": "^0.10.0-beta.1",
     "simple-git-hooks": "^2.9.0",
     "tslib": "^2.6.2",
     "twoslash": "workspace:*",
@@ -44,16 +44,16 @@
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "unplugin-vue-components": "^0.26.0",
-    "vitepress-plugin-twoslash": "^0.10.0-beta.0",
+    "vitepress-plugin-twoslash": "^0.10.0-beta.1",
     "vitest": "^1.2.0"
   },
   "resolutions": {
-    "shikiji": "^0.10.0-beta.0",
-    "shikiji-transformers": "^0.10.0-beta.0",
-    "shikiji-twoslash": "^0.10.0-beta.0",
+    "shikiji": "^0.10.0-beta.1",
+    "shikiji-transformers": "^0.10.0-beta.1",
+    "shikiji-twoslash": "^0.10.0-beta.1",
     "twoslash": "workspace:*",
     "twoslash-vue": "workspace:*",
-    "vitepress-plugin-twoslash": "^0.10.0-beta.0"
+    "vitepress-plugin-twoslash": "^0.10.0-beta.1"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

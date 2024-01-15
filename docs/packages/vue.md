@@ -35,16 +35,16 @@ onMounted(() => {
 ::: code-group
 
 ```bash [npm]
-npm i -D twoslash-vie
+npm i -D twoslash-vue
 ```
 ```bash [pnpm]
-pnpm i -D twoslash-vie
+pnpm i -D twoslash-vue
 ```
 ```bash [yarn]
-yarn add -D twoslash-vie
+yarn add -D twoslash-vue
 ```
 ```bash [bun]
-bun add -D twoslash-vie
+bun add -D twoslash-vue
 ```
 
 :::

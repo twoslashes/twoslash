@@ -1,0 +1,303 @@
+@font-face {
+  font-family: "caslon";
+  src: url("/fonts/CaslonOS-Regular.otf") format("woff2");
+}
+
+@font-face {
+  font-family: "euclid";
+  src: url("/fonts/EuclidInitialsnormal.woff2") format("woff2");
+}
+
+
+main.main-intro {
+  padding: 5rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "caslon";
+
+
+  .eu {
+    font-family: "euclid";
+    font-size: 20rem;
+    display: inline-block;
+    height: 5rem;
+    margin-left: -0.4rem;
+    margin-top: -4rem;
+  }
+  
+  p {
+    font-size: 1.3rem;
+    line-height: 2rem;
+  }
+  
+  h1 {
+    font-size: 3.8rem;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    font-weight: bolder;
+  }
+  
+  h2 {
+    font-size: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 6rem;
+  }
+  
+  h2 > a {
+    opacity: 0.3;
+    text-decoration: none;
+  }
+  
+  h2 > a:hover {
+    opacity: 0.9;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+  
+  article.container {
+  
+    padding: 4.5rem 0;
+    margin-bottom: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    width: 100%;
+  
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .border-red {
+    border-left: 8px solid #e76143bb;
+  }
+  
+  .border-blue {
+    border-left: 8px solid #183f66bb;
+  }
+  
+  .border-yellow {
+    border-left: 8px solid #e5a604bb;
+  }
+
+
+  .intro {
+    text-align: center;
+    text-transform: uppercase;
+    max-width: 640px;
+    font-weight: 100;
+  }
+
+  .intro p {
+    font-size: 0.9rem;
+  }
+
+  .intro p.by {
+    font-size: 1.3rem;
+  }
+
+  #shiki .split-50-50,
+  #twoslash .split-50-50 {
+    margin-top: 6rem;
+  }
+
+  .split {
+    margin-top: 4rem;
+    margin-bottom: 8rem;
+  }
+
+  .mid-10 .source {
+    background-color: #bb8700;
+    padding: 4px;
+  }
+
+  .mid-10 .output {
+    background-color: black;
+    color: white;
+    padding: 4px;
+  }
+
+  .mid-10 pre {
+    margin-top: 0;
+  }
+
+  .show-lots-of-code {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .show-lots-of-code pre:nth-child(even) {
+    margin-left: 20px;
+  }
+
+  .has-funny-opening-letter {
+    margin-top: 180px;
+  }
+
+  .show-lots-of-code > pre {
+    margin-bottom: 0;
+    flex: 1;
+  }
+
+  .code-split > div {
+    max-width: 50%;
+  }
+
+  .lib {
+    margin-bottom: 4rem;
+  }
+  .lib-content {
+    display: flex;
+    word-break: break-all;
+    margin-top: 2rem;
+  }
+
+  .lib-content.right {
+    flex-direction: row-reverse;
+  }
+
+  .lib h4 {
+    font-size: 1.5rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .lib img {
+    width: 100%;
+  }
+
+  .lib-content img {
+    max-width: 150px;
+    max-height: 150px;
+    margin-right: 18px;
+    margin-bottom: 18px;
+  }
+
+  .lib-content.right img {
+    margin-right: 0;
+    margin-left: 18px;
+  }
+
+  .lib > a,
+  a.lib {
+    display: block;
+    background-color: black;
+    color: #fcf3d9;
+    text-align: center;
+    font-family: "JetBrains Mono", Menlo, Monaco, Consolas, Courier New,
+      monospace;
+    font-size: 1.3rem;
+    line-height: 2.5rem;
+    min-height: 2.5rem;
+  }
+
+  .lib > a:hover,
+  a.lib:hover {
+    background-color: #183f66;
+  }
+
+  .small-only {
+    display: none;
+  }
+
+  @media (max-width: 800px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    .intro p {
+      font-size: 0.8rem;
+    }
+
+    img.old {
+      width: 60%;
+      margin-top: -20px;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .small-only {
+      display: inline-block;
+    }
+
+    .show-lots-of-code pre:nth-child(even) {
+      margin-left: 0;
+    }
+  }
+
+  /* ------------- grid ----------------- */
+
+  .split-50-50 {
+    display: flex;
+  }
+
+  .split-50-50 div {
+    flex: 1;
+  }
+
+  @media (max-width: 800px) {
+    img {
+      max-width: 100%;
+    }
+    .split-50-50,
+    .mid-10 {
+      flex-direction: column;
+    }
+    .left-margin-1 {
+      margin-left: 1rem;
+      padding: 0 !important;
+      margin-right: 1rem;
+    }
+    .center-small {
+      text-align: center;
+    }
+
+    .mid-6 {
+      padding: 10px;
+    }
+
+    .code-split > div {
+      max-width: none;
+    }
+  }
+
+  .left-margin-1 {
+    padding-left: 10%;
+  }
+
+  .mid-6 {
+    max-width: 480px;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+  .mid-8 {
+    max-width: 630px;
+    width: 100%;
+  }
+
+  .mid-10 {
+    max-width: 790px;
+    width: 100%;
+    display: flex;
+  }
+
+  .mid-10 > div {
+    flex: 1;
+  }
+
+  pre.shiki {
+    margin-bottom: 20px;
+  }
+
+  .language-id {
+    display: none;
+  }
+}

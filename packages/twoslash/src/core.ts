@@ -3,7 +3,7 @@ import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment 
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
 import type { CreateTwoSlashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
-import { areRangesIntersecting, createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
+import { areRangesIntersecting, createPositionConverter, deExtensionify, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 import type { CompilerOptionDeclaration } from './types/internal'
@@ -340,23 +340,21 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         for (const file of files)
           env.updateFile(file.filepath, file.content)
       }
-      function removeExt(filename: string) {
-        return filename.replace(/\.[^/.]+$/, '').replace(/\.d$/, '')
-      }
 
       const emitFilename = meta.handbookOptions.showEmittedFile
         ? meta.handbookOptions.showEmittedFile
         : meta.compilerOptions.jsx === 1 satisfies JsxEmit.Preserve
           ? 'index.jsx'
           : 'index.js'
-      let emitSource = meta.virtualFiles.find(i => removeExt(i.filename) === removeExt(emitFilename))?.filename
+
+      let emitSource = meta.virtualFiles.find(i => deExtensionify(i.filename) === deExtensionify(emitFilename))?.filename
 
       if (!emitSource && !meta.compilerOptions.outFile) {
         const allFiles = meta.virtualFiles.map(i => i.filename).join(', ')
         throw new TwoslashError(
           `Could not find source file to show the emit for`,
-          `Cannot find the corresponding **source** file  ${emitFilename} for completions via ^| returned no quickinfo from the compiler.`,
-          `Looked for: ${emitFilename} in the vfs - which contains: ${allFiles}`,
+          `Cannot find the corresponding **source** file: '${emitFilename}'`,
+          `Looked for: ${emitSource} in the vfs - which contains: ${allFiles}`,
         )
       }
 
