@@ -1,6 +1,13 @@
 @font-face {
-  font-family: "caslon";
-  src: url("/fonts/CaslonOS-Regular.otf") format("woff2");
+  font-family: "Caslon";
+  font-weight: 400;
+  src: url("/fonts/Caslon-Regular.otf") format("woff2");
+}
+
+@font-face {
+  font-family: "Caslon";
+  font-weight: 700;
+  src: url("/fonts/LibreCaslonText-Bold.ttf") format("woff2");
 }
 
 @font-face {
@@ -9,6 +16,20 @@
 }
 
 @font-face {
-  font-family: "Monaspace Argon";
-  src: url("/fonts/MonaspaceArgon-Regular.woff") format("woff2");
+  font-family: "Monaspace Xenon";
+  font-weight: 400;
+  src: url("/fonts/MonaspaceXenon-Regular.woff") format("woff2");
+}
+
+@font-face {
+  font-family: "Monaspace Xenon";
+  font-weight: 700;
+  src: url("/fonts/MonaspaceXenon-Bold.woff") format("woff2");
+}
+
+@font-face {
+  font-family: "Monaspace Xenon";
+  font-weight: 400;
+  font-style: italic;
+  src: url("/fonts/MonaspaceXenon-Italic.woff") format("woff2");
 }

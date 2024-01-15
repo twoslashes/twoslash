@@ -159,17 +159,33 @@ html.dark {
  * -------------------------------------------------------------------------- */
 
 :root {
-  --vp-font-family-base: "caslon";
-  --vp-font-family-mono: "Monaspace Argon";
+  --vp-font-family-base: 'Caslon', serif;
+  --vp-font-family-mono: "Monaspace Xenon", monospace;
+  --vp-doc-top-height: 5rem;
 }
 
-.main {
-  padding: 2rem 0;
+#VPSidebarNav {
+  margin-top: var(--vp-doc-top-height);
 }
+
+.vp-doc div[class*='language-'],
+.vp-code-group .tabs,
+.vp-code-group .tab {
+  border-radius: 0 !important;
+}
+
+.vp-code-group .tabs {
+  background: none;
+}
+
+.vp-code-group .tabs label {
+  line-height: 2rem;
+}
+
 
 .main p {
   font-size: 1.1rem;
-  line-height: 2rem;
+  line-height: 2.2rem;
 }
 
 .main h1 {
@@ -181,10 +197,9 @@ html.dark {
 }
 
 .main h2 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   border-top: 0;
-  /* margin-top: 1rem; */
-  /* margin-bottom: 6rem; */
+  margin-bottom: 2rem;
 }
 
 h2>a {
@@ -201,14 +216,4 @@ h2>a:hover {
   letter-spacing: 2px;
   font-size: 0.8rem;
   opacity: 0.5;
-}
-
-/* 
- * Workaround for "Calson" font that has some bottom padding, cause items misaligned
- */
-.VPNavBarTitle .title .logo {
-  transform: translateY(-3px);
-}
-.VPNavBarTitle .title {
-  transform: translateY(3px);
 }

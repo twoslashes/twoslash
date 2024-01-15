@@ -21,13 +21,13 @@
           mixed with the TypeScript compiler’s information
         </p>
 
-        <div style="margin-top: 3rem; margin-bottom:3rem">
+        <div my-15>
           <img class="dark:invert" style="margin: 0 auto" src="/svgs/squiggle.svg" alt="Decoration" width="70" height="25.5">
         </div>
 
         <div class="intro">
           <p class="by">
-            By <a href="https://orta.io">orta therox</a>
+            By <a href="https://orta.io">Orta Therox</a>
           </p>
           <p>
             Purveyor of <a href="https://puzzmo.com/">Puzzles</a>, shipper of renowned open source code
@@ -35,7 +35,7 @@
             and ex-TypeScript compiler team member
           </p>
 
-          <p class="by" style="margin-top: 1rem">
+          <p class="by">
             And <a href="https://antfu.me">Anthony Fu</a>
           </p>
 
