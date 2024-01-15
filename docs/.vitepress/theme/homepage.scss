@@ -9,7 +9,7 @@
 }
 
 
-main.main {
+main.main-intro {
   padding: 5rem 0;
   flex: 1;
   display: flex;
@@ -17,7 +17,6 @@ main.main {
   justify-content: center;
   align-items: center;
   font-family: "caslon";
-
 
 
   .eu {
@@ -51,6 +50,7 @@ main.main {
     opacity: 0.3;
     text-decoration: none;
   }
+  
   h2 > a:hover {
     opacity: 0.9;
   }

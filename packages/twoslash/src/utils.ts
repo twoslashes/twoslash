@@ -438,3 +438,10 @@ export function findQueryMarkers(
   }
   return meta
 }
+
+/** De-extension a filename, used for going from an output file to the source */
+export function deExtensionify(filename: string) {
+  // originally, .replace(".jsx", "").replace(".js", "").replace(".d.ts", "").replace(".map", "")
+  const sansMapOrDTS = filename.replace(/\.d\.ts$/, '.ts').replace(/\.map$/, '')
+  return sansMapOrDTS.replace(/\.[^/.]+$/, '')
+}
