@@ -21,10 +21,8 @@ Using `^|` you can pull out information about a what the auto-complete looks lik
 ```ts twoslash
 // @noErrors
 console.e
-//      ^|
+//       ^|
 ```
-
-<!-- TODO: this needs to be one char along -->
 
 What happens is that Twoslash makes a request to TypeScript to get the auto-complete at the point of the `^`, and then filters the possible outputs based on the letters following the `.`. Up to 5 results will be shown inline, and if a completion is marked as deprecated - that will be respected in the output.
 
