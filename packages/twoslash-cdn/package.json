@@ -1,0 +1,64 @@
+{
+  "name": "twoslash-cdn",
+  "type": "module",
+  "version": "0.0.2",
+  "description": "Run TwoSlash on the browser, with Auto-Type-Acquisition on CDN.",
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/antfu",
+  "homepage": "https://github.com/twoslashes/twoslash#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twoslashes/twoslash.git",
+    "directory": "packages/twoslash-cdn"
+  },
+  "bugs": "https://github.com/twoslashes/twoslash/issues",
+  "keywords": [
+    "typescript",
+    "twoslash"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "play": "nr -C playground dev",
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "prepublishOnly": "nr build"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  },
+  "dependencies": {
+    "twoslash": "workspace:*"
+  },
+  "devDependencies": {
+    "@typescript/ata": "^0.9.4",
+    "@typescript/vfs": "^1.5.0",
+    "twoslash-cdn": "workspace:*",
+    "typescript": "^5.3.3",
+    "unbuild": "^2.0.0",
+    "unstorage": "^1.10.1",
+    "vite": "^5.0.10",
+    "vitest": "^1.0.4"
+  }
+}

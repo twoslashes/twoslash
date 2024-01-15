@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <!-- Check this file live: https://twoslash-cdn-examples.netlify.app/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TwoSlash + Shikiji on CDN Example</title>
+    <link rel="stylesheet" href="https://esm.sh/shikiji-twoslash/style-rich.css" />
+    <style>
+      html {
+        color-scheme: dark;
+        font-family: 'Inter', sans-serif;
+      }
+      pre.twoslash {
+        --twoslash-popup-bg: #222;
+      }
+      body {
+        padding: 2em;
+      }
+      a {
+        color: #58a6ff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>
+      This is an example of running
+      <a href="https://github.com/antfu/twoslash-cdn" target="_blank"> TwoSlash </a>
+      + <a href="https://shikiji.netlify.app/" target="_blank">Shikiji</a> on CDN. This page is
+      <a href="https://github.com/antfu/twoslash-cdn/blob/main/examples/index.html" target="_blank">
+        a single static HTML file</a
+      >.
+    </p>
+    <div id="app">Loading...</div>
+    <script type="module">
+      // TODO: Replace with explicit versions in production
+      import { createTransformerFactory, rendererRich } from 'https://esm.sh/shikiji-twoslash@latest/core'
+      import { codeToHtml } from 'https://esm.sh/shikiji@latest'
+      import { createStorage } from 'https://esm.sh/unstorage@latest'
+      import indexedDbDriver from 'https://esm.sh/unstorage@latest/drivers/indexedb'
+      import { createTwoSlashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
+
+      // ============= Initialization =============
+
+      // An example of using unstorage with IndexedDB to cache the virtual file system
+      const storage = createStorage({
+        driver: indexedDbDriver({ base: 'twoslash-cdn' }),
+      })
+
+      const twoslash = createTwoSlashFromCDN({
+        storage,
+        compilerOptions: {
+          lib: ['esnext', 'dom'],
+        },
+      })
+
+      const transformerTwoSlash = createTransformerFactory(twoslash.runSync)({
+        renderer: rendererRich(),
+      })
+
+      // ============= Execution =============
+
+      const app = document.getElementById('app')
+
+      const source = `
+import { ref } from '@vue/reactivity'
+
+console.log("Hi! Shikiji + TwoSlash on CDN :)")
+
+const count = ref(0)
+//     ^?
+`.trim()
+
+      // Before rendering, we need to prepare the types, so that the rendering could happend synchronously
+      await twoslash.prepareTypes(source)
+
+      // Then we can render the code
+      app.innerHTML = await codeToHtml(source, {
+        lang: 'ts',
+        theme: 'vitesse-dark',
+        transformers: [transformerTwoSlash],
+      })
+    </script>
+  </body>
+</html>
