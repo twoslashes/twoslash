@@ -58,7 +58,7 @@ Would only show the last two lines, but to TypeScript it was a program with 2 fi
 
 ### `---cut-after---`
 
-The sibling to `--cut---` which trims anything after the sigil:
+The sibling to `---cut---` which trims anything after the sigil:
 
 <!-- eslint-skip -->
 ```ts twoslash
