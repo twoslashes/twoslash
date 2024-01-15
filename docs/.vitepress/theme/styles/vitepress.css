@@ -67,7 +67,11 @@ html:not(.dark) {
   --vp-c-divider: #e0d2ac80;
 }
 
-.dark {
+html.dark {
+  --vp-c-text-1: #fcf3d9;
+  --vp-c-text-2: #f8eccf;
+  --vp-c-text-3: #f3e5c3;
+
   --vp-c-brand-1: #E5A604;
   --vp-c-brand-2: #cea233;
   --vp-c-brand-3: #b4974e;
@@ -154,35 +158,57 @@ html:not(.dark) {
  * Orta making it feel OLDE!
  * -------------------------------------------------------------------------- */
 
- .main {
-  padding: 3rem 0;
-  font-family: "caslon";
- }
+:root {
+  --vp-font-family-base: "caslon";
+  --vp-font-family-mono: "Monaspace Argon";
+}
 
- .main p {
-   font-size: 1.1rem;
-   line-height: 2rem;
- }
- 
- .main h1 {
-   font-size: 3.8rem;
-   margin-top: 3rem;
-   margin-bottom: 2rem;
-   font-weight: bolder;
- }
- 
- .main h2 {
-   font-size: 2.5rem;
-   border-top: 0;
-   /* margin-top: 1rem; */
-   /* margin-bottom: 6rem; */
- }
- 
- h2 > a {
-   opacity: 0.3;
-   text-decoration: none;
- }
- 
- h2 > a:hover {
-   opacity: 0.9;
- }
+.main {
+  padding: 2rem 0;
+}
+
+.main p {
+  font-size: 1.1rem;
+  line-height: 2rem;
+}
+
+.main h1 {
+  font-size: 3.8rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  font-weight: bolder;
+  line-height: 1.2em;
+}
+
+.main h2 {
+  font-size: 2.5rem;
+  border-top: 0;
+  /* margin-top: 1rem; */
+  /* margin-bottom: 6rem; */
+}
+
+h2>a {
+  opacity: 0.3;
+  text-decoration: none;
+}
+
+h2>a:hover {
+  opacity: 0.9;
+}
+
+.VPSidebarItem.level-0 > .item > .text {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+/* 
+ * Workaround for "Calson" font that has some bottom padding, cause items misaligned
+ */
+.VPNavBarTitle .title .logo {
+  transform: translateY(-3px);
+}
+.VPNavBarTitle .title {
+  transform: translateY(3px);
+}

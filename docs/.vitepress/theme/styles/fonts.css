@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "caslon";
+  src: url("/fonts/CaslonOS-Regular.otf") format("woff2");
+}
+
+@font-face {
+  font-family: "euclid";
+  src: url("/fonts/EuclidInitialsnormal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Monaspace Argon";
+  src: url("/fonts/MonaspaceArgon-Regular.woff") format("woff2");
+}
