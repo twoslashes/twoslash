@@ -10,7 +10,7 @@ const tab = ref(0)
       <button
         flex="~ gap-1 items-center" px2 py1
         border="b-solid 2 transparent" op50
-        :class="{ active: tab === 0 }" @click="tab = 0"
+        :class="tab === 0 ? 'active' : 'inactive'" @click="tab = 0"
       >
         <img src="/logo.svg" class="w-16px h-16px" mt--1>
         <span>TwoSlash Rendered</span>
@@ -19,7 +19,7 @@ const tab = ref(0)
       <button
         flex="~ gap-1 items-center" px2 py1
         border="b-solid 2 transparent" op50
-        :class="{ active: tab === 1 }" @click="tab = 1"
+        :class="tab === 1 ? 'active' : 'inactive'" @click="tab = 1"
       >
         <div i-ri-code-s-slash-fill class="w-16px h-16px" mt--1 />
         <span>Input Code</span>
@@ -58,5 +58,9 @@ const tab = ref(0)
 .twoslash-render-tabs .tabs .active {
   border-color: var(--vp-c-brand);
   opacity: 0.75;
+}
+
+.twoslash-render-tabs .tabs .inactive img {
+  filter: grayscale(100%);
 }
 </style>
