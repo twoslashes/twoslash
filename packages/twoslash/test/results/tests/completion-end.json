@@ -1,0 +1,39 @@
+{
+  "code": "console.e\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 8,
+      "length": 1,
+      "target": "e",
+      "line": 0,
+      "character": 8
+    },
+    {
+      "type": "completion",
+      "start": 9,
+      "length": 0,
+      "completions": [
+        {
+          "name": "error",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "completionsPrefix": "e",
+      "line": 0,
+      "character": 9
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": true,
+      "start": 0,
+      "end": 13
+    }
+  ]
+}
