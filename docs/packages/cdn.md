@@ -4,7 +4,7 @@ Run TwoSlash on the browsers or web workers, with [Auto-Type-Acquisition](https:
 
 A thin wrapper around `twoslash`, `@typescript/vfs`, `@typescript/ata` to an easy-to-use interface. Huge thanks to the TypeScript team for the heavy-lifting work on [TypeScript Website](https://github.com/microsoft/TypeScript-Website) project.
 
-[CDN Example](https://twoslash-cdn-examples.netlify.app/) | [Example Source File](./examples/index.html)
+[CDN Example](https://twoslash-cdn-examples.netlify.app/) | [Example Source File](https://github.com/antfu/twoslashes/blob/main/packages/twoslash-cdn/examples/index.html)
 
 ## Usage
 
