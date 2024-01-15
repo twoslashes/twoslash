@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <main class="main">
+  <main class="main-intro">
     <article class="container border-red">
       <div class="intro">
         <p>
