@@ -8,13 +8,13 @@ It provides [`shikiji-twoslash`](https://shikiji.netlify.app/packages/twoslash) 
 
 ```ts twoslash
 import { codeToHtml } from 'shikiji'
-import { transformerTwoSlash } from 'shikiji-twoslash' // [!code hl]
+import { transformerTwoslash } from 'shikiji-twoslash' // [!code hl]
 
 const html = await codeToHtml(`console.log()`, {
   lang: 'ts',
   theme: 'vitesse-dark',
   transformers: [
-    transformerTwoSlash(), // [!code hl]
+    transformerTwoslash(), // [!code hl]
   ],
 })
 ```

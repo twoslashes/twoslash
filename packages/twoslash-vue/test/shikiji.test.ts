@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { codeToHtml } from 'shikiji'
 import { createTransformerFactory, rendererRich } from 'shikiji-twoslash/core'
-import { createTwoSlasher } from '../src'
+import { createTwoslasher } from '../src'
 
 const code = `
 <script setup lang="ts">
@@ -48,7 +48,7 @@ const styleHeader = [
   '',
 ].join('\n')
 
-const twoslasherVue = createTwoSlasher()
+const twoslasherVue = createTwoslasher()
 
 it('highlight vue', async () => {
   const result = await codeToHtml(code, {
@@ -68,7 +68,7 @@ it('highlight vue', async () => {
     .toMatchFileSnapshot('./results/example.vue.html')
 })
 
-const twoslasherRaw = createTwoSlasher(undefined, false)
+const twoslasherRaw = createTwoslasher(undefined, false)
 it('highlight raw', async () => {
   const result = await codeToHtml(code, {
     lang: 'ts',

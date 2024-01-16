@@ -33,7 +33,7 @@ export default defineConfig({
             return _
 
           return [
-            '<TwoSlashRenderTabs>',
+            '<TwoslashRenderTabs>',
             '<template #rendered>',
             '',
             `${quotes}${lang} twoslash${options} [Twoslash Rendered]`,
@@ -48,7 +48,7 @@ export default defineConfig({
             quotes,
             '',
             '</template>',
-            '</TwoSlashRenderTabs>',
+            '</TwoslashRenderTabs>',
           ].join('\n')
         })
       },

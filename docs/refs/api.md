@@ -1,13 +1,13 @@
 # API References
 
-## `createTwoSlasher`
+## `createTwoslasher`
 
-Twoslash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. Twoslash provides a `createTwoSlasher` factory function allows you to cache the language servers and reuse the already initialized files.
+Twoslash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. Twoslash provides a `createTwoslasher` factory function allows you to cache the language servers and reuse the already initialized files.
 
 ```ts
-import { createTwoSlasher } from 'twoslash'
+import { createTwoslasher } from 'twoslash'
 
-const twoslasher = createTwoSlasher({
+const twoslasher = createTwoslasher({
   // you can have some default options here
 })
 
@@ -23,9 +23,9 @@ To avoid getting interference across runs, it will reuse the language server wit
 You can retrieve the cached map and clear it when necessary, to avoid memory leaks:
 
 ```ts
-import { createTwoSlasher } from 'twoslash'
+import { createTwoslasher } from 'twoslash'
 
-const twoslasher = createTwoSlasher()
+const twoslasher = createTwoslasher()
 
 // do something
 

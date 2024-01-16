@@ -26,25 +26,25 @@ bun add -D twoslash
 
 ## Usage
 
-To use it, you can call the `createTwoSlasher` function to create a Twoslash instance where it will cache the TypeScript language service internally for better performance:
+To use it, you can call the `createTwoslasher` function to create a Twoslash instance where it will cache the TypeScript language service internally for better performance:
 
 ```ts twoslash
-import { createTwoSlasher } from 'twoslash'
+import { createTwoslasher } from 'twoslash'
 
 const code = `let a = 'hello'.toUpperCase()`
 
-const twoslasher = createTwoSlasher()
+const twoslasher = createTwoslasher()
 const result = twoslasher(code)
 ```
 
 It will outputs a JavaScript object that contains static type information for each identifier in the code:
 
 ```ts eval
-import { createTwoSlasher } from 'twoslash'
+import { createTwoslasher } from 'twoslash'
 
 const code = `let a = 'hello'.toUpperCase()`
 
-const twoslasher = createTwoSlasher()
+const twoslasher = createTwoslasher()
 const result = twoslasher(code)
 
 console.log({

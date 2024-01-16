@@ -8,7 +8,7 @@ import { basename } from 'node:path'
 import { bench, describe } from 'vitest'
 import fg from 'fast-glob'
 import { twoslasher as twoslasherOld } from '@typescript/twoslash'
-import { createTwoSlasher } from 'twoslash'
+import { createTwoslasher } from 'twoslash'
 
 const codes = await fg([
   'examples/*.ts',
@@ -28,7 +28,7 @@ const options = {
   customTags: ['annotate'],
 }
 
-const twoslash = createTwoSlasher(options)
+const twoslash = createTwoslasher(options)
 
 for (const [file, code] of codes) {
   describe(basename(file), () => {

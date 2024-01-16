@@ -53,8 +53,8 @@ bun add -D twoslash-vue
 
 ```ts twoslash
 // @noErrors
-import { createTwoSlasher } from 'twoslash' // [!code --]
-import { createTwoSlasher } from 'twoslash-vue' // [!code ++]
+import { createTwoslasher } from 'twoslash' // [!code --]
+import { createTwoslasher } from 'twoslash-vue' // [!code ++]
 
 const code = `
 <script setup>
@@ -68,6 +68,6 @@ const msg = 'Hello Vue 3!'
 </template>
 `
 
-const twoslasher = createTwoSlasher()
+const twoslasher = createTwoslasher()
 const result = twoslasher(code, 'vue') // [!code hl]
 ```

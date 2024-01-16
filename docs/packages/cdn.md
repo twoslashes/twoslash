@@ -11,9 +11,9 @@ A thin wrapper around `twoslash`, `@typescript/vfs`, `@typescript/ata` to an eas
 ```html
 <script type="module">
   // replace with exact version in production
-  import { createTwoSlashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
+  import { createTwoslashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
 
-  const twoslash = createTwoSlashFromCDN()
+  const twoslash = createTwoslashFromCDN()
 
   // During `.run()`, it will automatically fetch types from CDN
   // for used imports in the code (in this case, `vue` and its dependencies),
@@ -35,9 +35,9 @@ npm i -D twoslash-cdn
 ```
 
 ```ts twoslash
-import { createTwoSlashFromCDN } from 'twoslash-cdn'
+import { createTwoslashFromCDN } from 'twoslash-cdn'
 
-const twoslash = createTwoSlashFromCDN()
+const twoslash = createTwoslashFromCDN()
 // ...
 ```
 
@@ -48,7 +48,7 @@ By default, the fetched files are stored in a virtual file system in memory. So 
 ```html
 <script type="module">
   // replace with exact versions in production
-  import { createTwoSlashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
+  import { createTwoslashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
   import { createStorage } from 'https://esm.sh/unstorage@latest'
   import indexedDbDriver from 'https://esm.sh/unstorage@latest/drivers/indexedb'
 
@@ -57,7 +57,7 @@ By default, the fetched files are stored in a virtual file system in memory. So 
     driver: indexedDbDriver(),
   })
 
-  const twoslash = createTwoSlashFromCDN({
+  const twoslash = createTwoslashFromCDN({
     storage,
   })
 
@@ -74,13 +74,13 @@ Fetching files from CDN is asynchronous, and there is no way to make the whole p
 For example, in [Shikiji](https://shikiji.netlify.app/), the `codeToHtml` function is synchronous as well as the [`shikiji-twoslash` transformer](https://shikiji.netlify.app/packages/twoslash).
 
 ```ts
-import { createTwoSlashFromCDN } from 'twoslash-cdn'
+import { createTwoslashFromCDN } from 'twoslash-cdn'
 import { createHighlighter } from 'shikiji'
-import { transformerTwoSlash } from 'shikiji-twoslash'
+import { transformerTwoslash } from 'shikiji-twoslash'
 
 const highlighter = await createHighlighter({})
 
-const twoslash = createTwoSlashFromCDN()
+const twoslash = createTwoslashFromCDN()
 
 const code = `
 import { ref } from 'vue'
@@ -96,7 +96,7 @@ const highlighted = highlighter.codeToHtml(code, {
   lang: 'ts',
   theme: 'dark-plus',
   transformers: [
-    transformerTwoSlash({
+    transformerTwoslash({
       // Use `twoslash.runSync` to replace the non-CDN `twoslasher` function
       twoslasher: twoslash.runSync
     })

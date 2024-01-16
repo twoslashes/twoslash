@@ -1,20 +1,20 @@
 import type { CompilerOptions } from 'typescript'
 import type { HandbookOptions } from './handbook-options'
-import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, Range, TwoSlashNode } from './nodes'
+import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, Range, TwoslashNode } from './nodes'
 
-export interface TwoSlashReturn {
+export interface TwoslashReturn {
   /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
   code: string
 
   /**
    * Nodes containing various bits of information about the code
    */
-  nodes: TwoSlashNode[]
+  nodes: TwoslashNode[]
 
   /**
    * The meta information the twoslash run
    */
-  meta: TwoSlashReturnMeta
+  meta: TwoslashReturnMeta
 
   get queries(): NodeQuery[]
   get completions(): NodeCompletion[]
@@ -24,7 +24,7 @@ export interface TwoSlashReturn {
   get tags(): NodeTag[]
 }
 
-export interface TwoSlashReturnMeta {
+export interface TwoslashReturnMeta {
   /**
    * The new extension type for the code, potentially changed if they've requested emitted results
    */

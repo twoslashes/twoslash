@@ -7,6 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    TwoSlashRenderTabs: typeof import('./.vitepress/components/TwoSlashRenderTabs.vue')['default']
+    TwoslashRenderTabs: typeof import('./.vitepress/components/TwoslashRenderTabs.vue')['default']
   }
 }

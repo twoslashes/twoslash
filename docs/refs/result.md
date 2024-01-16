@@ -7,15 +7,15 @@ outline: deep
 The return value of Twoslash contains the following information:
 
 ```ts twoslash
-import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoSlashNode, TwoSlashReturnMeta } from 'twoslash'
+import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoslashNode, TwoslashReturnMeta } from 'twoslash'
 // ---cut---
-export interface TwoSlashReturn {
+export interface TwoslashReturn {
   /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
   code: string
   /** Nodes containing various bits of information about the code */
-  nodes: TwoSlashNode[]
+  nodes: TwoslashNode[]
   /** The meta information the twoslash run */
-  meta: TwoSlashReturnMeta
+  meta: TwoslashReturnMeta
   /** Getters shorthand */
   get queries(): NodeQuery[]
   get completions(): NodeCompletion[]
@@ -83,10 +83,10 @@ Same as `hover`
 To make it easier to access, we also provide some getters shortcuts to each type of the nodes:
 
 ```ts
-import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoSlashNode, TwoSlashReturnMeta } from 'twoslash'
+import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoslashNode, TwoslashReturnMeta } from 'twoslash'
 // ---cut---
-export interface TwoSlashReturn {
-  nodes: TwoSlashNode[]
+export interface TwoslashReturn {
+  nodes: TwoslashNode[]
 
   get hovers(): NodeHover[] // was `staticQuickInfos`
   get queries(): NodeQuery[] // was `queries` with `kind: 'query'`
