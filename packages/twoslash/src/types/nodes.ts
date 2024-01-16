@@ -22,6 +22,8 @@ export interface NodeHover extends NodeBase {
   text: string
   /** Attached JSDoc info */
   docs?: string
+  /** JSDoc tags */
+  tags?: [name: string, text: string | undefined][]
 }
 
 export interface NodeHighlight extends Omit<NodeHover, 'type'> {

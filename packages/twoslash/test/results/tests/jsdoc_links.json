@@ -1,0 +1,34 @@
+{
+  "code": "import { onKeyPressed } from '@vueuse/core'\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "(alias) function onKeyPressed(key: KeyFilter, handler: (event: KeyboardEvent) => void, options?: Omit<OnKeyStrokeOptions, 'eventName'>): () => void\nimport onKeyPressed",
+      "docs": "Listen to the keypress event of the given key.",
+      "tags": [
+        [
+          "see",
+          "https://vueuse.org/onKeyStroke"
+        ],
+        [
+          "param",
+          "key"
+        ],
+        [
+          "param",
+          "handler"
+        ],
+        [
+          "param",
+          "options"
+        ]
+      ],
+      "start": 9,
+      "length": 12,
+      "target": "onKeyPressed",
+      "line": 0,
+      "character": 9
+    }
+  ],
+  "flags": []
+}
