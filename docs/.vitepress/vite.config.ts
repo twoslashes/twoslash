@@ -20,7 +20,7 @@ export default defineConfig({
     UnoCSS(
       fileURLToPath(new URL('./uno.config.ts', import.meta.url)),
     ),
-    // Converting TwoSlash codeblocks into code-groups with the source code
+    // Converting Twoslash codeblocks into code-groups with the source code
     {
       name: 'markdown-transformer',
       enforce: 'pre',
@@ -44,7 +44,7 @@ export default defineConfig({
             `<TwoSlashRenderTabs${preferInput ? ' :prefer-input="true"' : ''}>`,
             '<template #rendered>',
             '',
-            `${quotes}${lang} twoslash ${options} [TwoSlash Rendered]`,
+            `${quotes}${lang} twoslash ${options} [Twoslash Rendered]`,
             code,
             quotes,
             '',

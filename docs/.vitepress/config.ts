@@ -13,7 +13,7 @@ const GUIDES: DefaultTheme.NavItemWithLink[] = [
 ]
 
 const REFERENCES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'TwoSlash Notations', link: '/refs/notations' },
+  { text: 'Twoslash Notations', link: '/refs/notations' },
   { text: 'API References', link: '/refs/api' },
   { text: 'Options References', link: '/refs/options' },
   { text: 'Result References', link: '/refs/result' },
@@ -32,7 +32,7 @@ const VERSIONS: DefaultTheme.NavItemWithLink[] = [
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'TwoSlash',
+  title: 'Twoslash',
   description: 'Markup for TypeScript information in docs',
   markdown: {
     theme: {
@@ -157,7 +157,7 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#ffffff' }],
     ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
     ['meta', { name: 'author', content: 'Orta Therox, Anthony Fu' }],
-    ['meta', { property: 'og:title', content: 'TwoSlash' }],
+    ['meta', { property: 'og:title', content: 'Twoslash' }],
     ['meta', { property: 'og:image', content: 'https://twoslash.netlify.app/og.png' }],
     ['meta', { property: 'og:description', content: 'A beautiful and powerful syntax highlighter' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],

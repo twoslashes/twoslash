@@ -3,7 +3,7 @@
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 
-Run TwoSlash on the browsers or web workers, with [Auto-Type-Acquisition](https://www.typescriptlang.org/play#example/automatic-type-acquisition) from CDN.
+Run Twoslash on the browsers or web workers, with [Auto-Type-Acquisition](https://www.typescriptlang.org/play#example/automatic-type-acquisition) from CDN.
 
 [📚 Documentation](https://twoslash.netlify.app/packages/cdn)
 

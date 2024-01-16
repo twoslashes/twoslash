@@ -1,6 +1,6 @@
-# TwoSlash Vue
+# Twoslash Vue
 
-This package added the support for TwoSlash to handle Vue Single File Component files.
+This package added the support for Twoslash to handle Vue Single File Component files.
 
 For example:
 

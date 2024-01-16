@@ -2,7 +2,7 @@
 
 ## `createTwoSlasher`
 
-TwoSlash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. TwoSlash provides a `createTwoSlasher` factory function allows you to cache the language servers and reuse the already initialized files.
+Twoslash runs a TypeScript language server to get the information, which could be a heavy operation to load and parse all the files it needs. In repetitive usages, you may not want to initialize the language server every simple time. Twoslash provides a `createTwoSlasher` factory function allows you to cache the language servers and reuse the already initialized files.
 
 ```ts
 import { createTwoSlasher } from 'twoslash'

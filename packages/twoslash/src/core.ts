@@ -13,7 +13,7 @@ export * from './public'
 type TS = typeof import('typescript')
 
 /**
- * Create a TwoSlash instance with cached TS environments
+ * Create a Twoslash instance with cached TS environments
  */
 export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): TwoSlashInstance {
   const ts: TS = createOptions.tsModule!
@@ -428,7 +428,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 }
 
 /**
- * Run TwoSlash on a string of code
+ * Run Twoslash on a string of code
  *
  * It's recommended to use `createTwoSlash` for better performance on multiple runs
  */
