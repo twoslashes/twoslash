@@ -1,0 +1,267 @@
+{
+  "code": "\n// ✅ Works fine\nconst a: { test: 'foo' | 'bar' | 'baz' } = {\n  test: 'foo'\n}\na.t\n\n// Expected completion to be \"foo\", \"bar\", \"baz\"\na.test === '\n\n// Expected completion to be \"bar\", \"baz\"\na.test === 'b\n\n// Expected completion to be \"bar\", \"baz\"\na.test === 'bar'\n\n// Expected completion to be \"foo\", \"bar\", \"baz\"\na.test === 'bar'\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "start": 23,
+      "length": 1,
+      "target": "a",
+      "line": 2,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(property) test: \"foo\" | \"bar\" | \"baz\"",
+      "start": 28,
+      "length": 4,
+      "target": "test",
+      "line": 2,
+      "character": 11
+    },
+    {
+      "type": "hover",
+      "text": "(property) test: \"foo\" | \"bar\" | \"baz\"",
+      "start": 64,
+      "length": 4,
+      "target": "test",
+      "line": 3,
+      "character": 2
+    },
+    {
+      "type": "hover",
+      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "start": 78,
+      "length": 1,
+      "target": "a",
+      "line": 5,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 80,
+      "length": 1,
+      "target": "t",
+      "line": 5,
+      "character": 2
+    },
+    {
+      "type": "completion",
+      "start": 81,
+      "length": 0,
+      "completions": [
+        {
+          "name": "test",
+          "kind": "property",
+          "kindModifiers": "",
+          "sortText": "11"
+        }
+      ],
+      "completionsPrefix": "t",
+      "line": 5,
+      "character": 3
+    },
+    {
+      "type": "hover",
+      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "start": 132,
+      "length": 1,
+      "target": "a",
+      "line": 8,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(property) test: \"foo\" | \"bar\" | \"baz\"",
+      "start": 134,
+      "length": 4,
+      "target": "test",
+      "line": 8,
+      "character": 2
+    },
+    {
+      "type": "completion",
+      "start": 144,
+      "length": 0,
+      "completions": [
+        {
+          "name": "foo",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        },
+        {
+          "name": "bar",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        },
+        {
+          "name": "baz",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        }
+      ],
+      "completionsPrefix": "'",
+      "line": 8,
+      "character": 12
+    },
+    {
+      "type": "hover",
+      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "start": 188,
+      "length": 1,
+      "target": "a",
+      "line": 11,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(property) test: \"foo\" | \"bar\" | \"baz\"",
+      "start": 190,
+      "length": 4,
+      "target": "test",
+      "line": 11,
+      "character": 2
+    },
+    {
+      "type": "completion",
+      "start": 201,
+      "length": 0,
+      "completions": [
+        {
+          "name": "bar",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        },
+        {
+          "name": "baz",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        }
+      ],
+      "completionsPrefix": "b",
+      "line": 11,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "start": 245,
+      "length": 1,
+      "target": "a",
+      "line": 14,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(property) test: \"foo\" | \"bar\" | \"baz\"",
+      "start": 247,
+      "length": 4,
+      "target": "test",
+      "line": 14,
+      "character": 2
+    },
+    {
+      "type": "completion",
+      "start": 258,
+      "length": 0,
+      "completions": [
+        {
+          "name": "bar",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 307,
+            "length": 3
+          }
+        },
+        {
+          "name": "baz",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 307,
+            "length": 3
+          }
+        }
+      ],
+      "completionsPrefix": "b",
+      "line": 14,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "start": 312,
+      "length": 1,
+      "target": "a",
+      "line": 17,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(property) test: \"foo\" | \"bar\" | \"baz\"",
+      "start": 314,
+      "length": 4,
+      "target": "test",
+      "line": 17,
+      "character": 2
+    },
+    {
+      "type": "completion",
+      "start": 324,
+      "length": 0,
+      "completions": [
+        {
+          "name": "foo",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 390,
+            "length": 3
+          }
+        },
+        {
+          "name": "bar",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 390,
+            "length": 3
+          }
+        },
+        {
+          "name": "baz",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 390,
+            "length": 3
+          }
+        }
+      ],
+      "completionsPrefix": "'",
+      "line": 17,
+      "character": 12
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": true,
+      "start": 0,
+      "end": 13
+    }
+  ]
+}

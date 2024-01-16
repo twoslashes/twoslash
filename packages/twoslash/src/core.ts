@@ -1,4 +1,4 @@
-import type { CompilerOptions, JsxEmit } from 'typescript'
+import type { CompilerOptions, CompletionEntry, CompletionInfo, CompletionTriggerKind, JsxEmit, WithMetadata } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
@@ -251,24 +251,46 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
             continue
           if (isInRemoval(target))
             continue
-          const completions = ls.getCompletionsAtPosition(filepath, target - 1, {})
-          if (!completions && !meta.handbookOptions.noErrorValidation) {
-            const pos = pc.indexToPos(target)
-            throw new TwoslashError(
-            `Invalid completion query`,
-            `The request on line ${pos} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
-            `This is likely that the positioning is off.`,
-            )
+
+          let prefix = code.slice(0, target).match(/[$_\w]+$/)?.[0] || ''
+          prefix = prefix.split('.').pop()!
+
+          let completions: CompletionEntry[] = []
+          // If matched with an identifier prefix
+          if (prefix) {
+            const result = ls.getCompletionsAtPosition(filepath, target - 1, {
+              triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
+              includeCompletionsForModuleExports: false,
+            })
+            completions = (result?.entries ?? []).filter(i => i.name.startsWith(prefix)) || []
+          }
+          // If not, we try to trigger with character (e.g. `.`, `'`, `"`)
+          else {
+            prefix = code[target - 1]
+            if (prefix) {
+              const result = ls.getCompletionsAtPosition(filepath, target, {
+                triggerKind: 2 satisfies CompletionTriggerKind.TriggerCharacter,
+                triggerCharacter: prefix as any,
+                includeCompletionsForModuleExports: false,
+              })
+              completions = result?.entries ?? []
+            }
           }
 
-          let prefix = code.slice(0, target - 1 + 1).match(/\S+$/)?.[0] || ''
-          prefix = prefix.split('.').pop()!
+          if (!completions?.length && !meta.handbookOptions.noErrorValidation) {
+            const pos = pc.indexToPos(target)
+            throw new TwoslashError(
+              `Invalid completion query`,
+              `The request on line ${pos.line} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
+              `This is likely that the positioning is off.`,
+            )
+          }
 
           nodes.push({
             type: 'completion',
             start: target,
             length: 0,
-            completions: (completions?.entries ?? []).filter(i => i.name.startsWith(prefix)),
+            completions,
             completionsPrefix: prefix,
           })
         }
