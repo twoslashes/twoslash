@@ -2,6 +2,12 @@
 import { ref } from 'vue'
 
 const tab = ref(0)
+
+function triggerResize() {
+  // Workaround to floating-vue to force recalculation the floating position
+  // Awaits https://github.com/Akryum/floating-vue/pull/1010
+  window.dispatchEvent(new Event('resize'))
+}
 </script>
 
 <template>
@@ -10,7 +16,7 @@ const tab = ref(0)
       <button
         flex="~ gap-1 items-center" px2 py1
         border="b-solid 2 transparent" op50
-        :class="tab === 0 ? 'active' : 'inactive'" @click="tab = 0"
+        :class="tab === 0 ? 'active' : 'inactive'" @click="tab = 0;triggerResize()"
       >
         <img src="/logo.svg" class="w-16px h-16px" mt--1>
         <span>TwoSlash Rendered</span>
@@ -19,7 +25,7 @@ const tab = ref(0)
       <button
         flex="~ gap-1 items-center" px2 py1
         border="b-solid 2 transparent" op50
-        :class="tab === 1 ? 'active' : 'inactive'" @click="tab = 1"
+        :class="tab === 1 ? 'active' : 'inactive'" @click="tab = 1;triggerResize()"
       >
         <div i-ri-code-s-slash-fill class="w-16px h-16px" mt--1 />
         <span>Input Code</span>
