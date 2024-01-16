@@ -2,7 +2,7 @@ import type { CompilerOptions, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { CreateTwoSlashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoSlashExecuteOptions, TwoSlashInstance, TwoSlashOptions, TwoSlashReturn, TwoSlashReturnMeta } from './types'
+import type { CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta } from './types'
 import { areRangesIntersecting, createPositionConverter, deExtensionify, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
@@ -15,7 +15,7 @@ type TS = typeof import('typescript')
 /**
  * Create a Twoslash instance with cached TS environments
  */
-export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): TwoSlashInstance {
+export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): TwoslashInstance {
   const ts: TS = createOptions.tsModule!
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 
@@ -47,9 +47,9 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
   function twoslasher(
     code: string,
     extension = 'ts',
-    options: TwoSlashExecuteOptions = {},
-  ): TwoSlashReturn {
-    const meta: TwoSlashReturnMeta = {
+    options: TwoslashExecuteOptions = {},
+  ): TwoslashReturn {
+    const meta: TwoslashReturnMeta = {
       extension: typesToExtension(extension),
       compilerOptions: {
         ...defaultCompilerOptions,
@@ -430,10 +430,10 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
 /**
  * Run Twoslash on a string of code
  *
- * It's recommended to use `createTwoSlash` for better performance on multiple runs
+ * It's recommended to use `createTwoslash` for better performance on multiple runs
  */
-export function twoslasher(code: string, lang?: string, opts?: Partial<TwoSlashOptions>) {
-  return createTwoSlasher({
+export function twoslasher(code: string, lang?: string, opts?: Partial<TwoslashOptions>) {
+  return createTwoslasher({
     ...opts,
     cache: false,
   })(code, lang)

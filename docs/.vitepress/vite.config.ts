@@ -41,7 +41,7 @@ export default defineConfig({
             .trim()
 
           return [
-            `<TwoSlashRenderTabs${preferInput ? ' :prefer-input="true"' : ''}>`,
+            `<TwoslashRenderTabs${preferInput ? ' :prefer-input="true"' : ''}>`,
             '<template #rendered>',
             '',
             `${quotes}${lang} twoslash ${options} [Twoslash Rendered]`,
@@ -56,7 +56,7 @@ export default defineConfig({
             quotes,
             '',
             '</template>',
-            '</TwoSlashRenderTabs>',
+            '</TwoslashRenderTabs>',
           ].join('\n')
         })
       },

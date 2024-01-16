@@ -1,14 +1,14 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
-import type { TwoSlashReturn } from './returns'
-import type { TwoSlashExecuteOptions } from './options'
+import type { TwoslashReturn } from './returns'
+import type { TwoslashExecuteOptions } from './options'
 
-export type TwoSlashFunction = (code: string, extension?: string, options?: TwoSlashExecuteOptions) => TwoSlashReturn
+export type TwoslashFunction = (code: string, extension?: string, options?: TwoslashExecuteOptions) => TwoslashReturn
 
-export interface TwoSlashInstance {
+export interface TwoslashInstance {
 /**
  * Run Twoslash on a string of code, with a particular extension
  */
-  (code: string, extension?: string, options?: TwoSlashExecuteOptions): TwoSlashReturn
+  (code: string, extension?: string, options?: TwoslashExecuteOptions): TwoslashReturn
   /**
    * Get the internal cache map
    */

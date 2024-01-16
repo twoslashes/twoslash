@@ -1,6 +1,6 @@
 import type { SourceFile } from 'typescript'
 import { TwoslashError } from './error'
-import type { NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoSlashNode, TwoSlashReturnMeta, VirtualFile } from './types'
+import type { NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoslashNode, TwoslashReturnMeta, VirtualFile } from './types'
 import { defaultHandbookOptions } from './defaults'
 import type { CompilerOptionDeclaration } from './types/internal'
 import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart } from './regexp'
@@ -236,16 +236,16 @@ export function removeCodeRanges(code: string, removals: Range[], nodes?: NodeSt
  *
  * Note that the nodes items will be mutated, clone them beforehand if not desired
  */
-export function resolveNodePositions(nodes: NodeWithoutPosition[], code: string): TwoSlashNode[]
-export function resolveNodePositions(nodes: NodeWithoutPosition[], indexToPos: (index: number) => Position): TwoSlashNode[]
-export function resolveNodePositions(nodes: NodeWithoutPosition[], options: string | ((index: number) => Position)): TwoSlashNode[] {
+export function resolveNodePositions(nodes: NodeWithoutPosition[], code: string): TwoslashNode[]
+export function resolveNodePositions(nodes: NodeWithoutPosition[], indexToPos: (index: number) => Position): TwoslashNode[]
+export function resolveNodePositions(nodes: NodeWithoutPosition[], options: string | ((index: number) => Position)): TwoslashNode[] {
   const indexToPos = typeof options === 'string'
     ? createPositionConverter(options).indexToPos
     : options
 
   const resolved = nodes
     .filter(node => node.start >= 0)
-    .sort((a, b) => a.start - b.start) as TwoSlashNode[]
+    .sort((a, b) => a.start - b.start) as TwoslashNode[]
 
   resolved
     .forEach(node => Object.assign(node, indexToPos(node.start)))
@@ -411,7 +411,7 @@ export function findCutNotations(code: string) {
 
 export function findQueryMarkers(
   code: string,
-  meta: Pick<TwoSlashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights' | 'removals'>,
+  meta: Pick<TwoslashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights' | 'removals'>,
   getIndexOfLineAbove: (index: number) => number,
 ) {
   if (code.includes('//')) {

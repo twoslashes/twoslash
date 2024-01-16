@@ -2,19 +2,19 @@ import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { CompilerOptions, CustomTransformers } from 'typescript'
 import type { HandbookOptions } from './handbook-options'
 import type { NodeWithoutPosition } from './nodes'
-import type { TwoSlashReturnMeta } from './returns'
+import type { TwoslashReturnMeta } from './returns'
 
 export type TS = typeof import('typescript')
 
 /**
  * Options for the `twoslasher` function
  */
-export interface TwoSlashOptions extends CreateTwoSlashOptions, TwoSlashExecuteOptions { }
+export interface TwoslashOptions extends CreateTwoslashOptions, TwoslashExecuteOptions { }
 
 /**
  * Options for twoslash instance
  */
-export interface TwoSlashExecuteOptions extends Partial<Pick<TwoSlashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights'>> {
+export interface TwoslashExecuteOptions extends Partial<Pick<TwoslashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights'>> {
   /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
   handbookOptions?: Partial<HandbookOptions>
 
@@ -34,7 +34,7 @@ export interface TwoSlashExecuteOptions extends Partial<Pick<TwoSlashReturnMeta,
   filterNode?: (node: NodeWithoutPosition) => boolean
 }
 
-export interface CreateTwoSlashOptions extends TwoSlashExecuteOptions {
+export interface CreateTwoslashOptions extends TwoslashExecuteOptions {
   /**
    *  Allows applying custom transformers to the emit result, only useful with the showEmit output
    */

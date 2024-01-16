@@ -3,13 +3,13 @@ import { createTransformerFactory, rendererRich } from 'shikiji-twoslash/core'
 import { codeToHtml } from 'shikiji'
 import { createStorage } from 'unstorage'
 import indexedDbDriver from 'unstorage/drivers/indexedb'
-import { createTwoSlashFromCDN } from 'twoslash-cdn'
+import { createTwoslashFromCDN } from 'twoslash-cdn'
 
 const storage = createStorage({
   driver: indexedDbDriver({ base: 'twoslash-cdn:' }),
 })
 
-const twoslash = createTwoSlashFromCDN({
+const twoslash = createTwoslashFromCDN({
   storage,
   compilerOptions: {
     lib: ['esnext', 'dom'],

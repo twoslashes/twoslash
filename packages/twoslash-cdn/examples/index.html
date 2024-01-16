@@ -39,7 +39,7 @@
       import { codeToHtml } from 'https://esm.sh/shikiji@latest'
       import { createStorage } from 'https://esm.sh/unstorage@latest'
       import indexedDbDriver from 'https://esm.sh/unstorage@latest/drivers/indexedb'
-      import { createTwoSlashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
+      import { createTwoslashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
 
       // ============= Initialization =============
 
@@ -48,14 +48,14 @@
         driver: indexedDbDriver({ base: 'twoslash-cdn' }),
       })
 
-      const twoslash = createTwoSlashFromCDN({
+      const twoslash = createTwoslashFromCDN({
         storage,
         compilerOptions: {
           lib: ['esnext', 'dom'],
         },
       })
 
-      const transformerTwoSlash = createTransformerFactory(twoslash.runSync)({
+      const transformerTwoslash = createTransformerFactory(twoslash.runSync)({
         renderer: rendererRich(),
       })
 
@@ -79,7 +79,7 @@ const count = ref(0)
       app.innerHTML = await codeToHtml(source, {
         lang: 'ts',
         theme: 'vitesse-dark',
-        transformers: [transformerTwoSlash],
+        transformers: [transformerTwoslash],
       })
     </script>
   </body>

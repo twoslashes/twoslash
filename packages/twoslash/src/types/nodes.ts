@@ -57,7 +57,7 @@ export interface NodeTag extends NodeBase {
   text?: string
 }
 
-export type TwoSlashNode = NodeHighlight | NodeHover | NodeQuery | NodeCompletion | NodeError | NodeTag
+export type TwoslashNode = NodeHighlight | NodeHover | NodeQuery | NodeCompletion | NodeError | NodeTag
 
 export type NodeWithoutPosition = Omit<NodeHighlight, keyof Position> |
   Omit<NodeHover, keyof Position> |

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createTwoSlasher } from '../src/index'
+import { createTwoslasher } from '../src/index'
 
 const code = `
 <script setup lang="ts">
@@ -17,7 +17,7 @@ const double = computed(() => count.value * 2)
 </template>
 `
 
-const twoslasher = createTwoSlasher()
+const twoslasher = createTwoslasher()
 
 describe('basic', () => {
   const result = twoslasher(code, 'vue')

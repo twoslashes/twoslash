@@ -2,8 +2,8 @@ import fs from 'node:fs/promises'
 import { extname, join, parse } from 'node:path'
 import process from 'node:process'
 import { describe, expect, it } from 'vitest'
-import type { TwoSlashReturn } from '../src/types'
-import { createTwoSlasher } from '../src/index'
+import type { TwoslashReturn } from '../src/types'
+import { createTwoslasher } from '../src/index'
 
 const isWindows = process.platform === 'win32'
 
@@ -13,7 +13,7 @@ const isWindows = process.platform === 'win32'
 const fixturesFolder = join(__dirname, 'fixtures')
 const resultsFolder = join(__dirname, 'results')
 
-const twoslasher = createTwoSlasher()
+const twoslasher = createTwoslasher()
 
 describe.skipIf(isWindows)('fixtures', async () => {
   const fixturesTests = await fs.readdir(join(fixturesFolder, 'tests'))
@@ -94,7 +94,7 @@ describe('fixtures throws', async () => {
   )
 })
 
-function cleanFixture(ts: TwoSlashReturn) {
+function cleanFixture(ts: TwoslashReturn) {
   return JSON.stringify({
     code: ts.code,
     nodes: ts.nodes,

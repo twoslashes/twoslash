@@ -1,7 +1,7 @@
 import type { CompilerOptions } from 'typescript'
-import type { HandbookOptions, TwoSlashExecuteOptions, TwoSlashReturn } from './types'
+import type { HandbookOptions, TwoslashExecuteOptions, TwoslashReturn } from './types'
 
-export interface TwoSlashOptionsLegacy extends TwoSlashExecuteOptions {
+export interface TwoslashOptionsLegacy extends TwoslashExecuteOptions {
   /**
    * @deprecated, use `handbookOptions` instead
    */
@@ -12,7 +12,7 @@ export interface TwoSlashOptionsLegacy extends TwoSlashExecuteOptions {
   defaultCompilerOptions?: CompilerOptions
 }
 
-export interface TwoSlashReturnLegacy {
+export interface TwoslashReturnLegacy {
   /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
   code: string
 
@@ -99,7 +99,7 @@ export interface TwoSlashReturnLegacy {
   playgroundURL: string
 }
 
-export function convertLegacyOptions<T extends TwoSlashOptionsLegacy>(opts: T): Omit<T, 'defaultOptions' | 'defaultCompilerOptions'> {
+export function convertLegacyOptions<T extends TwoslashOptionsLegacy>(opts: T): Omit<T, 'defaultOptions' | 'defaultCompilerOptions'> {
   return {
     ...opts,
     handbookOptions: opts.handbookOptions || opts.defaultOptions,
@@ -110,13 +110,13 @@ export function convertLegacyOptions<T extends TwoSlashOptionsLegacy>(opts: T): 
 /**
  * Covert the new return type to the old one
  */
-export function convertLegacyReturn(result: TwoSlashReturn): TwoSlashReturnLegacy {
+export function convertLegacyReturn(result: TwoslashReturn): TwoslashReturnLegacy {
   return {
     code: result.code,
     extension: result.meta.extension,
 
     staticQuickInfos: result.hovers
-      .map((i): TwoSlashReturnLegacy['staticQuickInfos'][0] => ({
+      .map((i): TwoslashReturnLegacy['staticQuickInfos'][0] => ({
         text: i.text,
         docs: i.docs || '',
         start: i.start,
@@ -127,14 +127,14 @@ export function convertLegacyReturn(result: TwoSlashReturn): TwoSlashReturnLegac
       })),
 
     tags: result.tags
-      .map((t): TwoSlashReturnLegacy['tags'][0] => ({
+      .map((t): TwoslashReturnLegacy['tags'][0] => ({
         name: t.name,
         line: t.line,
         annotation: t.text,
       })),
 
     highlights: result.highlights
-      .map((h): TwoSlashReturnLegacy['highlights'][0] => ({
+      .map((h): TwoslashReturnLegacy['highlights'][0] => ({
         kind: 'highlight',
         offset: h.character,
         start: h.start,
@@ -145,7 +145,7 @@ export function convertLegacyReturn(result: TwoSlashReturn): TwoSlashReturnLegac
 
     queries: ([
       ...result.queries
-        .map((q): TwoSlashReturnLegacy['queries'][0] => ({
+        .map((q): TwoslashReturnLegacy['queries'][0] => ({
           kind: 'query',
           docs: q.docs || '',
           offset: q.character,
@@ -155,7 +155,7 @@ export function convertLegacyReturn(result: TwoSlashReturn): TwoSlashReturnLegac
           text: q.text,
         })),
       ...result.completions
-        .map((q): TwoSlashReturnLegacy['queries'][0] => ({
+        .map((q): TwoslashReturnLegacy['queries'][0] => ({
           kind: 'completions',
           offset: q.character,
           start: q.start,
@@ -164,11 +164,11 @@ export function convertLegacyReturn(result: TwoSlashReturn): TwoSlashReturnLegac
           completions: q.completions,
           completionsPrefix: q.completionsPrefix,
         })),
-    ] as TwoSlashReturnLegacy['queries'])
+    ] as TwoslashReturnLegacy['queries'])
       .sort((a, b) => a.start - b.start),
 
     errors: result.errors
-      .map((e): TwoSlashReturnLegacy['errors'][0] => ({
+      .map((e): TwoslashReturnLegacy['errors'][0] => ({
         id: e.id,
         code: e.code,
         start: e.start,

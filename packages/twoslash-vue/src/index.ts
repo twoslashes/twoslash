@@ -1,15 +1,15 @@
 import { SourceMap, createVueLanguage, sharedTypes } from '@vue/language-core'
 import ts from 'typescript'
 import type {
-  CreateTwoSlashOptions,
+  CreateTwoslashOptions,
   Range,
-  TwoSlashExecuteOptions,
-  TwoSlashInstance,
-  TwoSlashReturnMeta,
+  TwoslashExecuteOptions,
+  TwoslashInstance,
+  TwoslashReturnMeta,
 } from 'twoslash'
 import {
   createPositionConverter,
-  createTwoSlasher as createTwoSlasherBase,
+  createTwoslasher as createTwoslasherBase,
   defaultCompilerOptions,
   findQueryMarkers,
   removeCodeRanges,
@@ -19,10 +19,10 @@ import {
 /**
  * Create a twoslasher instance that add additional support for Vue SFC.
  */
-export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag = true): TwoSlashInstance {
-  const twoslasherBase = createTwoSlasherBase(createOptions)
+export function createTwoslasher(createOptions: CreateTwoslashOptions = {}, flag = true): TwoslashInstance {
+  const twoslasherBase = createTwoslasherBase(createOptions)
 
-  function twoslasher(code: string, extension?: string, options: TwoSlashExecuteOptions = {}) {
+  function twoslasher(code: string, extension?: string, options: TwoslashExecuteOptions = {}) {
     if (extension !== 'vue')
       return twoslasherBase(code, extension, options)
 
@@ -40,7 +40,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag
       positionCompletions: [] as number[],
       positionQueries: [] as number[],
       positionHighlights: [] as Range[],
-    } satisfies Partial<TwoSlashReturnMeta>
+    } satisfies Partial<TwoslashReturnMeta>
 
     const pc = createPositionConverter(code)
     // we get the markers with the original code so the position is correct
@@ -144,9 +144,9 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}, flag
 }
 
 /**
- * @deprecated Use `createTwoSlasher` instead.
+ * @deprecated Use `createTwoslasher` instead.
  */
-export const createTwoSlasherVue = createTwoSlasher
+export const createTwoslasherVue = createTwoslasher
 
 function isNotNull<T>(x: T | null | undefined): x is T {
   return x != null

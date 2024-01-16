@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import * as ts from 'typescript/lib/tsserverlibrary'
 import { splitFiles } from '../src/utils'
-import type { TwoSlashReturn } from '../src/types'
+import type { TwoslashReturn } from '../src/types'
 import { twoslasher } from '../src'
 
 export type TS = typeof import('typescript')
@@ -31,7 +31,7 @@ let c = createLabel(Math.random() ? "hello" : 42);
 console.log(a.name);
 `
 
-function verifyResult(result: TwoSlashReturn) {
+function verifyResult(result: TwoslashReturn) {
   for (const node of result.nodes) {
     if ('target' in node)
       expect.soft(result.code.slice(node.start, node.start + node.length)).toBe(node.target)
