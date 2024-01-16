@@ -32,11 +32,19 @@ export default defineConfig({
           if (!code.match(/\/\/ @|\^[?\|^]|---cut/))
             return _
 
+          let preferInput = false
+          options = options
+            .replace(/\binput\b/, () => {
+              preferInput = true
+              return ''
+            })
+            .trim()
+
           return [
-            '<TwoslashRenderTabs>',
+            `<TwoslashRenderTabs${preferInput ? ' :prefer-input="true"' : ''}>`,
             '<template #rendered>',
             '',
-            `${quotes}${lang} twoslash${options} [Twoslash Rendered]`,
+            `${quotes}${lang} twoslash ${options} [Twoslash Rendered]`,
             code,
             quotes,
             '',

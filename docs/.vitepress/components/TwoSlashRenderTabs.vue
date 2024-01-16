@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const tab = ref(0)
+const props = defineProps<{
+  preferInput?: boolean
+}>()
+
+const tab = ref(props.preferInput ? 1 : 0)
 
 function triggerResize() {
   // Workaround to floating-vue to force recalculation the floating position
@@ -12,7 +16,7 @@ function triggerResize() {
 
 <template>
   <div class="twoslash-render-tabs">
-    <div class="tabs" flex="~ gap-2" text-sm>
+    <div class="tabs" flex="~ gap-2" text-sm :class="preferInput ? 'flex-row-reverse justify-end' : ''">
       <button
         flex="~ gap-1 items-center" px2 py1
         border="b-solid 2 transparent" op50
