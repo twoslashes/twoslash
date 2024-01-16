@@ -26,7 +26,7 @@ bun add -D twoslash
 
 ## Usage
 
-To use it, you can call the `createTwoSlasher` function to create a TwoSlash instance where it will cache the TypeScript language service internally for better performance:
+To use it, you can call the `createTwoSlasher` function to create a Twoslash instance where it will cache the TypeScript language service internally for better performance:
 
 ```ts twoslash
 import { createTwoSlasher } from 'twoslash'

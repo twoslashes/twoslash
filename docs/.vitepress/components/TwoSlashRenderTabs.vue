@@ -19,7 +19,7 @@ function triggerResize() {
         :class="tab === 0 ? 'active' : 'inactive'" @click="tab = 0;triggerResize()"
       >
         <img src="/logo.svg" class="w-16px h-16px" mt--1>
-        <span>TwoSlash Rendered</span>
+        <span>Twoslash Rendered</span>
       </button>
 
       <button

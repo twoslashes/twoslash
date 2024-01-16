@@ -1,6 +1,6 @@
-# TwoSlash CDN
+# Twoslash CDN
 
-Run TwoSlash on the browsers or web workers, with [Auto-Type-Acquisition](https://www.typescriptlang.org/play#example/automatic-type-acquisition) from CDN.
+Run Twoslash on the browsers or web workers, with [Auto-Type-Acquisition](https://www.typescriptlang.org/play#example/automatic-type-acquisition) from CDN.
 
 A thin wrapper around `twoslash`, `@typescript/vfs`, `@typescript/ata` to an easy-to-use interface. Huge thanks to the TypeScript team for the heavy-lifting work on [TypeScript Website](https://github.com/microsoft/TypeScript-Website) project.
 

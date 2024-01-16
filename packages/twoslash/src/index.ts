@@ -11,7 +11,7 @@ export * from './legacy'
 const cwd = /* @__PURE__ */ typeof process !== 'undefined' && typeof process.cwd === 'function' ? process.cwd() : ''
 
 /**
- * Create a TwoSlash instance with cached TS environments
+ * Create a Twoslash instance with cached TS environments
  */
 export function createTwoSlasher(opts?: TwoSlashOptions) {
   return _createTwoSlasher({

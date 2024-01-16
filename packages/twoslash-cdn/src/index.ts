@@ -29,7 +29,7 @@ export interface TwoSlashCdnOptions {
   compilerOptions?: ts.CompilerOptions
 
   /**
-   * TwoSlash options Overrides
+   * Twoslash options Overrides
    *
    * Options `tsModule`, `lzstringModule` and `fsMap` are controlled by this function
    */

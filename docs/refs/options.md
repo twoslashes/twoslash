@@ -41,11 +41,11 @@ hello = 'hi' // supposed to be an error, but ignored because it's cutted
 
 ### `noErrorValidation`
 
-Disable error validation, the errors will still be rendered but TwoSlash will not throw to guard against errors in the code.
+Disable error validation, the errors will still be rendered but Twoslash will not throw to guard against errors in the code.
 
 ### `keepNotations`
 
-Tell TwoSlash to not remove any notations, and keep the original code untouched. The `nodes` will have the position information of the original code. Useful for better source mapping combing with `meta.removals`.
+Tell Twoslash to not remove any notations, and keep the original code untouched. The `nodes` will have the position information of the original code. Useful for better source mapping combing with `meta.removals`.
 
 ```ts twoslash
 // @keepNotations

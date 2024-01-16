@@ -6,7 +6,7 @@ export type TwoSlashFunction = (code: string, extension?: string, options?: TwoS
 
 export interface TwoSlashInstance {
 /**
- * Run TwoSlash on a string of code, with a particular extension
+ * Run Twoslash on a string of code, with a particular extension
  */
   (code: string, extension?: string, options?: TwoSlashExecuteOptions): TwoSlashReturn
   /**
