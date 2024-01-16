@@ -4,6 +4,7 @@ export default antfu({
   ignores: [
     '**/test/fixtures/**/*',
     '**/test/results/**/*',
+    '**/.eval*',
   ],
   markdown: {
     overrides: {

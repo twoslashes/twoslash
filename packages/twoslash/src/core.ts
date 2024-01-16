@@ -1,4 +1,4 @@
-import type { CompilerOptions, CompletionEntry, CompletionInfo, CompletionTriggerKind, JsxEmit, WithMetadata } from 'typescript'
+import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
