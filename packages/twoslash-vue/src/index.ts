@@ -16,10 +16,19 @@ import {
   resolveNodePositions,
 } from 'twoslash'
 
+interface CreateTwoslashVueOptions extends CreateTwoslashOptions {
+  /**
+   * Render the generated code in the output instead of the Vue file
+   *
+   * @default false
+   */
+  debugShowGeneratedCode?: boolean
+}
+
 /**
  * Create a twoslasher instance that add additional support for Vue SFC.
  */
-export function createTwoslasher(createOptions: CreateTwoslashOptions = {}, flag = true): TwoslashInstance {
+export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): TwoslashInstance {
   const twoslasherBase = createTwoslasherBase(createOptions)
 
   function twoslasher(code: string, extension?: string, options: TwoslashExecuteOptions = {}) {
@@ -92,7 +101,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}, flag
         .map(([start, end]) => [map.toGeneratedOffset(start)![0], map.toGeneratedOffset(end)![0]] as Range),
     })
 
-    if (!flag)
+    if (createOptions.debugShowGeneratedCode)
       return result
 
     // Map the tokens

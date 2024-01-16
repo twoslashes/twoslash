@@ -68,13 +68,16 @@ it('highlight vue', async () => {
     .toMatchFileSnapshot('./results/example.vue.html')
 })
 
-const twoslasherRaw = createTwoslasher(undefined, false)
+const twoslasherRaw = createTwoslasher({
+  debugShowGeneratedCode: true,
+})
+
 it('highlight raw', async () => {
   const result = await codeToHtml(code, {
-    lang: 'ts',
+    lang: 'vue',
     theme: 'vitesse-dark',
     transformers: [
-      createTransformerFactory((code, _, opt) => twoslasherRaw(code, 'vue', opt))({
+      createTransformerFactory(twoslasherRaw)({
         langs: ['ts', 'tsx', 'vue'],
         renderer: rendererRich({
           lang: 'ts',
