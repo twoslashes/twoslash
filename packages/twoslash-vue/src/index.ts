@@ -1,3 +1,4 @@
+import type { VueCompilerOptions } from '@vue/language-core'
 import { SourceMap, createVueLanguage, sharedTypes } from '@vue/language-core'
 import ts from 'typescript'
 import type {
@@ -16,7 +17,14 @@ import {
   resolveNodePositions,
 } from 'twoslash'
 
-interface CreateTwoslashVueOptions extends CreateTwoslashOptions {
+export interface VueSpecificOptions {
+  /**
+   * Vue Compiler options
+   */
+  vueCompilerOptions?: Partial<VueCompilerOptions>
+}
+
+export interface CreateTwoslashVueOptions extends CreateTwoslashOptions, VueSpecificOptions {
   /**
    * Render the generated code in the output instead of the Vue file
    *
@@ -25,13 +33,16 @@ interface CreateTwoslashVueOptions extends CreateTwoslashOptions {
   debugShowGeneratedCode?: boolean
 }
 
+export interface TwoslashVueExecuteOptions extends TwoslashExecuteOptions, VueSpecificOptions {
+}
+
 /**
  * Create a twoslasher instance that add additional support for Vue SFC.
  */
 export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): TwoslashInstance {
   const twoslasherBase = createTwoslasherBase(createOptions)
 
-  function twoslasher(code: string, extension?: string, options: TwoslashExecuteOptions = {}) {
+  function twoslasher(code: string, extension?: string, options: TwoslashVueExecuteOptions = {}) {
     if (extension !== 'vue')
       return twoslasherBase(code, extension, options)
 
@@ -41,6 +52,10 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       {
         ...defaultCompilerOptions,
         ...options.compilerOptions,
+      },
+      {
+        ...createOptions.vueCompilerOptions,
+        ...options.vueCompilerOptions,
       },
     )
 
