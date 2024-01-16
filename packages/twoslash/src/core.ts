@@ -376,7 +376,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       }
 
       outputCode = outfile.text
-      meta.extension = getExtension(outfile.name)
+      meta.extension = typesToExtension(getExtension(outfile.name))
       meta.removals.length = 0
       nodes.length = 0
     }

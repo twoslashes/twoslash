@@ -8,3 +8,4 @@ node_modules
 dist
 coverage
 docs/.vitepress/cache
+.eval*

@@ -35,6 +35,11 @@ export function typesToExtension(types: string) {
     jsx: 'jsx',
     json: 'json',
     jsn: 'json',
+    map: 'json',
+    mts: 'ts',
+    cts: 'ts',
+    mjs: 'js',
+    cjs: 'js',
   }
 
   if (map[types])

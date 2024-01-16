@@ -135,6 +135,8 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}, flag
       result.meta.removals = mappedRemovals
     }
 
+    result.meta.extension = 'vue'
+
     return result
   }
 
