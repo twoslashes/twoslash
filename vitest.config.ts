@@ -15,7 +15,13 @@ export default defineConfig({
       // }
     },
     coverage: {
-      include: ['**/src/**/*.ts'],
+      include: [
+        '**/src/**/*.ts',
+      ],
+      exclude: [
+        '**/twoslash-cdn/**',
+        '**/types/**',
+      ],
     },
   },
 })
