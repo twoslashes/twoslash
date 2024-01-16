@@ -4,7 +4,7 @@ outline: deep
 
 # Result References
 
-The return value of TwoSlash contains the following information:
+The return value of Twoslash contains the following information:
 
 ```ts twoslash
 import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoSlashNode, TwoSlashReturnMeta } from 'twoslash'
@@ -30,7 +30,7 @@ Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packag
 
 ## Information Nodes
 
-TwoSlash returns all types of information in the `nodes` array. Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packages/twoslash/src/types/nodes.ts) for all the fields.
+Twoslash returns all types of information in the `nodes` array. Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packages/twoslash/src/types/nodes.ts) for all the fields.
 
 ### Properties
 
@@ -108,7 +108,7 @@ The list of options flag notation that is detected from the code.
 
 ### `meta.removals`
 
-A list of the index ranges of the code removed by TwoSlash from the original code, useful for better source mapping.
+A list of the index ranges of the code removed by Twoslash from the original code, useful for better source mapping.
 
 ### `meta.compilerOptions`
 

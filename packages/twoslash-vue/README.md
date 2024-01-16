@@ -3,7 +3,7 @@
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 
-Extended TwoSlash for Vue SFC support.
+Extended Twoslash for Vue SFC support.
 
 > [!IMPORTANT]
 > Working in Progress.

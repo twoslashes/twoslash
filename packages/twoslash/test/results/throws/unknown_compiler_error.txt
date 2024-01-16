@@ -4,4 +4,4 @@
 The following flags are either valid TSConfig nor handbook options:
 @targets
 
-This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional TwoSlash flags in the npm page for @typescript/twoslash.
+This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.

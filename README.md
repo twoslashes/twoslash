@@ -1,6 +1,6 @@
-<img src="https://twoslash.netlify.app/logo.svg" alt="TwoSlash Logo" width="150">
+<img src="https://twoslash.netlify.app/logo.svg" alt="Twoslash Logo" width="150">
 
-# TwoSlash
+# Twoslash
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
