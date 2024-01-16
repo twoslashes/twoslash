@@ -4,6 +4,12 @@
     {
       "type": "hover",
       "text": "function App(): JSXInternal.Element",
+      "tags": [
+        [
+          "jsxImportSource",
+          "preact"
+        ]
+      ],
       "start": 41,
       "length": 3,
       "target": "App",

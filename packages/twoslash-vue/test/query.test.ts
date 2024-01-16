@@ -50,6 +50,7 @@ describe('basic', () => {
           "length": 8,
           "line": 2,
           "start": 40,
+          "tags": undefined,
           "target": "computed",
           "text": "(alias) const computed: {
             <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions | undefined): ComputedRef<T>;

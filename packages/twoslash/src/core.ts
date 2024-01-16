@@ -141,13 +141,14 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       if (quickInfo && quickInfo.displayParts) {
         const text = quickInfo.displayParts.map(dp => dp.text).join('')
 
-        // TODO: get different type of docs
         const docs = quickInfo.documentation?.map(d => d.text).join('\n') || undefined
+        const tags = quickInfo.tags?.map(t => [t.name, t.text?.map(i => i.text).join('')] as [string, string | undefined])
 
         return {
           type: 'hover',
           text,
           docs,
+          tags,
           start,
           length: target.length,
           target,
