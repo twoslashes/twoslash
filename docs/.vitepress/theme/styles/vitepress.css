@@ -218,3 +218,7 @@ h2>a:hover {
   font-size: 0.8rem;
   opacity: 0.5;
 }
+
+.vp-doc :not(pre) > code {
+  text-wrap: nowrap;
+}
