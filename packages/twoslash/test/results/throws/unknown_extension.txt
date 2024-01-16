@@ -1,4 +1,4 @@
 
-## Unknown TypeScript extension given to Twoslash
+## Unknown TypeScript extension given to TwoSlash
 
-Received herjk but Twoslash only accepts: js,javascript,ts,typescript,tsx,jsx,json,jsn 
+Received herjk but TwoSlash only accepts: js,javascript,ts,typescript,tsx,jsx,json,jsn 

@@ -9,7 +9,7 @@ by the [fourslash test system](https://github.com/orta/typescript-notes/blob/mas
 
 Used as a pre-parser before showing code samples inside the TypeScript website and to create a standard way for us to create examples for bugs on the compiler's issue tracker.
 
-### What is Twoslash?
+### What is TwoSlash?
 
 It might be easier to show instead of telling, here is an example of code from the TypeScript handbook. We'll use
 twoslash to let the compiler handle error messaging and provide rich highlight info.

@@ -41,8 +41,8 @@ export function typesToExtension(types: string) {
     return map[types]
 
   throw new TwoslashError(
-    `Unknown TypeScript extension given to Twoslash`,
-    `Received ${types} but Twoslash only accepts: ${Object.keys(map)} `,
+    `Unknown TypeScript extension given to TwoSlash`,
+    `Received ${types} but TwoSlash only accepts: ${Object.keys(map)} `,
     ``,
   )
 }

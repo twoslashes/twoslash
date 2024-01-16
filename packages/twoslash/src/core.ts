@@ -112,7 +112,7 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
         throw new TwoslashError(
           `Unknown inline compiler flags`,
           `The following flags are either valid TSConfig nor handbook options:\n${unknownFlags.map(i => `@${i.name}`).join(', ')}`,
-          `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional Twoslash flags in the npm page for @typescript/twoslash.`,
+          `This is likely a typo, you can check all the compiler flags in the TSConfig reference, or check the additional TwoSlash flags in the npm page for @typescript/twoslash.`,
         )
       }
     }
@@ -369,8 +369,8 @@ export function createTwoSlasher(createOptions: CreateTwoSlashOptions = {}): Two
       if (!outfile) {
         const allFiles = output.outputFiles.map(o => o.name).join(', ')
         throw new TwoslashError(
-          `Cannot find the output file in the Twoslash VFS`,
-          `Looking for ${emitFilename} in the Twoslash vfs after compiling`,
+          `Cannot find the output file in the TwoSlash VFS`,
+          `Looking for ${emitFilename} in the TwoSlash vfs after compiling`,
           `Looked for" ${fsRoot + emitFilename} in the vfs - which contains ${allFiles}.`,
         )
       }

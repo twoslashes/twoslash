@@ -1,8 +1,8 @@
 # Notation References
 
-## Queries in Twoslash
+## Queries in TwoSlash
 
-One of the key reasons for making Twoslash is the ability to use the TypeScript compiler to pull out type information about your code mechanically. Twoslash comes with two different ways to query your code: `?^` and `?|`.
+One of the key reasons for making TwoSlash is the ability to use the TypeScript compiler to pull out type information about your code mechanically. TwoSlash comes with two different ways to query your code: `?^` and `?|`.
 
 ### Extract Type
 
@@ -24,13 +24,13 @@ console.e
 //       ^|
 ```
 
-What happens is that Twoslash makes a request to TypeScript to get the auto-complete at the point of the `^`, and then filters the possible outputs based on the letters following the `.`. Up to 5 results will be shown inline, and if a completion is marked as deprecated - that will be respected in the output.
+What happens is that TwoSlash makes a request to TypeScript to get the auto-complete at the point of the `^`, and then filters the possible outputs based on the letters following the `.`. Up to 5 results will be shown inline, and if a completion is marked as deprecated - that will be respected in the output.
 
-So, in this case, Twoslash asks TypeScript for completions of `console`, then filters down to completions which start with `e`. Note that the compiler flag for `// @noErrors` is set, because `console.e` is a failing TypeScript code sample but we don't really care about that.
+So, in this case, TwoSlash asks TypeScript for completions of `console`, then filters down to completions which start with `e`. Note that the compiler flag for `// @noErrors` is set, because `console.e` is a failing TypeScript code sample but we don't really care about that.
 
 ## Cutting a Code Sample
 
-Every Twoslash code sample needs to be a complete TypeScript program realistically, basically it needs to compile. Quite often to make it compile, there is a bunch of code which isn't relevant to the user. This can be extracted out of the code sample via `// ---cut---` which removes all of the code above it from the output.
+Every TwoSlash code sample needs to be a complete TypeScript program realistically, basically it needs to compile. Quite often to make it compile, there is a bunch of code which isn't relevant to the user. This can be extracted out of the code sample via `// ---cut---` which removes all of the code above it from the output.
 
 ### `---cut---`
 
@@ -54,7 +54,7 @@ import { helloWorld } from './a'
 console.log(helloWorld)
 ```
 
-Would only show the last two lines, but to TypeScript it was a program with 2 files and all of the IDE information is hooked up correctly across the files. This is why `// @filename: [file]` is specifically the only Twoslash command which _is not_ removed, because if it's not relevant it can be `---cut---` away.
+Would only show the last two lines, but to TypeScript it was a program with 2 files and all of the IDE information is hooked up correctly across the files. This is why `// @filename: [file]` is specifically the only TwoSlash command which _is not_ removed, because if it's not relevant it can be `---cut---` away.
 
 ### `---cut-after---`
 
@@ -71,11 +71,11 @@ console.log('This is not shown')
 
 ## Showing the Emitted Files
 
-Running a Twoslash code sample is a full TypeScript compiler run, and that run will create files inside the virtual file system. You can replace the contents of your code sample with the results of running TypeScript over the project.
+Running a TwoSlash code sample is a full TypeScript compiler run, and that run will create files inside the virtual file system. You can replace the contents of your code sample with the results of running TypeScript over the project.
 
 #### `@showEmit`
 
-`// @showEmit` is the main command to tell Shiki Twoslash that you want to replace the output of your code sample with the equivalent `.js` file.
+`// @showEmit` is the main command to tell Shiki TwoSlash that you want to replace the output of your code sample with the equivalent `.js` file.
 
 ```ts twoslash
 // @showEmit
@@ -86,7 +86,7 @@ Would show the `.js` file which this `.ts` file represents. You can see TypeScri
 
 #### `@showEmittedFile: [file]`
 
-While the `.js` file is probably the most useful file out of the box, TypeScript does emit other files if you have the right flags enabled (`.d.ts` and `.map`) but also when you have a multi-file code sample - you might need to tell Twoslash which file to show. For all these cases you can _also_ add `@showEmittedFile: [file]` to tell Shiki Twoslash which file you want to show.
+While the `.js` file is probably the most useful file out of the box, TypeScript does emit other files if you have the right flags enabled (`.d.ts` and `.map`) but also when you have a multi-file code sample - you might need to tell TwoSlash which file to show. For all these cases you can _also_ add `@showEmittedFile: [file]` to tell Shiki TwoSlash which file you want to show.
 
 ```ts twoslash
 // @declaration
