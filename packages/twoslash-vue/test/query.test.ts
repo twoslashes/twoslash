@@ -45,11 +45,11 @@ describe('basic', () => {
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'computed'))
       .toMatchInlineSnapshot(`
         {
-          "character": 15,
+          "character": 14,
           "docs": undefined,
           "length": 8,
           "line": 2,
-          "start": 41,
+          "start": 40,
           "target": "computed",
           "text": "(alias) const computed: {
             <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions | undefined): ComputedRef<T>;

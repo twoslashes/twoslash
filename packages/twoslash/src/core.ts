@@ -203,7 +203,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
           const id = identifiers.find(i => isInRange(query, i as unknown as Range))
           let node: NodeWithoutPosition | undefined
           if (id)
-            node = getQuickInfo(query, id[2])
+            node = getQuickInfo(id[0], id[2])
           if (node) {
             node.type = 'query'
             nodes.push(node)

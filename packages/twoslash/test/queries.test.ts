@@ -81,3 +81,22 @@ const b = "345"
   const bQueryResult = result.queries.find(info => info.line === 4)
   expect(bQueryResult!.text).toContain('const b:')
 })
+
+it('supports carets should be relative to token', () => {
+  const file1 = `
+const abc = "123"
+//     ^?
+  `
+  const file2 = `
+const abc = "123"
+//    ^?
+  `
+
+  const result1 = twoslasher(file1, 'ts')
+  const result2 = twoslasher(file2, 'ts')
+  expect(
+    result1.queries,
+  ).toEqual(
+    result2.queries,
+  )
+})
