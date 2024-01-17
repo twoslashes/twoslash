@@ -60,7 +60,7 @@ export interface TwoslashReturnMeta {
   /**
    * Positions of errors in the code
    */
-  positionHighlights: Range[]
+  positionHighlights: [start: number, end: number, text?: string][]
 }
 
 export interface ParsedFlagNotation {

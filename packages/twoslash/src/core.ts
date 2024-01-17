@@ -2,7 +2,7 @@ import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit }
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { TwoslashError } from './error'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
-import { areRangesIntersecting, createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, isInRange, isInRanges, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
+import { createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, isInRange, isInRanges, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 
@@ -239,35 +239,12 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
       // #region get highlights
       for (const highlight of meta.positionHighlights) {
-        if (isInRemoval(highlight[0])) {
-          throw new TwoslashError(
-            `Invalid highlight query`,
-            `The request on line ${pc.indexToPos(highlight[0]).line + 2} for highlight via ^^^ is in a removal range.`,
-            `This is likely that the positioning is off.`,
-          )
-        }
-
-        const file = getFileAtPosition(highlight[0])!
-        const identifiers = getIdentifiersOfFile(file)
-
-        const ids = identifiers.filter(i => areRangesIntersecting(i as unknown as Range, highlight))
-        const matched = ids
-          .map(i => getQuickInfo(file, i[0], i[2]))
-          .filter(Boolean) as NodeWithoutPosition[]
-        if (matched.length) {
-          for (const node of matched) {
-            node.type = 'highlight'
-            nodes.push(node)
-          }
-        }
-        else {
-          const pos = pc.indexToPos(highlight[0])
-          throw new TwoslashError(
-            `Invalid highlight query`,
-            `The request on line ${pos.line + 2} in ${file.filename} for highlight via ^^^ is returned nothing from the compiler.`,
-            `This is likely that the positioning is off.`,
-          )
-        }
+        nodes.push({
+          type: 'highlight',
+          start: highlight[0],
+          length: highlight[1] - highlight[0],
+          text: highlight[2],
+        })
       }
       // #endregion
 

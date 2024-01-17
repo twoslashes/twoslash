@@ -136,11 +136,12 @@ export function convertLegacyReturn(result: TwoslashReturn): TwoslashReturnLegac
     highlights: result.highlights
       .map((h): TwoslashReturnLegacy['highlights'][0] => ({
         kind: 'highlight',
-        offset: h.character,
-        start: h.start,
+        // it's a bit confusing that `offset` and `start` are flipped
+        offset: h.start,
+        start: h.character,
         length: h.length,
         line: h.line,
-        text: h.text,
+        text: h.text || '',
       })),
 
     queries: ([
