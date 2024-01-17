@@ -77,4 +77,5 @@ export interface VirtualFile {
   filepath: string
   content: string
   extension: string
+  supportLsp?: boolean
 }

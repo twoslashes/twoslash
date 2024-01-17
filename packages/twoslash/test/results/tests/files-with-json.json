@@ -2,18 +2,6 @@
   "code": "// @filename: settings.json\n{\n    \"repo\": \"TypeScript\",\n    \"dry\": false,\n    \"debug\": false\n}\n// @filename: index.ts\nimport settings from \"./settings.json\";\n\nsettings.debug === true;\nsettings.dry === 2;\n",
   "nodes": [
     {
-      "type": "error",
-      "start": 2,
-      "length": 18,
-      "code": 2367,
-      "filename": "index.ts",
-      "id": "err-2367-89-18",
-      "text": "This comparison appears to be unintentional because the types 'boolean' and 'number' have no overlap.",
-      "level": 1,
-      "line": 0,
-      "character": 2
-    },
-    {
       "type": "hover",
       "text": "import settings",
       "start": 125,

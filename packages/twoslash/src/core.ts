@@ -2,7 +2,7 @@ import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit }
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta } from './types'
+import type { CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
 import { areRangesIntersecting, createPositionConverter, deExtensionify, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
@@ -22,7 +22,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   // In a browser we want to DI everything, in node we can use local infra
   const useFS = !!createOptions.fsMap
   const _root = createOptions.vfsRoot!.replace(/\\/g, '/') // Normalize slashes
-  const vfs = useFS && createOptions.fsMap ? createOptions.fsMap : new Map<string, string>()
+  const vfs = createOptions.fsMap || new Map<string, string>()
   const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory)
   const fsRoot = useFS ? '/' : `${_root}/`
 
@@ -76,7 +76,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
     const defaultFilename = `index.${meta.extension}`
     let nodes: NodeWithoutPosition[] = []
-    const isInRemoval = (index: number) => isInRanges(index, meta.removals)
+    const isInRemoval = (index: number) => index >= code.length || index < 0 || isInRanges(index, meta.removals)
 
     meta.flagNotations = findFlagNotations(code, customTags, tsOptionDeclarations)
 
@@ -129,13 +129,21 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
     const supportedFileTyes = ['js', 'jsx', 'ts', 'tsx']
     meta.virtualFiles = splitFiles(code, defaultFilename, fsRoot)
+    const identifiersMap = new Map<string, ReturnType<typeof getIdentifierTextSpans>>()
+
+    function getIdentifiersOfFile(file: VirtualFile) {
+      if (!identifiersMap.has(file.filename)) {
+        const source = env.getSourceFile(file.filepath)!
+        identifiersMap.set(file.filename, getIdentifierTextSpans(ts, source, file.offset))
+      }
+      return identifiersMap.get(file.filename)!
+    }
 
     function getFileAtPosition(pos: number) {
       return meta.virtualFiles.find(i => isInRange(pos, [i.offset, i.offset + i.content.length]))
     }
 
-    function getQuickInfo(start: number, target: string): NodeWithoutPosition | undefined {
-      const file = getFileAtPosition(start)!
+    function getQuickInfo(file: VirtualFile, start: number, target: string): NodeWithoutPosition | undefined {
       const quickInfo = ls.getQuickInfoAtPosition(file.filepath, start - file.offset)
 
       if (quickInfo && quickInfo.displayParts) {
@@ -156,167 +164,179 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       }
     }
 
+    // # region write files into the FS
     for (const file of meta.virtualFiles) {
       // Only run the LSP-y things on source files
-      if (file.extension === 'json') {
-        if (!meta.compilerOptions.resolveJsonModule)
+      if (supportedFileTyes.includes(file.extension) || (file.extension === 'json' && meta.compilerOptions.resolveJsonModule)) {
+        file.supportLsp = true
+        env.createFile(file.filepath, file.content)
+        getIdentifiersOfFile(file)
+      }
+    }
+    // #endregion
+
+    if (!meta.handbookOptions.showEmit) {
+      for (const file of meta.virtualFiles) {
+        if (!file.supportLsp)
           continue
-      }
-      else if (!supportedFileTyes.includes(file.extension)) {
-        continue
-      }
 
-      const filepath = fsRoot + file.filename
-      env.createFile(filepath, file.content)
-
-      const fileEnd = file.offset + file.content.length
-      function isInFile(pos: number) {
-        return file.offset <= pos && pos < fileEnd
-      }
-
-      if (!meta.handbookOptions.showEmit) {
         // #region get ts info for quick info
-        const source = env.getSourceFile(filepath)!
-
-        let identifiers: ReturnType<typeof getIdentifierTextSpans> | undefined
         if (!meta.handbookOptions.noStaticSemanticInfo) {
-          identifiers = getIdentifierTextSpans(ts, source, file.offset)
+          const identifiers = getIdentifiersOfFile(file)
           for (const [start, _end, target] of identifiers) {
             if (isInRemoval(start))
               continue
             if (!shouldGetHoverInfo(target, start, file.filename))
               continue
-
-            const node = getQuickInfo(start, target)
+            const node = getQuickInfo(file, start, target)
             if (node)
               nodes.push(node)
           }
         }
-        // #endregion
+      }
+      // #endregion
 
-        // #region get query
-        for (const query of meta.positionQueries) {
-          if (!isInFile(query))
-            continue
-          if (!identifiers)
-            identifiers = getIdentifierTextSpans(ts, source, file.offset)
+      // #region get query
+      for (const query of meta.positionQueries) {
+        if (isInRemoval(query)) {
+          throw new TwoslashError(
+            `Invalid quick info query`,
+            `The request on line ${pc.indexToPos(query).line + 2} for quickinfo via ^? is in a removal range.`,
+            `This is likely that the positioning is off.`,
+          )
+        }
 
-          const id = identifiers.find(i => isInRange(query, i as unknown as Range))
-          let node: NodeWithoutPosition | undefined
-          if (id)
-            node = getQuickInfo(id[0], id[2])
-          if (node) {
-            node.type = 'query'
-            nodes.push(node)
-          }
-          else {
-            const pos = pc.indexToPos(query)
-            throw new TwoslashError(
+        const file = getFileAtPosition(query)!
+        const identifiers = getIdentifiersOfFile(file)
+
+        const id = identifiers.find(i => isInRange(query, i as unknown as Range))
+        let node: NodeWithoutPosition | undefined
+        if (id)
+          node = getQuickInfo(file, id[0], id[2])
+
+        if (node) {
+          node.type = 'query'
+          nodes.push(node)
+        }
+        else {
+          const pos = pc.indexToPos(query)
+          throw new TwoslashError(
             `Invalid quick info query`,
             `The request on line ${pos.line + 2} in ${file.filename} for quickinfo via ^? returned nothing from the compiler.`,
-            `This is likely that the x positioning is off.`,
-            )
-          }
+            `This is likely that the positioning is off.`,
+          )
         }
-        // #endregion
+      }
+      // #endregion
 
-        // #region get highlights
-        for (const highlight of meta.positionHighlights) {
-          if (!isInFile(highlight[0]))
-            continue
-          if (!identifiers)
-            identifiers = getIdentifierTextSpans(ts, source, file.offset)
-
-          const ids = identifiers.filter(i => areRangesIntersecting(i as unknown as Range, highlight))
-          const matched = ids.map(i => getQuickInfo(i[0], i[2])).filter(Boolean) as NodeWithoutPosition[]
-          if (matched.length) {
-            for (const node of matched) {
-              node.type = 'highlight'
-              nodes.push(node)
-            }
-          }
-          else {
-            const pos = pc.indexToPos(highlight[0])
-            throw new TwoslashError(
+      // #region get highlights
+      for (const highlight of meta.positionHighlights) {
+        if (isInRemoval(highlight[0])) {
+          throw new TwoslashError(
             `Invalid highlight query`,
-            `The request on line ${pos.line + 2} in ${file.filename} for highlight via ^^^ returned nothing from the compiler.`,
-            `This is likely that the x positioning is off.`,
-            )
+            `The request on line ${pc.indexToPos(highlight[0]).line + 2} for highlight via ^^^ is in a removal range.`,
+            `This is likely that the positioning is off.`,
+          )
+        }
+
+        const file = getFileAtPosition(highlight[0])!
+        const identifiers = getIdentifiersOfFile(file)
+
+        const ids = identifiers.filter(i => areRangesIntersecting(i as unknown as Range, highlight))
+        const matched = ids
+          .map(i => getQuickInfo(file, i[0], i[2]))
+          .filter(Boolean) as NodeWithoutPosition[]
+        if (matched.length) {
+          for (const node of matched) {
+            node.type = 'highlight'
+            nodes.push(node)
           }
         }
-        // #endregion
+        else {
+          const pos = pc.indexToPos(highlight[0])
+          throw new TwoslashError(
+            `Invalid highlight query`,
+            `The request on line ${pos.line + 2} in ${file.filename} for highlight via ^^^ is returned nothing from the compiler.`,
+            `This is likely that the positioning is off.`,
+          )
+        }
+      }
+      // #endregion
 
-        // #region get completions
-        for (const target of meta.positionCompletions) {
-          if (!isInFile(target))
-            continue
-          if (isInRemoval(target))
-            continue
+      // #region get completions
+      for (const target of meta.positionCompletions) {
+        if (isInRemoval(target)) {
+          throw new TwoslashError(
+            `Invalid completion query`,
+            `The request on line ${pc.indexToPos(target).line + 2} for completions via ^| is in a removal range.`,
+            `This is likely that the positioning is off.`,
+          )
+        }
+        const file = getFileAtPosition(target)!
 
-          let prefix = code.slice(0, target).match(/[$_\w]+$/)?.[0] || ''
-          prefix = prefix.split('.').pop()!
+        let prefix = code.slice(0, target).match(/[$_\w]+$/)?.[0] || ''
+        prefix = prefix.split('.').pop()!
 
-          let completions: CompletionEntry[] = []
-          // If matched with an identifier prefix
+        let completions: CompletionEntry[] = []
+        // If matched with an identifier prefix
+        if (prefix) {
+          const result = ls.getCompletionsAtPosition(file.filepath, target - file.offset - 1, {
+            triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
+            includeCompletionsForModuleExports: false,
+          })
+          completions = (result?.entries ?? []).filter(i => i.name.startsWith(prefix)) || []
+        }
+        // If not, we try to trigger with character (e.g. `.`, `'`, `"`)
+        else {
+          prefix = code[target - 1]
           if (prefix) {
-            const result = ls.getCompletionsAtPosition(filepath, target - file.offset - 1, {
-              triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
+            const result = ls.getCompletionsAtPosition(file.filepath, target - file.offset, {
+              triggerKind: 2 satisfies CompletionTriggerKind.TriggerCharacter,
+              triggerCharacter: prefix as any,
               includeCompletionsForModuleExports: false,
             })
-            completions = (result?.entries ?? []).filter(i => i.name.startsWith(prefix)) || []
+            completions = result?.entries ?? []
           }
-          // If not, we try to trigger with character (e.g. `.`, `'`, `"`)
-          else {
-            prefix = code[target - 1]
-            if (prefix) {
-              const result = ls.getCompletionsAtPosition(filepath, target - file.offset, {
-                triggerKind: 2 satisfies CompletionTriggerKind.TriggerCharacter,
-                triggerCharacter: prefix as any,
-                includeCompletionsForModuleExports: false,
-              })
-              completions = result?.entries ?? []
-            }
-          }
-
-          if (!completions?.length && !meta.handbookOptions.noErrorValidation) {
-            const pos = pc.indexToPos(target)
-            throw new TwoslashError(
-              `Invalid completion query`,
-              `The request on line ${pos.line} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
-              `This is likely that the positioning is off.`,
-            )
-          }
-
-          nodes.push({
-            type: 'completion',
-            start: target,
-            length: 0,
-            completions,
-            completionsPrefix: prefix,
-          })
         }
-        // #endregion
+
+        if (!completions?.length && !meta.handbookOptions.noErrorValidation) {
+          const pos = pc.indexToPos(target)
+          throw new TwoslashError(
+            `Invalid completion query`,
+            `The request on line ${pos.line} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
+            `This is likely that the positioning is off.`,
+          )
+        }
+
+        nodes.push({
+          type: 'completion',
+          start: target,
+          length: 0,
+          completions,
+          completionsPrefix: prefix,
+        })
       }
+      // #endregion
     }
 
     let errorNodes: Omit<NodeError, keyof Position>[] = []
 
     // #region get diagnostics, after all files are mounted
     for (const file of meta.virtualFiles) {
-      if (!supportedFileTyes.includes(file.extension))
+      if (!file.supportLsp)
         continue
 
-      const filepath = fsRoot + file.filename
       if (meta.handbookOptions.noErrors !== true) {
+        env.updateFile(file.filepath, file.content)
         const diagnostics = [
-          ...ls.getSemanticDiagnostics(filepath),
-          ...ls.getSyntacticDiagnostics(filepath),
+          ...ls.getSemanticDiagnostics(file.filepath),
+          ...ls.getSyntacticDiagnostics(file.filepath),
         ]
         const ignores = Array.isArray(meta.handbookOptions.noErrors)
           ? meta.handbookOptions.noErrors
           : []
         for (const diagnostic of diagnostics) {
-          if (diagnostic.file?.fileName !== filepath)
+          if (diagnostic.file?.fileName !== file.filepath)
             continue
           if (ignores.includes(diagnostic.code))
             continue

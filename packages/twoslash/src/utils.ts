@@ -157,8 +157,10 @@ const reFilenamesMakers = /^\/\/\s?@filename: (.+)$/mg
 
 export function splitFiles(code: string, defaultFileName: string, root: string) {
   const matches = Array.from(code.matchAll(reFilenamesMakers))
-
-  let currentFileName = defaultFileName
+  const allFilenames = matches.map(match => match[1].trimEnd())
+  let currentFileName = allFilenames.includes(defaultFileName)
+    ? '__index__.ts'
+    : defaultFileName
   const files: VirtualFile[] = []
 
   let index = 0

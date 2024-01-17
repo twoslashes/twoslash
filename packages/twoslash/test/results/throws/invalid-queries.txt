@@ -3,4 +3,4 @@
 
 The request on line 2 in index.ts for quickinfo via ^? returned nothing from the compiler.
 
-This is likely that the x positioning is off.
+This is likely that the positioning is off.
