@@ -3,6 +3,7 @@ import { SourceMap, createVueLanguage, sharedTypes } from '@vue/language-core'
 import type { CompilerOptions } from 'typescript'
 import ts from 'typescript'
 import type {
+  CompilerOptionDeclaration,
   CreateTwoslashOptions,
   HandbookOptions,
   ParsedFlagNotation,
@@ -18,11 +19,10 @@ import {
   defaultHandbookOptions,
   findFlagNotations,
   findQueryMarkers,
-  objectHash,
+  getObjectHash,
   removeCodeRanges,
   resolveNodePositions,
 } from 'twoslash'
-import type { CompilerOptionDeclaration } from '../../twoslash/src/types/internal'
 
 export interface VueSpecificOptions {
   /**
@@ -54,7 +54,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
   function getVueLanguage(compilerOptions: Partial<CompilerOptions>, vueCompilerOptions: Partial<VueCompilerOptions>) {
     if (!cache)
       return createVueLanguage(ts, defaultCompilerOptions, vueCompilerOptions)
-    const key = `vue:${objectHash([compilerOptions, vueCompilerOptions])}`
+    const key = `vue:${getObjectHash([compilerOptions, vueCompilerOptions])}`
     if (!cache.has(key)) {
       const env = createVueLanguage(ts, defaultCompilerOptions, vueCompilerOptions)
       cache.set(key, env)

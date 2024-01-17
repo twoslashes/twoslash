@@ -6,6 +6,12 @@ import type { TwoslashReturnMeta } from './returns'
 
 export type TS = typeof import('typescript')
 
+export interface CompilerOptionDeclaration {
+  name: string
+  type: 'list' | 'boolean' | 'number' | 'string' | Map<string, any>
+  element?: CompilerOptionDeclaration
+}
+
 /**
  * Options for the `twoslasher` function
  */

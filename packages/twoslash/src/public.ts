@@ -14,7 +14,7 @@ export {
   removeCodeRanges,
   resolveNodePositions,
 
-  objectHash,
+  getObjectHash,
 } from './utils'
 
 export {

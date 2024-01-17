@@ -1,11 +1,10 @@
 import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { TwoslashError } from './error'
-import type { CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
-import { areRangesIntersecting, createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, objectHash, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
+import { areRangesIntersecting, createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, isInRange, isInRanges, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
-import type { CompilerOptionDeclaration } from './types/internal'
 
 export * from './public'
 
@@ -34,7 +33,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   function getEnv(compilerOptions: CompilerOptions) {
     if (!cache)
       return createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, createOptions.customTransformers)
-    const key = objectHash(compilerOptions)
+    const key = getObjectHash(compilerOptions)
     if (!cache?.has(key)) {
       const env = createVirtualTypeScriptEnvironment(system, [], ts, compilerOptions, createOptions.customTransformers)
       cache?.set(key, env)

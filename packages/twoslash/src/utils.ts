@@ -1,11 +1,13 @@
 import type { SourceFile } from 'typescript'
+import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
-import type { NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoslashNode, TwoslashReturnMeta, VirtualFile } from './types'
+import type { CompilerOptionDeclaration, NodeStartLength, NodeWithoutPosition, ParsedFlagNotation, Position, Range, TwoslashNode, TwoslashReturnMeta, VirtualFile } from './types'
 import { defaultHandbookOptions } from './defaults'
-import type { CompilerOptionDeclaration } from './types/internal'
 import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart } from './regexp'
 
-export { objectHash } from 'ohash'
+export function getObjectHash(obj: any): string {
+  return objectHash(obj)
+}
 
 export function parsePrimitive(value: string, type: string): any {
   // eslint-disable-next-line valid-typeof
