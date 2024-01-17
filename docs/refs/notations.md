@@ -28,6 +28,19 @@ What happens is that Twoslash makes a request to TypeScript to get the auto-comp
 
 So, in this case, Twoslash asks TypeScript for completions of `console`, then filters down to completions which start with `e`. Note that the compiler flag for `// @noErrors` is set, because `console.e` is a failing TypeScript code sample but we don't really care about that.
 
+### Highlighting
+
+Use `^^^` to highlight a particular range of the line above it.
+
+```ts twoslash input
+function add(a: number, b: number) {
+  //     ^^^
+  return a + b
+}
+```
+
+It depends on how the integrations renderer that informations. Typically, the [Shikiji integration](https://twoslash.netlify.app/guide/highlight) wraps them with a `.twoslash-highlighted` class, and the styling is up to you.
+
 ## Cutting a Code Sample
 
 Every Twoslash code sample needs to be a complete TypeScript program realistically, basically it needs to compile. Quite often to make it compile, there is a bunch of code which isn't relevant to the user. This can be extracted out of the code sample via the following sigils to remove code from the output.
@@ -103,7 +116,7 @@ Running a Twoslash code sample is a full TypeScript compiler run, and that run w
 
 #### `@showEmit`
 
-`// @showEmit` is the main command to tell Shiki Twoslash that you want to replace the output of your code sample with the equivalent `.js` file.
+`// @showEmit` is the main command to tell Twoslash that you want to replace the output of your code sample with the equivalent `.js` file.
 
 ```ts twoslash input
 // @showEmit
@@ -114,7 +127,7 @@ Would show the `.js` file which this `.ts` file represents. You can see TypeScri
 
 #### `@showEmittedFile: [file]`
 
-While the `.js` file is probably the most useful file out of the box, TypeScript does emit other files if you have the right flags enabled (`.d.ts` and `.map`) but also when you have a multi-file code sample - you might need to tell Twoslash which file to show. For all these cases you can _also_ add `@showEmittedFile: [file]` to tell Shiki Twoslash which file you want to show.
+While the `.js` file is probably the most useful file out of the box, TypeScript does emit other files if you have the right flags enabled (`.d.ts` and `.map`) but also when you have a multi-file code sample - you might need to tell Twoslash which file to show. For all these cases you can _also_ add `@showEmittedFile: [file]` to tell Twoslash which file you want to show.
 
 ```ts twoslash input
 // @declaration
