@@ -14,6 +14,7 @@
       ]
     },
     "types": [
+      "node",
       "vite/client"
     ],
     "strict": true,
