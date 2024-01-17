@@ -21,7 +21,13 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   const useFS = !!createOptions.fsMap
   const _root = createOptions.vfsRoot!.replace(/\\/g, '/') // Normalize slashes
   const vfs = createOptions.fsMap || new Map<string, string>()
-  const system = useFS ? createSystem(vfs) : createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory)
+  const system = useFS
+    ? createSystem(vfs)
+    : {
+        ...createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory),
+        // To work with non-hoisted packages structure
+        realpath: ts.sys.realpath,
+      }
   const fsRoot = useFS ? '/' : `${_root}/`
 
   const cache = createOptions.cache === false
