@@ -443,6 +443,7 @@ export function findQueryMarkers(
         meta.positionHighlights.push([
           targetIndex,
           targetIndex + markerLength,
+          match[2]?.trim(),
         ])
       }
     })

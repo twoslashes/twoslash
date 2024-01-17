@@ -26,8 +26,10 @@ export interface NodeHover extends NodeBase {
   tags?: [name: string, text: string | undefined][]
 }
 
-export interface NodeHighlight extends Omit<NodeHover, 'type'> {
+export interface NodeHighlight extends NodeBase {
   type: 'highlight'
+  /** The annotation message */
+  text?: string
 }
 
 export interface NodeQuery extends Omit<NodeHover, 'type'> {

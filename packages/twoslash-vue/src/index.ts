@@ -85,7 +85,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       removals: [] as Range[],
       positionCompletions: [] as number[],
       positionQueries: [] as number[],
-      positionHighlights: [] as Range[],
+      positionHighlights: [] as TwoslashReturnMeta['positionHighlights'],
       flagNotations: [] as ParsedFlagNotation[],
     } satisfies Partial<TwoslashReturnMeta>
 
