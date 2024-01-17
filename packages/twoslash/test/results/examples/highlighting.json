@@ -95,7 +95,7 @@
       "character": 0
     },
     {
-      "type": "hover",
+      "type": "highlight",
       "text": "var Date: DateConstructor\nnew () => Date (+4 overloads)",
       "start": 138,
       "length": 4,
@@ -104,7 +104,7 @@
       "character": 22
     },
     {
-      "type": "highlight",
+      "type": "hover",
       "text": "var Date: DateConstructor\nnew () => Date (+4 overloads)",
       "start": 138,
       "length": 4,

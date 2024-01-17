@@ -74,15 +74,6 @@
       "character": 2
     },
     {
-      "type": "hover",
-      "text": "any",
-      "start": 327,
-      "length": 4,
-      "target": "code",
-      "line": 8,
-      "character": 8
-    },
-    {
       "type": "error",
       "start": 327,
       "length": 4,
@@ -91,6 +82,15 @@
       "id": "err-2339-599-4",
       "text": "Property 'code' does not exist on type 'NetworkState'.\n  Property 'code' does not exist on type 'NetworkLoadingState'.",
       "level": 1,
+      "line": 8,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 327,
+      "length": 4,
+      "target": "code",
       "line": 8,
       "character": 8
     },

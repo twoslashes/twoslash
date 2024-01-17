@@ -5,6 +5,8 @@ import { defaultHandbookOptions } from './defaults'
 import type { CompilerOptionDeclaration } from './types/internal'
 import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart } from './regexp'
 
+export { objectHash } from 'ohash'
+
 export function parsePrimitive(value: string, type: string): any {
   // eslint-disable-next-line valid-typeof
   if (typeof value === type)
@@ -252,7 +254,7 @@ export function resolveNodePositions(nodes: NodeWithoutPosition[], options: stri
 
   const resolved = nodes
     .filter(node => node.start >= 0)
-    .sort((a, b) => a.start - b.start) as TwoslashNode[]
+    .sort((a, b) => a.start - b.start || a.type.localeCompare(b.type)) as TwoslashNode[]
 
   resolved
     .forEach(node => Object.assign(node, indexToPos(node.start)))
@@ -447,7 +449,7 @@ export function findQueryMarkers(
 }
 
 /** De-extension a filename, used for going from an output file to the source */
-export function deExtensionify(filename: string) {
+export function removeTsExtension(filename: string) {
   // originally, .replace(".jsx", "").replace(".js", "").replace(".d.ts", "").replace(".map", "")
   const sansMapOrDTS = filename.replace(/\.d\.ts$/, '.ts').replace(/\.map$/, '')
   return sansMapOrDTS.replace(/\.[^/.]+$/, '')

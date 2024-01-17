@@ -2,15 +2,6 @@
   "code": "type Result = \"pass\" | \"fail\"\n\nconst hello = \"OK\"\n",
   "nodes": [
     {
-      "type": "hover",
-      "text": "type Result = \"pass\" | \"fail\"",
-      "start": 5,
-      "length": 6,
-      "target": "Result",
-      "line": 0,
-      "character": 5
-    },
-    {
       "type": "highlight",
       "text": "type Result = \"pass\" | \"fail\"",
       "start": 5,
@@ -21,6 +12,15 @@
     },
     {
       "type": "hover",
+      "text": "type Result = \"pass\" | \"fail\"",
+      "start": 5,
+      "length": 6,
+      "target": "Result",
+      "line": 0,
+      "character": 5
+    },
+    {
+      "type": "highlight",
       "text": "const hello: \"OK\"",
       "start": 37,
       "length": 5,
@@ -29,7 +29,7 @@
       "character": 6
     },
     {
-      "type": "highlight",
+      "type": "hover",
       "text": "const hello: \"OK\"",
       "start": 37,
       "length": 5,

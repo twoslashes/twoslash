@@ -1,6 +1,6 @@
 import ts from 'typescript'
 import { expect, it } from 'vitest'
-import { deExtensionify, getIdentifierTextSpans } from '../src/utils'
+import { getIdentifierTextSpans, removeTsExtension } from '../src/utils'
 
 it('gets the expected identifiers', () => {
   const file = ts.createSourceFile(
@@ -33,10 +33,10 @@ readdirSync(fixturesFolder).forEach(fixtureName => {
 })
 
 it('reduces filenames down', () => {
-  expect(deExtensionify('foo.ts')).toEqual('foo')
-  expect(deExtensionify('foo.tsx')).toEqual('foo')
-  expect(deExtensionify('foo.d.ts')).toEqual('foo')
-  expect(deExtensionify('foo.js.map')).toEqual('foo')
-  expect(deExtensionify('foo')).toEqual('foo')
-  expect(deExtensionify('foo.vue')).toEqual('foo')
+  expect(removeTsExtension('foo.ts')).toEqual('foo')
+  expect(removeTsExtension('foo.tsx')).toEqual('foo')
+  expect(removeTsExtension('foo.d.ts')).toEqual('foo')
+  expect(removeTsExtension('foo.js.map')).toEqual('foo')
+  expect(removeTsExtension('foo')).toEqual('foo')
+  expect(removeTsExtension('foo.vue')).toEqual('foo')
 })

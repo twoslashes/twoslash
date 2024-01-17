@@ -1,9 +1,8 @@
 import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
-import { objectHash } from 'ohash'
 import { TwoslashError } from './error'
 import type { CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
-import { areRangesIntersecting, createPositionConverter, deExtensionify, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, removeCodeRanges, resolveNodePositions, splitFiles, typesToExtension } from './utils'
+import { areRangesIntersecting, createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, isInRange, isInRanges, objectHash, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 import type { CompilerOptionDeclaration } from './types/internal'
@@ -265,14 +264,14 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
       // #region get completions
       for (const target of meta.positionCompletions) {
-        if (isInRemoval(target)) {
+        const file = getFileAtPosition(target)!
+        if (isInRemoval(target) || !file) {
           throw new TwoslashError(
             `Invalid completion query`,
             `The request on line ${pc.indexToPos(target).line + 2} for completions via ^| is in a removal range.`,
             `This is likely that the positioning is off.`,
           )
         }
-        const file = getFileAtPosition(target)!
 
         let prefix = code.slice(0, target).match(/[$_\w]+$/)?.[0] || ''
         prefix = prefix.split('.').pop()!
@@ -390,7 +389,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
           ? 'index.jsx'
           : 'index.js'
 
-      let emitSource = meta.virtualFiles.find(i => deExtensionify(i.filename) === deExtensionify(emitFilename))?.filename
+      let emitSource = meta.virtualFiles.find(i => removeTsExtension(i.filename) === removeTsExtension(emitFilename))?.filename
 
       if (!emitSource && !meta.compilerOptions.outFile) {
         const allFiles = meta.virtualFiles.map(i => i.filename).join(', ')

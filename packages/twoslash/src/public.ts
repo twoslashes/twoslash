@@ -13,6 +13,8 @@ export {
 
   removeCodeRanges,
   resolveNodePositions,
+
+  objectHash,
 } from './utils'
 
 export {

@@ -1,21 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { createTwoslasher } from '../src/index'
 
-const code = `
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-//             ^?
-
-const count = ref(0)
-const double = computed(() => count.value * 2)
-//     ^?
-</script>
-
-<template>
-  <button @click="count++">count is: {{ count }}</button>
-//           ^?
-</template>
-`
+const code = await import('./fixtures/query-basic.vue?raw').then(m => m.default)
 
 const twoslasher = createTwoslasher()
 
@@ -26,7 +12,7 @@ describe('basic', () => {
     expect(result.nodes.find(n => n.type === 'hover' && n.target === 'button'))
       .toHaveProperty('text', '(property) button: ButtonHTMLAttributes & ReservedProps')
     expect(result.nodes.find(n => n.type === 'hover' && n.target === 'click'))
-      .toHaveProperty('text', '(property) \'click\': ((payload: MouseEvent) => void) | undefined')
+      .toHaveProperty('text', `(property) 'click': ((payload: MouseEvent) => void) | undefined`)
   })
 
   it('has correct query', () => {
@@ -35,7 +21,8 @@ describe('basic', () => {
         [
           38,
           235,
-          1970,
+          2023,
+          2624,
         ]
       `)
 
@@ -48,8 +35,8 @@ describe('basic', () => {
           "character": 14,
           "docs": undefined,
           "length": 8,
-          "line": 2,
-          "start": 40,
+          "line": 1,
+          "start": 39,
           "tags": undefined,
           "target": "computed",
           "text": "(alias) const computed: {
@@ -61,10 +48,36 @@ describe('basic', () => {
         }
       `)
 
-    // TODO: support this, and also it should throw an error if it's not found
-    // expect(result.nodes.find(n => n.type === 'query' && n.target === 'click'))
-    //   .toMatchInlineSnapshot(`undefined`)
-    // expect(result.nodes.filter(n => n.type === 'query'))
-    //   .toHaveLength(3)
+    expect(result.nodes.find(n => n.type === 'query' && n.target === 'count'))
+      .toMatchInlineSnapshot(`
+        {
+          "character": 18,
+          "docs": undefined,
+          "length": 5,
+          "line": 9,
+          "start": 228,
+          "tags": undefined,
+          "target": "count",
+          "text": "(property) count: number",
+          "type": "query",
+        }
+      `)
+
+    expect(result.nodes.find(n => n.type === 'query' && n.target === 'click'))
+      .toMatchInlineSnapshot(`
+        {
+          "character": 11,
+          "docs": undefined,
+          "length": 5,
+          "line": 8,
+          "start": 163,
+          "tags": undefined,
+          "target": "click",
+          "text": "(property) onClick?: ((payload: MouseEvent) => void) | undefined",
+          "type": "query",
+        }
+      `)
+    expect(result.nodes.filter(n => n.type === 'query'))
+      .toHaveLength(4)
   })
 })

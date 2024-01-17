@@ -3,42 +3,7 @@ import { codeToHtml } from 'shikiji'
 import { createTransformerFactory, rendererRich } from 'shikiji-twoslash/core'
 import { createTwoslasher } from '../src'
 
-const code = `
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-//             ^?
-
-
-
-
-
-const count = ref(0)
-
-const double = computed(() => count.value * 2)
-//     ^?
-</script>
-
-<script>
-export default {
-  name: 'HelloWorld',
-  data() {
-    return {
-      msg: 'Hello!'
-    }
-  },
-  methods: {
-    greet() {
-      console.log(this.msg)
-    }
-  }
-}
-</script>
-
-<template>
-  <button @click="count++">{{ msg }} Count is: {{ count }}</button>
-//           ^?
-</template>
-`
+const code = await import('./fixtures/example.vue?raw').then(m => m.default)
 
 const styleHeader = [
   '<head>',
@@ -65,7 +30,7 @@ it('highlight vue', async () => {
   })
 
   expect(styleHeader + result)
-    .toMatchFileSnapshot('./results/example.vue.html')
+    .toMatchFileSnapshot('./results/renderer/example.vue.html')
 })
 
 const twoslasherRaw = createTwoslasher({
@@ -87,5 +52,5 @@ it('highlight raw', async () => {
   })
 
   expect(styleHeader + result)
-    .toMatchFileSnapshot('./results/example.raw.html')
+    .toMatchFileSnapshot('./results/renderer/example.raw.html')
 })
