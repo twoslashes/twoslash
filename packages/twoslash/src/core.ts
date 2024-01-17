@@ -26,7 +26,11 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     : {
         ...createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory),
         // To work with non-hoisted packages structure
-        realpath: ts.sys.realpath,
+        realpath(path: string) {
+          if (vfs.has(path))
+            return path
+          return ts.sys.realpath?.(path) || path
+        },
       }
   const fsRoot = useFS ? '/' : `${_root}/`
 

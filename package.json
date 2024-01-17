@@ -34,6 +34,7 @@
     "lint-staged": "^15.2.0",
     "lz-string": "^1.5.0",
     "mlly": "^1.5.0",
+    "preact": "^10.19.3",
     "pretty-format": "^29.7.0",
     "react": "^18.2.0",
     "shikiji": "^0.10.0-beta.3",
@@ -48,7 +49,8 @@
     "unbuild": "^2.0.0",
     "unplugin-vue-components": "^0.26.0",
     "vitepress-plugin-twoslash": "^0.10.0-beta.3",
-    "vitest": "^1.2.0"
+    "vitest": "^1.2.0",
+    "vue": "^3.4.14"
   },
   "resolutions": {
     "shikiji": "^0.10.0-beta.3",

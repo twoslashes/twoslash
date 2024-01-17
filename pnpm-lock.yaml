@@ -70,6 +70,9 @@ importers:
       mlly:
         specifier: ^1.5.0
         version: 1.5.0
+      preact:
+        specifier: ^10.19.3
+        version: 10.19.3
       pretty-format:
         specifier: ^29.7.0
         version: 29.7.0
@@ -115,6 +118,9 @@ importers:
       vitest:
         specifier: ^1.2.0
         version: 1.2.0(@types/node@20.11.4)
+      vue:
+        specifier: ^3.4.14
+        version: 3.4.14(typescript@5.3.3)
 
   docs:
     dependencies:
@@ -5438,7 +5444,6 @@ packages:
 
   /preact@10.19.3:
     resolution: {integrity: sha512-nHHTeFVBTHRGxJXKkKu5hT8C/YWBkPso4/Gad6xuj5dbptt9iF9NZr9pHbPhBrnT2klheu7mHTxTZ/LjwJiEiQ==}
-    dev: false
 
   /prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
