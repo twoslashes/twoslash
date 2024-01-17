@@ -1,0 +1,114 @@
+{
+  "code": "import { foo } from './foo'\n\ntype Example = {\n  name: 'foo' | 'bar' | 'baz'\n}\n\nconst example: Example = { name: 'foo' }\nexample.name === '   \n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "(alias) const foo: \"foo\"\nimport foo",
+      "start": 9,
+      "length": 3,
+      "target": "foo",
+      "line": 0,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "type Example = {\n    name: 'foo' | 'bar' | 'baz';\n}",
+      "start": 34,
+      "length": 7,
+      "target": "Example",
+      "line": 2,
+      "character": 5
+    },
+    {
+      "type": "hover",
+      "text": "(property) name: \"foo\" | \"bar\" | \"baz\"",
+      "start": 48,
+      "length": 4,
+      "target": "name",
+      "line": 3,
+      "character": 2
+    },
+    {
+      "type": "hover",
+      "text": "const example: Example",
+      "start": 85,
+      "length": 7,
+      "target": "example",
+      "line": 6,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "type Example = {\n    name: 'foo' | 'bar' | 'baz';\n}",
+      "start": 94,
+      "length": 7,
+      "target": "Example",
+      "line": 6,
+      "character": 15
+    },
+    {
+      "type": "hover",
+      "text": "(property) name: \"foo\" | \"bar\" | \"baz\"",
+      "start": 106,
+      "length": 4,
+      "target": "name",
+      "line": 6,
+      "character": 27
+    },
+    {
+      "type": "hover",
+      "text": "const example: Example",
+      "start": 120,
+      "length": 7,
+      "target": "example",
+      "line": 7,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(property) name: \"foo\" | \"bar\" | \"baz\"",
+      "start": 128,
+      "length": 4,
+      "target": "name",
+      "line": 7,
+      "character": 8
+    },
+    {
+      "type": "completion",
+      "start": 138,
+      "length": 0,
+      "completions": [
+        {
+          "name": "foo",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        },
+        {
+          "name": "bar",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        },
+        {
+          "name": "baz",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11"
+        }
+      ],
+      "completionsPrefix": "'",
+      "line": 7,
+      "character": 18
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": true,
+      "start": 0,
+      "end": 13
+    }
+  ]
+}

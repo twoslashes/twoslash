@@ -259,7 +259,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
           let completions: CompletionEntry[] = []
           // If matched with an identifier prefix
           if (prefix) {
-            const result = ls.getCompletionsAtPosition(filepath, target - 1, {
+            const result = ls.getCompletionsAtPosition(filepath, target - file.offset - 1, {
               triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
               includeCompletionsForModuleExports: false,
             })
@@ -269,7 +269,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
           else {
             prefix = code[target - 1]
             if (prefix) {
-              const result = ls.getCompletionsAtPosition(filepath, target, {
+              const result = ls.getCompletionsAtPosition(filepath, target - file.offset, {
                 triggerKind: 2 satisfies CompletionTriggerKind.TriggerCharacter,
                 triggerCharacter: prefix as any,
                 includeCompletionsForModuleExports: false,

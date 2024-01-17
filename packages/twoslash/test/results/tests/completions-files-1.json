@@ -1,0 +1,57 @@
+{
+  "code": "import { foo } from './foo'\n\nconsole.e \n\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "(alias) const foo: \"foo\"\nimport foo",
+      "start": 9,
+      "length": 3,
+      "target": "foo",
+      "line": 0,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "var console: Console",
+      "start": 29,
+      "length": 7,
+      "target": "console",
+      "line": 2,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 37,
+      "length": 1,
+      "target": "e",
+      "line": 2,
+      "character": 8
+    },
+    {
+      "type": "completion",
+      "start": 38,
+      "length": 0,
+      "completions": [
+        {
+          "name": "error",
+          "kind": "method",
+          "kindModifiers": "declare",
+          "sortText": "11"
+        }
+      ],
+      "completionsPrefix": "e",
+      "line": 2,
+      "character": 9
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": true,
+      "start": 0,
+      "end": 13
+    }
+  ]
+}
