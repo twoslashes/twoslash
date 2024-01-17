@@ -13,6 +13,9 @@
         "./packages/twoslash/src/index.ts"
       ]
     },
+    "types": [
+      "vite/client"
+    ],
     "strict": true,
     "esModuleInterop": true,
     "skipDefaultLibCheck": true,

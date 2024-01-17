@@ -112,6 +112,9 @@ importers:
       unplugin-vue-components:
         specifier: ^0.26.0
         version: 0.26.0(rollup@3.29.4)(vue@3.4.14)
+      vite:
+        specifier: ^5.0.11
+        version: 5.0.11(@types/node@20.11.4)(sass@1.69.7)
       vitepress-plugin-twoslash:
         specifier: ^0.10.0-beta.3
         version: 0.10.0-beta.3(typescript@5.3.3)
