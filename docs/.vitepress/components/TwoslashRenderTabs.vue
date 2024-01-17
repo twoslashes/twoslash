@@ -6,12 +6,6 @@ const props = defineProps<{
 }>()
 
 const tab = ref(props.preferInput ? 1 : 0)
-
-function triggerResize() {
-  // Workaround to floating-vue to force recalculation the floating position
-  // Awaits https://github.com/Akryum/floating-vue/pull/1010
-  window.dispatchEvent(new Event('resize'))
-}
 </script>
 
 <template>
