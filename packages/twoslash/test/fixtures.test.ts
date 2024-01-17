@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import fs from 'node:fs/promises'
 import { extname, join, parse } from 'node:path'
 import process from 'node:process'
@@ -5,93 +7,47 @@ import { describe, expect, it } from 'vitest'
 import type { TwoslashReturn } from '../src/types'
 import { createTwoslasher } from '../src/index'
 
-const isWindows = process.platform === 'win32'
-
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
 
-const fixturesFolder = join(__dirname, 'fixtures')
-const resultsFolder = join(__dirname, 'results')
+const fixtures = import.meta.glob('./fixtures/**/*.*', { as: 'raw' })
 
 const twoslasher = createTwoslasher()
 
-describe.skipIf(isWindows)('fixtures', async () => {
-  const fixturesTests = await fs.readdir(join(fixturesFolder, 'tests'))
+Object.entries(fixtures).forEach(([path, fixture]) => {
+  path = path.replace(/\\/g, '/')
+  const expectThrows = path.includes('/throws/')
+  const inExt = extname(path).slice(1)
+  const outExt = expectThrows ? '.txt' : '.json'
+  const outPath = path.replace('/fixtures/', '/results/').replace(/\.[^/.]+$/, outExt)
 
-  await Promise.all(
-    fixturesTests.map(async (fixtureName): Promise<void> => {
-      const fixture = join(fixturesFolder, 'tests', fixtureName)
-      if (await fs.lstat(fixture).then(r => r.isDirectory()))
-        return
-
-      // if(!fixtureName.includes("imports")) return
-      it(fixtureName, async () => {
-        const resultName = `${parse(fixtureName).name}.json`
-        const file = await fs.readFile(fixture, 'utf8')
-
-        const fourslashed = twoslasher(file, extname(fixtureName).substr(1), {
+  it(path, async () => {
+    let result: TwoslashReturn = undefined!
+    try {
+      result = twoslasher(
+        await fixture(),
+        inExt,
+        {
           customTags: ['annotate'],
-        })
-        expect(cleanFixture(fourslashed))
-          .toMatchFileSnapshot(join(resultsFolder, 'tests', resultName))
-      })
-    }),
-  )
-})
-
-describe('fixtures examples', async () => {
-  const fixturesFolder = join(__dirname, 'fixtures', 'examples')
-  const fixturesRoot = await fs.readdir(join(fixturesFolder))
-
-  await Promise.all(
-    fixturesRoot.map(async (fixtureName) => {
-      const fixture = join(fixturesFolder, fixtureName)
-      if (await fs.lstat(fixture).then(r => r.isDirectory()))
+        },
+      )
+    }
+    catch (err: any) {
+      if (expectThrows) {
+        expect(err.message).toMatchFileSnapshot(outPath)
         return
+      }
+    }
 
-      // if(!fixtureName.includes("compiler_fl")) return
-      it(fixtureName, async () => {
-        const resultName = `${parse(fixtureName).name}.json`
-        const file = await fs.readFile(fixture, 'utf8')
+    if (expectThrows) {
+      throw new Error('Expected to throw')
+    }
 
-        const fourslashed = twoslasher(file, extname(fixtureName).substr(1))
-        expect(cleanFixture(fourslashed))
-          .toMatchFileSnapshot(join(resultsFolder, 'examples', resultName))
-      })
-    }),
-  )
-})
-
-describe('fixtures throws', async () => {
-  const throwingFixturesFolder = join(__dirname, 'fixtures', 'throws')
-  const fixturesTrows = await fs.readdir(throwingFixturesFolder)
-
-  await Promise.all(
-    fixturesTrows.map(async (fixtureName) => {
-      const fixture = join(throwingFixturesFolder, fixtureName)
-      if (await fs.lstat(fixture).then(r => r.isDirectory()))
-        return
-
-      it(fixtureName, async () => {
-        const resultName = `${parse(fixtureName).name}.txt`
-
-        const file = await fs.readFile(fixture, 'utf8')
-
-        let thrown = false
-        try {
-          twoslasher(file, extname(fixtureName).substr(1))
-        }
-        catch (err) {
-          thrown = true
-          if (err instanceof Error)
-            expect(err.message).toMatchFileSnapshot(join(resultsFolder, 'throws', resultName))
-        }
-
-        if (!thrown)
-          throw new Error('Did not throw')
-      })
-    }),
-  )
+    else {
+      expect(cleanFixture(result))
+        .toMatchFileSnapshot(outPath)
+    }
+  })
 })
 
 function cleanFixture(ts: TwoslashReturn) {

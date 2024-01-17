@@ -5,9 +5,9 @@ import { describe, expect, it } from 'vitest'
 import { twoslasherLegacy } from '../src'
 
 describe('legacy', async () => {
-  await compareCode('./fixtures/examples/cuts_out_unnecessary_code.ts')
-  await compareCode('./fixtures/examples/errorsWithGenerics.ts')
-  await compareCode('./fixtures/examples/completions_basic.ts')
+  await compareCode('./fixtures/examples/cuts-out-unnecessary-code.ts')
+  await compareCode('./fixtures/examples/errors-with-generics.ts')
+  await compareCode('./fixtures/examples/completions-basic.ts')
 
   async function compareCode(path: string) {
     const code = await fs.readFile(new URL(path, import.meta.url), 'utf-8')
