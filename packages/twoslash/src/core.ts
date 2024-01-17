@@ -2,7 +2,7 @@ import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit }
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { TwoslashError } from './error'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
-import { areRangesIntersecting, createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, isInRange, isInRanges, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
+import { createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, isInRange, isInRanges, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 
