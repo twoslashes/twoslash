@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Options References
 
 ## Compiler Options
@@ -44,6 +48,11 @@ hello = 'hi' // supposed to be an error, but ignored because it's cutted
 ### `noErrorValidation`
 
 Disable error validation, the errors will still be rendered but Twoslash will not throw to guard against errors in the code.
+
+```ts twoslash input
+// @noErrorValidation
+const str: string = 1
+```
 
 ### `keepNotations`
 
