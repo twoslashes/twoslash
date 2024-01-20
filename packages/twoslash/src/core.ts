@@ -133,7 +133,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     // extract cuts
     meta.removals.push(...findCutNotations(code))
     // extract markers
-    findQueryMarkers(code, meta, pc.getIndexOfLineAbove)
+    findQueryMarkers(code, meta, pc)
 
     const supportedFileTyes = ['js', 'jsx', 'ts', 'tsx']
     meta.virtualFiles = splitFiles(code, defaultFilename, fsRoot)

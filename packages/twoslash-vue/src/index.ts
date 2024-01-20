@@ -95,7 +95,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
 
     const pc = createPositionConverter(code)
     // we get the markers with the original code so the position is correct
-    findQueryMarkers(code, sourceMeta, pc.getIndexOfLineAbove)
+    findQueryMarkers(code, sourceMeta, pc)
     const flagNotations = findFlagNotations(code, customTags, tsOptionDeclarations)
 
     // #region apply flags

@@ -137,23 +137,17 @@ export function createPositionConverter(code: string) {
 
   function posToIndex(line: number, character: number) {
     let index = 0
-    for (let i = 0; i < line - 1; i++)
+    for (let i = 0; i < line; i++)
       index += lines[i].length
 
     index += character
     return index
   }
 
-  function getIndexOfLineAbove(index: number): number {
-    const pos = indexToPos(index)
-    return posToIndex(pos.line, pos.character)
-  }
-
   return {
     lines,
     indexToPos,
     posToIndex,
-    getIndexOfLineAbove,
   }
 }
 
@@ -423,15 +417,22 @@ export function findCutNotations(code: string) {
 export function findQueryMarkers(
   code: string,
   meta: Pick<TwoslashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights' | 'removals'>,
-  getIndexOfLineAbove: (index: number) => number,
+  pc: ReturnType<typeof createPositionConverter>,
 ) {
   if (code.includes('//')) {
+    const linesQuery = new Set<number>()
     Array.from(code.matchAll(reAnnonateMarkers)).forEach((match) => {
       const type = match[1] as '?' | '|' | '^^'
       const index = match.index!
       meta.removals.push([index, index + match[0].length + 1])
       const markerIndex = match[0].indexOf('^')
-      const targetIndex = getIndexOfLineAbove(index + markerIndex)
+
+      const pos = pc.indexToPos(index + markerIndex)
+      let targetLine = pos.line - 1
+      while (linesQuery.has(targetLine) && targetLine >= 0)
+        targetLine -= 1
+
+      const targetIndex = pc.posToIndex(targetLine, pos.character)
       if (type === '?') {
         meta.positionQueries.push(targetIndex)
       }
@@ -446,6 +447,7 @@ export function findQueryMarkers(
           match[2]?.trim(),
         ])
       }
+      linesQuery.add(pos.line)
     })
   }
   return meta
