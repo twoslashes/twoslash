@@ -147,12 +147,12 @@ export const hello = 'world'
 
 > Shows the `.map` for the JavaScript -> TypeScript
 
-```ts
+```ts twoslash input
 // @declaration
 // @declarationMap
 // @showEmit
 // @showEmittedFile: index.d.ts.map
-export const hello = 'world'
+export const hello: string = 'world'
 ```
 
 > Shows the `.map` for a `.d.ts` (mainly used for project references)
@@ -168,4 +168,4 @@ import { helloWorld } from './a'
 console.log(helloWorld)
 ```
 
-> Shows `.js` file for `b.ts`
+It shows the emitted `.js` file for `b.ts`
