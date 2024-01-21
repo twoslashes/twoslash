@@ -1,6 +1,6 @@
 # Installation
 
-The package `twoslash` is relatively a low-level tool that generating raw type information for the given TypeScript code snippets. **This page will force on low-level programtic usages**. If you are looking for a higher-level tool, check the [integrations](/guide/integrations) section.
+The package `twoslash` is relatively a low-level tool that generating raw type information for the given TypeScript code snippets. **This page will focus on low-level programtic usages**. If you are looking for a higher-level tool, check the [Syntax Highlighting](/guide/highlight) section.
 
 To install the `twoslash` package, run the following command:
 
