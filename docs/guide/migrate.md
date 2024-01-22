@@ -1,6 +1,6 @@
 # Migration Guide
 
-Mirgrating from [`@typescript/twoslash`](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher).
+Migrating from [`@typescript/twoslash`](https://github.com/microsoft/TypeScript-Website/tree/v2/packages/ts-twoslasher).
 
 Consider `twoslash` as the successor of `@typescript/twoslash` that maintained and driven by the community. It has been rewritten to provide better performance and more flexible APIs.
 
@@ -9,7 +9,7 @@ Consider `twoslash` as the successor of `@typescript/twoslash` that maintained a
 Breaking changes from `@typescript/twoslash`:
 
 1. The returned items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `nodes`. Learn more at the [Information Nodes](#information-nodes) section.
-2. Main entry point `import {} from "twoslash"` depdent on `typescript` package, while a new sub-entry `import {} from "twoslash/core"` is dependency-free and requires providing your own typescript instance.
+2. Main entry point `import {} from "twoslash"` dependent on `typescript` package, while a new sub-entry `import {} from "twoslash/core"` is dependency-free and requires providing your own TypeScript instance.
 3. `defaultOptions` is renamed to `handbookOptions`.
 4. `defaultCompilerOptions` is renamed to `compilerOptions`.
 5. The default `compilerOptions` is set to `target: "esnext"` instead of `target: "es5"`, [learn more](https://github.com/twoslashes/twoslash/blob/main/packages/twoslash/src/defaults.ts).
@@ -27,7 +27,7 @@ const result = twoslasherLegacy('import { ref } from "vue"', 'ts')
 console.log(result.staticQuickInfos) // the old interface
 ```
 
-You can also compose it your own by only converting the return value:
+You can also compose it yourself by only converting the return value:
 
 ```ts twoslash
 import { convertLegacyReturn, twoslasher } from 'twoslash'

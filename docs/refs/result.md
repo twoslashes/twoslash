@@ -10,13 +10,13 @@ The return value of Twoslash contains the following information:
 import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, TwoslashNode, TwoslashReturnMeta } from 'twoslash'
 // ---cut---
 export interface TwoslashReturn {
-  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
+  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts. */
   code: string
-  /** Nodes containing various bits of information about the code */
+  /** Nodes containing various bits of information about the code. */
   nodes: TwoslashNode[]
-  /** The meta information the twoslash run */
+  /** The meta information the twoslash run. */
   meta: TwoslashReturnMeta
-  /** Getters shorthand */
+  /** Getters shorthand. */
   get queries(): NodeQuery[]
   get completions(): NodeCompletion[]
   get errors(): NodeError[]
@@ -112,8 +112,8 @@ A list of the index ranges of the code removed by Twoslash from the original cod
 
 ### `meta.compilerOptions`
 
-The final resolved [`compilerOptions`](/refs/options#compiler-options)
+The final resolved [`compilerOptions`](/refs/options#compiler-options).
 
 ### `meta.handbookOptions`
 
-The final resolved [`handbookOptions`](/refs/options#handbook-options)
+The final resolved [`handbookOptions`](/refs/options#handbook-options).

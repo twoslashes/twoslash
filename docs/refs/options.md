@@ -16,7 +16,7 @@ Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packag
 
 ### `errors`
 
-TypeScript error codes to be presented in the code. Use space to separate multiple error codes.
+TypeScript error codes to be presented in the code. Use spaces to separate multiple error codes.
 
 ```ts twoslash input
 // @errors: 2322 2588
@@ -26,7 +26,7 @@ str = 'Hello'
 
 ### `noErrors`
 
-Suppress errors in the code. Or provide error codes to suppress specific errors.
+Suppress all errors in the code. You can also provide error codes to suppress specific errors.
 
 ```ts twoslash input
 // @noErrors
@@ -42,7 +42,7 @@ Ignore errors that occurred in the cutted code.
 // @noErrorsCutted
 const hello = 'world'
 // ---cut-after---
-hello = 'hi' // supposed to be an error, but ignored because it's cutted
+hello = 'hi' // Supposed to be an error, but ignored because it's cutted.
 ```
 
 ### `noErrorValidation`

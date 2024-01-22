@@ -8,11 +8,11 @@ Twoslash runs a TypeScript language server to get the information, which could b
 import { createTwoslasher } from 'twoslash'
 
 const twoslasher = createTwoslasher({
-  // you can have some default options here
+  // ...your custom options.
 })
 
 const result1 = twoslasher('import { ref } from "vue"', 'ts')
-// the second time will be much faster as the types from `vue` is already
+// The second time will be much faster as the types from `vue` is already.
 const result2 = twoslasher('import { computed } from "vue"', 'ts')
 ```
 
@@ -27,9 +27,9 @@ import { createTwoslasher } from 'twoslash'
 
 const twoslasher = createTwoslasher()
 
-// do something
+// Do something...
 
-// Clear the cached language servers, free the memory
+// Clear the cached language servers, free the memory.
 twoslasher.getCacheMap()?.clear()
 ```
 
