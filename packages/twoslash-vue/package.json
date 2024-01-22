@@ -1,7 +1,7 @@
 {
   "name": "twoslash-vue",
   "type": "module",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "Extended Twoslash for Vue SFC support",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
