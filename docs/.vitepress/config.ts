@@ -149,7 +149,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2019-PRESENT Orta Therox, 2023-PRESENT Anthony Fu.',
+      copyright: 'Copyright © 2019-PRESENT Orta Therox, Anthony Fu.',
     },
   },
 
@@ -159,7 +159,7 @@ export default defineConfig({
     ['meta', { name: 'author', content: 'Orta Therox, Anthony Fu' }],
     ['meta', { property: 'og:title', content: 'Twoslash' }],
     ['meta', { property: 'og:image', content: 'https://twoslash.netlify.app/og.png' }],
-    ['meta', { property: 'og:description', content: 'A beautiful and powerful syntax highlighter' }],
+    ['meta', { property: 'og:description', content: 'Markup for generating rich type information in your documentations ahead of time.' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:image', content: 'https://twoslash.netlify.app/og.png' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' }],
