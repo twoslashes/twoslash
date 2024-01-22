@@ -18,10 +18,14 @@
           <br>
           the syntax engine of Visual Studio Code
           <br>
-          mixed with the TypeScript compiler’s information
+          mixed with the TypeScript compiler's information
         </p>
 
-        <div my-15>
+        <a href="/guide/" class="action-button" inline-block my-10>
+          Get Started
+        </a>
+
+        <div mb-15 mt-5>
           <img class="dark:invert" style="margin: 0 auto" src="/svgs/squiggle.svg" alt="Decoration" width="70" height="25.5">
         </div>
 
