@@ -4,14 +4,13 @@ outline: deep
 
 # Introduction
 
-A markup format for TypeScript code, ideal for creating self-contained code samples which let the TypeScript compiler do the extra leg-work. Inspired
-by the [fourslash test system](https://github.com/orta/typescript-notes/blob/master/systems/testing/fourslash.md).
+A markup format for TypeScript code, ideal for creating self-contained code samples which let the TypeScript compiler do the extra leg-work. Inspired by the [fourslash test system](https://github.com/orta/typescript-notes/blob/master/systems/testing/fourslash.md).
 
 Used as a pre-parser before showing code samples inside the TypeScript website and to create a standard way for us to create examples for bugs on the compiler's issue tracker.
 
 ### What is Twoslash?
 
-It might be easier to show instead of telling, here is an example of code from the TypeScript handbook. We'll use
+It might be easier to show instead of tell. Here is an example of code from the TypeScript handbook. We'll use
 twoslash to let the compiler handle error messaging and provide rich highlight info.
 
 ##### Before
