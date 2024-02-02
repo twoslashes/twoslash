@@ -39,7 +39,7 @@ function add(a: number, b: number) {
 }
 ```
 
-It depends on how the integrations renderer that informations. Typically, the [Shikiji integration](https://twoslash.netlify.app/guide/highlight) wraps them with a `.twoslash-highlighted` class, and the styling is up to you.
+It depends on how the integrations renderer that informations. Typically, the [Shiki integration](https://twoslash.netlify.app/guide/highlight) wraps them with a `.twoslash-highlighted` class, and the styling is up to you.
 
 ## Cutting a Code Sample
 

@@ -53,4 +53,4 @@ console.log({
 })
 ```
 
-With this, you can render the code snippets how you want. Or, you can check the [Syntax Highlighting](/guide/highlight) section to see how you use it along with a tool like Shikiji to get beautiful syntax highlighting.
+With this, you can render the code snippets how you want. Or, you can check the [Syntax Highlighting](/guide/highlight) section to see how you use it along with a tool like Shiki to get beautiful syntax highlighting.

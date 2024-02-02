@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "shikiji": "^0.10.0",
-    "shikiji-twoslash": "^0.10.0"
+    "@shikijs/twoslash": "^1.0.0-beta.5",
+    "shiki": "^1.0.0-beta.5"
   },
   "devDependencies": {
     "idb-keyval": "^6.2.1",

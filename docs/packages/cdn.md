@@ -71,12 +71,12 @@ Refresh the page after loading once, you will see the execution is much faster a
 
 Fetching files from CDN is asynchronous, and there is no way to make the whole process synchronous. But if you can run some asynchronous code beforehand, we do provide API to separate the asynchronous part and the synchronous part.
 
-For example, in [Shikiji](https://shikiji.netlify.app/), the `codeToHtml` function is synchronous as well as the [`shikiji-twoslash` transformer](https://shikiji.netlify.app/packages/twoslash).
+For example, in [Shiki](https://shiki.style/), the `codeToHtml` function is synchronous as well as the [`@shikijs/twoslash` transformer](https://shiki.style/packages/twoslash).
 
 ```ts
 import { createTwoslashFromCDN } from 'twoslash-cdn'
-import { createHighlighter } from 'shikiji'
-import { transformerTwoslash } from 'shikiji-twoslash'
+import { createHighlighter } from 'shiki'
+import { transformerTwoslash } from '@shikijs/twoslash'
 
 const highlighter = await createHighlighter({})
 

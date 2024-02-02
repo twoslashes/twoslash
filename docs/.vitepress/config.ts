@@ -1,7 +1,7 @@
 import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
-import { bundledThemes } from 'shikiji'
-import { transformerTwoslash } from 'vitepress-plugin-twoslash'
+import { bundledThemes } from 'shiki'
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { version } from '../../package.json'
 import vite from './vite.config'
 
@@ -39,16 +39,14 @@ export default defineConfig({
       light: 'vitesse-light',
       dark: 'vitesse-dark',
     },
-    async shikijiSetup(shikiji) {
-      await Promise.all(Object.keys(bundledThemes).map(async (theme) => {
-        await shikiji.loadTheme(theme as any)
-      }))
+    async shikiSetup(shiki) {
+      await shiki.loadTheme(...Object.keys(bundledThemes) as any)
     },
     codeTransformers: [
       transformerTwoslash(),
       {
         // Render custom themes with codeblocks
-        name: 'shikiji:inline-theme',
+        name: 'twoslash:inline-theme',
         preprocess(code, options) {
           const reg = /\btheme:([\w,-]+)\b/
           const match = options.meta?.__raw?.match(reg)
@@ -80,7 +78,7 @@ export default defineConfig({
         },
       },
       {
-        name: 'shikiji:remove-escape',
+        name: 'twoslash:remove-escape',
         postprocess(code) {
           return code.replace(/\[\\\!code/g, '[!code')
         },
