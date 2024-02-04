@@ -6,6 +6,7 @@
       "dom",
       "esnext"
     ],
+    "moduleDetection": "force",
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
@@ -13,12 +14,15 @@
         "./packages/twoslash/src/index.ts"
       ]
     },
+    "resolveJsonModule": true,
     "types": [
       "node",
       "vite/client"
     ],
+    "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
