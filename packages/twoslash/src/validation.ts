@@ -7,7 +7,7 @@ export function validateCodeForErrors(
   handbookOptions: { errors: number[] },
   vfsRoot: string,
 ) {
-  const unspecifiedErrors = relevantErrors.filter(e => !handbookOptions.errors.includes(e.code))
+  const unspecifiedErrors = relevantErrors.filter(e => e.code && !handbookOptions.errors.includes(e.code as number))
   const errorsFound = Array.from(new Set(unspecifiedErrors.map(e => e.code))).join(' ')
 
   if (unspecifiedErrors.length) {

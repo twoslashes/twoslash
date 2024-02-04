@@ -170,14 +170,14 @@ export function convertLegacyReturn(result: TwoslashReturn): TwoslashReturnLegac
 
     errors: result.errors
       .map((e): TwoslashReturnLegacy['errors'][0] => ({
-        id: e.id,
+        id: e.id ?? '',
         code: e.code,
         start: e.start,
         length: e.length,
         line: e.line,
         character: e.character,
         renderedMessage: e.text,
-        category: e.level,
+        category: e.level ?? 1,
       })),
 
     playgroundURL: '',

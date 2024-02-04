@@ -46,11 +46,28 @@ export interface NodeCompletion extends NodeBase {
 
 export interface NodeError extends NodeBase {
   type: 'error'
-  id: string
-  level: 0 | 1 | 2 | 3
+  id?: string
+  /**
+   * Error level:
+   *
+   * Warning = 0
+   * Error = 1
+   * Suggestion = 2
+   * Message = 3
+   */
+  level?: 0 | 1 | 2 | 3
+  /**
+   * Error code
+   */
   code: number
+  /**
+   * Error message
+   */
   text: string
-  filename: string
+  /**
+   * The filename of the file the error is in
+   */
+  filename?: string
 }
 
 export interface NodeTag extends NodeBase {
