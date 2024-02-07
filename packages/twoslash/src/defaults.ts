@@ -1,4 +1,4 @@
-import type { CompilerOptions, ModuleKind, ScriptTarget } from 'typescript'
+import type { CompilerOptions, ModuleDetectionKind, ModuleKind, ScriptTarget } from 'typescript'
 import type { HandbookOptions } from './types'
 
 export const defaultCompilerOptions: CompilerOptions = {
@@ -8,6 +8,7 @@ export const defaultCompilerOptions: CompilerOptions = {
   allowJs: true,
   skipDefaultLibCheck: true,
   skipLibCheck: true,
+  moduleDetection: 3 satisfies ModuleDetectionKind.Force,
 }
 
 export const defaultHandbookOptions: HandbookOptions = {
