@@ -13,7 +13,7 @@ const fixtures = import.meta.glob('./fixtures/**/*.*', { as: 'raw' })
 
 // A temporary list of regex to match with the path of the file to test
 const filters: RegExp[] = [
-  // /completions-files/,
+  // /completions-edge-2/,
 ]
 
 if (process.env.CI && filters.length)

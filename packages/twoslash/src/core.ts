@@ -296,7 +296,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
             triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
             includeCompletionsForModuleExports: false,
           })
-          completions = (result?.entries ?? [])
+          completions = result?.entries ?? []
           prefix = (completions[0]?.replacementSpan && code.slice(
             completions[0].replacementSpan.start,
             target,
@@ -313,6 +313,15 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
               includeCompletionsForModuleExports: false,
             })
             completions = result?.entries ?? []
+            if (completions[0].replacementSpan?.length) {
+              prefix = (completions[0]?.replacementSpan && code.slice(
+                completions[0].replacementSpan.start,
+                target,
+              )) || prefix
+              const newCompletions = completions.filter(i => i.name.startsWith(prefix))
+              if (newCompletions.length)
+                completions = newCompletions
+            }
           }
         }
 
@@ -320,7 +329,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
           const pos = pc.indexToPos(target)
           throw new TwoslashError(
             `Invalid completion query`,
-            `The request on line ${pos.line} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
+            `The request on line ${pos.line} in ${file.filename} for completions via ^| returned no completions from the compiler. (prefix: ${prefix})`,
             `This is likely that the positioning is off.`,
           )
         }
