@@ -263,13 +263,19 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         prefix = prefix.split('.').pop()!
 
         let completions: CompletionEntry[] = []
+
         // If matched with an identifier prefix
         if (prefix) {
           const result = ls.getCompletionsAtPosition(file.filepath, target - file.offset - 1, {
             triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
             includeCompletionsForModuleExports: false,
           })
-          completions = (result?.entries ?? []).filter(i => i.name.startsWith(prefix)) || []
+          completions = (result?.entries ?? [])
+          prefix = (completions[0]?.replacementSpan && code.slice(
+            completions[0].replacementSpan.start,
+            target,
+          )) || prefix
+          completions = completions.filter(i => i.name.startsWith(prefix))
         }
         // If not, we try to trigger with character (e.g. `.`, `'`, `"`)
         else {
