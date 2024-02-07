@@ -3,7 +3,9 @@ import type { HandbookOptions } from './handbook-options'
 import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, Range, TwoslashNode } from './nodes'
 
 export interface TwoslashReturn {
-  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
+  /**
+   * The output code, could be TypeScript, but could also be a JS/JSON/d.ts
+   */
   code: string
 
   /**
@@ -78,4 +80,6 @@ export interface VirtualFile {
   content: string
   extension: string
   supportLsp?: boolean
+  prepend?: string
+  append?: string
 }

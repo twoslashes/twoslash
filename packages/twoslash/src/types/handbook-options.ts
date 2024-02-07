@@ -1,7 +1,9 @@
-/** Available inline flags which are not compiler flags */
+/**
+ * Available inline flags which are not compiler flags
+ */
 export interface HandbookOptions {
   /**
-   *  An array of TS error codes, which you write as space separated - this is so the tool can know about unexpected errors
+   * An array of TS error codes, which you write as space separated - this is so the tool can know about unexpected errors
    */
   errors: number[]
   /**

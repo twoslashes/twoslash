@@ -4,7 +4,7 @@ import type { CompletionEntry } from 'typescript'
  * Basic node with start and length to represent a range in the code
  */
 export interface NodeStartLength {
-/** 0-indexed position of the node in the file */
+  /** 0-indexed position of the node in the file */
   start: number
   /** The length of the node */
   length: number

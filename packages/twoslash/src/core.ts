@@ -80,6 +80,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       customTags = createOptions.customTags || [],
       shouldGetHoverInfo = createOptions.shouldGetHoverInfo || (() => true),
       filterNode = createOptions.filterNode,
+      extraFiles = createOptions.extraFiles || {},
     } = options
 
     const defaultFilename = `index.${meta.extension}`
@@ -142,7 +143,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     function getIdentifiersOfFile(file: VirtualFile) {
       if (!identifiersMap.has(file.filename)) {
         const source = env.getSourceFile(file.filepath)!
-        identifiersMap.set(file.filename, getIdentifierTextSpans(ts, source, file.offset))
+        identifiersMap.set(file.filename, getIdentifierTextSpans(ts, source, file.offset - (file.prepend?.length || 0)))
       }
       return identifiersMap.get(file.filename)!
     }
@@ -152,7 +153,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     }
 
     function getQuickInfo(file: VirtualFile, start: number, target: string): NodeWithoutPosition | undefined {
-      const quickInfo = ls.getQuickInfoAtPosition(file.filepath, start - file.offset)
+      const quickInfo = ls.getQuickInfoAtPosition(file.filepath, getOffsetInFile(start, file))
 
       if (quickInfo && quickInfo.displayParts) {
         const text = quickInfo.displayParts.map(dp => dp.text).join('')
@@ -172,16 +173,41 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       }
     }
 
+    Object.entries(extraFiles)
+      .forEach(([filename, content]) => {
+        if (!meta.virtualFiles.find(i => i.filename === filename)) {
+          env.createFile(
+            fsRoot + filename,
+            typeof content === 'string'
+              ? content
+              : (content.prepend || '') + (content.append || ''),
+          )
+        }
+      })
+
     // # region write files into the FS
     for (const file of meta.virtualFiles) {
       // Only run the LSP-y things on source files
       if (supportedFileTyes.includes(file.extension) || (file.extension === 'json' && meta.compilerOptions.resolveJsonModule)) {
         file.supportLsp = true
-        env.createFile(file.filepath, file.content)
+        const extra = extraFiles[file.filename]
+        if (extra && typeof extra !== 'string') {
+          file.append = extra.append
+          file.prepend = extra.prepend
+        }
+        env.createFile(file.filepath, getFileContent(file))
         getIdentifiersOfFile(file)
       }
     }
     // #endregion
+
+    function getOffsetInFile(offset: number, file: VirtualFile) {
+      return offset - file.offset + (file.prepend?.length || 0)
+    }
+
+    function getFileContent(file: VirtualFile) {
+      return (file.prepend || '') + file.content + (file.append || '')
+    }
 
     if (!meta.handbookOptions.showEmit) {
       for (const file of meta.virtualFiles) {
@@ -266,7 +292,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
         // If matched with an identifier prefix
         if (prefix) {
-          const result = ls.getCompletionsAtPosition(file.filepath, target - file.offset - 1, {
+          const result = ls.getCompletionsAtPosition(file.filepath, getOffsetInFile(target, file) - 1, {
             triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
             includeCompletionsForModuleExports: false,
           })
@@ -281,7 +307,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         else {
           prefix = code[target - 1]
           if (prefix) {
-            const result = ls.getCompletionsAtPosition(file.filepath, target - file.offset, {
+            const result = ls.getCompletionsAtPosition(file.filepath, getOffsetInFile(target, file), {
               triggerKind: 2 satisfies CompletionTriggerKind.TriggerCharacter,
               triggerCharacter: prefix as any,
               includeCompletionsForModuleExports: false,
@@ -318,7 +344,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         continue
 
       if (meta.handbookOptions.noErrors !== true) {
-        env.updateFile(file.filepath, file.content)
+        env.updateFile(file.filepath, getFileContent(file))
         const diagnostics = [
           ...ls.getSemanticDiagnostics(file.filepath),
           ...ls.getSyntacticDiagnostics(file.filepath),
@@ -331,7 +357,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
             continue
           if (ignores.includes(diagnostic.code))
             continue
-          const start = diagnostic.start! + file.offset
+          const start = diagnostic.start! + file.offset - (file.prepend?.length || 0)
           if (meta.handbookOptions.noErrorsCutted && isInRemoval(start))
             continue
           errorNodes.push({
@@ -372,7 +398,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         const { code: removedCode } = removeCodeRanges(outputCode, meta.removals)
         const files = splitFiles(removedCode, defaultFilename, fsRoot)
         for (const file of files)
-          env.updateFile(file.filepath, file.content)
+          env.updateFile(file.filepath, getFileContent(file))
       }
 
       const emitFilename = meta.handbookOptions.showEmittedFile
@@ -427,6 +453,12 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       : createPositionConverter(outputCode).indexToPos
 
     const resolvedNodes = resolveNodePositions(nodes, indexToPos)
+
+    // cleanup
+    for (const file of meta.virtualFiles)
+      env.createFile(file.filepath, '')
+    for (const file of Object.keys(extraFiles))
+      env.createFile(fsRoot + file, '')
 
     return {
       code: outputCode,
