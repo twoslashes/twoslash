@@ -214,6 +214,21 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(@types/node@20.11.16)(sass@1.70.0)
 
+  packages/twoslash-cli:
+    dependencies:
+      chokidar:
+        specifier: ^3.5.3
+        version: 3.5.3
+      commander:
+        specifier: ^11.1.0
+        version: 11.1.0
+      twoslash:
+        specifier: workspace:*
+        version: link:../twoslash
+      typescript:
+        specifier: '*'
+        version: 5.3.3
+
   packages/twoslash-protocol: {}
 
   packages/twoslash-vue:
@@ -2784,7 +2799,6 @@ packages:
   /commander@11.1.0:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
-    dev: true
 
   /commander@7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}

@@ -1,8 +1,4 @@
-#!/usr/bin/env node
 /* eslint-disable no-console */
-
-'use strict'
-
 import { readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
