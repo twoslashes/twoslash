@@ -1,6 +1,6 @@
-import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit } from 'typescript'
+import type { type CompilerOptions, type CompletionEntry, type CompletionTriggerKind, DiagnosticCategory, type JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
-import type { NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
+import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
 import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import { TwoslashError } from './error'
 import { validateCodeForErrors } from './validation'
@@ -379,7 +379,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
             filename: file.filename,
             id: `err-${diagnostic.code}-${start}-${diagnostic.length}`,
             text: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
-            level: diagnostic.category,
+            level: diagnosticCategoryToErrorLevel(diagnostic.category),
           })
         }
       }
@@ -514,4 +514,19 @@ export function twoslasher(code: string, lang?: string, opts?: Partial<TwoslashO
     ...opts,
     cache: false,
   })(code, lang)
+}
+
+function diagnosticCategoryToErrorLevel(e: DiagnosticCategory): ErrorLevel | undefined {
+  switch (e) {
+    case 0:
+      return 'warning'
+    case 1:
+      return 'error'
+    case 2:
+      return 'suggestion'
+    case 3:
+      return 'message'
+    default:
+      return undefined
+  }
 }

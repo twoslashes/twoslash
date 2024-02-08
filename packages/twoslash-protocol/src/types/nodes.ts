@@ -47,22 +47,20 @@ export interface NodeCompletion extends NodeBase {
   completionsPrefix: string
 }
 
+export type ErrorLevel = 'warning' | 'error' | 'suggestion' | 'message'
+
 export interface NodeError extends NodeBase {
   type: 'error'
   id?: string
   /**
-   * Error level:
-   *
-   * Warning = 0
-   * Error = 1
-   * Suggestion = 2
-   * Message = 3
+   * Error level
+   * When not provided, defaults to 'error'
    */
-  level?: 0 | 1 | 2 | 3
+  level?: ErrorLevel
   /**
    * Error code
    */
-  code: number
+  code?: number | string
   /**
    * Error message
    */
