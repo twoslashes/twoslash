@@ -20,7 +20,9 @@
       "require": "./dist/index.cjs"
     },
     "./types": {
-      "types": "./dist/types.d.mts"
+      "types": "./dist/types.d.mts",
+      "import": "./dist/types.mjs",
+      "require": "./dist/types.cjs"
     }
   },
   "main": "dist/index.mjs",
