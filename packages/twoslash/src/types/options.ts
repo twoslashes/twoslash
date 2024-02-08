@@ -1,7 +1,7 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { CompilerOptions, CustomTransformers } from 'typescript'
+import type { NodeWithoutPosition } from 'twoslash-protocol'
 import type { HandbookOptions } from './handbook-options'
-import type { NodeWithoutPosition } from './nodes'
 import type { TwoslashReturnMeta } from './returns'
 
 export type TS = typeof import('typescript')
@@ -21,33 +21,47 @@ export interface TwoslashOptions extends CreateTwoslashOptions, TwoslashExecuteO
  * Options for twoslash instance
  */
 export interface TwoslashExecuteOptions extends Partial<Pick<TwoslashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights'>> {
-  /** Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers */
+  /**
+   * Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers
+   */
   handbookOptions?: Partial<HandbookOptions>
 
-  /** Allows setting any of the compiler options from outside the function */
+  /**
+   * Allows setting any of the compiler options from outside the function
+   */
   compilerOptions?: CompilerOptions
 
-  /** A set of known `// @[tags]` tags to extract and not treat as a comment */
+  /**
+   * A set of known `// @[tags]` tags to extract and not treat as a comment
+   */
   customTags?: string[]
 
   /**
    * A custom hook to filter out hover info for certain identifiers
    */
   shouldGetHoverInfo?: (identifier: string, start: number, filename: string) => boolean
+
   /**
    * A custom predicate to filter out nodes for further processing
    */
   filterNode?: (node: NodeWithoutPosition) => boolean
+
+  /**
+   * Extra files to to added to the virtual file system, or prepended/appended to existing files
+   */
+  extraFiles?: ExtraFiles
 }
+
+export type ExtraFiles = Record<string, string | { prepend?: string, append?: string }>
 
 export interface CreateTwoslashOptions extends TwoslashExecuteOptions {
   /**
-   *  Allows applying custom transformers to the emit result, only useful with the showEmit output
+   * Allows applying custom transformers to the emit result, only useful with the showEmit output
    */
   customTransformers?: CustomTransformers
 
   /**
-   *  An optional copy of the TypeScript import, if missing it will be require'd.
+   * An optional copy of the TypeScript import, if missing it will be require'd.
    */
   tsModule?: TS
 
@@ -62,7 +76,9 @@ export interface CreateTwoslashOptions extends TwoslashExecuteOptions {
    */
   fsMap?: Map<string, string>
 
-  /** The cwd for the folder which the virtual fs should be overlaid on top of when using local fs, opts to process.cwd() if not present */
+  /**
+   * The cwd for the folder which the virtual fs should be overlaid on top of when using local fs, opts to process.cwd() if not present
+   */
   vfsRoot?: string
 
   /**

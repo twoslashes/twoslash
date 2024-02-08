@@ -13,7 +13,7 @@ Run Twoslash on the browsers or web workers, with [Auto-Type-Acquisition](https:
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/twoslash-cdn?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-src]: https://img.shields.io/npm/v/twoslash-cdn?style=flat&colorA=161514&colorB=EAB836
 [npm-version-href]: https://npmjs.com/package/twoslash-cdn
-[npm-downloads-src]: https://img.shields.io/npm/dm/twoslash-cdn?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-src]: https://img.shields.io/npm/dm/twoslash-cdn?style=flat&colorA=161514&colorB=E66041
 [npm-downloads-href]: https://npmjs.com/package/twoslash-cdn

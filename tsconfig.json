@@ -6,19 +6,29 @@
       "dom",
       "esnext"
     ],
+    "moduleDetection": "force",
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
       "twoslash": [
         "./packages/twoslash/src/index.ts"
+      ],
+      "twoslash-protocol/types": [
+        "./packages/twoslash-protocol/src/types.ts"
+      ],
+      "twoslash-protocol": [
+        "./packages/twoslash-protocol/src/index.ts"
       ]
     },
+    "resolveJsonModule": true,
     "types": [
       "node",
       "vite/client"
     ],
+    "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },

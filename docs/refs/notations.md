@@ -39,7 +39,7 @@ function add(a: number, b: number) {
 }
 ```
 
-It depends on how the integrations renderer that informations. Typically, the [Shikiji integration](https://twoslash.netlify.app/guide/highlight) wraps them with a `.twoslash-highlighted` class, and the styling is up to you.
+It depends on how the integrations renderer that informations. Typically, the [Shiki integration](https://twoslash.netlify.app/guide/highlight) wraps them with a `.twoslash-highlighted` class, and the styling is up to you.
 
 ## Cutting a Code Sample
 
@@ -83,12 +83,12 @@ console.log('This is not shown')
 
 ### `// ---cut-start---` and `// ---cut-end---`
 
-You can also use `// ---cut-start---` and `// ---cut-end---` paris to cut out sections of code in between the two sigils.
+You can also use `// ---cut-start---` and `// ---cut-end---` pairs to cut out sections of code in between the two sigils.
 
 ```ts twoslash input
 const level: string = 'Danger'
 // ---cut-start---
-console.log(level) // This is not shown
+console.log(level) // This is not shown.
 // ---cut-end---
 console.log('This is shown')
 ```
@@ -106,7 +106,7 @@ For example:
 // @target: esnext
 // @lib: esnext
 // This suppose to throw an error,
-// but it won't because we disabled noImplicitAny
+// but it won't because we disabled noImplicitAny.
 const fn = a => a + 1
 ```
 
@@ -136,7 +136,7 @@ While the `.js` file is probably the most useful file out of the box, TypeScript
 export const hello = 'world'
 ```
 
-> Shows the `.d.ts` for a TypeScript code sample
+> Shows the `.d.ts` for a TypeScript code sample.
 
 ```ts twoslash input
 // @sourceMap
@@ -145,7 +145,7 @@ export const hello = 'world'
 export const hello = 'world'
 ```
 
-> Shows the `.map` for the JavaScript -> TypeScript
+> Shows the `.map` for the JavaScript -> TypeScript.
 
 ```ts twoslash input
 // @declaration
@@ -155,7 +155,7 @@ export const hello = 'world'
 export const hello: string = 'world'
 ```
 
-> Shows the `.map` for a `.d.ts` (mainly used for project references)
+> Shows the `.map` for a `.d.ts` (mainly used for project references).
 
 ```ts twoslash input
 // @showEmit
@@ -168,4 +168,4 @@ import { helloWorld } from './a'
 console.log(helloWorld)
 ```
 
-It shows the emitted `.js` file for `b.ts`
+It shows the emitted `.js` file for `b.ts`.

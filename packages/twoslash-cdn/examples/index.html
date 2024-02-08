@@ -4,8 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Twoslash + Shikiji on CDN Example</title>
-    <link rel="stylesheet" href="https://esm.sh/shikiji-twoslash/style-rich.css" />
+    <title>Twoslash + Shiki on CDN Example</title>
+    <link rel="stylesheet" href="https://esm.sh/@shikijs/twoslash/style-rich.css" />
     <style>
       html {
         color-scheme: dark;
@@ -26,8 +26,8 @@
   <body>
     <p>
       This is an example of running
-      <a href="https://github.com/antfu/twoslash-cdn" target="_blank"> Twoslash </a>
-      + <a href="https://shikiji.netlify.app/" target="_blank">Shikiji</a> on CDN. This page is
+      <a href="https://github.com/twoslashes/twoslash" target="_blank"> Twoslash </a>
+      + <a href="https://shiki.style/" target="_blank">Shiki</a> on CDN. This page is
       <a href="https://github.com/antfu/twoslash-cdn/blob/main/examples/index.html" target="_blank">
         a single static HTML file</a
       >.
@@ -35,8 +35,8 @@
     <div id="app">Loading...</div>
     <script type="module">
       // TODO: Replace with explicit versions in production
-      import { createTransformerFactory, rendererRich } from 'https://esm.sh/shikiji-twoslash@latest/core'
-      import { codeToHtml } from 'https://esm.sh/shikiji@latest'
+      import { createTransformerFactory, rendererRich } from 'https://esm.sh/shiki-twoslash@latest/core'
+      import { codeToHtml } from 'https://esm.sh/shiki@latest'
       import { createStorage } from 'https://esm.sh/unstorage@latest'
       import indexedDbDriver from 'https://esm.sh/unstorage@latest/drivers/indexedb'
       import { createTwoslashFromCDN } from 'https://esm.sh/twoslash-cdn@latest'
@@ -66,7 +66,7 @@
       const source = `
 import { ref } from '@vue/reactivity'
 
-console.log("Hi! Shikiji + Twoslash on CDN :)")
+console.log("Hi! Shiki + Twoslash on CDN :)")
 
 const count = ref(0)
 //     ^?

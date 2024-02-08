@@ -47,7 +47,7 @@
       "filename": "index.ts",
       "id": "err-2322-89-1",
       "text": "Type 'Record<string, string>' is not assignable to type 'Record<string, number>'.\n  'string' index signatures are incompatible.\n    Type 'string' is not assignable to type 'number'.",
-      "level": 1,
+      "level": "error",
       "line": 2,
       "character": 0
     },

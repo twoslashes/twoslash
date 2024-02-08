@@ -12,5 +12,5 @@ export interface TwoslashInstance {
   /**
    * Get the internal cache map
    */
-  getCacheMap(): Map<string, VirtualTypeScriptEnvironment> | undefined
+  getCacheMap: () => Map<string, VirtualTypeScriptEnvironment> | undefined
 }

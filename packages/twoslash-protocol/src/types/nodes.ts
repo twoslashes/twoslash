@@ -1,10 +1,8 @@
-import type { CompletionEntry } from 'typescript'
-
 /**
  * Basic node with start and length to represent a range in the code
  */
 export interface NodeStartLength {
-/** 0-indexed position of the node in the file */
+  /** 0-indexed position of the node in the file */
   start: number
   /** The length of the node */
   length: number
@@ -36,6 +34,11 @@ export interface NodeQuery extends Omit<NodeHover, 'type'> {
   type: 'query'
 }
 
+export interface CompletionEntry {
+  name: string
+  kind?: string
+}
+
 export interface NodeCompletion extends NodeBase {
   type: 'completion'
   /** Results for completions at a particular point */
@@ -44,13 +47,28 @@ export interface NodeCompletion extends NodeBase {
   completionsPrefix: string
 }
 
+export type ErrorLevel = 'warning' | 'error' | 'suggestion' | 'message'
+
 export interface NodeError extends NodeBase {
   type: 'error'
-  id: string
-  level: 0 | 1 | 2 | 3
-  code: number
+  id?: string
+  /**
+   * Error level
+   * When not provided, defaults to 'error'
+   */
+  level?: ErrorLevel
+  /**
+   * Error code
+   */
+  code?: number | string
+  /**
+   * Error message
+   */
   text: string
-  filename: string
+  /**
+   * The filename of the file the error is in
+   */
+  filename?: string
 }
 
 export interface NodeTag extends NodeBase {

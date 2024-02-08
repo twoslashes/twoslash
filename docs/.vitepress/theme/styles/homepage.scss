@@ -6,6 +6,10 @@ main.main-intro {
   justify-content: center;
   align-items: center;
 
+  @media screen and (max-width: 800px) {
+    padding: 0 0;
+  }
+
   .eu {
     font-family: "euclid";
     font-size: 20rem;
@@ -45,9 +49,9 @@ main.main-intro {
   a {
     text-decoration: underline;
   }
-  
+
   article.container {
-    padding: 4.5rem 0;
+    padding: 6rem 0;
     margin-bottom: 6rem;
     display: flex;
     flex-direction: column;
@@ -56,9 +60,24 @@ main.main-intro {
     width: 100%;
     background-color: rgb(251 246 232 / 0.5);
 
+    @media screen and (max-width: 800px) {
+      padding: 3rem 0;
+    }
+
     html.dark & {
       background-color: rgb(30 30 30);
     }
+  }
+
+  .action-button {
+    border: 1px solid #e76143;
+    border-left: 4px solid #e76143;
+    padding: 10px 12px 5px 12px;
+    text-decoration: none;
+  }
+  .action-button:hover {
+    background: #e76143;
+    color: white;
   }
 
   .border-red {

@@ -1,10 +1,12 @@
-import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit } from 'typescript'
+import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
+import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
+import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
-import { createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, isInRange, isInRanges, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
+import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
 
 export * from './public'
 
@@ -80,6 +82,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       customTags = createOptions.customTags || [],
       shouldGetHoverInfo = createOptions.shouldGetHoverInfo || (() => true),
       filterNode = createOptions.filterNode,
+      extraFiles = createOptions.extraFiles || {},
     } = options
 
     const defaultFilename = `index.${meta.extension}`
@@ -142,7 +145,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     function getIdentifiersOfFile(file: VirtualFile) {
       if (!identifiersMap.has(file.filename)) {
         const source = env.getSourceFile(file.filepath)!
-        identifiersMap.set(file.filename, getIdentifierTextSpans(ts, source, file.offset))
+        identifiersMap.set(file.filename, getIdentifierTextSpans(ts, source, file.offset - (file.prepend?.length || 0)))
       }
       return identifiersMap.get(file.filename)!
     }
@@ -152,7 +155,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     }
 
     function getQuickInfo(file: VirtualFile, start: number, target: string): NodeWithoutPosition | undefined {
-      const quickInfo = ls.getQuickInfoAtPosition(file.filepath, start - file.offset)
+      const quickInfo = ls.getQuickInfoAtPosition(file.filepath, getOffsetInFile(start, file))
 
       if (quickInfo && quickInfo.displayParts) {
         const text = quickInfo.displayParts.map(dp => dp.text).join('')
@@ -172,16 +175,41 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       }
     }
 
+    Object.entries(extraFiles)
+      .forEach(([filename, content]) => {
+        if (!meta.virtualFiles.find(i => i.filename === filename)) {
+          env.createFile(
+            fsRoot + filename,
+            typeof content === 'string'
+              ? content
+              : (content.prepend || '') + (content.append || ''),
+          )
+        }
+      })
+
     // # region write files into the FS
     for (const file of meta.virtualFiles) {
       // Only run the LSP-y things on source files
       if (supportedFileTyes.includes(file.extension) || (file.extension === 'json' && meta.compilerOptions.resolveJsonModule)) {
         file.supportLsp = true
-        env.createFile(file.filepath, file.content)
+        const extra = extraFiles[file.filename]
+        if (extra && typeof extra !== 'string') {
+          file.append = extra.append
+          file.prepend = extra.prepend
+        }
+        env.createFile(file.filepath, getFileContent(file))
         getIdentifiersOfFile(file)
       }
     }
     // #endregion
+
+    function getOffsetInFile(offset: number, file: VirtualFile) {
+      return offset - file.offset + (file.prepend?.length || 0)
+    }
+
+    function getFileContent(file: VirtualFile) {
+      return (file.prepend || '') + file.content + (file.append || '')
+    }
 
     if (!meta.handbookOptions.showEmit) {
       for (const file of meta.virtualFiles) {
@@ -263,24 +291,39 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         prefix = prefix.split('.').pop()!
 
         let completions: CompletionEntry[] = []
+
         // If matched with an identifier prefix
         if (prefix) {
-          const result = ls.getCompletionsAtPosition(file.filepath, target - file.offset - 1, {
+          const result = ls.getCompletionsAtPosition(file.filepath, getOffsetInFile(target, file) - 1, {
             triggerKind: 1 satisfies CompletionTriggerKind.Invoked,
             includeCompletionsForModuleExports: false,
           })
-          completions = (result?.entries ?? []).filter(i => i.name.startsWith(prefix)) || []
+          completions = result?.entries ?? []
+          prefix = (completions[0]?.replacementSpan && code.slice(
+            completions[0].replacementSpan.start,
+            target,
+          )) || prefix
+          completions = completions.filter(i => i.name.startsWith(prefix))
         }
         // If not, we try to trigger with character (e.g. `.`, `'`, `"`)
         else {
           prefix = code[target - 1]
           if (prefix) {
-            const result = ls.getCompletionsAtPosition(file.filepath, target - file.offset, {
+            const result = ls.getCompletionsAtPosition(file.filepath, getOffsetInFile(target, file), {
               triggerKind: 2 satisfies CompletionTriggerKind.TriggerCharacter,
               triggerCharacter: prefix as any,
               includeCompletionsForModuleExports: false,
             })
             completions = result?.entries ?? []
+            if (completions[0].replacementSpan?.length) {
+              prefix = (completions[0]?.replacementSpan && code.slice(
+                completions[0].replacementSpan.start,
+                target,
+              )) || prefix
+              const newCompletions = completions.filter(i => i.name.startsWith(prefix))
+              if (newCompletions.length)
+                completions = newCompletions
+            }
           }
         }
 
@@ -288,7 +331,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
           const pos = pc.indexToPos(target)
           throw new TwoslashError(
             `Invalid completion query`,
-            `The request on line ${pos.line} in ${file.filename} for completions via ^| returned no completions from the compiler.`,
+            `The request on line ${pos.line} in ${file.filename} for completions via ^| returned no completions from the compiler. (prefix: ${prefix})`,
             `This is likely that the positioning is off.`,
           )
         }
@@ -312,7 +355,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         continue
 
       if (meta.handbookOptions.noErrors !== true) {
-        env.updateFile(file.filepath, file.content)
+        env.updateFile(file.filepath, getFileContent(file))
         const diagnostics = [
           ...ls.getSemanticDiagnostics(file.filepath),
           ...ls.getSyntacticDiagnostics(file.filepath),
@@ -325,7 +368,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
             continue
           if (ignores.includes(diagnostic.code))
             continue
-          const start = diagnostic.start! + file.offset
+          const start = diagnostic.start! + file.offset - (file.prepend?.length || 0)
           if (meta.handbookOptions.noErrorsCutted && isInRemoval(start))
             continue
           errorNodes.push({
@@ -336,7 +379,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
             filename: file.filename,
             id: `err-${diagnostic.code}-${start}-${diagnostic.length}`,
             text: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
-            level: diagnostic.category,
+            level: diagnosticCategoryToErrorLevel(diagnostic.category),
           })
         }
       }
@@ -366,7 +409,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         const { code: removedCode } = removeCodeRanges(outputCode, meta.removals)
         const files = splitFiles(removedCode, defaultFilename, fsRoot)
         for (const file of files)
-          env.updateFile(file.filepath, file.content)
+          env.updateFile(file.filepath, getFileContent(file))
       }
 
       const emitFilename = meta.handbookOptions.showEmittedFile
@@ -422,6 +465,12 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
     const resolvedNodes = resolveNodePositions(nodes, indexToPos)
 
+    // cleanup
+    for (const file of meta.virtualFiles)
+      env.createFile(file.filepath, '')
+    for (const file of Object.keys(extraFiles))
+      env.createFile(fsRoot + file, '')
+
     return {
       code: outputCode,
       nodes: resolvedNodes,
@@ -465,4 +514,19 @@ export function twoslasher(code: string, lang?: string, opts?: Partial<TwoslashO
     ...opts,
     cache: false,
   })(code, lang)
+}
+
+function diagnosticCategoryToErrorLevel(e: DiagnosticCategory): ErrorLevel | undefined {
+  switch (e) {
+    case 0:
+      return 'warning'
+    case 1:
+      return 'error'
+    case 2:
+      return 'suggestion'
+    case 3:
+      return 'message'
+    default:
+      return undefined
+  }
 }

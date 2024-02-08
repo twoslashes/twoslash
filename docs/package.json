@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "docs:dev": "vitepress dev",
@@ -8,13 +8,13 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
-    "@unocss/reset": "^0.58.3",
+    "@unocss/reset": "^0.58.5",
     "@vueuse/core": "^10.7.2",
-    "floating-vue": "^5.2.0",
+    "floating-vue": "^5.2.2",
     "fuse.js": "^7.0.0",
     "sass": "^1.70.0",
-    "unocss": "^0.58.3",
-    "vitepress": "^1.0.0-rc.39",
-    "vue": "^3.4.15"
+    "unocss": "^0.58.5",
+    "vitepress": "^1.0.0-rc.42",
+    "vue": "^3.4.16"
   }
 }

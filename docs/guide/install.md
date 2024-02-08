@@ -1,6 +1,6 @@
 # Installation
 
-The package `twoslash` is relatively a low-level tool that generating raw type information for the given TypeScript code snippets. **This page will focus on low-level programtic usages**. If you are looking for a higher-level tool, check the [Syntax Highlighting](/guide/highlight) section.
+The package `twoslash` is relatively a low-level tool that generating raw type information for the given TypeScript code snippets. **This page will focus on low-level programmatic usage**. If you are looking for a higher-level tool, check the [Syntax Highlighting](/guide/highlight) section.
 
 To install the `twoslash` package, run the following command:
 
@@ -37,7 +37,7 @@ const twoslasher = createTwoslasher()
 const result = twoslasher(code)
 ```
 
-It will outputs a JavaScript object that contains static type information for each identifier in the code:
+It will output a JavaScript object that contains static type information for each identifier in the code:
 
 ```ts eval
 import { createTwoslasher } from 'twoslash'

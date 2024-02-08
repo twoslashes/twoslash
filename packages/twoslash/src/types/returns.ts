@@ -1,16 +1,8 @@
 import type { CompilerOptions } from 'typescript'
+import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, Range, TwoslashGenericResult } from 'twoslash-protocol'
 import type { HandbookOptions } from './handbook-options'
-import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, Range, TwoslashNode } from './nodes'
 
-export interface TwoslashReturn {
-  /** The output code, could be TypeScript, but could also be a JS/JSON/d.ts */
-  code: string
-
-  /**
-   * Nodes containing various bits of information about the code
-   */
-  nodes: TwoslashNode[]
-
+export interface TwoslashReturn extends TwoslashGenericResult {
   /**
    * The meta information the twoslash run
    */
@@ -78,4 +70,6 @@ export interface VirtualFile {
   content: string
   extension: string
   supportLsp?: boolean
+  prepend?: string
+  append?: string
 }

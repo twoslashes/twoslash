@@ -18,7 +18,7 @@
       "filename": "index.ts",
       "id": "err-7006-49-1",
       "text": "Parameter 's' implicitly has an 'any' type.",
-      "level": 1,
+      "level": "error",
       "line": 1,
       "character": 12
     },

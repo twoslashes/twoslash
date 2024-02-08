@@ -1,0 +1,71 @@
+{
+  "code": "type A = '@foo' | '@bar' | '/foo' | '/bar'\n\nconst b: A = '/'\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "type A = \"@foo\" | \"@bar\" | \"/foo\" | \"/bar\"",
+      "start": 5,
+      "length": 1,
+      "target": "A",
+      "line": 0,
+      "character": 5
+    },
+    {
+      "type": "hover",
+      "text": "const b: A",
+      "start": 50,
+      "length": 1,
+      "target": "b",
+      "line": 2,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "type A = \"@foo\" | \"@bar\" | \"/foo\" | \"/bar\"",
+      "start": 53,
+      "length": 1,
+      "target": "A",
+      "line": 2,
+      "character": 9
+    },
+    {
+      "type": "completion",
+      "start": 59,
+      "length": 0,
+      "completions": [
+        {
+          "name": "/foo",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 71,
+            "length": 1
+          }
+        },
+        {
+          "name": "/bar",
+          "kindModifiers": "",
+          "kind": "string",
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 71,
+            "length": 1
+          }
+        }
+      ],
+      "completionsPrefix": "/",
+      "line": 2,
+      "character": 15
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": true,
+      "start": 0,
+      "end": 13
+    }
+  ]
+}

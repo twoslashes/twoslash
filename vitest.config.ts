@@ -1,12 +1,10 @@
-import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      twoslash: fileURLToPath(new URL('./packages/twoslash/src/index.ts', import.meta.url)),
-    },
-  },
+  plugins: [
+    tsconfigPaths(),
+  ],
   test: {
     benchmark: {
       // reporters: ['default', 'json'],

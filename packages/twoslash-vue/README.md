@@ -16,7 +16,7 @@ Extended Twoslash for Vue SFC support.
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/twoslash-vue?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-src]: https://img.shields.io/npm/v/twoslash-vue?style=flat&colorA=161514&colorB=EAB836
 [npm-version-href]: https://npmjs.com/package/twoslash-vue
-[npm-downloads-src]: https://img.shields.io/npm/dm/twoslash-vue?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-src]: https://img.shields.io/npm/dm/twoslash-vue?style=flat&colorA=161514&colorB=E66041
 [npm-downloads-href]: https://npmjs.com/package/twoslash-vue

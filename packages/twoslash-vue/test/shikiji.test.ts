@@ -1,13 +1,13 @@
 import { expect, it } from 'vitest'
-import { codeToHtml } from 'shikiji'
-import { createTransformerFactory, rendererRich } from 'shikiji-twoslash/core'
+import { codeToHtml } from 'shiki'
+import { createTransformerFactory, rendererRich } from '@shikijs/twoslash/core'
 import { createTwoslasher } from '../src'
 
 const code = await import('./fixtures/example.vue?raw').then(m => m.default)
 
 const styleHeader = [
   '<head>',
-  `<link rel="stylesheet" href="https://esm.sh/shikiji-twoslash@0.9.18/style-rich.css" />`,
+  `<link rel="stylesheet" href="https://esm.sh/@shikijs/twoslash@1.0.0-beta.5/style-rich.css" />`,
   `<style>:root { color-scheme: dark; --twoslash-popup-bg: #222; }</style>`,
   '</head>',
   '',
