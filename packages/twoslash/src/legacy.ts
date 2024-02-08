@@ -1,4 +1,5 @@
 import type { CompilerOptions } from 'typescript'
+import type { ErrorLevel } from 'twoslash-protocol'
 import type { HandbookOptions, TwoslashExecuteOptions, TwoslashReturn } from './types'
 
 export interface TwoslashOptionsLegacy extends TwoslashExecuteOptions {
@@ -162,7 +163,7 @@ export function convertLegacyReturn(result: TwoslashReturn): TwoslashReturnLegac
           start: q.start,
           length: q.length,
           line: q.line + 1,
-          completions: q.completions,
+          completions: q.completions as any,
           completionsPrefix: q.completionsPrefix,
         })),
     ] as TwoslashReturnLegacy['queries'])
@@ -171,15 +172,25 @@ export function convertLegacyReturn(result: TwoslashReturn): TwoslashReturnLegac
     errors: result.errors
       .map((e): TwoslashReturnLegacy['errors'][0] => ({
         id: e.id ?? '',
-        code: e.code,
+        code: e.code as number,
         start: e.start,
         length: e.length,
         line: e.line,
         character: e.character,
         renderedMessage: e.text,
-        category: e.level ?? 1,
+        category: errorLevelToCategory(e.level),
       })),
 
     playgroundURL: '',
   }
+}
+
+function errorLevelToCategory(level?: ErrorLevel) {
+  switch (level) {
+    case 'warning': return 0
+    case 'suggestion': return 2
+    case 'message': return 3
+    case 'error': return 1
+  }
+  return 1
 }

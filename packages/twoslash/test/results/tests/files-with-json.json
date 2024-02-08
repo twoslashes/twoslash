@@ -36,7 +36,7 @@
       "filename": "index.ts",
       "id": "err-2367-271-18",
       "text": "This comparison appears to be unintentional because the types 'boolean' and 'number' have no overlap.",
-      "level": 1,
+      "level": "error",
       "line": 10,
       "character": 0
     },

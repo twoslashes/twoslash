@@ -1,4 +1,4 @@
-import type { NodeErrorWithoutPosition } from './types'
+import type { NodeErrorWithoutPosition } from 'twoslash-protocol'
 import { TwoslashError } from './error'
 
 /** To ensure that errors are matched up right */

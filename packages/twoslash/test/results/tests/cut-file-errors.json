@@ -81,7 +81,7 @@
       "filename": "index.ts",
       "id": "err-2339-599-4",
       "text": "Property 'code' does not exist on type 'NetworkState'.\n  Property 'code' does not exist on type 'NetworkLoadingState'.",
-      "level": 1,
+      "level": "error",
       "line": 8,
       "character": 8
     },

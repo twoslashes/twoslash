@@ -1,10 +1,12 @@
-import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, JsxEmit } from 'typescript'
+import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
+import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
+import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, CreateTwoslashOptions, NodeError, NodeWithoutPosition, Position, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
-import { createPositionConverter, findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, isInRange, isInRanges, removeCodeRanges, removeTsExtension, resolveNodePositions, splitFiles, typesToExtension } from './utils'
 import { validateCodeForErrors } from './validation'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
+import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
 
 export * from './public'
 
@@ -377,7 +379,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
             filename: file.filename,
             id: `err-${diagnostic.code}-${start}-${diagnostic.length}`,
             text: ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n'),
-            level: diagnostic.category,
+            level: diagnosticCategoryToErrorLevel(diagnostic.category),
           })
         }
       }
@@ -512,4 +514,19 @@ export function twoslasher(code: string, lang?: string, opts?: Partial<TwoslashO
     ...opts,
     cache: false,
   })(code, lang)
+}
+
+function diagnosticCategoryToErrorLevel(e: DiagnosticCategory): ErrorLevel | undefined {
+  switch (e) {
+    case 0:
+      return 'warning'
+    case 1:
+      return 'error'
+    case 2:
+      return 'suggestion'
+    case 3:
+      return 'message'
+    default:
+      return undefined
+  }
 }
