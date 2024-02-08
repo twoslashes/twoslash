@@ -73,7 +73,7 @@ export default defineConfig({
           async (_, quotes, lang, optionsPre, optionsPost, code) => {
             // eslint-disable-next-line no-console
             console.log('markdown eval', { lang, code })
-            const logos = []
+            const logs: any[][] = []
             const _console = globalThis.console
 
             const filename = resolve(id, '..', `.eval.${new Date().getTime()}.${lang}`)
@@ -81,13 +81,13 @@ export default defineConfig({
 
             globalThis.console = {
               log: (...args: any[]) => {
-                logos.push(args)
+                logs.push(args)
               },
               error: (...args: any[]) => {
-                logos.push(args)
+                logs.push(args)
               },
               warn: (...args: any[]) => {
-                logos.push(args)
+                logs.push(args)
               },
             } as any
 
@@ -105,7 +105,7 @@ export default defineConfig({
 
             return [
               `${quotes}ts ${optionsPre} ${optionsPost}`,
-              logos.map(args => args.map(a => format(a, {
+              logs.map(args => args.map(a => format(a, {
                 printBasicPrototype: false,
                 printFunctionName: false,
               })).join(' ')).join('\n'),
