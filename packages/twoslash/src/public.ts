@@ -5,15 +5,9 @@ export * from './types'
 export * from './defaults'
 
 export {
-  createPositionConverter,
-
   findCutNotations,
   findFlagNotations,
   findQueryMarkers,
-
-  removeCodeRanges,
-  resolveNodePositions,
-
   getObjectHash,
 } from './utils'
 

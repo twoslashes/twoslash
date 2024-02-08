@@ -1,15 +1,15 @@
 {
-  "name": "twoslash",
+  "name": "twoslash-protocol",
   "type": "module",
   "version": "0.1.2",
-  "description": "Markup for generating rich type information in your documentations ahead of time",
-  "author": "TypeScript team",
+  "description": "The protocol for the Twoslash interface",
+  "author": "Anthony Fu",
   "license": "MIT",
   "homepage": "https://github.com/twoslashes/twoslash",
   "repository": {
     "url": "https://github.com/twoslashes/twoslash",
     "type": "git",
-    "directory": "packages/twoslash"
+    "directory": "packages/twoslash-protocol"
   },
   "bugs": {
     "url": "https://github.com/twoslashes/twoslash/issues"
@@ -19,30 +19,25 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
-    "./core": {
-      "import": "./dist/core.mjs",
-      "require": "./dist/core.cjs"
+    "./types": {
+      "types": "./dist/types.d.mts"
     }
   },
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.mts",
+  "typesVersions": {
+    "*": {
+      "./types": ["./dist/types.d.mts"],
+      "*": ["./dist/index.d.mts"]
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "unbuild",
     "prepublishOnly": "nr build"
-  },
-  "peerDependencies": {
-    "typescript": "*"
-  },
-  "dependencies": {
-    "@typescript/vfs": "1.5.0",
-    "twoslash-protocol": "workspace:*"
-  },
-  "devDependencies": {
-    "ohash": "^1.1.3"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

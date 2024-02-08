@@ -12,6 +12,9 @@
     "paths": {
       "twoslash": [
         "./packages/twoslash/src/index.ts"
+      ],
+      "twoslash-protocol": [
+        "./packages/twoslash-protocol/src/index.ts"
       ]
     },
     "resolveJsonModule": true,

@@ -1,5 +1,3 @@
-import type { CompletionEntry } from 'typescript'
-
 /**
  * Basic node with start and length to represent a range in the code
  */
@@ -34,6 +32,11 @@ export interface NodeHighlight extends NodeBase {
 
 export interface NodeQuery extends Omit<NodeHover, 'type'> {
   type: 'query'
+}
+
+export interface CompletionEntry {
+  name: string
+  kind?: string
 }
 
 export interface NodeCompletion extends NodeBase {

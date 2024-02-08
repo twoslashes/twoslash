@@ -13,16 +13,18 @@ import type {
   TwoslashReturnMeta,
 } from 'twoslash'
 import {
-  createPositionConverter,
   createTwoslasher as createTwoslasherBase,
   defaultCompilerOptions,
   defaultHandbookOptions,
   findFlagNotations,
   findQueryMarkers,
   getObjectHash,
+} from 'twoslash'
+import {
+  createPositionConverter,
   removeCodeRanges,
   resolveNodePositions,
-} from 'twoslash'
+} from 'twoslash-protocol'
 
 export interface VueSpecificOptions {
   /**

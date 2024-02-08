@@ -1,4 +1,5 @@
 import type { CompilerOptions } from 'typescript'
+import type { CompletionEntry } from 'twoslash-protocol'
 import type { HandbookOptions, TwoslashExecuteOptions, TwoslashReturn } from './types'
 
 export interface TwoslashOptionsLegacy extends TwoslashExecuteOptions {
@@ -162,7 +163,7 @@ export function convertLegacyReturn(result: TwoslashReturn): TwoslashReturnLegac
           start: q.start,
           length: q.length,
           line: q.line + 1,
-          completions: q.completions,
+          completions: q.completions as any,
           completionsPrefix: q.completionsPrefix,
         })),
     ] as TwoslashReturnLegacy['queries'])

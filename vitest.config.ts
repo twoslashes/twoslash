@@ -4,7 +4,8 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   resolve: {
     alias: {
-      twoslash: fileURLToPath(new URL('./packages/twoslash/src/index.ts', import.meta.url)),
+      'twoslash': fileURLToPath(new URL('./packages/twoslash/src/index.ts', import.meta.url)),
+      'twoslash-protocol': fileURLToPath(new URL('./packages/twoslash-protocol/src/index.ts', import.meta.url)),
     },
   },
   test: {
