@@ -17,4 +17,4 @@ export interface TwoslashGenericResult {
   nodes: TwoslashNode[]
 }
 
-export type TwoslashGenericFunction<Options> = (code: string, filename?: string, options?: Options) => TwoslashGenericResult
+export type TwoslashGenericFunction<Options = never> = (code: string, filename?: string, options?: Options) => TwoslashGenericResult

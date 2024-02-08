@@ -18,6 +18,9 @@
       ],
       "twoslash-protocol": [
         "./packages/twoslash-protocol/src/index.ts"
+      ],
+      "twoslash-eslint": [
+        "./packages/twoslash-eslint/src/index.ts"
       ]
     },
     "resolveJsonModule": true,
@@ -32,9 +35,14 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true
   },
+  "include": [
+    "packages/*/test/*.ts",
+    "packages/*/src/*.ts",
+    "docs/.vitepress/**/*.ts"
+  ],
   "exclude": [
-    "**/test/fixtures",
-    "**/test/results",
-    "**/dist"
+    "**/test/fixtures/**",
+    "**/test/results/**",
+    "**/dist/**"
   ]
 }

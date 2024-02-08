@@ -1,0 +1,29 @@
+{
+  "code": "   console.log('Hello' + 'World')\n",
+  "nodes": [
+    {
+      "type": "error",
+      "id": "style/indent",
+      "code": 0,
+      "text": "Expected indentation of 0 spaces but found 3. ([style/indent](https://eslint.style/rules/ts/indent))",
+      "start": 0,
+      "length": 3,
+      "level": "error",
+      "filename": "index.ts",
+      "line": 0,
+      "character": 0
+    },
+    {
+      "type": "error",
+      "id": "no-console",
+      "code": 0,
+      "text": "Unexpected console statement. (no-console)",
+      "start": 3,
+      "length": 11,
+      "level": "error",
+      "filename": "index.ts",
+      "line": 0,
+      "character": 3
+    }
+  ]
+}

@@ -5,9 +5,6 @@
 
 Extended Twoslash for Vue SFC support.
 
-> [!IMPORTANT]
-> Working in Progress.
-
 [📚 Documentation](https://twoslash.netlify.app/packages/vue)
 
 ## License
