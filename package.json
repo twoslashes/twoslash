@@ -19,10 +19,10 @@
     "@antfu/eslint-config": "^2.6.4",
     "@iconify-json/ri": "^1.1.19",
     "@iconify-json/svg-spinners": "^1.1.2",
-    "@shikijs/markdown-it": "^1.0.0",
-    "@shikijs/transformers": "^1.0.0",
-    "@shikijs/twoslash": "^1.0.0",
-    "@shikijs/vitepress-twoslash": "^1.0.0",
+    "@shikijs/markdown-it": "^1.1.0",
+    "@shikijs/transformers": "^1.1.0",
+    "@shikijs/twoslash": "^1.1.0",
+    "@shikijs/vitepress-twoslash": "^1.1.0",
     "@types/node": "^20.11.16",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
@@ -41,7 +41,7 @@
     "preact": "^10.19.4",
     "pretty-format": "^29.7.0",
     "react": "^18.2.0",
-    "shiki": "^1.0.0",
+    "shiki": "^1.1.0",
     "simple-git-hooks": "^2.9.0",
     "tslib": "^2.6.2",
     "twoslash": "workspace:*",
@@ -55,11 +55,6 @@
     "vite-tsconfig-paths": "^4.3.1",
     "vitest": "^1.2.2",
     "vue": "^3.4.16"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "@shikijs/twoslash@1.0.0": "patches/@shikijs__twoslash@1.0.0.patch"
-    }
   },
   "resolutions": {
     "twoslash": "workspace:*",
