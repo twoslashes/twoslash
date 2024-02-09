@@ -253,7 +253,7 @@ export function findFlagNotations(code: string, customTags: string[], tsOptionDe
   return flagNotations
 }
 
-export function findCutNotations(code: string) {
+export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'removals'>) {
   const removals: Range[] = []
 
   const cutBefore = [...code.matchAll(reCutBefore)]
@@ -288,6 +288,10 @@ export function findCutNotations(code: string) {
     }
     removals.push([start.index!, end.index! + end[0].length + 1])
   }
+
+  if (meta)
+    meta.removals.push(...removals)
+
   return removals
 }
 

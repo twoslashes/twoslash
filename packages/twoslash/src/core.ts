@@ -134,7 +134,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     const pc = createPositionConverter(code)
 
     // extract cuts
-    meta.removals.push(...findCutNotations(code))
+    findCutNotations(code, meta)
     // extract markers
     findQueryMarkers(code, meta, pc)
 

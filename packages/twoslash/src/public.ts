@@ -12,5 +12,9 @@ export {
 } from './utils'
 
 export {
+  removeTwoslashNotations,
+} from './fallback'
+
+export {
   validateCodeForErrors,
 } from './validation'

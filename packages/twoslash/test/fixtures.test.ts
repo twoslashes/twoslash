@@ -4,7 +4,7 @@ import { extname } from 'node:path'
 import process from 'node:process'
 import { expect, it } from 'vitest'
 import type { TwoslashReturn } from '../src/types'
-import { createTwoslasher } from '../src/index'
+import { createTwoslasher, removeTwoslashNotations } from '../src/index'
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
@@ -32,9 +32,10 @@ Object.entries(fixtures).forEach(([path, fixture]) => {
     path,
     async () => {
       let result: TwoslashReturn = undefined!
+      const code = await fixture()
       try {
         result = twoslasher(
-          await fixture(),
+          code,
           inExt,
           {
             customTags: ['annotate'],
@@ -58,6 +59,11 @@ Object.entries(fixtures).forEach(([path, fixture]) => {
       else {
         expect(cleanFixture(result))
           .toMatchFileSnapshot(outPath)
+
+        if (!result.meta.handbookOptions.showEmit) {
+          expect(removeTwoslashNotations(code))
+            .toEqual(result.code)
+        }
       }
     },
   )

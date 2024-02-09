@@ -4,6 +4,7 @@ export default defineBuildConfig({
   entries: [
     'src/index',
     'src/core',
+    'src/fallback',
   ],
   declaration: true,
   clean: true,

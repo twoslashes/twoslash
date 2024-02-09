@@ -22,11 +22,22 @@
     "./core": {
       "import": "./dist/core.mjs",
       "require": "./dist/core.cjs"
+    },
+    "./fallback": {
+      "import": "./dist/fallback.mjs",
+      "require": "./dist/fallback.cjs"
     }
   },
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.mts",
+  "typesVersions": {
+    "*": {
+      "./core": ["./dist/core.d.mts"],
+      "./fallback": ["./dist/fallback.d.mts"],
+      "*": ["./dist/index.d.mts"]
+    }
+  },
   "files": [
     "dist"
   ],
