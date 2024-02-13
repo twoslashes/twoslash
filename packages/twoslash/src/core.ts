@@ -315,8 +315,8 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
               includeCompletionsForModuleExports: false,
             })
             completions = result?.entries ?? []
-            if (completions[0].replacementSpan?.length) {
-              prefix = (completions[0]?.replacementSpan && code.slice(
+            if (completions[0]?.replacementSpan?.length) {
+              prefix = (code.slice(
                 completions[0].replacementSpan.start,
                 target,
               )) || prefix
