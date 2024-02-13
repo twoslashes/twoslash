@@ -115,6 +115,7 @@ export function createTwoslasher(options: CreateTwoslashESLintOptions): Twoslash
     }
 
     const nodes = resolveNodePositions(merged, code)
+      .filter(i => i.line < pc.lines.length) // filter out messages outside of the code
 
     const results: TwoslashGenericResult = {
       code,
