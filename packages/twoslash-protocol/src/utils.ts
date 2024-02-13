@@ -1,11 +1,14 @@
 import type { NodeStartLength, NodeWithoutPosition, Position, Range, TwoslashNode } from './types'
 
-export function isInRange(index: number, range: Range) {
-  return range[0] <= index && index <= range[1]
+export function isInRange(index: number, range: Range, inclusive = true) {
+  if (inclusive)
+    return range[0] <= index && index <= range[1]
+  else
+    return range[0] < index && index < range[1]
 }
 
-export function isInRanges(index: number, ranges: Range[]) {
-  return ranges.find(range => isInRange(index, range))
+export function isInRanges(index: number, ranges: Range[], inclusive = true) {
+  return ranges.find(range => isInRange(index, range, inclusive))
 }
 
 /**

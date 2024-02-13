@@ -87,7 +87,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
     const defaultFilename = `index.${meta.extension}`
     let nodes: NodeWithoutPosition[] = []
-    const isInRemoval = (index: number) => index >= code.length || index < 0 || isInRanges(index, meta.removals)
+    const isInRemoval = (index: number) => index >= code.length || index < 0 || isInRanges(index, meta.removals, false)
 
     meta.flagNotations = findFlagNotations(code, customTags, tsOptionDeclarations)
 

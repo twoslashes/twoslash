@@ -3,6 +3,15 @@
   "nodes": [
     {
       "type": "hover",
+      "text": "var console: Console",
+      "start": 0,
+      "length": 7,
+      "target": "console",
+      "line": 0,
+      "character": 0
+    },
+    {
+      "type": "hover",
       "text": "any",
       "start": 8,
       "length": 1,
