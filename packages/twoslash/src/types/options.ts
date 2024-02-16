@@ -8,7 +8,7 @@ export type TS = typeof import('typescript')
 
 export interface CompilerOptionDeclaration {
   name: string
-  type: 'list' | 'boolean' | 'number' | 'string' | Map<string, any>
+  type: 'list' | 'boolean' | 'number' | 'string' | 'object' | Map<string, any>
   element?: CompilerOptionDeclaration
 }
 

@@ -181,6 +181,14 @@ export function parseFlag(
           end,
         }
       }
+      case 'object':
+        return {
+          type: 'compilerOptions',
+          name: compilerDecl.name,
+          value: JSON.parse(value),
+          start,
+          end,
+        }
       default: {
         // It's a map
         return {
