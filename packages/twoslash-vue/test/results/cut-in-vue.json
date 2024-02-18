@@ -1,0 +1,69 @@
+{
+  "code": "<script setup lang=\"ts\">\nconst { hi } = useFoo()\n</script>\n\n<template>\n  <div>\n    {{ hi.bar }}\n  </div>\n</template>\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const hi: Ref<{\n    bar: string;\n}>",
+      "start": 33,
+      "length": 2,
+      "target": "hi",
+      "line": 1,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "function useFoo(): {\n    hi: Ref<{\n        bar: string;\n    }>;\n}",
+      "start": 40,
+      "length": 6,
+      "target": "useFoo",
+      "line": 1,
+      "character": 15
+    },
+    {
+      "type": "hover",
+      "text": "(property) div: HTMLAttributes & ReservedProps",
+      "start": 74,
+      "length": 3,
+      "target": "div",
+      "line": 5,
+      "character": 3
+    },
+    {
+      "type": "hover",
+      "text": "const hi: Ref<{\n    bar: string;\n}>",
+      "start": 86,
+      "length": 2,
+      "target": "hi",
+      "line": 6,
+      "character": 7
+    },
+    {
+      "type": "hover",
+      "text": "(property) bar: string",
+      "start": 89,
+      "length": 3,
+      "target": "bar",
+      "line": 6,
+      "character": 10
+    },
+    {
+      "type": "query",
+      "text": "(property) bar: string",
+      "start": 89,
+      "length": 3,
+      "target": "bar",
+      "line": 6,
+      "character": 10
+    },
+    {
+      "type": "hover",
+      "text": "(property) div: HTMLAttributes & ReservedProps",
+      "start": 100,
+      "length": 3,
+      "target": "div",
+      "line": 7,
+      "character": 4
+    }
+  ],
+  "flags": []
+}
