@@ -1,5 +1,5 @@
 {
-  "code": "// @filename: foo.ts\nexport const a = 1\n\n// @filename: bar.ts\nimport { a } from \"./foo\"\n\nconst b = a + 1\n",
+  "code": "// @filename: foo.ts\nexport const a = 1\n\n// @filename: bar.ts\nimport { a } from \"@foo\"\n\nconst b = a + 1\n",
   "nodes": [
     {
       "type": "hover",
@@ -22,7 +22,7 @@
     {
       "type": "hover",
       "text": "const b: number",
-      "start": 95,
+      "start": 94,
       "length": 1,
       "target": "b",
       "line": 6,
@@ -31,7 +31,7 @@
     {
       "type": "query",
       "text": "const b: number",
-      "start": 95,
+      "start": 94,
       "length": 1,
       "target": "b",
       "line": 6,
@@ -40,7 +40,7 @@
     {
       "type": "hover",
       "text": "(alias) const a: 1\nimport a",
-      "start": 99,
+      "start": 98,
       "length": 1,
       "target": "a",
       "line": 6,

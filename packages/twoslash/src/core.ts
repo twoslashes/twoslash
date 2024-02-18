@@ -63,6 +63,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       extension: typesToExtension(extension),
       compilerOptions: {
         ...defaultCompilerOptions,
+        baseUrl: fsRoot,
         ...createOptions.compilerOptions,
         ...options.compilerOptions,
       },
