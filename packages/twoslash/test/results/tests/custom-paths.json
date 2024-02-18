@@ -1,0 +1,63 @@
+{
+  "code": "// @filename: foo.ts\nexport const a = 1\n\n// @filename: bar.ts\nimport { a } from \"@foo\"\n\nconst b = a + 1\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const a: 1",
+      "start": 34,
+      "length": 1,
+      "target": "a",
+      "line": 1,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "(alias) const a: 1\nimport a",
+      "start": 71,
+      "length": 1,
+      "target": "a",
+      "line": 4,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "const b: number",
+      "start": 94,
+      "length": 1,
+      "target": "b",
+      "line": 6,
+      "character": 6
+    },
+    {
+      "type": "query",
+      "text": "const b: number",
+      "start": 94,
+      "length": 1,
+      "target": "b",
+      "line": 6,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(alias) const a: 1\nimport a",
+      "start": 98,
+      "length": 1,
+      "target": "a",
+      "line": 6,
+      "character": 10
+    }
+  ],
+  "flags": [
+    {
+      "type": "compilerOptions",
+      "name": "paths",
+      "value": {
+        "@foo": [
+          "./foo"
+        ]
+      },
+      "start": 0,
+      "end": 31
+    }
+  ]
+}
