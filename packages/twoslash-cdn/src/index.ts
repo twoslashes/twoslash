@@ -75,7 +75,7 @@ export interface TwoslashCdnReturn {
   fetcher: typeof fetch
 }
 
-export function createTwoslashFromCDN(options: TwoslashCdnOptions = {}): TwoslashCdnReturn {
+export async function createTwoslashFromCDN(options: TwoslashCdnOptions = {}): Promise<TwoslashCdnReturn> {
   const fetcher = (
     options.storage
       ? createCachedFetchFromStorage(options.storage, options.fetcher || fetch)
@@ -124,7 +124,7 @@ export function createTwoslashFromCDN(options: TwoslashCdnOptions = {}): Twoslas
     ])
   }
 
-  const twoslasher = createTwoslasher({
+  const twoslasher = await createTwoslasher({
     ...options.twoSlashOptionsOverrides,
     tsModule: ts,
     fsMap,
@@ -132,7 +132,10 @@ export function createTwoslashFromCDN(options: TwoslashCdnOptions = {}): Twoslas
 
   async function run(source: string, extension?: string, localOptions?: TwoslashExecuteOptions) {
     await prepareTypes(source)
-    return runSync(source, extension, localOptions)
+    return twoslasher(source, extension, {
+      ...options.twoSlashOptionsOverrides,
+      ...localOptions,
+    })
   }
 
   function runSync(source: string, extension?: string, localOptions?: TwoslashExecuteOptions) {

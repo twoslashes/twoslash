@@ -91,8 +91,8 @@ const value = absolute(-1)
   `)
 })
 
-it('should pass', () => {
-  const result = twoslasher(code, 'ts', {
+it('should pass', async () => {
+  const result = await twoslasher(code, 'ts', {
     tsModule: ts,
     vfsRoot: process.cwd(),
   })

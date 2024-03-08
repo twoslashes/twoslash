@@ -15,7 +15,7 @@ describe('legacy', async () => {
     const code = await fs.readFile(new URL(path, import.meta.url), 'utf-8')
 
     it(`compare ${basename(path)}`, async () => {
-      const us = twoslasherLegacy(code, 'ts')
+      const us = await twoslasherLegacy(code, 'ts')
       const result = twoslasherOriginal(code, 'ts')
 
       function cleanup(t: any) {

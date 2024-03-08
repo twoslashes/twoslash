@@ -13,7 +13,7 @@ const styleHeader = [
   '',
 ].join('\n')
 
-const twoslasherVue = createTwoslasher()
+const twoslasherVue = await createTwoslasher()
 
 it('highlight vue', async () => {
   const result = await codeToHtml(code, {
@@ -33,7 +33,7 @@ it('highlight vue', async () => {
     .toMatchFileSnapshot('./results/renderer/example.vue.html')
 })
 
-const twoslasherRaw = createTwoslasher({
+const twoslasherRaw = await createTwoslasher({
   debugShowGeneratedCode: true,
 })
 

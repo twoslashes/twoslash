@@ -37,9 +37,9 @@ export function twoslasher(code: string, lang: string, opts?: TwoslashOptions) {
  *
  * @deprecated migrate to `twoslasher` instead
  */
-export function twoslasherLegacy(code: string, lang: string, opts?: TwoslashOptionsLegacy): TwoslashReturnLegacy {
+export async function twoslasherLegacy(code: string, lang: string, opts?: TwoslashOptionsLegacy): Promise<TwoslashReturnLegacy> {
   return convertLegacyReturn(
-    _twoslasher(code, lang, convertLegacyOptions({
+    await _twoslasher(code, lang, convertLegacyOptions({
       vfsRoot: cwd,
       tsModule: ts,
       ...opts,

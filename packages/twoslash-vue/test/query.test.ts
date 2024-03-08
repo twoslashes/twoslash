@@ -3,7 +3,7 @@ import { createTwoslasher } from '../src/index'
 
 const code = await import('./fixtures/query-basic.vue?raw').then(m => m.default)
 
-const twoslasher = createTwoslasher()
+const twoslasher = await createTwoslasher()
 
 describe('basic', () => {
   const result = twoslasher(code, 'vue')

@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { twoslasher } from '../src/index'
 
-describe('supports hiding the example code', () => {
+describe('supports hiding the example code', async () => {
   const file = `
 const a = "123"
 // ---cut---
 const b = "345"
 `
-  const result = twoslasher(file, 'ts')
+  const result = await twoslasher(file, 'ts')
 
   it('hides the right code', () => {
     // Has the right code shipped
@@ -28,7 +28,7 @@ const b = "345"
   })
 })
 
-describe('supports hiding the example code with multi-files', () => {
+describe('supports hiding the example code with multi-files', async () => {
   const file = `
 // @filename: main-file.ts
 const a = "123"
@@ -36,7 +36,7 @@ const a = "123"
 // ---cut---
 const b = "345"
 `
-  const result = twoslasher(file, 'ts')
+  const result = await twoslasher(file, 'ts')
 
   it('shows the right LSP results', () => {
     expect(result.hovers.find(info => info.text.includes('const a'))).toBeUndefined()
@@ -51,14 +51,14 @@ const b = "345"
   })
 })
 
-describe('supports handling queries in cut code', () => {
+describe('supports handling queries in cut code', async () => {
   const file = `
 const a = "123"
 // ---cut---
 const b = "345"
 //    ^?
 `
-  const result = twoslasher(file, 'ts')
+  const result = await twoslasher(file, 'ts')
 
   it('shows the right query results', () => {
     const bLSPResult = result.queries.find(info => info.line === 0)
@@ -67,7 +67,7 @@ const b = "345"
   })
 })
 
-describe('supports handling a query in cut multi-file code', () => {
+describe('supports handling a query in cut multi-file code', async () => {
   const file = `
 // @filename: index.ts
 const a = "123"
@@ -77,7 +77,7 @@ const b = "345"
 const c = "678"
 //    ^?
 `
-  const result = twoslasher(file, 'ts')
+  const result = await twoslasher(file, 'ts')
 
   it('shows the right query results', () => {
     const bQueryResult = result.queries.find(info => info.line === 0)
@@ -86,13 +86,13 @@ const c = "678"
   })
 })
 
-describe('supports hiding after a line', () => {
+describe('supports hiding after a line', async () => {
   const file = `
 const a = "123"
 // ---cut-after---
 const b = "345"
 `
-  const result = twoslasher(file, 'ts')
+  const result = await twoslasher(file, 'ts')
 
   it('hides the right code', () => {
     // Has the right code shipped

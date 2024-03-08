@@ -15,7 +15,7 @@ type TS = typeof import('typescript')
 /**
  * Create a Twoslash instance with cached TS environments
  */
-export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): TwoslashInstance {
+export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): TwoslashInstance | Promise<TwoslashInstance> {
   const ts: TS = createOptions.tsModule!
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 
@@ -510,11 +510,11 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
  *
  * It's recommended to use `createTwoslash` for better performance on multiple runs
  */
-export function twoslasher(code: string, lang?: string, opts?: Partial<TwoslashOptions>) {
-  return createTwoslasher({
+export async function twoslasher(code: string, lang?: string, opts?: Partial<TwoslashOptions>) {
+  return (await createTwoslasher({
     ...opts,
     cache: false,
-  })(code, lang)
+  }))(code, lang)
 }
 
 function diagnosticCategoryToErrorLevel(e: DiagnosticCategory): ErrorLevel | undefined {

@@ -2,7 +2,7 @@ import { ModuleKind } from 'typescript'
 import { expect, it } from 'vitest'
 import { twoslasher } from '../src/index'
 
-it('emits CommonJS', () => {
+it('emits CommonJS', async () => {
   const files = `
 // @filename: file-with-export.ts
 export const helloWorld = "Example string";
@@ -11,7 +11,7 @@ export const helloWorld = "Example string";
 import {helloWorld} from "./file-with-export"
 console.log(helloWorld)
 `
-  const result = twoslasher(files, 'ts', {
+  const result = await twoslasher(files, 'ts', {
     handbookOptions: { showEmit: true },
     compilerOptions: { module: ModuleKind.CommonJS },
   })

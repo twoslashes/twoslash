@@ -48,8 +48,8 @@ export interface TwoslashVueExecuteOptions extends TwoslashExecuteOptions, VueSp
 /**
  * Create a twoslasher instance that add additional support for Vue SFC.
  */
-export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): TwoslashInstance {
-  const twoslasherBase = createTwoslasherBase(createOptions)
+export async function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): Promise<TwoslashInstance> {
+  const twoslasherBase = await createTwoslasherBase(createOptions)
   const cache = twoslasherBase.getCacheMap() as any as Map<string, ReturnType<typeof createVueLanguage>> | undefined
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 

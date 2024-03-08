@@ -9,7 +9,7 @@ declare namespace G {
 export = G;
 `
 
-it('works with a dependency in @types for the project', () => {
+it('works with a dependency in @types for the project', async () => {
   const fsMap = createDefaultMapFromNodeModules({})
   fsMap.set('/node_modules/@types/glob/index.d.ts', dt)
 
@@ -18,7 +18,7 @@ import glob from "glob"
 glob.hasMagic("OK")
 //   ^?
   `
-  const result = twoslasher(file, 'ts', { fsMap })
+  const result = await twoslasher(file, 'ts', { fsMap })
   expect(result.errors).toEqual([])
   expect(result.queries[0].text!.includes('hasMagic')).toBeTruthy()
 })

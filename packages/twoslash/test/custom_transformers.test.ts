@@ -3,7 +3,7 @@ import { isSourceFile, isStringLiteral, visitEachChild, visitNode } from 'typesc
 import { expect, it } from 'vitest'
 import { twoslasher } from '../src/index'
 
-it('applies custom transformers', () => {
+it('applies custom transformers', async () => {
   const code = 'console.log(\'Hello World!\')'
   // A simple transformer that uppercases all string literals
   const transformer: TransformerFactory<SourceFile> = (ctx: TransformationContext) => {
@@ -15,7 +15,7 @@ it('applies custom transformers', () => {
     return node => visitNode(node, visitor, isSourceFile)
   }
 
-  const result = twoslasher(code, 'ts', {
+  const result = await twoslasher(code, 'ts', {
     handbookOptions: { showEmit: true },
     customTransformers: {
       before: [transformer],

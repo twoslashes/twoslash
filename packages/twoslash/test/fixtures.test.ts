@@ -19,7 +19,7 @@ const filters: RegExp[] = [
 if (process.env.CI && filters.length)
   throw new Error('Should not filters fixture tests in CI, did you forget to remove them?')
 
-const twoslasher = createTwoslasher()
+const twoslasher = await createTwoslasher()
 
 Object.entries(fixtures).forEach(([path, fixture]) => {
   path = path.replace(/\\/g, '/')
