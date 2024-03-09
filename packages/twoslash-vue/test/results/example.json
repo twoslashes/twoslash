@@ -189,7 +189,7 @@
     {
       "type": "hover",
       "text": "(method) Console.log(...data: any[]): void",
-      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log)",
+      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log_static)",
       "start": 290,
       "length": 3,
       "target": "log",
