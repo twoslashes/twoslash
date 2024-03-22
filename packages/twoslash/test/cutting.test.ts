@@ -112,3 +112,17 @@ const b = "345"
     expect(bLSPResult!.start).toEqual(7)
   })
 })
+
+describe('supports carriage return', () => {
+  const file1 = `const x = "123"\n\n// ---cut---\nconst b = "345"`
+  const file2 = `const x = "123"\r\n\r\n// ---cut---\r\nconst b = "345"`
+  const result1 = twoslasher(file1, 'ts')
+  const result2 = twoslasher(file2, 'ts')
+
+  it('hover is on the same line', () => {
+    const hover1 = result1.hovers.find(info => info.text.includes('const b'))
+    const hover2 = result2.hovers.find(info => info.text.includes('const b'))
+
+    expect(hover1?.line).toEqual(hover2?.line)
+  })
+})
