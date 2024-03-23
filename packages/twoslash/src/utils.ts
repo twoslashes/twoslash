@@ -271,7 +271,7 @@ export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'r
 
   if (cutBefore.length) {
     const last = cutBefore[cutBefore.length - 1]
-    removals.push([0, last.index! + last[0].length + 1])
+    removals.push([0, last.index! + last[0].length])
   }
   if (cutAfter.length) {
     const first = cutAfter[0]
@@ -294,7 +294,7 @@ export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'r
         `Make sure you have a matching pair for each.`,
       )
     }
-    removals.push([start.index!, end.index! + end[0].length + 1])
+    removals.push([start.index!, end.index! + end[0].length])
   }
 
   if (meta)
