@@ -126,3 +126,17 @@ describe('supports carriage return', () => {
     expect(hover1?.line).toEqual(hover2?.line)
   })
 })
+
+describe('supports space before cut comments', () => {
+  const file1 = `function foo() {\n  const x = "123"\n// ---cut-start---\n  /** @type {"345"} */\n// ---cut-end---\n  const b = "345"\n}`
+  const file2 = `function foo() {\n  const x = "123"\n  // ---cut-start---\n  /** @type {"345"} */\n  // ---cut-end---\n  const b = "345"\n}`
+  const result1 = twoslasher(file1, 'ts')
+  const result2 = twoslasher(file2, 'ts')
+
+  it('hover is on the same line', () => {
+    const hover1 = result1.hovers.find(info => info.text.includes('const b'))
+    const hover2 = result2.hovers.find(info => info.text.includes('const b'))
+
+    expect(hover1?.line).toEqual(hover2?.line)
+  })
+})
