@@ -1,0 +1,227 @@
+{
+  "code": "<script setup lang=\"ts\">\nimport { ref, computed } from 'vue'\n\nconst count = ref(0)\nconst double = computed(() => count.value * 2)\n</script>\n\n<template>\n  <button @click=\"count++\">count is: {{ count }}</button>\n  <p>Count is: {{ count }}</p>\n</template>\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "(alias) function ref<T>(value: T): Ref<UnwrapRef<T>> (+1 overload)\nimport ref",
+      "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
+      "tags": [
+        [
+          "param",
+          "value - The object to wrap in the ref."
+        ],
+        [
+          "see",
+          "{@link https://vuejs.org/api/reactivity-core.html#ref}"
+        ]
+      ],
+      "start": 34,
+      "length": 3,
+      "target": "ref",
+      "line": 1,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions | undefined): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions | undefined): WritableComputedRef<...>;\n}\nimport computed",
+      "start": 39,
+      "length": 8,
+      "target": "computed",
+      "line": 1,
+      "character": 14
+    },
+    {
+      "type": "query",
+      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions | undefined): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions | undefined): WritableComputedRef<...>;\n}\nimport computed",
+      "start": 39,
+      "length": 8,
+      "target": "computed",
+      "line": 1,
+      "character": 14
+    },
+    {
+      "type": "hover",
+      "text": "const count: Ref<number>",
+      "start": 68,
+      "length": 5,
+      "target": "count",
+      "line": 3,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(alias) ref<number>(value: number): Ref<number> (+1 overload)\nimport ref",
+      "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
+      "tags": [
+        [
+          "param",
+          "value - The object to wrap in the ref."
+        ],
+        [
+          "see",
+          "{@link https://vuejs.org/api/reactivity-core.html#ref}"
+        ]
+      ],
+      "start": 76,
+      "length": 3,
+      "target": "ref",
+      "line": 3,
+      "character": 14
+    },
+    {
+      "type": "hover",
+      "text": "const double: ComputedRef<number>",
+      "start": 89,
+      "length": 6,
+      "target": "double",
+      "line": 4,
+      "character": 6
+    },
+    {
+      "type": "query",
+      "text": "const double: ComputedRef<number>",
+      "start": 89,
+      "length": 6,
+      "target": "double",
+      "line": 4,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(alias) computed<number>(getter: ComputedGetter<number>, debugOptions?: DebuggerOptions | undefined): ComputedRef<number> (+1 overload)\nimport computed",
+      "docs": "Takes a getter function and returns a readonly reactive ref object for the\nreturned value from the getter. It can also take an object with get and set\nfunctions to create a writable ref object.",
+      "tags": [
+        [
+          "example",
+          "```js\n// Creating a readonly computed ref:\nconst count = ref(1)\nconst plusOne = computed(() => count.value + 1)\n\nconsole.log(plusOne.value) // 2\nplusOne.value++ // error\n```\n\n```js\n// Creating a writable computed ref:\nconst count = ref(1)\nconst plusOne = computed({\n  get: () => count.value + 1,\n  set: (val) => {\n    count.value = val - 1\n  }\n})\n\nplusOne.value = 1\nconsole.log(count.value) // 0\n```"
+        ],
+        [
+          "param",
+          "getter - Function that produces the next value."
+        ],
+        [
+          "param",
+          "debugOptions - For debugging. See {@link https://vuejs.org/guide/extras/reactivity-in-depth.html#computed-debugging}."
+        ],
+        [
+          "see",
+          "{@link https://vuejs.org/api/reactivity-core.html#computed}"
+        ]
+      ],
+      "start": 98,
+      "length": 8,
+      "target": "computed",
+      "line": 4,
+      "character": 15
+    },
+    {
+      "type": "hover",
+      "text": "const count: Ref<number>",
+      "start": 113,
+      "length": 5,
+      "target": "count",
+      "line": 4,
+      "character": 30
+    },
+    {
+      "type": "hover",
+      "text": "(property) Ref<number>.value: number",
+      "start": 119,
+      "length": 5,
+      "target": "value",
+      "line": 4,
+      "character": 36
+    },
+    {
+      "type": "hover",
+      "text": "(property) button: ButtonHTMLAttributes & ReservedProps",
+      "start": 155,
+      "length": 6,
+      "target": "button",
+      "line": 8,
+      "character": 3
+    },
+    {
+      "type": "hover",
+      "text": "(property) 'click': ((payload: MouseEvent) => void) | undefined",
+      "start": 163,
+      "length": 5,
+      "target": "click",
+      "line": 8,
+      "character": 11
+    },
+    {
+      "type": "query",
+      "text": "(property) onClick?: ((payload: MouseEvent) => void) | undefined",
+      "start": 163,
+      "length": 5,
+      "target": "click",
+      "line": 8,
+      "character": 11
+    },
+    {
+      "type": "hover",
+      "text": "const count: Ref<number>",
+      "start": 170,
+      "length": 5,
+      "target": "count",
+      "line": 8,
+      "character": 18
+    },
+    {
+      "type": "hover",
+      "text": "const count: Ref<number>",
+      "start": 192,
+      "length": 5,
+      "target": "count",
+      "line": 8,
+      "character": 40
+    },
+    {
+      "type": "hover",
+      "text": "(property) button: ButtonHTMLAttributes & ReservedProps",
+      "start": 202,
+      "length": 6,
+      "target": "button",
+      "line": 8,
+      "character": 50
+    },
+    {
+      "type": "hover",
+      "text": "(property) p: HTMLAttributes & ReservedProps",
+      "start": 213,
+      "length": 1,
+      "target": "p",
+      "line": 9,
+      "character": 3
+    },
+    {
+      "type": "hover",
+      "text": "const count: Ref<number>",
+      "start": 228,
+      "length": 5,
+      "target": "count",
+      "line": 9,
+      "character": 18
+    },
+    {
+      "type": "query",
+      "text": "(property) count: number",
+      "start": 228,
+      "length": 5,
+      "target": "count",
+      "line": 9,
+      "character": 18
+    },
+    {
+      "type": "hover",
+      "text": "(property) p: HTMLAttributes & ReservedProps",
+      "start": 238,
+      "length": 1,
+      "target": "p",
+      "line": 9,
+      "character": 28
+    }
+  ],
+  "flags": []
+}

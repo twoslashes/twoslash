@@ -1,0 +1,61 @@
+{
+  "name": "twoslash-cli",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Twoslash for your file-system",
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/antfu",
+  "homepage": "https://github.com/twoslashes/twoslash#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twoslashes/twoslash.git",
+    "directory": "packages/twoslash-cli"
+  },
+  "bugs": "https://github.com/twoslashes/twoslash/issues",
+  "keywords": [
+    "twoslash",
+    "cli",
+    "shiki"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "bin": {
+    "twoslash": "./dist/cli.js",
+    "twoslash-cli": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "prepublishOnly": "nr build",
+    "start": "esno src/index.ts"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "commander": "^11.1.0",
+    "twoslash": "workspace:*"
+  }
+}

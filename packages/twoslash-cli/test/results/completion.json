@@ -1,0 +1,252 @@
+{
+  "code": "<script setup lang=\"ts\">\nimport { ref } from \"vue\"\n\nconst count1 = ref(1)\n\nfunction count2() {\n  return count1.value + 1\n}\n</script>\n\n<template>\n  <div>\n    {{ count1 }}\n  </div>\n</template>\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "(alias) function ref<T>(value: T): Ref<UnwrapRef<T>> (+1 overload)\nimport ref",
+      "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
+      "tags": [
+        [
+          "param",
+          "value - The object to wrap in the ref."
+        ],
+        [
+          "see",
+          "{@link https://vuejs.org/api/reactivity-core.html#ref}"
+        ]
+      ],
+      "start": 34,
+      "length": 3,
+      "target": "ref",
+      "line": 1,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "const count1: Ref<number>",
+      "start": 58,
+      "length": 6,
+      "target": "count1",
+      "line": 3,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(alias) ref<number>(value: number): Ref<number> (+1 overload)\nimport ref",
+      "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
+      "tags": [
+        [
+          "param",
+          "value - The object to wrap in the ref."
+        ],
+        [
+          "see",
+          "{@link https://vuejs.org/api/reactivity-core.html#ref}"
+        ]
+      ],
+      "start": 67,
+      "length": 3,
+      "target": "ref",
+      "line": 3,
+      "character": 15
+    },
+    {
+      "type": "hover",
+      "text": "function count2(): number",
+      "start": 84,
+      "length": 6,
+      "target": "count2",
+      "line": 5,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "const count1: Ref<number>",
+      "start": 104,
+      "length": 6,
+      "target": "count1",
+      "line": 6,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "(property) Ref<number>.value: number",
+      "start": 111,
+      "length": 5,
+      "target": "value",
+      "line": 6,
+      "character": 16
+    },
+    {
+      "type": "hover",
+      "text": "(property) div: HTMLAttributes & ReservedProps",
+      "start": 148,
+      "length": 3,
+      "target": "div",
+      "line": 11,
+      "character": 3
+    },
+    {
+      "type": "hover",
+      "text": "const count1: Ref<number>",
+      "start": 160,
+      "length": 6,
+      "target": "count1",
+      "line": 12,
+      "character": 7
+    },
+    {
+      "type": "completion",
+      "start": 161,
+      "length": 0,
+      "completions": [
+        {
+          "name": "count1",
+          "kind": "const",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "count2",
+          "kind": "function",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "caches",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "cancelAnimationFrame",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "cancelIdleCallback",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "case",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "catch",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "class",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "clearInterval",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "clearTimeout",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "close",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "closed",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "confirm",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "console",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "const",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "continue",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "createImageBitmap",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "crossOriginIsolated",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "crypto",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "customElements",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "captureEvents",
+          "kind": "function",
+          "kindModifiers": "deprecated,declare",
+          "sortText": "z15"
+        },
+        {
+          "name": "clientInformation",
+          "kind": "var",
+          "kindModifiers": "deprecated,declare",
+          "sortText": "z15"
+        }
+      ],
+      "completionsPrefix": "c",
+      "line": 12,
+      "character": 8,
+      "target": ""
+    },
+    {
+      "type": "hover",
+      "text": "(property) div: HTMLAttributes & ReservedProps",
+      "start": 174,
+      "length": 3,
+      "target": "div",
+      "line": 13,
+      "character": 4
+    }
+  ],
+  "flags": []
+}
