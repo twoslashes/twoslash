@@ -47,7 +47,7 @@ Every Twoslash code sample needs to be a complete TypeScript program realistical
 
 ### `// ---cut-before---`
 
-Cut works after TypeScript has generated the project and pulled out all the editor information (like identifiers, queries, highlights etc) and then amends all of their offsets and lines to re-fit the smaller output. What your user sees is everything below the `// ---before-cut---`. A shorthand `// ---cut---` is also available.
+Cut works after TypeScript has generated the project and pulled out all the editor information (like identifiers, queries, highlights etc) and then amends all of their offsets and lines to re-fit the smaller output. What your user sees is everything below the `// ---cut-before---`. A shorthand `// ---cut---` is also available.
 
 ```ts twoslash input
 const level: string = 'Danger'
