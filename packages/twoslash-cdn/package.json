@@ -55,10 +55,10 @@
     "@typescript/ata": "^0.9.4",
     "@typescript/vfs": "^1.5.0",
     "twoslash-cdn": "workspace:*",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
     "unstorage": "^1.10.2",
-    "vite": "^5.2.3",
-    "vitest": "^1.4.0"
+    "vite": "^5.2.11",
+    "vitest": "^1.6.0"
   }
 }
