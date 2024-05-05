@@ -4,7 +4,7 @@ import type { Range, createPositionConverter } from 'twoslash-protocol'
 import { TwoslashError } from './error'
 import type { CompilerOptionDeclaration, ParsedFlagNotation, TwoslashReturnMeta, VirtualFile } from './types'
 import { defaultHandbookOptions } from './defaults'
-import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart } from './regexp'
+import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart, reFilenamesMakers } from './regexp'
 
 export function getObjectHash(obj: any): string {
   return objectHash(obj)
@@ -89,8 +89,6 @@ export function getOptionValueFromMap(name: string, key: string, optMap: Map<str
   }
   return result
 }
-
-const reFilenamesMakers = /^\/\/\s?@filename: (.+)$/mg
 
 export function splitFiles(code: string, defaultFileName: string, root: string) {
   const matches = Array.from(code.matchAll(reFilenamesMakers))
