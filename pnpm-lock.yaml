@@ -162,12 +162,12 @@ importers:
       '@typescript/vfs':
         specifier: 1.5.0
         version: 1.5.0
+      '@vue/language-core':
+        specifier: ^1.8.27
+        version: 1.8.27(typescript@5.4.5)
       twoslash-protocol:
         specifier: workspace:*
         version: link:../twoslash-protocol
-      twoslash-vue:
-        specifier: workspace:*
-        version: link:../twoslash-vue
       typescript:
         specifier: '*'
         version: 5.4.5

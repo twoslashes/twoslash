@@ -56,8 +56,8 @@
   },
   "dependencies": {
     "@typescript/vfs": "1.5.0",
-    "twoslash-protocol": "workspace:*",
-    "twoslash-vue": "workspace:*"
+    "@vue/language-core": "^1.8.27",
+    "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {
     "ohash": "^1.1.3"
