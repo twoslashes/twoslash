@@ -1,6 +1,7 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { CompilerOptions, CustomTransformers } from 'typescript'
 import type { NodeWithoutPosition } from 'twoslash-protocol'
+import type { VueSpecificOptions } from 'twoslash-vue'
 import type { HandbookOptions } from './handbook-options'
 import type { TwoslashReturnMeta } from './returns'
 
@@ -20,7 +21,7 @@ export interface TwoslashOptions extends CreateTwoslashOptions, TwoslashExecuteO
 /**
  * Options for twoslash instance
  */
-export interface TwoslashExecuteOptions extends Partial<Pick<TwoslashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights'>> {
+export interface TwoslashExecuteOptions extends Partial<Pick<TwoslashReturnMeta, 'positionQueries' | 'positionCompletions' | 'positionHighlights'>>, VueSpecificOptions {
   /**
    * Allows setting any of the handbook options from outside the function, useful if you don't want LSP identifiers
    */
