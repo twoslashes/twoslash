@@ -288,7 +288,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
           )
         }
 
-        let prefix = code.slice(0, target).match(/[$_\w]+$/)?.[0] || ''
+        let prefix = code.slice(0, target).match(/[$\w]+$/)?.[0] || ''
         prefix = prefix.split('.').pop()!
 
         let completions: CompletionEntry[] = []
