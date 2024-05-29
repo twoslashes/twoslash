@@ -1,5 +1,5 @@
 import type { VueCompilerOptions } from '@vue/language-core'
-import { SourceMap, createVueLanguage, sharedTypes } from '@vue/language-core'
+import { SourceMap, createVueLanguagePlugin, resolveVueCompilerOptions } from '@vue/language-core'
 import type { CompilerOptions } from 'typescript'
 import ts from 'typescript'
 import type {
@@ -50,15 +50,15 @@ export interface TwoslashVueExecuteOptions extends TwoslashExecuteOptions, VueSp
  */
 export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): TwoslashInstance {
   const twoslasherBase = createTwoslasherBase(createOptions)
-  const cache = twoslasherBase.getCacheMap() as any as Map<string, ReturnType<typeof createVueLanguage>> | undefined
+  const cache = twoslasherBase.getCacheMap() as any as Map<string, ReturnType<typeof createVueLanguagePlugin>> | undefined
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 
   function getVueLanguage(compilerOptions: Partial<CompilerOptions>, vueCompilerOptions: Partial<VueCompilerOptions>) {
     if (!cache)
-      return createVueLanguage(ts, defaultCompilerOptions, vueCompilerOptions)
+      return createVueLanguagePlugin(ts, id => id, false, () => '', () => ['index.vue'], defaultCompilerOptions, resolveVueCompilerOptions(vueCompilerOptions))
     const key = `vue:${getObjectHash([compilerOptions, vueCompilerOptions])}`
     if (!cache.has(key)) {
-      const env = createVueLanguage(ts, defaultCompilerOptions, vueCompilerOptions)
+      const env = createVueLanguagePlugin(ts, id => id, false, () => '', () => ['index.vue'], defaultCompilerOptions, resolveVueCompilerOptions(vueCompilerOptions))
       cache.set(key, env)
       return env
     }
@@ -128,19 +128,18 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     }
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
-    const fileSource = lang.createVirtualFile('index.vue', ts.ScriptSnapshot.fromString(strippedCode), 'vue')!
-    const fileCompiled = fileSource.getEmbeddedFiles()[0]
-    const typeHelpers = sharedTypes.getTypesCode(fileSource.vueCompilerOptions)
+    const fileSource = lang.createVirtualCode!('index.vue', 'vue', ts.ScriptSnapshot.fromString(strippedCode))!
+    const fileCompiled = fileSource.getEmbeddedCodes()[0]
     const compiled = [
-      (fileCompiled as any).content.map((c: any) => Array.isArray(c) ? c[0] : c).join(''),
-      '// ---cut-after---',
-      typeHelpers,
+      fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength()),
     ].join('\n')
+      // Waiting for merge https://github.com/vuejs/language-tools/pull/4413
+      .replace(/(?=function __VLS_template\(\))/, 'async ')
 
     const map = new SourceMap(fileCompiled.mappings)
 
     function getLastGeneratedOffset(pos: number) {
-      const offsets = [...map.toGeneratedOffsets(pos)]
+      const offsets = [...map.getGeneratedOffsets(pos)]
       if (!offsets.length)
         return undefined
       return offsets[offsets.length - 1]?.[0]
@@ -150,7 +149,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     const result = twoslasherBase(compiled, 'tsx', {
       ...options,
       compilerOptions: {
-        jsx: 4 satisfies ts.JsxEmit.ReactJSX,
+        jsx: 1 satisfies ts.JsxEmit.Preserve,
         jsxImportSource: 'vue',
         noImplicitAny: false,
         ...compilerOptions,
@@ -166,9 +165,9 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       positionCompletions: sourceMeta.positionCompletions
         .map(p => getLastGeneratedOffset(p)!),
       positionQueries: sourceMeta.positionQueries
-        .map(p => map.toGeneratedOffset(p)![0]),
+        .map(p => map.getGeneratedOffset(p)![0]),
       positionHighlights: sourceMeta.positionHighlights
-        .map(([start, end]) => [map.toGeneratedOffset(start)![0], map.toGeneratedOffset(end)![0]] as Range),
+        .map(([start, end]) => [map.getGeneratedOffset(start)![0], map.getGeneratedOffset(end)![0]]),
     })
 
     if (createOptions.debugShowGeneratedCode)
@@ -179,13 +178,13 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       .map((q) => {
         if ('text' in q && q.text === 'any')
           return undefined
-        const startMap = map.toSourceOffset(q.start)
+        const startMap = map.getSourceOffset(q.start)
         if (!startMap)
           return undefined
         const start = startMap[0]
-        let end = map.toSourceOffset(q.start + q.length)?.[0]
-        if (end == null && startMap[1].sourceRange[0] === startMap[0])
-          end = startMap[1].sourceRange[1]
+        let end = map.getSourceOffset(q.start + q.length)?.[0]
+        if (end == null && startMap[1].sourceOffsets[0] === startMap[0])
+          end = startMap[1].sourceOffsets[1]
         if (end == null || start < 0 || end < 0 || start > end)
           return undefined
         return Object.assign(q, {
@@ -201,8 +200,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       ...sourceMeta.removals,
       ...result.meta.removals
         .map((r) => {
-          const start = map.toSourceOffset(r[0])?.[0]
-          const end = map.toSourceOffset(r[1])?.[0]
+          const start = map.getSourceOffset(r[0])?.[0]
+          const end = map.getSourceOffset(r[1])?.[0]
           if (start == null || end == null || start < 0 || end < 0 || start >= end)
             return undefined
           return [start, end] as Range
