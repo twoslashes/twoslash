@@ -27,9 +27,9 @@ export default defineConfig({
       transform(code, id) {
         if (!id.endsWith('.md'))
           return
-        return code.replace(/(`{3,4})(\w+) twoslash([^\n]*?)\n([\s\S]+?)\n\1/g, (_, quotes, lang, options, code) => {
+        return code.replace(/(`{3,4})(\w+) twoslash([^\n]*)\n([\s\S]+?)\n\1/g, (_, quotes, lang, options, code) => {
           // Only run on codeblocks which have a twoslash annotation
-          if (!code.match(/\/\/ @|\^[?\|^]|---cut/))
+          if (!code.match(/\/\/ @|\^[?|^]|---cut/))
             return _
 
           let preferInput = false
@@ -69,7 +69,8 @@ export default defineConfig({
           return
         return await replaceAsync(
           code,
-          /(`{3,4})(\w+)([^\n]*?)\beval\b([^\n]*?)\n([\s\S]+?)\n\1/g,
+          // eslint-disable-next-line regexp/no-super-linear-backtracking
+          /(`{3,4})(\w+)([^\n]*?)\beval\b([^\n]*)\n([\s\S]+?)\n\1/g,
           async (_, quotes, lang, optionsPre, optionsPost, code) => {
             // eslint-disable-next-line no-console
             console.log('markdown eval', { lang, code })

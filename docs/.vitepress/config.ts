@@ -98,7 +98,7 @@ export default defineConfig({
       {
         name: 'twoslash:remove-escape',
         postprocess(code) {
-          return code.replace(/\[\\\!code/g, '[!code')
+          return code.replace(/\[\\!code/g, '[!code')
         },
       },
     ],
