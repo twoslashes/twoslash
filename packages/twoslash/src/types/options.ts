@@ -1,7 +1,6 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { CompilerOptions, CustomTransformers } from 'typescript'
 import type { NodeWithoutPosition } from 'twoslash-protocol'
-import type { VueCompilerOptions } from '@vue/language-core'
 import type { HandbookOptions } from './handbook-options'
 import type { TwoslashReturnMeta } from './returns'
 
@@ -31,11 +30,6 @@ export interface TwoslashExecuteOptions extends Partial<Pick<TwoslashReturnMeta,
    * Allows setting any of the compiler options from outside the function
    */
   compilerOptions?: CompilerOptions
-
-  /**
-   * Allows setting any of the vue compiler options from outside the function
-   */
-  vueCompilerOptions?: Partial<VueCompilerOptions>
 
   /**
    * A set of known `// @[tags]` tags to extract and not treat as a comment

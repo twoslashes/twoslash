@@ -165,9 +165,6 @@ importers:
       twoslash-protocol:
         specifier: workspace:*
         version: link:../twoslash-protocol
-      twoslash-vue:
-        specifier: workspace:*
-        version: link:../twoslash-vue
       typescript:
         specifier: '*'
         version: 5.4.5
