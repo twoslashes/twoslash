@@ -1,10 +1,9 @@
 <script setup lang="ts">
-// ---cut-start---
 import { ref } from "vue"
 interface Foo {
   bar: string
 }
-// ---cut-end---
+// ---cut---
 const { hi } = useFoo()
 // ---cut-start---
 function useFoo() {
