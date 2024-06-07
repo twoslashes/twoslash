@@ -1,5 +1,5 @@
 import type { NodeErrorWithoutPosition } from 'twoslash-protocol'
-import { TwoslashError } from './error'
+import { TwoslashError } from './error.js'
 
 /** To ensure that errors are matched up right */
 export function validateCodeForErrors(

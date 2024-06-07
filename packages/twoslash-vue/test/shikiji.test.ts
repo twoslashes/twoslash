@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { codeToHtml } from 'shiki'
 import { createTransformerFactory, rendererRich } from '@shikijs/twoslash/core'
-import { createTwoslasher } from '../src'
+import { createTwoslasher } from '../src/index.js'
 
 const code = await import('./fixtures/example.vue?raw').then(m => m.default)
 

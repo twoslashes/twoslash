@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { createTwoslasher } from '../src/index'
+import { createTwoslasher } from '../src/index.js'
 
 const twoslasher = createTwoslasher()
 

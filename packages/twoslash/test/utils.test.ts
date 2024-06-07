@@ -1,6 +1,6 @@
 import ts from 'typescript'
 import { expect, it } from 'vitest'
-import { getIdentifierTextSpans, removeTsExtension } from '../src/utils'
+import { getIdentifierTextSpans, removeTsExtension } from '../src/utils.js'
 
 it('gets the expected identifiers', () => {
   const file = ts.createSourceFile(

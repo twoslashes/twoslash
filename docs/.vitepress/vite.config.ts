@@ -93,7 +93,7 @@ export default defineConfig({
             } as any
 
             try {
-              const jiti = JITI(id, {
+              const jiti = (JITI as any)(id, {
                 esmResolve: true,
                 cache: false,
               })

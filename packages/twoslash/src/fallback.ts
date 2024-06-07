@@ -1,8 +1,8 @@
 import { removeCodeRanges } from 'twoslash-protocol'
-import { reAnnonateMarkers, reConfigBoolean, reConfigValue } from './regexp'
-import type { TwoslashReturnMeta } from './types'
-import { findCutNotations } from './utils'
-import { flagKeys } from './flag-keys'
+import { reAnnonateMarkers, reConfigBoolean, reConfigValue } from './regexp.js'
+import type { TwoslashReturnMeta } from './types/index.js'
+import { findCutNotations } from './utils.js'
+import { flagKeys } from './flag-keys.js'
 
 /**
  * A fallback function to strip out twoslash annotations from a string and does nothing else.

@@ -1,8 +1,8 @@
 import { expect, it } from 'vitest'
-import * as ts from 'typescript/lib/tsserverlibrary'
-import { splitFiles } from '../src/utils'
-import type { TwoslashReturn } from '../src/types'
-import { twoslasher } from '../src'
+import * as ts from 'typescript/lib/tsserverlibrary.js'
+import { splitFiles } from '../src/utils.js'
+import type { TwoslashReturn } from '../src/types/index.js'
+import { twoslasher } from '../src/index.js'
 
 export type TS = typeof import('typescript')
 

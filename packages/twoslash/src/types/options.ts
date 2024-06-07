@@ -1,8 +1,8 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { CompilerOptions, CustomTransformers } from 'typescript'
 import type { NodeWithoutPosition } from 'twoslash-protocol'
-import type { HandbookOptions } from './handbook-options'
-import type { TwoslashReturnMeta } from './returns'
+import type { HandbookOptions } from './handbook-options.js'
+import type { TwoslashReturnMeta } from './returns.js'
 
 export type TS = typeof import('typescript')
 

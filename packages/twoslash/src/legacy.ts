@@ -1,6 +1,6 @@
 import type { CompilerOptions } from 'typescript'
 import type { ErrorLevel } from 'twoslash-protocol'
-import type { HandbookOptions, TwoslashExecuteOptions, TwoslashReturn } from './types'
+import type { HandbookOptions, TwoslashExecuteOptions, TwoslashReturn } from './types/index.js'
 
 export interface TwoslashOptionsLegacy extends TwoslashExecuteOptions {
   /**

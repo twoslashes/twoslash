@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { twoslasher } from '../src/index'
+import { twoslasher } from '../src/index.js'
 
 it('supports highlighting something', () => {
   const file = `

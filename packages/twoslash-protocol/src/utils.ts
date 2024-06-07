@@ -1,4 +1,4 @@
-import type { NodeStartLength, NodeWithoutPosition, Position, Range, TwoslashNode } from './types'
+import type { NodeStartLength, NodeWithoutPosition, Position, Range, TwoslashNode } from './types.js'
 
 export function isInRange(index: number, range: Range, inclusive = true) {
   if (inclusive)

@@ -1,6 +1,6 @@
 import { createDefaultMapFromNodeModules } from '@typescript/vfs'
 import { expect, it } from 'vitest'
-import { twoslasher } from '../src/index'
+import { twoslasher } from '../src/index.js'
 
 const dt = `
 declare namespace G {

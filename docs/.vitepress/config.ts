@@ -5,7 +5,7 @@ import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { createTwoslasher as createTwoslasherESLint } from 'twoslash-eslint'
 import antfu from '@antfu/eslint-config'
 import { version } from '../../package.json'
-import vite from './vite.config'
+import vite from './vite.config.js'
 
 const GUIDES: DefaultTheme.NavItemWithLink[] = [
   { text: 'Getting Started', link: '/guide/' },

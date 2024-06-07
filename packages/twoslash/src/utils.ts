@@ -1,10 +1,10 @@
 import type { SourceFile } from 'typescript'
 import { objectHash } from 'ohash'
 import type { Range, createPositionConverter } from 'twoslash-protocol'
-import { TwoslashError } from './error'
-import type { CompilerOptionDeclaration, ParsedFlagNotation, TwoslashReturnMeta, VirtualFile } from './types'
-import { defaultHandbookOptions } from './defaults'
-import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart, reFilenamesMakers } from './regexp'
+import { TwoslashError } from './error.js'
+import type { CompilerOptionDeclaration, ParsedFlagNotation, TwoslashReturnMeta, VirtualFile } from './types/index.js'
+import { defaultHandbookOptions } from './defaults.js'
+import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart, reFilenamesMakers } from './regexp.js'
 
 export function getObjectHash(obj: any): string {
   return objectHash(obj)

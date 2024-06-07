@@ -1,5 +1,5 @@
 import type { CompilerOptions, ModuleDetectionKind, ModuleKind, ScriptTarget } from 'typescript'
-import type { HandbookOptions } from './types'
+import type { HandbookOptions } from './types/index.js'
 
 export const defaultCompilerOptions: CompilerOptions = {
   strict: true,

@@ -2,13 +2,13 @@ import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, Diagnosti
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
 import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
-import { TwoslashError } from './error'
-import { validateCodeForErrors } from './validation'
-import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
-import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
-import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
+import { TwoslashError } from './error.js'
+import { validateCodeForErrors } from './validation.js'
+import { defaultCompilerOptions, defaultHandbookOptions } from './defaults.js'
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types/index.js'
+import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils.js'
 
-export * from './public'
+export * from './public.js'
 
 type TS = typeof import('typescript')
 

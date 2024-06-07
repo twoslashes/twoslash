@@ -1,20 +1,20 @@
 // Public Utilities
 
-export * from './error'
-export * from './types'
-export * from './defaults'
+export * from './error.js'
+export * from './types/index.js'
+export * from './defaults.js'
 
 export {
   findCutNotations,
   findFlagNotations,
   findQueryMarkers,
   getObjectHash,
-} from './utils'
+} from './utils.js'
 
 export {
   removeTwoslashNotations,
-} from './fallback'
+} from './fallback.js'
 
 export {
   validateCodeForErrors,
-} from './validation'
+} from './validation.js'

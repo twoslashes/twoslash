@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createTwoslasher } from '../src/index'
+import { createTwoslasher } from '../src/index.js'
 
 const code = await import('./fixtures/query-basic.vue?raw').then(m => m.default)
 

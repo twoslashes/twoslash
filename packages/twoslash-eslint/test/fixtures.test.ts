@@ -6,7 +6,7 @@ import { expect, it } from 'vitest'
 import type { TwoslashGenericResult } from 'twoslash-protocol'
 import antfu from '@antfu/eslint-config'
 import type { Linter } from 'eslint'
-import { createTwoslasher } from '../src/index'
+import { createTwoslasher } from '../src/index.js'
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.

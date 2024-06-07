@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import { basename } from 'node:path'
 import { twoslasher as twoslasherOriginal } from '@typescript/twoslash'
 import { describe, expect, it } from 'vitest'
-import { twoslasherLegacy } from '../src'
+import { twoslasherLegacy } from '../src/index.js'
 
 describe('legacy', async () => {
   await compareCode('./fixtures/examples/cuts-out-unnecessary-code.ts')

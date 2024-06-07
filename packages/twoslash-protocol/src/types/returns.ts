@@ -1,4 +1,4 @@
-import type { TwoslashNode } from './nodes'
+import type { TwoslashNode } from './nodes.js'
 
 export interface TwoslashGenericResult {
   /**

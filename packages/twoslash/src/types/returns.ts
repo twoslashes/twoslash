@@ -1,6 +1,6 @@
 import type { CompilerOptions } from 'typescript'
 import type { NodeCompletion, NodeError, NodeHighlight, NodeHover, NodeQuery, NodeTag, Range, TwoslashGenericResult } from 'twoslash-protocol'
-import type { HandbookOptions } from './handbook-options'
+import type { HandbookOptions } from './handbook-options.js'
 
 export interface TwoslashReturn extends TwoslashGenericResult {
   /**

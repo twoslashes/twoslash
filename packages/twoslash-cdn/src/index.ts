@@ -1,6 +1,6 @@
 import type { TwoslashExecuteOptions, TwoslashFunction, TwoslashOptions, TwoslashReturn } from 'twoslash'
 import { createTwoslasher } from 'twoslash'
-import * as ts from 'typescript/lib/tsserverlibrary'
+import * as ts from 'typescript/lib/tsserverlibrary.js'
 import { createDefaultMapFromCDN } from '@typescript/vfs'
 import { setupTypeAcquisition } from '@typescript/ata'
 
