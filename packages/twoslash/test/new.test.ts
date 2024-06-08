@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import * as ts from 'typescript/lib/tsserverlibrary'
+import * as ts from 'typescript/lib/tsserverlibrary.js'
 import { splitFiles } from '../src/utils'
 import type { TwoslashReturn } from '../src/types'
 import { twoslasher } from '../src'
