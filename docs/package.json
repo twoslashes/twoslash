@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "private": true,
   "scripts": {
     "docs:dev": "vitepress dev",
@@ -12,9 +12,9 @@
     "@vueuse/core": "^10.10.0",
     "floating-vue": "^5.2.2",
     "fuse.js": "^7.0.0",
-    "sass": "^1.77.2",
+    "sass": "^1.77.4",
     "unocss": "^0.59.4",
-    "vitepress": "^1.2.2",
+    "vitepress": "^1.2.3",
     "vue": "^3.4.27"
   }
 }
