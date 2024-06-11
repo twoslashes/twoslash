@@ -8,12 +8,12 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
-    "@unocss/reset": "^0.59.4",
-    "@vueuse/core": "^10.10.0",
+    "@unocss/reset": "^0.60.4",
+    "@vueuse/core": "^10.10.1",
     "floating-vue": "^5.2.2",
     "fuse.js": "^7.0.0",
     "sass": "^1.77.4",
-    "unocss": "^0.59.4",
+    "unocss": "^0.60.4",
     "vitepress": "^1.2.3",
     "vue": "^3.4.27"
   }
