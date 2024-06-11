@@ -30,6 +30,7 @@
     ],
     "allowJs": true,
     "strict": true,
+    "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "skipDefaultLibCheck": true,
