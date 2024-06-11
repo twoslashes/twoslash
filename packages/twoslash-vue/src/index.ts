@@ -1,5 +1,5 @@
-import type { VueCompilerOptions } from '@vue/language-core'
-import { SourceMap, createVueLanguage, sharedTypes } from '@vue/language-core'
+import type { Language, VueCompilerOptions } from '@vue/language-core'
+import { FileMap, SourceMap, createLanguage, createVueLanguagePlugin, resolveVueCompilerOptions } from '@vue/language-core'
 import type { CompilerOptions } from 'typescript'
 import ts from 'typescript'
 import type {
@@ -50,19 +50,28 @@ export interface TwoslashVueExecuteOptions extends TwoslashExecuteOptions, VueSp
  */
 export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): TwoslashInstance {
   const twoslasherBase = createTwoslasherBase(createOptions)
-  const cache = twoslasherBase.getCacheMap() as any as Map<string, ReturnType<typeof createVueLanguage>> | undefined
+  const cache = twoslasherBase.getCacheMap() as any as Map<string, Language> | undefined
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 
   function getVueLanguage(compilerOptions: Partial<CompilerOptions>, vueCompilerOptions: Partial<VueCompilerOptions>) {
     if (!cache)
-      return createVueLanguage(ts, defaultCompilerOptions, vueCompilerOptions)
+      return getLanguage()
     const key = `vue:${getObjectHash([compilerOptions, vueCompilerOptions])}`
     if (!cache.has(key)) {
-      const env = createVueLanguage(ts, defaultCompilerOptions, vueCompilerOptions)
+      const env = getLanguage()
       cache.set(key, env)
       return env
     }
     return cache.get(key)!
+
+    function getLanguage() {
+      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, id => id, () => '', () => true, defaultCompilerOptions, resolveVueCompilerOptions(vueCompilerOptions))
+      return createLanguage(
+        [vueLanguagePlugin],
+        new FileMap(ts.sys.useCaseSensitiveFileNames),
+        () => {},
+      )
+    }
   }
 
   function twoslasher(code: string, extension?: string, options: TwoslashVueExecuteOptions = {}) {
@@ -128,19 +137,15 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     }
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
-    const fileSource = lang.createVirtualFile('index.vue', ts.ScriptSnapshot.fromString(strippedCode), 'vue')!
-    const fileCompiled = fileSource.getEmbeddedFiles()[0]
-    const typeHelpers = sharedTypes.getTypesCode(fileSource.vueCompilerOptions)
-    const compiled = [
-      (fileCompiled as any).content.map((c: any) => Array.isArray(c) ? c[0] : c).join(''),
-      '// ---cut-after---',
-      typeHelpers,
-    ].join('\n')
+    const sourceScript = lang.scripts.set('index.vue', ts.ScriptSnapshot.fromString(strippedCode))!
+    const fileCompiled = get(sourceScript.generated!.embeddedCodes.values(), 1)!
+    const compiled = fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength())
+      .replace(/(?=export const __VLS_globalTypesStart)/, '// ---cut-after---\n')
 
     const map = new SourceMap(fileCompiled.mappings)
 
     function getLastGeneratedOffset(pos: number) {
-      const offsets = [...map.toGeneratedOffsets(pos)]
+      const offsets = [...map.getGeneratedOffsets(pos)]
       if (!offsets.length)
         return undefined
       return offsets[offsets.length - 1]?.[0]
@@ -150,7 +155,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     const result = twoslasherBase(compiled, 'tsx', {
       ...options,
       compilerOptions: {
-        jsx: 4 satisfies ts.JsxEmit.ReactJSX,
+        jsx: 1 satisfies ts.JsxEmit.Preserve,
         jsxImportSource: 'vue',
         noImplicitAny: false,
         ...compilerOptions,
@@ -166,9 +171,14 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       positionCompletions: sourceMeta.positionCompletions
         .map(p => getLastGeneratedOffset(p)!),
       positionQueries: sourceMeta.positionQueries
-        .map(p => map.toGeneratedOffset(p)![0]),
+        .map(p => get(map.getGeneratedOffsets(p), 0)?.[0])
+        .filter(isNotNull),
       positionHighlights: sourceMeta.positionHighlights
-        .map(([start, end]) => [map.toGeneratedOffset(start)![0], map.toGeneratedOffset(end)![0]] as Range),
+        .map(([start, end]) => [
+          get(map.getGeneratedOffsets(start), 0)?.[0],
+          get(map.getGeneratedOffsets(end), 0)?.[0],
+        ])
+        .filter((x): x is [number, number] => x[0] != null && x[1] != null),
     })
 
     if (createOptions.debugShowGeneratedCode)
@@ -179,13 +189,13 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       .map((q) => {
         if ('text' in q && q.text === 'any')
           return undefined
-        const startMap = map.toSourceOffset(q.start)
+        const startMap = get(map.getSourceOffsets(q.start), 0)
         if (!startMap)
           return undefined
         const start = startMap[0]
-        let end = map.toSourceOffset(q.start + q.length)?.[0]
-        if (end == null && startMap[1].sourceRange[0] === startMap[0])
-          end = startMap[1].sourceRange[1]
+        let end = get(map.getSourceOffsets(q.start + q.length), 0)?.[0]
+        if (end == null && startMap[1].sourceOffsets[0] === startMap[0])
+          end = startMap[1].sourceOffsets[1]
         if (end == null || start < 0 || end < 0 || start > end)
           return undefined
         return Object.assign(q, {
@@ -201,8 +211,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       ...sourceMeta.removals,
       ...result.meta.removals
         .map((r) => {
-          const start = map.toSourceOffset(r[0])?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
-          const end = map.toSourceOffset(r[1])?.[0]
+          const start = get(map.getSourceOffsets(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
+          const end = get(map.getSourceOffsets(r[1]), 0)?.[0]
           if (start == null || end == null || start < 0 || end < 0 || start >= end)
             return undefined
           return [start, end] as Range
@@ -247,4 +257,12 @@ export const createTwoslasherVue = createTwoslasher
 
 function isNotNull<T>(x: T | null | undefined): x is T {
   return x != null
+}
+
+function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T | undefined {
+  for (const item of iterator) {
+    if (index-- === 0)
+      return item
+  }
+  return undefined
 }
