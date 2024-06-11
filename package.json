@@ -5,7 +5,7 @@
   "private": true,
   "packageManager": "pnpm@9.2.0",
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc",
     "build": "pnpm -r run build",
     "test": "vitest",
     "lint": "eslint .",
