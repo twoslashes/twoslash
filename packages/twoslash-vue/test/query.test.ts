@@ -12,7 +12,7 @@ describe('basic', () => {
     expect(result.nodes.find(n => n.type === 'hover' && n.target === 'button'))
       .toHaveProperty('text', '(property) button: ButtonHTMLAttributes & ReservedProps')
     expect(result.nodes.find(n => n.type === 'hover' && n.target === 'click'))
-      .toHaveProperty('text', `(property) 'click': ((payload: MouseEvent) => void) | undefined`)
+      .toHaveProperty('text', `(property) onClick?: ((payload: MouseEvent) => void) | undefined`)
   })
 
   it('has correct query', () => {
@@ -21,8 +21,8 @@ describe('basic', () => {
         [
           38,
           235,
-          2023,
-          2624,
+          1533,
+          1749,
         ]
       `)
 
