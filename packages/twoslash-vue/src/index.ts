@@ -142,6 +142,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     const compiled = [
       fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength()),
     ].join('\n')
+      .replace(/(?=export const __VLS_globalTypesStart)/, '// ---cut-after---\n')
 
     const map = new SourceMap(fileCompiled.mappings)
 

@@ -143,7 +143,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) 'click': ((payload: MouseEvent) => void) | undefined",
+      "text": "(property) onClick?: ((payload: MouseEvent) => void) | undefined",
       "start": 163,
       "length": 5,
       "target": "click",
