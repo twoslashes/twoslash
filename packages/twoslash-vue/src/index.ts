@@ -138,10 +138,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
     const sourceScript = lang.scripts.set('index.vue', ts.ScriptSnapshot.fromString(strippedCode))!
-    const fileCompiled = [...sourceScript.generated!.embeddedCodes.values()][1]
-    const compiled = [
-      fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength()),
-    ].join('\n')
+    const fileCompiled = get(sourceScript.generated!.embeddedCodes.values(), 1)!
+    const compiled = fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength())
       .replace(/(?=export const __VLS_globalTypesStart)/, '// ---cut-after---\n')
 
     const map = new SourceMap(fileCompiled.mappings)
@@ -173,9 +171,14 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       positionCompletions: sourceMeta.positionCompletions
         .map(p => getLastGeneratedOffset(p)!),
       positionQueries: sourceMeta.positionQueries
-        .map(p => [...map.getGeneratedOffsets(p)][0]?.[0]),
+        .map(p => get(map.getGeneratedOffsets(p), 0)?.[0])
+        .filter(isNotNull),
       positionHighlights: sourceMeta.positionHighlights
-        .map(([start, end]) => [[...map.getGeneratedOffsets(start)][0]?.[0], [...map.getGeneratedOffsets(end)][0]?.[0]]),
+        .map(([start, end]) => [
+          get(map.getGeneratedOffsets(start), 0)?.[0],
+          get(map.getGeneratedOffsets(end), 0)?.[0],
+        ])
+        .filter((x): x is [number, number] => x[0] != null && x[1] != null),
     })
 
     if (createOptions.debugShowGeneratedCode)
@@ -186,11 +189,11 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       .map((q) => {
         if ('text' in q && q.text === 'any')
           return undefined
-        const startMap = [...map.getSourceOffsets(q.start)][0]
+        const startMap = get(map.getSourceOffsets(q.start), 0)
         if (!startMap)
           return undefined
         const start = startMap[0]
-        let end = [...map.getSourceOffsets(q.start + q.length)][0]?.[0]
+        let end = get(map.getSourceOffsets(q.start + q.length), 0)?.[0]
         if (end == null && startMap[1].sourceOffsets[0] === startMap[0])
           end = startMap[1].sourceOffsets[1]
         if (end == null || start < 0 || end < 0 || start > end)
@@ -208,8 +211,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       ...sourceMeta.removals,
       ...result.meta.removals
         .map((r) => {
-          const start = [...map.getSourceOffsets(r[0])][0]?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
-          const end = [...map.getSourceOffsets(r[1])][0]?.[0]
+          const start = get(map.getSourceOffsets(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
+          const end = get(map.getSourceOffsets(r[1]), 0)?.[0]
           if (start == null || end == null || start < 0 || end < 0 || start >= end)
             return undefined
           return [start, end] as Range
@@ -254,4 +257,12 @@ export const createTwoslasherVue = createTwoslasher
 
 function isNotNull<T>(x: T | null | undefined): x is T {
   return x != null
+}
+
+function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T | undefined {
+  for (const item of iterator) {
+    if (index-- === 0)
+      return item
+  }
+  return undefined
 }
