@@ -208,7 +208,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       ...sourceMeta.removals,
       ...result.meta.removals
         .map((r) => {
-          const start = [...map.getSourceOffsets(r[0])][0]?.[0]
+          const start = [...map.getSourceOffsets(r[0])][0]?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
           const end = [...map.getSourceOffsets(r[1])][0]?.[0]
           if (start == null || end == null || start < 0 || end < 0 || start >= end)
             return undefined

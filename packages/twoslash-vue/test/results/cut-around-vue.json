@@ -1,0 +1,89 @@
+{
+  "code": "<script setup lang=\"ts\">\nconst { hi } = useFoo()\nfunction useFoo() {\n  const hi = ref<Foo>({ bar: \"hello\" })\n  return { hi }\n}\n// ---cut-after---\ndeclare const foo: {\n  hi: string\n}\n</script>\n\n<template>\n  <div>\n    {{ hi.bar }}\n  </div>\n</template>\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const hi: Ref<{\n    bar: string;\n}>",
+      "start": 33,
+      "length": 2,
+      "target": "hi",
+      "line": 1,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "function useFoo(): {\n    hi: Ref<{\n        bar: string;\n    }>;\n}",
+      "start": 40,
+      "length": 6,
+      "target": "useFoo",
+      "line": 1,
+      "character": 15
+    },
+    {
+      "type": "hover",
+      "text": "function useFoo(): {\n    hi: Ref<{\n        bar: string;\n    }>;\n}",
+      "start": 58,
+      "length": 6,
+      "target": "useFoo",
+      "line": 2,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "const hi: Ref<{\n    bar: string;\n}>",
+      "start": 77,
+      "length": 2,
+      "target": "hi",
+      "line": 3,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "(alias) ref<Foo>(value: Foo): Ref<{\n    bar: string;\n}> (+1 overload)\nimport ref",
+      "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
+      "tags": [
+        [
+          "param",
+          "value - The object to wrap in the ref."
+        ],
+        [
+          "see",
+          "{@link https://vuejs.org/api/reactivity-core.html#ref}"
+        ]
+      ],
+      "start": 82,
+      "length": 3,
+      "target": "ref",
+      "line": 3,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "interface Foo",
+      "start": 86,
+      "length": 3,
+      "target": "Foo",
+      "line": 3,
+      "character": 17
+    },
+    {
+      "type": "hover",
+      "text": "(property) Foo.bar: string",
+      "start": 93,
+      "length": 3,
+      "target": "bar",
+      "line": 3,
+      "character": 24
+    },
+    {
+      "type": "hover",
+      "text": "(property) hi: Ref<{\n    bar: string;\n}>",
+      "start": 120,
+      "length": 2,
+      "target": "hi",
+      "line": 4,
+      "character": 11
+    }
+  ],
+  "flags": []
+}

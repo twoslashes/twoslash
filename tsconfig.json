@@ -8,7 +8,7 @@
     ],
     "moduleDetection": "force",
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "paths": {
       "twoslash": [
         "./packages/twoslash/src/index.ts"
@@ -30,6 +30,7 @@
     ],
     "allowJs": true,
     "strict": true,
+    "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
     "skipDefaultLibCheck": true,
