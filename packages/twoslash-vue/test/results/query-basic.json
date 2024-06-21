@@ -23,7 +23,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions | undefined): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions | undefined): WritableComputedRef<...>;\n}\nimport computed",
+      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): WritableComputedRef<T>;\n}\nimport computed",
       "start": 39,
       "length": 8,
       "target": "computed",
@@ -32,7 +32,7 @@
     },
     {
       "type": "query",
-      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions | undefined): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions | undefined): WritableComputedRef<...>;\n}\nimport computed",
+      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): WritableComputedRef<T>;\n}\nimport computed",
       "start": 39,
       "length": 8,
       "target": "computed",
@@ -50,7 +50,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) ref<number>(value: number): Ref<number> (+1 overload)\nimport ref",
+      "text": "(alias) ref<number>(value: number): Ref<UnwrapRef<number>> (+1 overload)\nimport ref",
       "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
       "tags": [
         [
@@ -88,7 +88,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) computed<number>(getter: ComputedGetter<number>, debugOptions?: DebuggerOptions | undefined): ComputedRef<number> (+1 overload)\nimport computed",
+      "text": "(alias) computed<number>(getter: ComputedGetter<number>, debugOptions?: DebuggerOptions): ComputedRef<number> (+1 overload)\nimport computed",
       "docs": "Takes a getter function and returns a readonly reactive ref object for the\nreturned value from the getter. It can also take an object with get and set\nfunctions to create a writable ref object.",
       "tags": [
         [

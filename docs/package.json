@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "@unocss/reset": "^0.60.4",
-    "@vueuse/core": "^10.10.1",
+    "@vueuse/core": "^10.11.0",
     "floating-vue": "^5.2.2",
     "fuse.js": "^7.0.0",
-    "sass": "^1.77.4",
+    "sass": "^1.77.6",
     "unocss": "^0.60.4",
     "vitepress": "^1.2.3",
-    "vue": "^3.4.27"
+    "vue": "^3.4.29"
   }
 }

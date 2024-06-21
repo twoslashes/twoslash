@@ -3,7 +3,7 @@
   "nodes": [
     {
       "type": "hover",
-      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "text": "const a: {\n    test: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 23,
       "length": 1,
       "target": "a",
@@ -30,7 +30,7 @@
     },
     {
       "type": "hover",
-      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "text": "const a: {\n    test: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 78,
       "length": 1,
       "target": "a",
@@ -64,7 +64,7 @@
     },
     {
       "type": "hover",
-      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "text": "const a: {\n    test: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 132,
       "length": 1,
       "target": "a",
@@ -110,7 +110,7 @@
     },
     {
       "type": "hover",
-      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "text": "const a: {\n    test: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 188,
       "length": 1,
       "target": "a",
@@ -135,13 +135,21 @@
           "name": "bar",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 234,
+            "length": 0
+          }
         },
         {
           "name": "baz",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 234,
+            "length": 0
+          }
         }
       ],
       "completionsPrefix": "b",
@@ -150,7 +158,7 @@
     },
     {
       "type": "hover",
-      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "text": "const a: {\n    test: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 245,
       "length": 1,
       "target": "a",
@@ -198,7 +206,7 @@
     },
     {
       "type": "hover",
-      "text": "const a: {\n    test: 'foo' | 'bar' | 'baz';\n}",
+      "text": "const a: {\n    test: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 312,
       "length": 1,
       "target": "a",

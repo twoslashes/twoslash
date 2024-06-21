@@ -3,7 +3,7 @@
   "nodes": [
     {
       "type": "hover",
-      "text": "(alias) function onKeyPressed(key: KeyFilter, handler: (event: KeyboardEvent) => void, options?: Omit<OnKeyStrokeOptions, 'eventName'>): () => void\nimport onKeyPressed",
+      "text": "(alias) function onKeyPressed(key: KeyFilter, handler: (event: KeyboardEvent) => void, options?: Omit<OnKeyStrokeOptions, \"eventName\">): () => void\nimport onKeyPressed",
       "docs": "Listen to the keypress event of the given key.",
       "tags": [
         [

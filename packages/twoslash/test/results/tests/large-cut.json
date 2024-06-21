@@ -12,7 +12,7 @@
     },
     {
       "type": "hover",
-      "text": "type NetworkLoadingState = {\n    state: 'loading';\n}",
+      "text": "type NetworkLoadingState = {\n    state: \"loading\";\n}",
       "start": 20,
       "length": 19,
       "target": "NetworkLoadingState",
@@ -21,7 +21,7 @@
     },
     {
       "type": "hover",
-      "text": "type NetworkFailedState = {\n    state: 'failed';\n    code: number;\n}",
+      "text": "type NetworkFailedState = {\n    state: \"failed\";\n    code: number;\n}",
       "start": 42,
       "length": 18,
       "target": "NetworkFailedState",
@@ -30,7 +30,7 @@
     },
     {
       "type": "hover",
-      "text": "type NetworkSuccessState = {\n    state: 'success';\n    response: {\n        title: string;\n        duration: number;\n        summary: string;\n    };\n}",
+      "text": "type NetworkSuccessState = {\n    state: \"success\";\n    response: {\n        title: string;\n        duration: number;\n        summary: string;\n    };\n}",
       "start": 63,
       "length": 19,
       "target": "NetworkSuccessState",

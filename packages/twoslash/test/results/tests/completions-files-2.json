@@ -12,7 +12,7 @@
     },
     {
       "type": "hover",
-      "text": "type Example = {\n    name: 'foo' | 'bar' | 'baz';\n}",
+      "text": "type Example = {\n    name: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 34,
       "length": 7,
       "target": "Example",
@@ -39,7 +39,7 @@
     },
     {
       "type": "hover",
-      "text": "type Example = {\n    name: 'foo' | 'bar' | 'baz';\n}",
+      "text": "type Example = {\n    name: \"foo\" | \"bar\" | \"baz\";\n}",
       "start": 94,
       "length": 7,
       "target": "Example",
@@ -82,19 +82,31 @@
           "name": "foo",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 174,
+            "length": 0
+          }
         },
         {
           "name": "bar",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 174,
+            "length": 0
+          }
         },
         {
           "name": "baz",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "replacementSpan": {
+            "start": 174,
+            "length": 0
+          }
         }
       ],
       "completionsPrefix": "'",
