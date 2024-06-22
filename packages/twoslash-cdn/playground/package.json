@@ -1,17 +1,17 @@
 {
   "name": "playground",
   "type": "module",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "private": true,
   "scripts": {
     "dev": "vite"
   },
   "dependencies": {
-    "@shikijs/twoslash": "^1.6.4",
-    "shiki": "^1.6.4"
+    "@shikijs/twoslash": "^1.9.0",
+    "shiki": "^1.9.0"
   },
   "devDependencies": {
     "idb-keyval": "^6.2.1",
-    "vite": "^5.2.13"
+    "vite": "^5.3.1"
   }
 }

@@ -1,5 +1,5 @@
 import type { Language, VueCompilerOptions } from '@vue/language-core'
-import { FileMap, SourceMap, createLanguage, createVueLanguagePlugin, resolveVueCompilerOptions } from '@vue/language-core'
+import { FileMap, createLanguage, createVueLanguagePlugin, defaultMapperFactory, resolveVueCompilerOptions } from '@vue/language-core'
 import type { CompilerOptions } from 'typescript'
 import ts from 'typescript'
 import type {
@@ -142,10 +142,10 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     const compiled = fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength())
       .replace(/(?=export const __VLS_globalTypesStart)/, '// ---cut-after---\n')
 
-    const map = new SourceMap(fileCompiled.mappings)
+    const map = defaultMapperFactory(fileCompiled.mappings)
 
     function getLastGeneratedOffset(pos: number) {
-      const offsets = [...map.getGeneratedOffsets(pos)]
+      const offsets = [...map.toGeneratedLocation(pos)]
       if (!offsets.length)
         return undefined
       return offsets[offsets.length - 1]?.[0]
@@ -171,12 +171,12 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       positionCompletions: sourceMeta.positionCompletions
         .map(p => getLastGeneratedOffset(p)!),
       positionQueries: sourceMeta.positionQueries
-        .map(p => get(map.getGeneratedOffsets(p), 0)?.[0])
+        .map(p => get(map.toGeneratedLocation(p), 0)?.[0])
         .filter(isNotNull),
       positionHighlights: sourceMeta.positionHighlights
         .map(([start, end]) => [
-          get(map.getGeneratedOffsets(start), 0)?.[0],
-          get(map.getGeneratedOffsets(end), 0)?.[0],
+          get(map.toGeneratedLocation(start), 0)?.[0],
+          get(map.toGeneratedLocation(end), 0)?.[0],
         ])
         .filter((x): x is [number, number] => x[0] != null && x[1] != null),
     })
@@ -189,11 +189,11 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       .map((q) => {
         if ('text' in q && q.text === 'any')
           return undefined
-        const startMap = get(map.getSourceOffsets(q.start), 0)
+        const startMap = get(map.toSourceLocation(q.start), 0)
         if (!startMap)
           return undefined
         const start = startMap[0]
-        let end = get(map.getSourceOffsets(q.start + q.length), 0)?.[0]
+        let end = get(map.toSourceLocation(q.start + q.length), 0)?.[0]
         if (end == null && startMap[1].sourceOffsets[0] === startMap[0])
           end = startMap[1].sourceOffsets[1]
         if (end == null || start < 0 || end < 0 || start > end)
@@ -211,8 +211,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       ...sourceMeta.removals,
       ...result.meta.removals
         .map((r) => {
-          const start = get(map.getSourceOffsets(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
-          const end = get(map.getSourceOffsets(r[1]), 0)?.[0]
+          const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
+          const end = get(map.toSourceLocation(r[1]), 0)?.[0]
           if (start == null || end == null || start < 0 || end < 0 || start >= end)
             return undefined
           return [start, end] as Range

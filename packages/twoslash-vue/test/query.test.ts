@@ -40,8 +40,8 @@ describe('basic', () => {
           "tags": undefined,
           "target": "computed",
           "text": "(alias) const computed: {
-            <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions | undefined): ComputedRef<T>;
-            <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions | undefined): WritableComputedRef<...>;
+            <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;
+            <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): WritableComputedRef<T>;
         }
         import computed",
           "type": "query",
