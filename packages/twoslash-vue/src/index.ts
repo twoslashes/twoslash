@@ -65,7 +65,12 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, id => id, () => '', () => true, defaultCompilerOptions, resolveVueCompilerOptions(vueCompilerOptions))
+      const vueLanguagePlugin = createVueLanguagePlugin<string>(
+        ts,
+        defaultCompilerOptions,
+        resolveVueCompilerOptions(vueCompilerOptions),
+        id => id,
+      )
       return createLanguage(
         [vueLanguagePlugin],
         new FileMap(ts.sys.useCaseSensitiveFileNames),

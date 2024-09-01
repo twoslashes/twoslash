@@ -50,7 +50,7 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@vue/language-core": "~2.0.29",
+    "@vue/language-core": "~2.1.4",
     "twoslash": "workspace:*",
     "twoslash-protocol": "workspace:*"
   }
