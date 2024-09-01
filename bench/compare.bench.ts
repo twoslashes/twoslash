@@ -1,7 +1,6 @@
 /* eslint-disable import/first */
 process.env.NODE_ENV = 'production'
 
-/* eslint-disable test/consistent-test-it */
 import { fileURLToPath } from 'node:url'
 import fs from 'node:fs/promises'
 import { basename } from 'node:path'

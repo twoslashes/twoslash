@@ -55,7 +55,7 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@typescript/vfs": "1.5.0",
+    "@typescript/vfs": "^1.6.0",
     "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {

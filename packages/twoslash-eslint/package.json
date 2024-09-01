@@ -53,6 +53,6 @@
     "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {
-    "@types/eslint": "^8.56.10"
+    "@types/eslint": "^9.6.1"
   }
 }
