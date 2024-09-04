@@ -39,7 +39,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) ref<Foo>(value: Foo): Ref<UnwrapRef<Foo>> (+1 overload)\nimport ref",
+      "text": "(alias) ref<Foo>(value: Foo): Ref<{\n    bar: string;\n}> (+1 overload)\nimport ref",
       "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
       "tags": [
         [

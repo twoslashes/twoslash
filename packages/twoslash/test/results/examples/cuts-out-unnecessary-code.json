@@ -75,7 +75,7 @@
     },
     {
       "type": "hover",
-      "text": "function createLabel<\"typescript\">(idOrName: \"typescript\"): NameOrId<\"typescript\">",
+      "text": "function createLabel<\"typescript\">(idOrName: \"typescript\"): NameLabel",
       "start": 113,
       "length": 11,
       "target": "createLabel",
@@ -102,7 +102,7 @@
     },
     {
       "type": "hover",
-      "text": "function createLabel<2.8>(idOrName: 2.8): NameOrId<2.8>",
+      "text": "function createLabel<2.8>(idOrName: 2.8): IdLabel",
       "start": 149,
       "length": 11,
       "target": "createLabel",
@@ -129,7 +129,7 @@
     },
     {
       "type": "hover",
-      "text": "function createLabel<\"hello\" | 42>(idOrName: \"hello\" | 42): NameOrId<\"hello\" | 42>",
+      "text": "function createLabel<\"hello\" | 42>(idOrName: \"hello\" | 42): IdLabel | NameLabel",
       "start": 176,
       "length": 11,
       "target": "createLabel",

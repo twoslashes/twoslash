@@ -204,10 +204,12 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     }
     // #endregion
 
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     function getOffsetInFile(offset: number, file: VirtualFile) {
       return offset - file.offset + (file.prepend?.length || 0)
     }
 
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     function getFileContent(file: VirtualFile) {
       return (file.prepend || '') + file.content + (file.append || '')
     }
