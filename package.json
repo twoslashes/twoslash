@@ -16,14 +16,14 @@
     "prepare": "simple-git-hooks"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.0.0",
+    "@antfu/eslint-config": "^3.2.1",
     "@iconify-json/ri": "^1.2.0",
     "@iconify-json/svg-spinners": "^1.2.0",
-    "@shikijs/markdown-it": "^1.15.2",
-    "@shikijs/transformers": "^1.15.2",
-    "@shikijs/twoslash": "^1.15.2",
-    "@shikijs/vitepress-twoslash": "^1.15.2",
-    "@types/node": "^22.5.2",
+    "@shikijs/markdown-it": "^1.16.2",
+    "@shikijs/transformers": "^1.16.2",
+    "@shikijs/twoslash": "^1.16.2",
+    "@shikijs/vitepress-twoslash": "^1.16.2",
+    "@types/node": "^22.5.4",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@typescript/twoslash": "^3.2.8",
@@ -41,7 +41,7 @@
     "preact": "^10.23.2",
     "pretty-format": "^29.7.0",
     "react": "^18.3.1",
-    "shiki": "^1.15.2",
+    "shiki": "^1.16.2",
     "simple-git-hooks": "^2.11.1",
     "tslib": "^2.7.0",
     "twoslash": "workspace:*",
@@ -51,13 +51,13 @@
     "typescript": "^5.5.4",
     "unbuild": "^2.0.0",
     "unplugin-vue-components": "^0.27.4",
-    "vite": "^5.4.2",
+    "vite": "^5.4.3",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.0.5",
-    "vue": "^3.4.38"
+    "vue": "^3.5.2"
   },
   "resolutions": {
-    "@types/node": "^22.5.2",
+    "@types/node": "^22.5.4",
     "twoslash": "workspace:*",
     "twoslash-vue": "workspace:*",
     "typescript": "^5.5.4"

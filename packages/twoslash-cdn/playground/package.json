@@ -7,11 +7,11 @@
     "dev": "vite"
   },
   "dependencies": {
-    "@shikijs/twoslash": "^1.15.2",
-    "shiki": "^1.15.2"
+    "@shikijs/twoslash": "^1.16.2",
+    "shiki": "^1.16.2"
   },
   "devDependencies": {
     "idb-keyval": "^6.2.1",
-    "vite": "^5.4.2"
+    "vite": "^5.4.3"
   }
 }

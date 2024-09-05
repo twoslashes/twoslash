@@ -57,8 +57,8 @@
     "twoslash-cdn": "workspace:*",
     "typescript": "^5.5.4",
     "unbuild": "^2.0.0",
-    "unstorage": "^1.10.2",
-    "vite": "^5.4.2",
+    "unstorage": "^1.11.1",
+    "vite": "^5.4.3",
     "vitest": "^2.0.5"
   }
 }

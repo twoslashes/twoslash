@@ -6,7 +6,7 @@ import { twoslasher } from '../src/index'
 it('applies custom transformers', () => {
   const code = 'console.log(\'Hello World!\')'
   // A simple transformer that uppercases all string literals
-  // eslint-disable-next-line unicorn/consistent-function-scoping
+
   const transformer: TransformerFactory<SourceFile> = (ctx: TransformationContext) => {
     const visitor = (node: Node): Node => {
       if (isStringLiteral(node))

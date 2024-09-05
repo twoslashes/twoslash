@@ -3,7 +3,7 @@
   "nodes": [
     {
       "type": "hover",
-      "text": "(alias) function ref<T>(value: T): Ref<UnwrapRef<T>> (+1 overload)\nimport ref",
+      "text": "(alias) function ref<T>(value: T): [T] extends [Ref] ? IfAny<T, Ref<T>, T> : Ref<UnwrapRef<T>, UnwrapRef<T> | T> (+1 overload)\nimport ref",
       "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
       "tags": [
         [
@@ -23,7 +23,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): WritableComputedRef<T>;\n}\nimport computed",
+      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;\n    <T, S = T>(options: WritableComputedOptions<T, S>, debugOptions?: DebuggerOptions): WritableComputedRef<T, S>;\n}\nimport computed",
       "start": 39,
       "length": 8,
       "target": "computed",
@@ -32,7 +32,7 @@
     },
     {
       "type": "query",
-      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;\n    <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): WritableComputedRef<T>;\n}\nimport computed",
+      "text": "(alias) const computed: {\n    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;\n    <T, S = T>(options: WritableComputedOptions<T, S>, debugOptions?: DebuggerOptions): WritableComputedRef<T, S>;\n}\nimport computed",
       "start": 39,
       "length": 8,
       "target": "computed",
@@ -41,7 +41,7 @@
     },
     {
       "type": "hover",
-      "text": "const count: Ref<number>",
+      "text": "const count: Ref<number, number>",
       "start": 72,
       "length": 5,
       "target": "count",
@@ -50,7 +50,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) ref<number>(value: number): Ref<number> (+1 overload)\nimport ref",
+      "text": "(alias) ref<number>(value: number): Ref<number, number> (+1 overload)\nimport ref",
       "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
       "tags": [
         [
@@ -116,7 +116,7 @@
     },
     {
       "type": "hover",
-      "text": "const count: Ref<number>",
+      "text": "const count: Ref<number, number>",
       "start": 118,
       "length": 5,
       "target": "count",
@@ -125,7 +125,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) Ref<number>.value: number",
+      "text": "(property) Ref<number, number>.value: number",
       "start": 124,
       "length": 5,
       "target": "value",
@@ -134,7 +134,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) ComponentOptionsBase<Props, RawBindings, D, C extends ComputedOptions, M extends MethodOptions, Mixin extends ComponentOptionsMixin, Extends extends ComponentOptionsMixin, E extends EmitsOptions, EE extends string = string, Defaults = {}, I extends ComponentInjectOptions = {}, II extends string = string, S extends SlotsType = {}>.name?: string | undefined",
+      "text": "(property) ComponentOptionsBase<Props, RawBindings, D, C extends ComputedOptions, M extends MethodOptions, Mixin extends ComponentOptionsMixin, Extends extends ComponentOptionsMixin, E extends EmitsOptions, EE extends string = string, Defaults = {}, I extends ComponentInjectOptions = {}, II extends string = string, S extends SlotsType = {}, LC extends Record<string, Component> = {}, Directives extends Record<string, Directive> = {}, Exposed extends string = string, Provide extends ComponentProvideOptions = ComponentProvideOptions>.name?: string | undefined",
       "start": 174,
       "length": 4,
       "target": "name",
@@ -143,7 +143,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) LegacyOptions<{}, { msg: string; }, {}, { greet(): void; }, ComponentOptionsMixin, ComponentOptionsMixin, {}, string>.data?: ((this: CreateComponentPublicInstance<...>, vm: CreateComponentPublicInstance<{}, {}, {}, {}, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, {}, {}, {}, false, ... 8 more ..., {}>) => {\n    ...;\n}) | undefined",
+      "text": "(property) LegacyOptions<ToResolvedProps<{}, {}>, { msg: string; }, {}, { greet(): void; }, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, ComponentProvideOptions>.data?: ((this: CreateComponentPublicInstanceWithMixins<...>, vm: CreateComponentPublicInstanceWithMixins<ToResolvedProps<{}, {}>, {}, {}, {}, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, ... 18 more ..., {}>) => {\n    ...;\n}) | undefined",
       "start": 196,
       "length": 4,
       "target": "data",
@@ -161,7 +161,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) LegacyOptions<{}, { msg: string; }, {}, { greet(): void; }, ComponentOptionsMixin, ComponentOptionsMixin, {}, string>.methods?: {\n    greet(): void;\n} | undefined",
+      "text": "(property) LegacyOptions<ToResolvedProps<{}, {}>, { msg: string; }, {}, { greet(): void; }, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, ComponentProvideOptions>.methods?: {\n    greet(): void;\n} | undefined",
       "start": 251,
       "length": 7,
       "target": "methods",
@@ -247,7 +247,7 @@
     },
     {
       "type": "hover",
-      "text": "const count: Ref<number>",
+      "text": "const count: Ref<number, number>",
       "start": 356,
       "length": 5,
       "target": "count",
@@ -265,7 +265,7 @@
     },
     {
       "type": "hover",
-      "text": "const count: Ref<number>",
+      "text": "const count: Ref<number, number>",
       "start": 388,
       "length": 5,
       "target": "count",

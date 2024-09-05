@@ -3,7 +3,7 @@
   "nodes": [
     {
       "type": "hover",
-      "text": "const hi: Ref<{\n    bar: string;\n}>",
+      "text": "const hi: Ref<{\n    bar: string;\n}, Foo | {\n    bar: string;\n}>",
       "start": 33,
       "length": 2,
       "target": "hi",
@@ -12,7 +12,7 @@
     },
     {
       "type": "hover",
-      "text": "function useFoo(): {\n    hi: Ref<{\n        bar: string;\n    }>;\n}",
+      "text": "function useFoo(): {\n    hi: Ref<{\n        bar: string;\n    }, Foo | {\n        bar: string;\n    }>;\n}",
       "start": 40,
       "length": 6,
       "target": "useFoo",
@@ -21,7 +21,7 @@
     },
     {
       "type": "hover",
-      "text": "function useFoo(): {\n    hi: Ref<{\n        bar: string;\n    }>;\n}",
+      "text": "function useFoo(): {\n    hi: Ref<{\n        bar: string;\n    }, Foo | {\n        bar: string;\n    }>;\n}",
       "start": 58,
       "length": 6,
       "target": "useFoo",
@@ -30,7 +30,7 @@
     },
     {
       "type": "hover",
-      "text": "const hi: Ref<{\n    bar: string;\n}>",
+      "text": "const hi: Ref<{\n    bar: string;\n}, Foo | {\n    bar: string;\n}>",
       "start": 77,
       "length": 2,
       "target": "hi",
@@ -39,7 +39,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) ref<Foo>(value: Foo): Ref<{\n    bar: string;\n}> (+1 overload)\nimport ref",
+      "text": "(alias) ref<Foo>(value: Foo): Ref<{\n    bar: string;\n}, Foo | {\n    bar: string;\n}> (+1 overload)\nimport ref",
       "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
       "tags": [
         [
@@ -77,7 +77,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) hi: Ref<{\n    bar: string;\n}>",
+      "text": "(property) hi: Ref<{\n    bar: string;\n}, Foo | {\n    bar: string;\n}>",
       "start": 120,
       "length": 2,
       "target": "hi",
