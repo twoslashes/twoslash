@@ -1,5 +1,5 @@
 import type { Language, VueCompilerOptions } from '@vue/language-core'
-import { FileMap, createLanguage, createVueLanguagePlugin, defaultMapperFactory, resolveVueCompilerOptions } from '@vue/language-core'
+import { FileMap, createLanguage, createVueLanguagePlugin, defaultMapperFactory, resolveVueCompilerOptions, setupGlobalTypes } from '@vue/language-core'
 import type { CompilerOptions } from 'typescript'
 import ts from 'typescript'
 import type {
@@ -65,7 +65,9 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, id => id, () => '', () => true, defaultCompilerOptions, resolveVueCompilerOptions(vueCompilerOptions))
+      const resolvedVueOptions = resolveVueCompilerOptions(vueCompilerOptions)
+      resolvedVueOptions.__setupedGlobalTypes = setupGlobalTypes(ts.sys.getCurrentDirectory(), resolvedVueOptions, ts.sys)
+      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, defaultCompilerOptions, resolvedVueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
         new FileMap(ts.sys.useCaseSensitiveFileNames),
@@ -138,9 +140,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
     const sourceScript = lang.scripts.set('index.vue', ts.ScriptSnapshot.fromString(strippedCode))!
-    const fileCompiled = get(sourceScript.generated!.embeddedCodes.values(), 1)!
+    const fileCompiled = get(sourceScript.generated!.embeddedCodes.values(), 2)!
     const compiled = fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength())
-      .replace(/(?=export const __VLS_globalTypesStart)/, '// ---cut-after---\n')
 
     const map = defaultMapperFactory(fileCompiled.mappings)
 
