@@ -1,5 +1,5 @@
 {
-  "code": "<script setup lang=\"ts\">\nconst { hi } = useFoo()\nfunction useFoo() {\n  const hi = ref<Foo>({ bar: \"hello\" })\n  return { hi }\n}\n// ---cut-after---\ndeclare const foo: {\n  hi: string\n}\n</script>\n\n<template>\n  <div>\n    {{ hi.bar }}\n  </div>\n</template>\n",
+  "code": "<script setup lang=\"ts\">\nconst { hi } = useFoo()\nfunction useFoo() {\n  const hi = ref<Foo>({ bar: \"hello\" })\n  return { hi }\n}\n</script>\n\n<template>\n  <div>\n    {{ hi.bar }}\n  </div>\n</template>\n",
   "nodes": [
     {
       "type": "hover",
