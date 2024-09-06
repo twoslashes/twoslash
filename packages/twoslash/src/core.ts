@@ -1,12 +1,15 @@
-import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit } from 'typescript'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
-import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
 import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
-import { TwoslashError } from './error'
-import { validateCodeForErrors } from './validation'
+
+import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
+import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit } from 'typescript'
+
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
-import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
+import { TwoslashError } from './error'
 import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
+import { validateCodeForErrors } from './validation'
+
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
 
 export * from './public'
 

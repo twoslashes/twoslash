@@ -1,6 +1,6 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
-import type { TwoslashReturn } from './returns'
 import type { TwoslashExecuteOptions } from './options'
+import type { TwoslashReturn } from './returns'
 
 export type TwoslashFunction = (code: string, extension?: string, options?: TwoslashExecuteOptions) => TwoslashReturn
 

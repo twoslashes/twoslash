@@ -1,6 +1,6 @@
-import type { Node, SourceFile, TransformationContext, TransformerFactory } from 'typescript'
 import { isSourceFile, isStringLiteral, visitEachChild, visitNode } from 'typescript'
 import { expect, it } from 'vitest'
+import type { Node, SourceFile, TransformationContext, TransformerFactory } from 'typescript'
 import { twoslasher } from '../src/index'
 
 it('applies custom transformers', () => {

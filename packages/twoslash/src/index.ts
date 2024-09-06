@@ -1,11 +1,11 @@
 import ts from 'typescript'
-import type { TwoslashOptions } from './core'
 import { createTwoslasher as _createTwoslasher, twoslasher as _twoslasher } from './core'
 import { convertLegacyOptions, convertLegacyReturn } from './legacy'
+import type { TwoslashOptions } from './core'
 import type { TwoslashOptionsLegacy, TwoslashReturnLegacy } from './legacy'
 
-export * from './public'
 export * from './legacy'
+export * from './public'
 
 // eslint-disable-next-line node/prefer-global/process
 const cwd = /* @__PURE__ */ typeof process !== 'undefined' && typeof process.cwd === 'function' ? process.cwd() : ''

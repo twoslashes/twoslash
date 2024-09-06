@@ -7,8 +7,8 @@ To get the beautiful result you see on this website, you can use [Shiki](https:/
 It provides [`@shikijs/twoslash`](https://shiki.style/packages/twoslash) that integrates the type information into your code snippets.
 
 ```ts twoslash
-import { codeToHtml } from 'shiki'
 import { transformerTwoslash } from '@shikijs/twoslash' // [!code hl]
+import { codeToHtml } from 'shiki'
 
 const html = await codeToHtml(`console.log()`, {
   lang: 'ts',

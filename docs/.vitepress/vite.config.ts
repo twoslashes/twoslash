@@ -1,11 +1,11 @@
-import { fileURLToPath } from 'node:url'
-import { resolve } from 'node:path'
 import fs from 'node:fs/promises'
-import { defineConfig } from 'vite'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import JITI from 'jiti'
+import { format } from 'pretty-format'
 import UnoCSS from 'unocss/vite'
 import Components from 'unplugin-vue-components/vite'
-import { format } from 'pretty-format'
-import JITI from 'jiti'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
