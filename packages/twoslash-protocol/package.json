@@ -1,7 +1,7 @@
 {
   "name": "twoslash-protocol",
   "type": "module",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "The protocol for the Twoslash interface",
   "author": "Anthony Fu",
   "license": "MIT",
