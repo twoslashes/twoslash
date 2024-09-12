@@ -1,4 +1,4 @@
-import type { Language, VueCompilerOptions } from '@vue/language-core'
+import type { Language, SourceScript, VueCompilerOptions } from '@vue/language-core'
 import type {
   CompilerOptionDeclaration,
   CreateTwoslashOptions,
@@ -10,7 +10,14 @@ import type {
   TwoslashReturnMeta,
 } from 'twoslash'
 import type { CompilerOptions } from 'typescript'
-import { createLanguage, createVueLanguagePlugin, defaultMapperFactory, FileMap, resolveVueCompilerOptions, setupGlobalTypes } from '@vue/language-core'
+import {
+  createLanguage,
+  createVueLanguagePlugin,
+  defaultMapperFactory,
+  FileMap,
+  resolveVueCompilerOptions,
+  setupGlobalTypes,
+} from '@vue/language-core'
 import {
   createTwoslasher as createTwoslasherBase,
   defaultCompilerOptions,
@@ -70,7 +77,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, defaultCompilerOptions, resolvedVueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
-        new FileMap(ts.sys.useCaseSensitiveFileNames),
+        new FileMap(ts.sys.useCaseSensitiveFileNames) as unknown as Map<string, SourceScript<string>>,
         () => {},
       )
     }
