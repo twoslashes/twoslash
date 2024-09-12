@@ -1,8 +1,8 @@
+import type { TwoslashOptions } from './core'
+import type { TwoslashOptionsLegacy, TwoslashReturnLegacy } from './legacy'
 import ts from 'typescript'
 import { createTwoslasher as _createTwoslasher, twoslasher as _twoslasher } from './core'
 import { convertLegacyOptions, convertLegacyReturn } from './legacy'
-import type { TwoslashOptions } from './core'
-import type { TwoslashOptionsLegacy, TwoslashReturnLegacy } from './legacy'
 
 export * from './legacy'
 export * from './public'

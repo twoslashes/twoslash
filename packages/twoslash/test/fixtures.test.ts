@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 
+import type { TwoslashReturn } from '../src/types'
 import { extname } from 'node:path'
 import process from 'node:process'
 import { expect, it } from 'vitest'
 import { createTwoslasher, removeTwoslashNotations } from '../src/index'
-import type { TwoslashReturn } from '../src/types'
 
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.

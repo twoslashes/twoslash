@@ -1,15 +1,15 @@
-import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
-import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
-
 import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
 import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit } from 'typescript'
 
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
+import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
+
+import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 import { TwoslashError } from './error'
 import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
-import { validateCodeForErrors } from './validation'
 
-import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
+import { validateCodeForErrors } from './validation'
 
 export * from './public'
 
@@ -207,12 +207,10 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     }
     // #endregion
 
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     function getOffsetInFile(offset: number, file: VirtualFile) {
       return offset - file.offset + (file.prepend?.length || 0)
     }
 
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     function getFileContent(file: VirtualFile) {
       return (file.prepend || '') + file.content + (file.append || '')
     }

@@ -1,9 +1,9 @@
+import type { DefaultTheme } from 'vitepress'
 import antfu from '@antfu/eslint-config'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { bundledThemes } from 'shiki'
 import { createTwoslasher as createTwoslasherESLint } from 'twoslash-eslint'
 import { defineConfig } from 'vitepress'
-import type { DefaultTheme } from 'vitepress'
 import { version } from '../../package.json'
 import vite from './vite.config'
 

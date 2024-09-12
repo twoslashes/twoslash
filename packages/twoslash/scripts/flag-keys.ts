@@ -1,7 +1,7 @@
+import type { CompilerOptionDeclaration } from '../src/types/options'
 import fs from 'node:fs/promises'
 import ts from 'typescript'
 import { defaultHandbookOptions } from '../src/defaults'
-import type { CompilerOptionDeclaration } from '../src/types/options'
 
 async function generateFlagKeys() {
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]

@@ -1,3 +1,15 @@
+import type { Language, VueCompilerOptions } from '@vue/language-core'
+import type {
+  CompilerOptionDeclaration,
+  CreateTwoslashOptions,
+  HandbookOptions,
+  ParsedFlagNotation,
+  Range,
+  TwoslashExecuteOptions,
+  TwoslashInstance,
+  TwoslashReturnMeta,
+} from 'twoslash'
+import type { CompilerOptions } from 'typescript'
 import { createLanguage, createVueLanguagePlugin, defaultMapperFactory, FileMap, resolveVueCompilerOptions, setupGlobalTypes } from '@vue/language-core'
 import {
   createTwoslasher as createTwoslasherBase,
@@ -13,18 +25,6 @@ import {
   resolveNodePositions,
 } from 'twoslash-protocol'
 import ts from 'typescript'
-import type { Language, VueCompilerOptions } from '@vue/language-core'
-import type {
-  CompilerOptionDeclaration,
-  CreateTwoslashOptions,
-  HandbookOptions,
-  ParsedFlagNotation,
-  Range,
-  TwoslashExecuteOptions,
-  TwoslashInstance,
-  TwoslashReturnMeta,
-} from 'twoslash'
-import type { CompilerOptions } from 'typescript'
 
 export interface VueSpecificOptions {
   /**

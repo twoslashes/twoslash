@@ -89,19 +89,22 @@
           "name": "foo",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "commitCharacters": []
         },
         {
           "name": "bar",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "commitCharacters": []
         },
         {
           "name": "baz",
           "kindModifiers": "",
           "kind": "string",
-          "sortText": "11"
+          "sortText": "11",
+          "commitCharacters": []
         }
       ],
       "completionsPrefix": "'",
@@ -139,7 +142,8 @@
           "replacementSpan": {
             "start": 234,
             "length": 0
-          }
+          },
+          "commitCharacters": []
         },
         {
           "name": "baz",
@@ -149,7 +153,8 @@
           "replacementSpan": {
             "start": 234,
             "length": 0
-          }
+          },
+          "commitCharacters": []
         }
       ],
       "completionsPrefix": "b",
@@ -187,7 +192,8 @@
           "replacementSpan": {
             "start": 307,
             "length": 3
-          }
+          },
+          "commitCharacters": []
         },
         {
           "name": "baz",
@@ -197,7 +203,8 @@
           "replacementSpan": {
             "start": 307,
             "length": 3
-          }
+          },
+          "commitCharacters": []
         }
       ],
       "completionsPrefix": "b",
@@ -235,7 +242,8 @@
           "replacementSpan": {
             "start": 390,
             "length": 3
-          }
+          },
+          "commitCharacters": []
         },
         {
           "name": "bar",
@@ -245,7 +253,8 @@
           "replacementSpan": {
             "start": 390,
             "length": 3
-          }
+          },
+          "commitCharacters": []
         },
         {
           "name": "baz",
@@ -255,7 +264,8 @@
           "replacementSpan": {
             "start": 390,
             "length": 3
-          }
+          },
+          "commitCharacters": []
         }
       ],
       "completionsPrefix": "'",

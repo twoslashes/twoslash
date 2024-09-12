@@ -1,8 +1,8 @@
+import type { TwoslashReturnMeta } from './types'
 import { removeCodeRanges } from 'twoslash-protocol'
 import { flagKeys } from './flag-keys'
 import { reAnnonateMarkers, reConfigBoolean, reConfigValue } from './regexp'
 import { findCutNotations } from './utils'
-import type { TwoslashReturnMeta } from './types'
 
 /**
  * A fallback function to strip out twoslash annotations from a string and does nothing else.

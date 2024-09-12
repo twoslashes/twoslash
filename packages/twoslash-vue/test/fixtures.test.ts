@@ -1,9 +1,9 @@
 /// <reference types="vite/client" />
 
+import type { TwoslashReturn } from 'twoslash'
 import { extname } from 'node:path'
 import process from 'node:process'
 import { expect, it } from 'vitest'
-import type { TwoslashReturn } from 'twoslash'
 import { createTwoslasher } from '../src/index'
 
 // To add a test, create a file in the fixtures folder and it will will run through
