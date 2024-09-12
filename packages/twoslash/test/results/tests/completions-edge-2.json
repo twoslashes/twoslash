@@ -41,8 +41,7 @@
           "replacementSpan": {
             "start": 71,
             "length": 1
-          },
-          "commitCharacters": []
+          }
         },
         {
           "name": "/bar",
@@ -52,8 +51,7 @@
           "replacementSpan": {
             "start": 71,
             "length": 1
-          },
-          "commitCharacters": []
+          }
         }
       ],
       "completionsPrefix": "/",

@@ -86,8 +86,7 @@
           "replacementSpan": {
             "start": 174,
             "length": 0
-          },
-          "commitCharacters": []
+          }
         },
         {
           "name": "bar",
@@ -97,8 +96,7 @@
           "replacementSpan": {
             "start": 174,
             "length": 0
-          },
-          "commitCharacters": []
+          }
         },
         {
           "name": "baz",
@@ -108,8 +106,7 @@
           "replacementSpan": {
             "start": 174,
             "length": 0
-          },
-          "commitCharacters": []
+          }
         }
       ],
       "completionsPrefix": "'",
