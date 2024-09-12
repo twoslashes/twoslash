@@ -55,11 +55,11 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@typescript/vfs": "^1.6.0",
+    "@typescript/vfs": "catalog:",
     "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {
-    "ohash": "^1.1.3"
+    "ohash": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

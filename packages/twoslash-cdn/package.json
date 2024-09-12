@@ -52,13 +52,13 @@
     "twoslash": "workspace:*"
   },
   "devDependencies": {
-    "@typescript/ata": "^0.9.7",
-    "@typescript/vfs": "^1.6.0",
+    "@typescript/ata": "catalog:",
+    "@typescript/vfs": "catalog:",
     "twoslash-cdn": "workspace:*",
-    "typescript": "^5.6.2",
-    "unbuild": "^2.0.0",
-    "unstorage": "^1.12.0",
-    "vite": "^5.4.4",
-    "vitest": "^2.1.0"
+    "typescript": "catalog:",
+    "unbuild": "catalog:",
+    "unstorage": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
   }
 }

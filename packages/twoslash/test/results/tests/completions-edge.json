@@ -41,7 +41,8 @@
           "replacementSpan": {
             "start": 71,
             "length": 2
-          }
+          },
+          "commitCharacters": []
         }
       ],
       "completionsPrefix": "@f",
