@@ -1,5 +1,5 @@
 import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
-import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit } from 'typescript'
+import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit, System } from 'typescript'
 
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
@@ -28,15 +28,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   const vfs = createOptions.fsMap || new Map<string, string>()
   const system = useFS
     ? createSystem(vfs)
-    : {
-        ...createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory),
-        // To work with non-hoisted packages structure
-        realpath(path: string) {
-          if (vfs.has(path))
-            return path
-          return ts.sys.realpath?.(path) || path
-        },
-      }
+    : createCacheableFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory, createOptions.fsCache)
   const fsRoot = useFS ? '/' : `${_root}/`
 
   const cache = createOptions.cache === false
@@ -506,6 +498,49 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   }
 
   return twoslasher
+}
+
+function createCacheableFSBackedSystem(vfs: Map<string, string>, root: string, ts: TS, tsLibDirectory?: string, enableFsCache = false): System {
+  function withCache<T>(fn: (key: string) => T) {
+    const cache = new Map<string, T>()
+    return (key: string) => {
+      const cached = cache.get(key)
+      if (cached !== undefined)
+        return cached
+
+      const result = fn(key)
+      cache.set(key, result)
+      return result
+    }
+  }
+  const cachedReadFile = withCache(ts.sys.readFile)
+
+  const cachedTs = enableFsCache
+    ? {
+        ...ts,
+        sys: {
+          ...ts.sys,
+          directoryExists: withCache(ts.sys.directoryExists),
+          fileExists: withCache(ts.sys.fileExists),
+          ...(ts.sys.realpath ? { realpath: withCache(ts.sys.realpath) } : {}),
+          readFile(path, encoding) {
+            if (encoding === undefined)
+              return cachedReadFile(path)
+            return ts.sys.readFile(path, encoding)
+          },
+        } satisfies System,
+      }
+    : ts
+
+  return {
+    ...createFSBackedSystem(vfs, root, cachedTs, tsLibDirectory),
+    // To work with non-hoisted packages structure
+    realpath(path: string) {
+      if (vfs.has(path))
+        return path
+      return cachedTs.sys.realpath?.(path) || path
+    },
+  }
 }
 
 /**
