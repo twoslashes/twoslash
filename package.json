@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.2.11",
   "private": true,
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@9.11.0",
   "scripts": {
     "typecheck": "tsc",
     "build": "pnpm -r run build",
@@ -57,7 +57,7 @@
     "vue": "catalog:"
   },
   "resolutions": {
-    "@types/node": "^22.5.4",
+    "@types/node": "^22.7.4",
     "twoslash": "workspace:*",
     "twoslash-vue": "workspace:*",
     "typescript": "catalog:",
