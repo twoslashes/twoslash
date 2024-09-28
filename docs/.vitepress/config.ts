@@ -1,3 +1,4 @@
+/* eslint-disable antfu/no-top-level-await */
 import type { DefaultTheme } from 'vitepress'
 import antfu from '@antfu/eslint-config'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'

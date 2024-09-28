@@ -1,3 +1,4 @@
+/* eslint-disable antfu/no-top-level-await */
 import { createTransformerFactory, rendererRich } from '@shikijs/twoslash/core'
 import { codeToHtml } from 'shiki'
 import { createTwoslashFromCDN } from 'twoslash-cdn'
