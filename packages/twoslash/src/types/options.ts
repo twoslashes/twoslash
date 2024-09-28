@@ -87,7 +87,9 @@ export interface CreateTwoslashOptions extends TwoslashExecuteOptions {
   cache?: boolean | Map<string, VirtualTypeScriptEnvironment>
 
   /**
-   * Cache file system requests, defaults to false
+   * Cache file system requests
+   *
+   * @default true
    */
   fsCache?: boolean
 }

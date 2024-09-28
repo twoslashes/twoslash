@@ -500,7 +500,13 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   return twoslasher
 }
 
-function createCacheableFSBackedSystem(vfs: Map<string, string>, root: string, ts: TS, tsLibDirectory?: string, enableFsCache = false): System {
+function createCacheableFSBackedSystem(
+  vfs: Map<string, string>,
+  root: string,
+  ts: TS,
+  tsLibDirectory?: string,
+  enableFsCache = true,
+): System {
   function withCache<T>(fn: (key: string) => T) {
     const cache = new Map<string, T>()
     return (key: string) => {
