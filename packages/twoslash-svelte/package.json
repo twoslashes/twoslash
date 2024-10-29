@@ -1,0 +1,57 @@
+{
+  "name": "twoslash-svelte",
+  "type": "module",
+  "version": "0.2.12",
+  "description": "Extended Twoslash for Svelte",
+  "author": "Hugo Korte <hugokorteapple@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/twoslashes/twoslash#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twoslashes/twoslash.git",
+    "directory": "packages/twoslash-svelte"
+  },
+  "bugs": "https://github.com/twoslashes/twoslash/issues",
+  "keywords": [
+    "twoslash",
+    "svelte",
+    "shiki"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "prepublishOnly": "nr build",
+    "start": "esno src/index.ts"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  },
+  "dependencies": {
+    "@volar/language-core": "^2.4.8",
+    "svelte2tsx": "^0.7.22",
+    "twoslash": "workspace:*",
+    "twoslash-protocol": "workspace:*"
+  }
+}
