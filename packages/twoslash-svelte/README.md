@@ -3,7 +3,7 @@
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 
-Extended Twoslash for Svelte SFC support.
+Extended Twoslash for Svelte support.
 
 [📚 Documentation](https://twoslash.netlify.app/packages/svelte)
 

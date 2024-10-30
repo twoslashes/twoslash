@@ -2,7 +2,7 @@
   "name": "twoslash-svelte",
   "type": "module",
   "version": "0.2.12",
-  "description": "Extended Twoslash for Svelte SFC support",
+  "description": "Extended Twoslash for Svelte support",
   "author": "Hugo Korte <hugokorteapple@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/twoslashes/twoslash#readme",

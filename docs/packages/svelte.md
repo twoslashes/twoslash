@@ -1,6 +1,6 @@
 # Twoslash Svelte
 
-This package added the support for Twoslash to handle Svelte Single File Component files.
+This package added the support for Twoslash to handle Svelte files.
 
 For example:
 

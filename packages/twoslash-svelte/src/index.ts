@@ -13,7 +13,7 @@ const { TextDocument } = pkg
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
   /**
-   * Render the generated code in the output instead of the Vue file
+   * Render the generated code in the output instead of the Svelte file
    *
    * @default false
    */
@@ -21,7 +21,7 @@ export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
 }
 
 /**
- * Create a twoslasher instance that add additional support for Vue SFC.
+ * Create a twoslasher instance that add additional support for Svelte
  */
 export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}): TwoslashInstance {
   const twoslasherBase = createTwoslasherBase(createOptions)
