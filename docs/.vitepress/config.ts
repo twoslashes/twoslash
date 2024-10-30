@@ -24,6 +24,7 @@ const REFERENCES: DefaultTheme.NavItemWithLink[] = [
 
 const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
   { text: 'Vue Language Support', link: '/packages/vue' },
+  { text: 'Svelte Language Support', link: '/packages/svelte' },
   { text: 'ESLint TwoSlash', link: '/packages/eslint' },
   { text: 'CDN Usage', link: '/packages/cdn' },
 ]
