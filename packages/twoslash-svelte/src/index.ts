@@ -1,5 +1,7 @@
+import type { Mapping } from '@volar/language-core'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, ParsedFlagNotation, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
 import type { CompilerOptions } from 'typescript'
+import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
 import { svelte2tsx } from 'svelte2tsx'
 import { createTwoslasher as createTwoslasherBase, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
@@ -79,7 +81,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
 
     const compiled = svelte2tsx(strippedCode)
     // TODO: Converted `compiled.map` into `Mappings` compatible with Volar.js
-    const map = new SourceMap([])
+    const map = generateSourceMap(compiled.map, compiled.code, code)
 
     function getLastGeneratedOffset(pos: number) {
       const offsets = [...map.toGeneratedLocation(pos)]
@@ -191,4 +193,135 @@ function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T 
       return item
   }
   return undefined
+}
+
+interface MappingIndex {
+  generatedLine: number
+  generatedColumn: number
+  sourceLine: number
+  sourceColumn: number
+  sourceIndex: number
+  nameIndex?: number
+}
+
+function generateSourceMap(
+  mappings: ReturnType<typeof svelte2tsx>['map'],
+  compiled: string,
+  code: string,
+): SourceMap {
+  // Parse the mappings using sourcemap-codec
+  // The decode function returns number[][] where each inner array represents:
+  // [generatedColumn, sourceIndex, sourceLine, sourceColumn, nameIndex?]
+  const decodedMappings = decode(mappings.mappings)
+
+  // Convert to our intermediate format
+  const mappingIndexes = decodedMappings.reduce((acc: MappingIndex[], line, lineIndex) => {
+    line.forEach(([generatedColumn, sourceIndex, sourceLine, sourceColumn, nameIndex]) => {
+      if (sourceIndex !== undefined && sourceLine !== undefined && sourceColumn !== undefined) {
+        acc.push({
+          generatedLine: lineIndex,
+          generatedColumn,
+          sourceIndex,
+          sourceLine,
+          sourceColumn,
+          nameIndex,
+        })
+      }
+    })
+    return acc
+  }, [])
+
+  // Convert line/column positions to offsets
+  const volarMappings: Mapping[] = []
+  let currentMapping: Partial<Mapping> | null = null
+
+  for (const index of mappingIndexes) {
+    const sourceOffset = getOffsetFromLineColumn(code, index.sourceLine, index.sourceColumn)
+    const generatedOffset = getOffsetFromLineColumn(compiled, index.generatedLine, index.generatedColumn)
+
+    // If we can't determine valid offsets, skip this mapping
+    if (sourceOffset === -1 || generatedOffset === -1)
+      continue
+
+    // Try to combine consecutive mappings if possible
+    if (currentMapping
+      && isConsecutiveMapping(currentMapping, sourceOffset, generatedOffset)) {
+      // Extend the current mapping
+      const lastIndex = currentMapping.lengths!.length - 1
+      currentMapping.lengths![lastIndex]
+                = getNextTokenLength(code, sourceOffset)
+      if (currentMapping.generatedLengths) {
+        currentMapping.generatedLengths[lastIndex]
+                    = getNextTokenLength(compiled, generatedOffset)
+      }
+    }
+    else {
+      // Create a new mapping if we have a current one
+      if (currentMapping) {
+        volarMappings.push(currentMapping as Mapping)
+      }
+
+      // Start a new mapping
+      currentMapping = {
+        sourceOffsets: [sourceOffset],
+        generatedOffsets: [generatedOffset],
+        lengths: [getNextTokenLength(code, sourceOffset)],
+        generatedLengths: [getNextTokenLength(compiled, generatedOffset)],
+        data: {
+          source: mappings.sources[index.sourceIndex],
+          name: index.nameIndex !== undefined
+            ? mappings.names?.[index.nameIndex]
+            : undefined,
+        },
+      }
+    }
+  }
+
+  // Add the last mapping if exists
+  if (currentMapping) {
+    volarMappings.push(currentMapping as Mapping)
+  }
+
+  return new SourceMap(volarMappings)
+}
+
+function getOffsetFromLineColumn(code: string, line: number, column: number): number {
+  const lines = code.split('\n')
+  if (line >= lines.length)
+    return -1
+
+  let offset = 0
+  for (let i = 0; i < line; i++) {
+    offset += lines[i].length + 1 // +1 for the newline character
+  }
+
+  return offset + column
+}
+
+function getNextTokenLength(code: string, offset: number): number {
+  // Simple implementation - you might want to enhance this based on your needs
+  let length = 0
+  while (offset + length < code.length
+    && /[\w$]/.test(code[offset + length])) {
+    length++
+  }
+  return Math.max(1, length)
+}
+
+function isConsecutiveMapping(
+  currentMapping: Partial<Mapping>,
+  sourceOffset: number,
+  generatedOffset: number,
+): boolean {
+  const lastSourceIndex = currentMapping.sourceOffsets!.length - 1
+  const lastGeneratedIndex = currentMapping.generatedOffsets!.length - 1
+
+  const lastSourceEnd = currentMapping.sourceOffsets![lastSourceIndex]
+    + currentMapping.lengths![lastSourceIndex]
+  const lastGeneratedEnd = currentMapping.generatedOffsets![lastGeneratedIndex]
+    + (currentMapping.generatedLengths
+      ?? currentMapping.lengths!)[lastGeneratedIndex]
+
+  return sourceOffset === lastSourceEnd
+    && generatedOffset === lastGeneratedEnd
 }
