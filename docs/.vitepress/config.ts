@@ -66,6 +66,7 @@ export default defineConfig({
         explicitTrigger: /\beslint-check\b/,
       }),
       transformerTwoslash({
+        langs: ['svelte'],
         twoslasher: createTwoslasherSvelte(),
         explicitTrigger: /\bsvelte-check\b/,
       }),

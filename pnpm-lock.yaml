@@ -152,7 +152,7 @@ importers:
     devDependencies:
       '@antfu/eslint-config':
         specifier: 'catalog:'
-        version: 3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.4)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))
+        version: 3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))
       '@iconify-json/ri':
         specifier: 'catalog:'
         version: 1.2.0
@@ -288,6 +288,12 @@ importers:
       sass:
         specifier: 'catalog:'
         version: 1.79.4
+      svelte:
+        specifier: ^5.1.5
+        version: 5.1.5
+      svelte2tsx:
+        specifier: ^0.7.22
+        version: 0.7.22(svelte@5.1.5)(typescript@5.6.2)
       unocss:
         specifier: 'catalog:'
         version: 0.62.4(postcss@8.4.47)(rollup@4.21.2)(vite@5.4.8(@types/node@22.7.4)(sass@1.79.4))
@@ -386,7 +392,7 @@ importers:
         version: 2.4.8
       svelte2tsx:
         specifier: ^0.7.22
-        version: 0.7.22(svelte@5.1.4)(typescript@5.6.2)
+        version: 0.7.22(svelte@5.1.5)(typescript@5.6.2)
       twoslash:
         specifier: workspace:*
         version: link:../twoslash
@@ -3986,8 +3992,8 @@ packages:
       svelte: ^3.55 || ^4.0.0-next.0 || ^4.0 || ^5.0.0-next.0
       typescript: ^5.6.2
 
-  svelte@5.1.4:
-    resolution: {integrity: sha512-qgHDV7AyvBZa2pbf+V0tnvWrN1LKD8LdUsBkR/SSYVVN6zXexiXnOy5Pjcjft2y/2NJJVa8ORUHFVn3oiWCLVQ==}
+  svelte@5.1.5:
+    resolution: {integrity: sha512-AyYondx6wS0g8mmBMfwJVnOYYBswjBv6L4bc99awfbET2KozWvVwxe8NSN7fhx7Pgr7pOfOXIv7K8+Impc0OoQ==}
     engines: {node: '>=18'}
 
   svgo@3.2.0:
@@ -4584,7 +4590,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@antfu/eslint-config@3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.4)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))':
+  '@antfu/eslint-config@3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))':
     dependencies:
       '@antfu/install-pkg': 0.4.1
       '@clack/prompts': 0.7.0
@@ -4605,7 +4611,7 @@ snapshots:
       eslint-plugin-jsonc: 2.16.0(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-n: 17.10.3(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-no-only-tests: 3.3.0
-      eslint-plugin-perfectionist: 3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.4)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0)))
+      eslint-plugin-perfectionist: 3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0)))
       eslint-plugin-regexp: 2.6.0(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-toml: 0.11.1(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-unicorn: 55.0.0(eslint@9.11.1(jiti@2.0.0))
@@ -6596,7 +6602,7 @@ snapshots:
 
   eslint-plugin-no-only-tests@3.3.0: {}
 
-  eslint-plugin-perfectionist@3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.4)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0))):
+  eslint-plugin-perfectionist@3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0))):
     dependencies:
       '@typescript-eslint/types': 8.7.0
       '@typescript-eslint/utils': 8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2)
@@ -6604,7 +6610,7 @@ snapshots:
       minimatch: 9.0.5
       natural-compare-lite: 1.4.0
     optionalDependencies:
-      svelte: 5.1.4
+      svelte: 5.1.5
       vue-eslint-parser: 9.4.3(eslint@9.11.1(jiti@2.0.0))
     transitivePeerDependencies:
       - supports-color
@@ -8354,14 +8360,14 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte2tsx@0.7.22(svelte@5.1.4)(typescript@5.6.2):
+  svelte2tsx@0.7.22(svelte@5.1.5)(typescript@5.6.2):
     dependencies:
       dedent-js: 1.0.1
       pascal-case: 3.1.2
-      svelte: 5.1.4
+      svelte: 5.1.5
       typescript: 5.6.2
 
-  svelte@5.1.4:
+  svelte@5.1.5:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
