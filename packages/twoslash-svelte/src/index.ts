@@ -80,8 +80,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     }
 
     const compiled = svelte2tsx(strippedCode)
-    // TODO: Converted `compiled.map` into `Mappings` compatible with Volar.js
-    const map = generateSourceMap(compiled.map, compiled.code, code)
+    const map = generateSourceMap(strippedCode, compiled.code, compiled.map)
 
     function getLastGeneratedOffset(pos: number) {
       const offsets = [...map.toGeneratedLocation(pos)]
@@ -205,14 +204,14 @@ interface MappingIndex {
 }
 
 function generateSourceMap(
-  mappings: ReturnType<typeof svelte2tsx>['map'],
-  compiled: string,
-  code: string,
+  sourceCode: string,
+  generatedCode: string,
+  map: ReturnType<typeof svelte2tsx>['map'],
 ): SourceMap {
   // Parse the mappings using sourcemap-codec
   // The decode function returns number[][] where each inner array represents:
   // [generatedColumn, sourceIndex, sourceLine, sourceColumn, nameIndex?]
-  const decodedMappings = decode(mappings.mappings)
+  const decodedMappings = decode(map.mappings)
 
   // Convert to our intermediate format
   const mappingIndexes = decodedMappings.reduce((acc: MappingIndex[], line, lineIndex) => {
@@ -236,8 +235,8 @@ function generateSourceMap(
   let currentMapping: Partial<Mapping> | null = null
 
   for (const index of mappingIndexes) {
-    const sourceOffset = getOffsetFromLineColumn(code, index.sourceLine, index.sourceColumn)
-    const generatedOffset = getOffsetFromLineColumn(compiled, index.generatedLine, index.generatedColumn)
+    const sourceOffset = getOffsetFromLineColumn(sourceCode, index.sourceLine, index.sourceColumn)
+    const generatedOffset = getOffsetFromLineColumn(generatedCode, index.generatedLine, index.generatedColumn)
 
     // If we can't determine valid offsets, skip this mapping
     if (sourceOffset === -1 || generatedOffset === -1)
@@ -249,10 +248,10 @@ function generateSourceMap(
       // Extend the current mapping
       const lastIndex = currentMapping.lengths!.length - 1
       currentMapping.lengths![lastIndex]
-                = getNextTokenLength(code, sourceOffset)
+                = getNextTokenLength(sourceCode, sourceOffset)
       if (currentMapping.generatedLengths) {
         currentMapping.generatedLengths[lastIndex]
-                    = getNextTokenLength(compiled, generatedOffset)
+                    = getNextTokenLength(generatedCode, generatedOffset)
       }
     }
     else {
@@ -265,12 +264,12 @@ function generateSourceMap(
       currentMapping = {
         sourceOffsets: [sourceOffset],
         generatedOffsets: [generatedOffset],
-        lengths: [getNextTokenLength(code, sourceOffset)],
-        generatedLengths: [getNextTokenLength(compiled, generatedOffset)],
+        lengths: [getNextTokenLength(sourceCode, sourceOffset)],
+        generatedLengths: [getNextTokenLength(generatedCode, generatedOffset)],
         data: {
-          source: mappings.sources[index.sourceIndex],
+          source: map.sources[index.sourceIndex],
           name: index.nameIndex !== undefined
-            ? mappings.names?.[index.nameIndex]
+            ? map.names?.[index.nameIndex]
             : undefined,
         },
       }

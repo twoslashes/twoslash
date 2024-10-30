@@ -4,141 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@antfu/eslint-config':
-      specifier: ^3.7.3
-      version: 3.7.3
-    '@iconify-json/ri':
-      specifier: ^1.2.0
-      version: 1.2.0
-    '@iconify-json/svg-spinners':
-      specifier: ^1.2.0
-      version: 1.2.0
-    '@shikijs/markdown-it':
-      specifier: ^1.20.0
-      version: 1.20.0
-    '@shikijs/transformers':
-      specifier: ^1.20.0
-      version: 1.20.0
-    '@shikijs/twoslash':
-      specifier: ^1.20.0
-      version: 1.20.0
-    '@shikijs/vitepress-twoslash':
-      specifier: ^1.20.0
-      version: 1.20.0
-    '@types/eslint':
-      specifier: ^9.6.1
-      version: 9.6.1
-    '@types/react':
-      specifier: ^18.3.10
-      version: 18.3.10
-    '@types/react-dom':
-      specifier: ^18.3.0
-      version: 18.3.0
-    '@typescript/ata':
-      specifier: ^0.9.7
-      version: 0.9.7
-    '@typescript/twoslash':
-      specifier: ^3.2.8
-      version: 3.2.8
-    '@typescript/vfs':
-      specifier: ^1.6.0
-      version: 1.6.0
-    '@unocss/reset':
-      specifier: ^0.62.4
-      version: 0.62.4
-    '@vitest/coverage-v8':
-      specifier: 2.0.5
-      version: 2.0.5
-    '@vue/language-core':
-      specifier: ~2.1.6
-      version: 2.1.6
-    '@vueuse/core':
-      specifier: ^11.1.0
-      version: 11.1.0
-    bumpp:
-      specifier: ^9.6.0
-      version: 9.6.0
-    eslint:
-      specifier: ^9.11.1
-      version: 9.11.1
-    esno:
-      specifier: ^4.7.0
-      version: 4.7.0
-    fast-glob:
-      specifier: ^3.3.2
-      version: 3.3.2
-    floating-vue:
-      specifier: ^5.2.2
-      version: 5.2.2
-    fuse.js:
-      specifier: ^7.0.0
-      version: 7.0.0
-    idb-keyval:
-      specifier: ^6.2.1
-      version: 6.2.1
-    jiti:
-      specifier: ^2.0.0
-      version: 2.0.0
-    lint-staged:
-      specifier: ^15.2.10
-      version: 15.2.10
-    lz-string:
-      specifier: ^1.5.0
-      version: 1.5.0
-    mlly:
-      specifier: ^1.7.1
-      version: 1.7.1
-    ohash:
-      specifier: ^1.1.4
-      version: 1.1.4
-    preact:
-      specifier: ^10.24.1
-      version: 10.24.1
-    pretty-format:
-      specifier: ^29.7.0
-      version: 29.7.0
-    react:
-      specifier: ^18.3.1
-      version: 18.3.1
-    sass:
-      specifier: ^1.79.4
-      version: 1.79.4
-    shiki:
-      specifier: ^1.20.0
-      version: 1.20.0
-    simple-git-hooks:
-      specifier: ^2.11.1
-      version: 2.11.1
-    tslib:
-      specifier: ^2.7.0
-      version: 2.7.0
-    unbuild:
-      specifier: ^2.0.0
-      version: 2.0.0
-    unocss:
-      specifier: ^0.62.4
-      version: 0.62.4
-    unplugin-vue-components:
-      specifier: ^0.27.4
-      version: 0.27.4
-    unstorage:
-      specifier: ^1.12.0
-      version: 1.12.0
-    vite:
-      specifier: ^5.4.8
-      version: 5.4.8
-    vite-tsconfig-paths:
-      specifier: ^5.0.1
-      version: 5.0.1
-    vitepress:
-      specifier: ^1.3.4
-      version: 1.3.4
-    vitest:
-      specifier: 2.0.5
-      version: 2.0.5
-
 overrides:
   '@types/node': ^22.7.4
   twoslash: workspace:*
@@ -254,7 +119,7 @@ importers:
         version: 2.0.0(sass@1.79.4)(typescript@5.6.2)
       unplugin-vue-components:
         specifier: 'catalog:'
-        version: 0.27.4(@babel/parser@7.25.4)(rollup@4.21.2)(vue@3.5.10(typescript@5.6.2))
+        version: 0.27.4(@babel/parser@7.25.4)(rollup@3.29.4)(vue@3.5.10(typescript@5.6.2))
       vite:
         specifier: 'catalog:'
         version: 5.4.8(@types/node@22.7.4)(sass@1.79.4)
@@ -8577,10 +8442,10 @@ snapshots:
       - rollup
       - supports-color
 
-  unplugin-vue-components@0.27.4(@babel/parser@7.25.4)(rollup@4.21.2)(vue@3.5.10(typescript@5.6.2)):
+  unplugin-vue-components@0.27.4(@babel/parser@7.25.4)(rollup@3.29.4)(vue@3.5.10(typescript@5.6.2)):
     dependencies:
       '@antfu/utils': 0.7.10
-      '@rollup/pluginutils': 5.1.0(rollup@4.21.2)
+      '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
       chokidar: 3.6.0
       debug: 4.3.6
       fast-glob: 3.3.2
