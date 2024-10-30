@@ -6,8 +6,6 @@ import { createTwoslasher as createTwoslasherBase, defaultCompilerOptions, defau
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
 
-// @ts-expect-error -- this is fine
-
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
   /**
    * Render the generated code in the output instead of the Vue file
