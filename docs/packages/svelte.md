@@ -25,17 +25,23 @@ For example:
 ::: code-group
 
 ```bash [npm]
-npm i -D twoslash-svelte
+npm i -D twoslash-svelte svelte2tsx
 ```
 ```bash [pnpm]
-pnpm i -D twoslash-svelte
+pnpm i -D twoslash-svelte svelte2tsx
 ```
 ```bash [yarn]
-yarn add -D twoslash-svelte
+yarn add -D twoslash-svelte svelte2tsx
 ```
 ```bash [bun]
-bun add -D twoslash-svelte
+bun add -D twoslash-svelte svelte2tsx
 ```
+
+:::
+
+::: info Required Types
+
+`twoslash-svelte` requires `svelte2tsx` to be installed so that required declaration files are present during compilation of the Svelte code. Without `svelte2tsx` installed you might see errors like: `Cannot find name 'svelteHTML'.`
 
 :::
 
