@@ -95,6 +95,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     const result = twoslasherBase(compiled.code, 'tsx', {
       ...options,
       compilerOptions: {
+        // TODO: Types only work locally now, but not when consuming this package. (Probably because only `dist` is included in the package)
         types: [
           '../node_modules/svelte2tsx/svelte-jsx',
           '../node_modules/svelte2tsx/svelte-jsx-v4',
