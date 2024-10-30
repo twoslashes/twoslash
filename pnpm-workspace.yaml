@@ -2,6 +2,7 @@ packages:
   - packages/*
   - docs
   - packages/*/playground
+
 catalog:
   '@antfu/eslint-config': ^3.7.3
   '@iconify-json/ri': ^1.2.0
@@ -20,6 +21,8 @@ catalog:
   '@unocss/reset': ^0.62.4
   '@vitest/coverage-v8': 2.0.5
   '@vue/language-core': ~2.1.6
+  '@jridgewell/sourcemap-codec': ^1.5.0
+  '@volar/language-core': ^2.4.8
   '@vueuse/core': ^11.1.0
   bumpp: ^9.6.0
   eslint: ^9.11.1
@@ -39,6 +42,8 @@ catalog:
   sass: ^1.79.4
   shiki: ^1.20.0
   simple-git-hooks: ^2.11.1
+  svelte2tsx: ^0.7.22
+  svelte: ^5.1.6
   tslib: ^2.7.0
   typescript: ^5.6.2
   unbuild: ^2.0.0
@@ -50,3 +55,4 @@ catalog:
   vitepress: ^1.3.4
   vitest: 2.0.5
   vue: ^3.5.10
+  vscode-html-languageservice: ^5.3.1

@@ -15,18 +15,21 @@ catalogs:
     '@iconify-json/svg-spinners':
       specifier: ^1.2.0
       version: 1.2.0
+    '@jridgewell/sourcemap-codec':
+      specifier: ^1.5.0
+      version: 1.5.0
     '@shikijs/markdown-it':
       specifier: ^1.20.0
-      version: 1.20.0
+      version: 1.22.2
     '@shikijs/transformers':
       specifier: ^1.20.0
-      version: 1.20.0
+      version: 1.22.2
     '@shikijs/twoslash':
       specifier: ^1.20.0
       version: 1.22.2
     '@shikijs/vitepress-twoslash':
       specifier: ^1.20.0
-      version: 1.20.0
+      version: 1.22.2
     '@types/eslint':
       specifier: ^9.6.1
       version: 9.6.1
@@ -51,6 +54,9 @@ catalogs:
     '@vitest/coverage-v8':
       specifier: 2.0.5
       version: 2.0.5
+    '@volar/language-core':
+      specifier: ^2.4.8
+      version: 2.4.8
     '@vue/language-core':
       specifier: ~2.1.6
       version: 2.1.6
@@ -107,10 +113,16 @@ catalogs:
       version: 1.79.4
     shiki:
       specifier: ^1.20.0
-      version: 1.20.0
+      version: 1.22.2
     simple-git-hooks:
       specifier: ^2.11.1
       version: 2.11.1
+    svelte:
+      specifier: ^5.1.6
+      version: 5.1.6
+    svelte2tsx:
+      specifier: ^0.7.22
+      version: 0.7.22
     tslib:
       specifier: ^2.7.0
       version: 2.7.0
@@ -138,6 +150,9 @@ catalogs:
     vitest:
       specifier: 2.0.5
       version: 2.0.5
+    vscode-html-languageservice:
+      specifier: ^5.3.1
+      version: 5.3.1
 
 overrides:
   '@types/node': ^22.7.4
@@ -152,7 +167,7 @@ importers:
     devDependencies:
       '@antfu/eslint-config':
         specifier: 'catalog:'
-        version: 3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))
+        version: 3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.6)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))
       '@iconify-json/ri':
         specifier: 'catalog:'
         version: 1.2.0
@@ -161,16 +176,16 @@ importers:
         version: 1.2.0
       '@shikijs/markdown-it':
         specifier: 'catalog:'
-        version: 1.20.0
+        version: 1.22.2
       '@shikijs/transformers':
         specifier: 'catalog:'
-        version: 1.20.0
+        version: 1.22.2
       '@shikijs/twoslash':
         specifier: 'catalog:'
         version: 1.22.2
       '@shikijs/vitepress-twoslash':
         specifier: 'catalog:'
-        version: 1.20.0(typescript@5.6.2)
+        version: 1.22.2(typescript@5.6.2)
       '@types/node':
         specifier: ^22.7.4
         version: 22.7.4
@@ -227,7 +242,7 @@ importers:
         version: 18.3.1
       shiki:
         specifier: 'catalog:'
-        version: 1.20.0
+        version: 1.22.2
       simple-git-hooks:
         specifier: 'catalog:'
         version: 2.11.1
@@ -289,11 +304,11 @@ importers:
         specifier: 'catalog:'
         version: 1.79.4
       svelte:
-        specifier: ^5.1.5
-        version: 5.1.5
+        specifier: 'catalog:'
+        version: 5.1.6
       svelte2tsx:
-        specifier: ^0.7.22
-        version: 0.7.22(svelte@5.1.5)(typescript@5.6.2)
+        specifier: 'catalog:'
+        version: 0.7.22(svelte@5.1.6)(typescript@5.6.2)
       unocss:
         specifier: 'catalog:'
         version: 0.62.4(postcss@8.4.47)(rollup@4.21.2)(vite@5.4.8(@types/node@22.7.4)(sass@1.79.4))
@@ -358,7 +373,7 @@ importers:
         version: 1.22.2
       shiki:
         specifier: 'catalog:'
-        version: 1.20.0
+        version: 1.22.2
     devDependencies:
       idb-keyval:
         specifier: 'catalog:'
@@ -385,14 +400,14 @@ importers:
   packages/twoslash-svelte:
     dependencies:
       '@jridgewell/sourcemap-codec':
-        specifier: ^1.5.0
+        specifier: 'catalog:'
         version: 1.5.0
       '@volar/language-core':
-        specifier: ^2.4.8
+        specifier: 'catalog:'
         version: 2.4.8
       svelte2tsx:
-        specifier: ^0.7.22
-        version: 0.7.22(svelte@5.1.5)(typescript@5.6.2)
+        specifier: 'catalog:'
+        version: 0.7.22(svelte@5.1.6)(typescript@5.6.2)
       twoslash:
         specifier: workspace:*
         version: link:../twoslash
@@ -403,7 +418,7 @@ importers:
         specifier: ^5.6.2
         version: 5.6.2
       vscode-html-languageservice:
-        specifier: ^5.3.1
+        specifier: 'catalog:'
         version: 5.3.1
 
   packages/twoslash-vue:
@@ -1466,11 +1481,14 @@ packages:
   '@shikijs/engine-oniguruma@1.22.2':
     resolution: {integrity: sha512-GIZPAGzQOy56mGvWMoZRPggn0dTlBf1gutV5TdceLCZlFNqWmuc7u+CzD0Gd9vQUTgLbrt0KLzz6FNprqYAxlA==}
 
-  '@shikijs/markdown-it@1.20.0':
-    resolution: {integrity: sha512-WmvhXzGybpvND3k3/4dJTTNZWkbvp2rRjx895iiR1derBXYFR3Qn4uTTNCk7UvAkxo5vZ1BlJL71hnASxh+/aQ==}
+  '@shikijs/markdown-it@1.22.2':
+    resolution: {integrity: sha512-PgNY3s350UijOWLaoeAXHcYUeDqJKM2De9t8DMkBnQHi6tibo4eoV6sfnsULiJu47TwD1d4VG2YsH0Lxp/VM7A==}
 
   '@shikijs/transformers@1.20.0':
     resolution: {integrity: sha512-TNS5KAErbNIOm1QqabuVaU77NOs5xWfpjpnqME059SA8yddr3mN5ZNAeCI+4QAAnNqZd8RKXjp+9hw66f5ak/A==}
+
+  '@shikijs/transformers@1.22.2':
+    resolution: {integrity: sha512-8f78OiBa6pZDoZ53lYTmuvpFPlWtevn23bzG+azpPVvZg7ITax57o/K3TC91eYL3OMJOO0onPbgnQyZjRos8XQ==}
 
   '@shikijs/twoslash@1.22.2':
     resolution: {integrity: sha512-4R3A7aH/toZgtlveXHKk01nIsvn8hjAfPJ1aT550zcV4qK6vK/tfaEyYtaljOaY1wig2l5+8sKjNSEz3PcSiEw==}
@@ -1481,8 +1499,8 @@ packages:
   '@shikijs/types@1.22.2':
     resolution: {integrity: sha512-NCWDa6LGZqTuzjsGfXOBWfjS/fDIbDdmVDug+7ykVe1IKT4c1gakrvlfFYp5NhAXH/lyqLM8wsAPo5wNy73Feg==}
 
-  '@shikijs/vitepress-twoslash@1.20.0':
-    resolution: {integrity: sha512-9/BqSp1yF0QQ5jVXX/KbIVnwaw+14NJfcw4r1RAWIVykDUvXKO16dSmdV4UlRVh6VyrtF2EFdoFCvVnllrKccQ==}
+  '@shikijs/vitepress-twoslash@1.22.2':
+    resolution: {integrity: sha512-F4cS9l6QTt/ILlz+S871bOido2CK8Xwdnl4q9gHdnTuZlN1PHAMRZbAOvYAtokvouPp9aZ2W7NtNa+CNCn3yPQ==}
 
   '@shikijs/vscode-textmate@9.3.0':
     resolution: {integrity: sha512-jn7/7ky30idSkd/O5yDBfAnVt+JJpepofP/POZ1iMOxK59cOfqIgg/Dj0eFsjOTMw+4ycJN0uhZH/Eb0bs/EUA==}
@@ -3113,6 +3131,9 @@ packages:
   mdast-util-from-markdown@2.0.1:
     resolution: {integrity: sha512-aJEUyzZ6TzlsX2s5B4Of7lN7EQtAxvtradMMglCQDyaTFgse6CmtmdJ15ElnVRlCg1vpNyVtbem0PWzlNieZsA==}
 
+  mdast-util-from-markdown@2.0.2:
+    resolution: {integrity: sha512-uZhTV/8NBuw0WHkPTrCqDOl0zVe1BIng5ZtHoDk49ME1qqcjYmmLmOf0gELgcRMxN4w2iuIeVso5/6QymSrgmA==}
+
   mdast-util-gfm-autolink-literal@2.0.0:
     resolution: {integrity: sha512-FyzMsduZZHSc3i0Px3PQcBT4WJY/X/RCtEJKuybiC6sjPqLv7h1yqAkmILZtuxMSsUyaLUWNp71+vQH2zqp5cg==}
 
@@ -3857,6 +3878,9 @@ packages:
   shiki@1.20.0:
     resolution: {integrity: sha512-MZJJ1PCFsQB1Piq+25wiz0a75yUv8Q3/fzy7SzRx5ONdjdtGdyiKwYn8vb/FnK5kjS0voWGnPpjG16POauUR+g==}
 
+  shiki@1.22.2:
+    resolution: {integrity: sha512-3IZau0NdGKXhH2bBlUk4w1IHNxPh6A5B2sUpyY+8utLu2j/h1QpFkAaUA1bAMxOWWGtTWcAh531vnS4NJKS/lA==}
+
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
 
@@ -3992,8 +4016,8 @@ packages:
       svelte: ^3.55 || ^4.0.0-next.0 || ^4.0 || ^5.0.0-next.0
       typescript: ^5.6.2
 
-  svelte@5.1.5:
-    resolution: {integrity: sha512-AyYondx6wS0g8mmBMfwJVnOYYBswjBv6L4bc99awfbET2KozWvVwxe8NSN7fhx7Pgr7pOfOXIv7K8+Impc0OoQ==}
+  svelte@5.1.6:
+    resolution: {integrity: sha512-bYS/DpkqXk0j5UZgiNXrEjZYPRZ4Ncd87w4KUSbcZGyojA0+i/Ls9OGUjETHmdLe8RcQ0G8SX/T0PypPpAA/ew==}
     engines: {node: '>=18'}
 
   svgo@3.2.0:
@@ -4590,7 +4614,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@antfu/eslint-config@3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))':
+  '@antfu/eslint-config@3.7.3(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2))(@vue/compiler-sfc@3.5.10)(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.6)(typescript@5.6.2)(vitest@2.0.5(@types/node@22.7.4)(sass@1.79.4))':
     dependencies:
       '@antfu/install-pkg': 0.4.1
       '@clack/prompts': 0.7.0
@@ -4611,7 +4635,7 @@ snapshots:
       eslint-plugin-jsonc: 2.16.0(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-n: 17.10.3(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-no-only-tests: 3.3.0
-      eslint-plugin-perfectionist: 3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0)))
+      eslint-plugin-perfectionist: 3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.6)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0)))
       eslint-plugin-regexp: 2.6.0(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-toml: 0.11.1(eslint@9.11.1(jiti@2.0.0))
       eslint-plugin-unicorn: 55.0.0(eslint@9.11.1(jiti@2.0.0))
@@ -5368,14 +5392,18 @@ snapshots:
       '@shikijs/types': 1.22.2
       '@shikijs/vscode-textmate': 9.3.0
 
-  '@shikijs/markdown-it@1.20.0':
+  '@shikijs/markdown-it@1.22.2':
     dependencies:
       markdown-it: 14.1.0
-      shiki: 1.20.0
+      shiki: 1.22.2
 
   '@shikijs/transformers@1.20.0':
     dependencies:
       shiki: 1.20.0
+
+  '@shikijs/transformers@1.22.2':
+    dependencies:
+      shiki: 1.22.2
 
   '@shikijs/twoslash@1.22.2':
     dependencies:
@@ -5393,14 +5421,14 @@ snapshots:
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
 
-  '@shikijs/vitepress-twoslash@1.20.0(typescript@5.6.2)':
+  '@shikijs/vitepress-twoslash@1.22.2(typescript@5.6.2)':
     dependencies:
       '@shikijs/twoslash': 1.22.2
       floating-vue: 5.2.2(vue@3.5.10(typescript@5.6.2))
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.0.0
       mdast-util-to-hast: 13.2.0
-      shiki: 1.20.0
+      shiki: 1.22.2
       twoslash: link:packages/twoslash
       twoslash-vue: link:packages/twoslash-vue
       vue: 3.5.10(typescript@5.6.2)
@@ -6602,7 +6630,7 @@ snapshots:
 
   eslint-plugin-no-only-tests@3.3.0: {}
 
-  eslint-plugin-perfectionist@3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.5)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0))):
+  eslint-plugin-perfectionist@3.7.0(eslint@9.11.1(jiti@2.0.0))(svelte@5.1.6)(typescript@5.6.2)(vue-eslint-parser@9.4.3(eslint@9.11.1(jiti@2.0.0))):
     dependencies:
       '@typescript-eslint/types': 8.7.0
       '@typescript-eslint/utils': 8.7.0(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2)
@@ -6610,7 +6638,7 @@ snapshots:
       minimatch: 9.0.5
       natural-compare-lite: 1.4.0
     optionalDependencies:
-      svelte: 5.1.5
+      svelte: 5.1.6
       vue-eslint-parser: 9.4.3(eslint@9.11.1(jiti@2.0.0))
     transitivePeerDependencies:
       - supports-color
@@ -7371,6 +7399,23 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mdast-util-from-markdown@2.0.2:
+    dependencies:
+      '@types/mdast': 4.0.4
+      '@types/unist': 3.0.2
+      decode-named-character-reference: 1.0.2
+      devlop: 1.1.0
+      mdast-util-to-string: 4.0.0
+      micromark: 4.0.0
+      micromark-util-decode-numeric-character-reference: 2.0.1
+      micromark-util-decode-string: 2.0.0
+      micromark-util-normalize-identifier: 2.0.0
+      micromark-util-symbol: 2.0.0
+      micromark-util-types: 2.0.0
+      unist-util-stringify-position: 4.0.0
+    transitivePeerDependencies:
+      - supports-color
+
   mdast-util-gfm-autolink-literal@2.0.0:
     dependencies:
       '@types/mdast': 4.0.4
@@ -7383,7 +7428,7 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
       micromark-util-normalize-identifier: 2.0.0
     transitivePeerDependencies:
@@ -7392,7 +7437,7 @@ snapshots:
   mdast-util-gfm-strikethrough@2.0.0:
     dependencies:
       '@types/mdast': 4.0.4
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
@@ -7402,7 +7447,7 @@ snapshots:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
       markdown-table: 3.0.3
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
@@ -7411,14 +7456,14 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
 
   mdast-util-gfm@3.0.0:
     dependencies:
-      mdast-util-from-markdown: 2.0.1
+      mdast-util-from-markdown: 2.0.2
       mdast-util-gfm-autolink-literal: 2.0.0
       mdast-util-gfm-footnote: 2.0.0
       mdast-util-gfm-strikethrough: 2.0.0
@@ -8240,6 +8285,15 @@ snapshots:
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
 
+  shiki@1.22.2:
+    dependencies:
+      '@shikijs/core': 1.22.2
+      '@shikijs/engine-javascript': 1.22.2
+      '@shikijs/engine-oniguruma': 1.22.2
+      '@shikijs/types': 1.22.2
+      '@shikijs/vscode-textmate': 9.3.0
+      '@types/hast': 3.0.4
+
   siginfo@2.0.0: {}
 
   signal-exit@4.1.0: {}
@@ -8360,14 +8414,14 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte2tsx@0.7.22(svelte@5.1.5)(typescript@5.6.2):
+  svelte2tsx@0.7.22(svelte@5.1.6)(typescript@5.6.2):
     dependencies:
       dedent-js: 1.0.1
       pascal-case: 3.1.2
-      svelte: 5.1.5
+      svelte: 5.1.6
       typescript: 5.6.2
 
-  svelte@5.1.5:
+  svelte@5.1.6:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0

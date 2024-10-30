@@ -13,8 +13,8 @@
     "floating-vue": "catalog:",
     "fuse.js": "catalog:",
     "sass": "catalog:",
-    "svelte": "^5.1.5",
-    "svelte2tsx": "^0.7.22",
+    "svelte": "catalog:",
+    "svelte2tsx": "catalog:",
     "unocss": "catalog:",
     "vitepress": "catalog:",
     "vue": "catalog:"
