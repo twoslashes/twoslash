@@ -20,16 +20,16 @@ catalogs:
       version: 1.5.0
     '@shikijs/markdown-it':
       specifier: ^1.20.0
-      version: 1.22.2
+      version: 1.20.0
     '@shikijs/transformers':
       specifier: ^1.20.0
-      version: 1.22.2
+      version: 1.20.0
     '@shikijs/twoslash':
       specifier: ^1.20.0
-      version: 1.22.2
+      version: 1.20.0
     '@shikijs/vitepress-twoslash':
       specifier: ^1.20.0
-      version: 1.22.2
+      version: 1.20.0
     '@types/eslint':
       specifier: ^9.6.1
       version: 9.6.1
@@ -113,7 +113,7 @@ catalogs:
       version: 1.80.5
     shiki:
       specifier: ^1.20.0
-      version: 1.22.2
+      version: 1.20.0
     simple-git-hooks:
       specifier: ^2.11.1
       version: 2.11.1
@@ -176,16 +176,16 @@ importers:
         version: 1.2.1
       '@shikijs/markdown-it':
         specifier: 'catalog:'
-        version: 1.22.2
+        version: 1.20.0
       '@shikijs/transformers':
         specifier: 'catalog:'
-        version: 1.22.2
+        version: 1.20.0
       '@shikijs/twoslash':
         specifier: 'catalog:'
-        version: 1.22.2
+        version: 1.20.0
       '@shikijs/vitepress-twoslash':
         specifier: 'catalog:'
-        version: 1.22.2(typescript@5.6.3)
+        version: 1.20.0(typescript@5.6.3)
       '@types/node':
         specifier: ^22.7.4
         version: 22.8.4
@@ -242,7 +242,7 @@ importers:
         version: 18.3.1
       shiki:
         specifier: 'catalog:'
-        version: 1.22.2
+        version: 1.20.0
       simple-git-hooks:
         specifier: 'catalog:'
         version: 2.11.1
@@ -370,10 +370,10 @@ importers:
     dependencies:
       '@shikijs/twoslash':
         specifier: 'catalog:'
-        version: 1.22.2
+        version: 1.20.0
       shiki:
         specifier: 'catalog:'
-        version: 1.22.2
+        version: 1.20.0
     devDependencies:
       idb-keyval:
         specifier: 'catalog:'
@@ -1605,28 +1605,28 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@shikijs/core@1.22.2':
+  '@shikijs/core@1.20.0':
     resolution: {integrity: sha512-bvIQcd8BEeR1yFvOYv6HDiyta2FFVePbzeowf5pPS1avczrPK+cjmaxxh0nx5QzbON7+Sv0sQfQVciO7bN72sg==}
 
-  '@shikijs/engine-javascript@1.22.2':
+  '@shikijs/engine-javascript@1.20.0':
     resolution: {integrity: sha512-iOvql09ql6m+3d1vtvP8fLCVCK7BQD1pJFmHIECsujB0V32BJ0Ab6hxk1ewVSMFA58FI0pR2Had9BKZdyQrxTw==}
 
-  '@shikijs/engine-oniguruma@1.22.2':
+  '@shikijs/engine-oniguruma@1.20.0':
     resolution: {integrity: sha512-GIZPAGzQOy56mGvWMoZRPggn0dTlBf1gutV5TdceLCZlFNqWmuc7u+CzD0Gd9vQUTgLbrt0KLzz6FNprqYAxlA==}
 
-  '@shikijs/markdown-it@1.22.2':
+  '@shikijs/markdown-it@1.20.0':
     resolution: {integrity: sha512-PgNY3s350UijOWLaoeAXHcYUeDqJKM2De9t8DMkBnQHi6tibo4eoV6sfnsULiJu47TwD1d4VG2YsH0Lxp/VM7A==}
 
-  '@shikijs/transformers@1.22.2':
+  '@shikijs/transformers@1.20.0':
     resolution: {integrity: sha512-8f78OiBa6pZDoZ53lYTmuvpFPlWtevn23bzG+azpPVvZg7ITax57o/K3TC91eYL3OMJOO0onPbgnQyZjRos8XQ==}
 
-  '@shikijs/twoslash@1.22.2':
+  '@shikijs/twoslash@1.20.0':
     resolution: {integrity: sha512-4R3A7aH/toZgtlveXHKk01nIsvn8hjAfPJ1aT550zcV4qK6vK/tfaEyYtaljOaY1wig2l5+8sKjNSEz3PcSiEw==}
 
-  '@shikijs/types@1.22.2':
+  '@shikijs/types@1.20.0':
     resolution: {integrity: sha512-NCWDa6LGZqTuzjsGfXOBWfjS/fDIbDdmVDug+7ykVe1IKT4c1gakrvlfFYp5NhAXH/lyqLM8wsAPo5wNy73Feg==}
 
-  '@shikijs/vitepress-twoslash@1.22.2':
+  '@shikijs/vitepress-twoslash@1.20.0':
     resolution: {integrity: sha512-F4cS9l6QTt/ILlz+S871bOido2CK8Xwdnl4q9gHdnTuZlN1PHAMRZbAOvYAtokvouPp9aZ2W7NtNa+CNCn3yPQ==}
 
   '@shikijs/vscode-textmate@9.3.0':
@@ -3943,7 +3943,7 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shiki@1.22.2:
+  shiki@1.20.0:
     resolution: {integrity: sha512-3IZau0NdGKXhH2bBlUk4w1IHNxPh6A5B2sUpyY+8utLu2j/h1QpFkAaUA1bAMxOWWGtTWcAh531vnS4NJKS/lA==}
 
   siginfo@2.0.0:
@@ -5480,54 +5480,54 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.24.3':
     optional: true
 
-  '@shikijs/core@1.22.2':
+  '@shikijs/core@1.20.0':
     dependencies:
-      '@shikijs/engine-javascript': 1.22.2
-      '@shikijs/engine-oniguruma': 1.22.2
-      '@shikijs/types': 1.22.2
+      '@shikijs/engine-javascript': 1.20.0
+      '@shikijs/engine-oniguruma': 1.20.0
+      '@shikijs/types': 1.20.0
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.3
 
-  '@shikijs/engine-javascript@1.22.2':
+  '@shikijs/engine-javascript@1.20.0':
     dependencies:
-      '@shikijs/types': 1.22.2
+      '@shikijs/types': 1.20.0
       '@shikijs/vscode-textmate': 9.3.0
       oniguruma-to-js: 0.4.3
 
-  '@shikijs/engine-oniguruma@1.22.2':
+  '@shikijs/engine-oniguruma@1.20.0':
     dependencies:
-      '@shikijs/types': 1.22.2
+      '@shikijs/types': 1.20.0
       '@shikijs/vscode-textmate': 9.3.0
 
-  '@shikijs/markdown-it@1.22.2':
+  '@shikijs/markdown-it@1.20.0':
     dependencies:
       markdown-it: 14.1.0
-      shiki: 1.22.2
+      shiki: 1.20.0
 
-  '@shikijs/transformers@1.22.2':
+  '@shikijs/transformers@1.20.0':
     dependencies:
-      shiki: 1.22.2
+      shiki: 1.20.0
 
-  '@shikijs/twoslash@1.22.2':
+  '@shikijs/twoslash@1.20.0':
     dependencies:
-      '@shikijs/core': 1.22.2
-      '@shikijs/types': 1.22.2
+      '@shikijs/core': 1.20.0
+      '@shikijs/types': 1.20.0
       twoslash: link:packages/twoslash
 
-  '@shikijs/types@1.22.2':
+  '@shikijs/types@1.20.0':
     dependencies:
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
 
-  '@shikijs/vitepress-twoslash@1.22.2(typescript@5.6.3)':
+  '@shikijs/vitepress-twoslash@1.20.0(typescript@5.6.3)':
     dependencies:
-      '@shikijs/twoslash': 1.22.2
+      '@shikijs/twoslash': 1.20.0
       floating-vue: 5.2.2(vue@3.5.12(typescript@5.6.3))
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.0.0
       mdast-util-to-hast: 13.2.0
-      shiki: 1.22.2
+      shiki: 1.20.0
       twoslash: link:packages/twoslash
       twoslash-vue: link:packages/twoslash-vue
       vue: 3.5.12(typescript@5.6.3)
@@ -8323,12 +8323,12 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shiki@1.22.2:
+  shiki@1.20.0:
     dependencies:
-      '@shikijs/core': 1.22.2
-      '@shikijs/engine-javascript': 1.22.2
-      '@shikijs/engine-oniguruma': 1.22.2
-      '@shikijs/types': 1.22.2
+      '@shikijs/core': 1.20.0
+      '@shikijs/engine-javascript': 1.20.0
+      '@shikijs/engine-oniguruma': 1.20.0
+      '@shikijs/types': 1.20.0
       '@shikijs/vscode-textmate': 9.3.0
       '@types/hast': 3.0.4
 
@@ -8807,9 +8807,9 @@ snapshots:
     dependencies:
       '@docsearch/css': 3.6.2
       '@docsearch/js': 3.6.2(@algolia/client-search@4.24.0)(@types/react@18.3.12)(react@18.3.1)(search-insights@2.17.2)
-      '@shikijs/core': 1.22.2
-      '@shikijs/transformers': 1.22.2
-      '@shikijs/types': 1.22.2
+      '@shikijs/core': 1.20.0
+      '@shikijs/transformers': 1.20.0
+      '@shikijs/types': 1.20.0
       '@types/markdown-it': 14.1.2
       '@vitejs/plugin-vue': 5.1.4(vite@5.4.10(@types/node@22.8.4)(sass@1.80.5))(vue@3.5.12(typescript@5.6.3))
       '@vue/devtools-api': 7.6.0
@@ -8819,7 +8819,7 @@ snapshots:
       focus-trap: 7.6.0
       mark.js: 8.11.1
       minisearch: 7.1.0
-      shiki: 1.22.2
+      shiki: 1.20.0
       vite: 5.4.10(@types/node@22.8.4)(sass@1.80.5)
       vue: 3.5.12(typescript@5.6.3)
     optionalDependencies:
