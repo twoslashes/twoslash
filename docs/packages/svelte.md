@@ -4,11 +4,12 @@ This package added the support for Twoslash to handle Svelte Single File Compone
 
 For example:
 
-```svelte
-<script>
+```svelte svelte-check
+<script lang="ts">
     import { onMount } from 'svelte'
 
     let count = $state(0)
+
     function increment() {
         count++
     }

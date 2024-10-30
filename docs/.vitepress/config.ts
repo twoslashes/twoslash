@@ -4,6 +4,7 @@ import antfu from '@antfu/eslint-config'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { bundledThemes } from 'shiki'
 import { createTwoslasher as createTwoslasherESLint } from 'twoslash-eslint'
+import { createTwoslasher as createTwoslasherSvelte } from 'twoslash-svelte'
 import { defineConfig } from 'vitepress'
 import { version } from '../../package.json'
 import vite from './vite.config'
@@ -63,6 +64,10 @@ export default defineConfig({
           ],
         }) as any,
         explicitTrigger: /\beslint-check\b/,
+      }),
+      transformerTwoslash({
+        twoslasher: createTwoslasherSvelte(),
+        explicitTrigger: /\bsvelte-check\b/,
       }),
       {
         // Render custom themes with codeblocks

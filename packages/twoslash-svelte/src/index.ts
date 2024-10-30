@@ -7,7 +7,9 @@ import { svelte2tsx } from 'svelte2tsx'
 import { createTwoslasher as createTwoslasherBase, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
-import { TextDocument } from 'vscode-html-languageservice'
+import pkg from 'vscode-html-languageservice'
+
+const { TextDocument } = pkg
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
   /**
