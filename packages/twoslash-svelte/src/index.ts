@@ -1,4 +1,4 @@
-import type { Mapping } from '@volar/language-core'
+import type { CodeMapping } from '@volar/language-core'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, ParsedFlagNotation, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
 import type { CompilerOptions } from 'typescript'
 import { decode } from '@jridgewell/sourcemap-codec'
@@ -7,6 +7,7 @@ import { svelte2tsx } from 'svelte2tsx'
 import { createTwoslasher as createTwoslasherBase, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
+import { TextDocument } from 'vscode-html-languageservice'
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
   /**
@@ -194,105 +195,87 @@ function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T 
   return undefined
 }
 
+/**
+ * Generate a `@volar/source-map` from a sourcemap object.
+ * @param sourceCode - Source code
+ * @param generatedCode - Generated code
+ * @param encodedMappings - Base64 VLQ encoded mappings
+ * @returns {SourceMap} - a `@volar/source-map`
+ *
+ * Copied from `@astro/language-services`
+ * @see https://github.com/withastro/language-tools/blob/df90fe5f79978b567387cc1b0cedcc23a43bd156/packages/language-server/src/core/astro2tsx.ts#L97-L161
+ */
 function generateSourceMap(
   sourceCode: string,
   generatedCode: string,
   encodedMappings: string,
 ): SourceMap {
-  const decodedMappings = decode(encodedMappings)
-  const mappingIndexes = decodedMappings.reduce((acc, line, lineIndex) => {
-    line.forEach(([generatedColumn, sourceIndex, sourceLine, sourceColumn, nameIndex]) => {
-      if (sourceIndex !== undefined && sourceLine !== undefined && sourceColumn !== undefined) {
-        acc.push({
-          generatedLine: lineIndex,
-          generatedColumn,
-          sourceIndex,
-          sourceLine,
-          sourceColumn,
-          nameIndex,
-        })
-      }
-    })
-    return acc
-  }, [] as {
-    generatedLine: number
-    generatedColumn: number
-    sourceIndex: number
-    sourceLine: number
-    sourceColumn: number
-    nameIndex?: number
-  }[])
-  const mappings: Mapping[] = []
-  let currentMapping: Partial<Mapping> | null = null
-  for (const index of mappingIndexes) {
-    const sourceOffset = getOffsetFromLineColumn(sourceCode, index.sourceLine, index.sourceColumn)
-    const generatedOffset = getOffsetFromLineColumn(generatedCode, index.generatedLine, index.generatedColumn)
-    if (sourceOffset === -1 || generatedOffset === -1)
-      continue
-    if (currentMapping
-      && isConsecutiveMapping(currentMapping, sourceOffset, generatedOffset)) {
-      const lastIndex = currentMapping.lengths!.length - 1
-      currentMapping.lengths![lastIndex]
-                = getNextTokenLength(sourceCode, sourceOffset)
-      if (currentMapping.generatedLengths) {
-        currentMapping.generatedLengths[lastIndex]
-                    = getNextTokenLength(generatedCode, generatedOffset)
-      }
+  const v3Mappings = decode(encodedMappings)
+  const sourcedDoc = TextDocument.create('', 'svelte', 0, sourceCode)
+  const genDoc = TextDocument.create('', 'typescriptreact', 0, generatedCode)
+  const mappings: CodeMapping[] = []
+
+  let current:
+    | {
+      genOffset: number
+      sourceOffset: number
     }
-    else {
-      if (currentMapping)
-        mappings.push(currentMapping as Mapping)
-      currentMapping = {
-        sourceOffsets: [sourceOffset],
-        generatedOffsets: [generatedOffset],
-        lengths: [getNextTokenLength(sourceCode, sourceOffset)],
-        generatedLengths: [getNextTokenLength(generatedCode, generatedOffset)],
+    | undefined
+
+  for (let genLine = 0; genLine < v3Mappings.length; genLine++) {
+    for (const segment of v3Mappings[genLine]) {
+      const genCharacter = segment[0]
+      const genOffset = genDoc.offsetAt({ line: genLine, character: genCharacter })
+      if (current) {
+        let length = genOffset - current.genOffset
+        const sourceText = sourceCode.substring(current.sourceOffset, current.sourceOffset + length)
+        const genText = generatedCode.substring(current.genOffset, current.genOffset + length)
+        if (sourceText !== genText) {
+          length = 0
+          for (let i = 0; i < genOffset - current.genOffset; i++) {
+            if (sourceText[i] === genText[i]) {
+              length = i + 1
+            }
+            else {
+              break
+            }
+          }
+        }
+        if (length > 0) {
+          const lastMapping = mappings.length ? mappings[mappings.length - 1] : undefined
+          if (
+            lastMapping
+            && lastMapping.generatedOffsets[0] + lastMapping.lengths[0] === current.genOffset
+            && lastMapping.sourceOffsets[0] + lastMapping.lengths[0] === current.sourceOffset
+          ) {
+            lastMapping.lengths[0] += length
+          }
+          else {
+            mappings.push({
+              sourceOffsets: [current.sourceOffset],
+              generatedOffsets: [current.genOffset],
+              lengths: [length],
+              data: {
+                verification: true,
+                completion: true,
+                semantic: true,
+                navigation: true,
+                structure: true,
+                format: false,
+              },
+            })
+          }
+        }
+        current = undefined
+      }
+      if (segment[2] !== undefined && segment[3] !== undefined) {
+        const sourceOffset = sourcedDoc.offsetAt({ line: segment[2], character: segment[3] })
+        current = {
+          genOffset,
+          sourceOffset,
+        }
       }
     }
   }
-  if (currentMapping)
-    mappings.push(currentMapping as Mapping)
-
   return new SourceMap(mappings)
-}
-
-function getOffsetFromLineColumn(code: string, line: number, column: number): number {
-  const lines = code.split('\n')
-  if (line >= lines.length)
-    return -1
-
-  let offset = 0
-  for (let i = 0; i < line; i++) {
-    offset += lines[i].length + 1 // +1 for the newline character
-  }
-
-  return offset + column
-}
-
-function getNextTokenLength(code: string, offset: number): number {
-  // Simple implementation - you might want to enhance this based on your needs
-  let length = 0
-  while (offset + length < code.length
-    && /[\w$]/.test(code[offset + length])) {
-    length++
-  }
-  return Math.max(1, length)
-}
-
-function isConsecutiveMapping(
-  mapping: Partial<Mapping>,
-  sourceOffset: number,
-  generatedOffset: number,
-): boolean {
-  const lastSourceIndex = mapping.sourceOffsets!.length - 1
-  const lastGeneratedIndex = mapping.generatedOffsets!.length - 1
-
-  const lastSourceEnd = mapping.sourceOffsets![lastSourceIndex]
-    + mapping.lengths![lastSourceIndex]
-  const lastGeneratedEnd = mapping.generatedOffsets![lastGeneratedIndex]
-    + (mapping.generatedLengths
-      ?? mapping.lengths!)[lastGeneratedIndex]
-
-  return sourceOffset === lastSourceEnd
-    && generatedOffset === lastGeneratedEnd
 }

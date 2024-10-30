@@ -53,6 +53,7 @@
     "@volar/language-core": "^2.4.8",
     "svelte2tsx": "^0.7.22",
     "twoslash": "workspace:*",
-    "twoslash-protocol": "workspace:*"
+    "twoslash-protocol": "workspace:*",
+    "vscode-html-languageservice": "^5.3.1"
   }
 }
