@@ -167,16 +167,6 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     else {
       result.meta.removals = mappedRemovals
     }
-
-    result.nodes = result.nodes.filter((n, idx) => {
-      const next = result.nodes[idx + 1]
-      if (!next)
-        return true
-      // When multiple nodes are on the same position, we keep the last one by ignoring the previous ones
-      if (next.type === n.type && next.start === n.start)
-        return false
-      return true
-    })
     result.meta.extension = 'svelte'
     return result
   }

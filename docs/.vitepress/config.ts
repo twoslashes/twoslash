@@ -69,7 +69,7 @@ export default defineConfig({
         langs: ['svelte'],
         twoslasher: createTwoslasherSvelte(),
         explicitTrigger: /\bsvelte-check\b/,
-      }),
+      }) as any,
       {
         // Render custom themes with codeblocks
         name: 'twoslash:inline-theme',
