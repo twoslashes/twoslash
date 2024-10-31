@@ -5,14 +5,21 @@ This package added the support for Twoslash to handle Svelte files.
 For example:
 
 ```svelte svelte-check
-<script lang="ts">
+<script>
     import { onMount } from 'svelte'
 
+    // Reactive state.
     let count = $state(0)
 
+    // Functions that mutate state and trigger updates.
     function increment() {
         count++
     }
+
+    // Lifecycle hooks.
+    onMount(() => {
+        console.log(`The initial count is ${count}.`)
+    })
 </script>
 
 <button onclick={increment}>
