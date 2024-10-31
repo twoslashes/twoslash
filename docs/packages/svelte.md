@@ -7,6 +7,7 @@ For example:
 ```svelte svelte-check
 <script>
     import { onMount } from 'svelte'
+    //       ^?
 
     // Reactive state.
     let count = $state(0)
