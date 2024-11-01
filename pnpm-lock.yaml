@@ -14,7 +14,7 @@ catalogs:
       version: 1.2.3
     '@iconify-json/svg-spinners':
       specifier: ^1.2.0
-      version: 1.2.1
+      version: 1.2.0
     '@jridgewell/sourcemap-codec':
       specifier: ^1.5.0
       version: 1.5.0
@@ -173,7 +173,7 @@ importers:
         version: 1.2.3
       '@iconify-json/svg-spinners':
         specifier: 'catalog:'
-        version: 1.2.1
+        version: 1.2.0
       '@shikijs/markdown-it':
         specifier: 'catalog:'
         version: 1.20.0
@@ -1320,8 +1320,8 @@ packages:
   '@iconify-json/ri@1.2.3':
     resolution: {integrity: sha512-UVKofd5xkSevGd5K01pvO4NWsu+2C9spu+GxnMZUYymUiaWmpCAxtd22MFSpm6MGf0MP4GCwhDCo1Q8L8oZ9wg==}
 
-  '@iconify-json/svg-spinners@1.2.1':
-    resolution: {integrity: sha512-QZNA4YzFD2zqdC6nIBJM6WlAGakUCjvMt92Ks1R4XFxkd76Ps3rdiauYWESDRZvNYURAByp2b9cwZarFula65g==}
+  '@iconify-json/svg-spinners@1.2.0':
+    resolution: {integrity: sha512-0ov9JMKnqD4p/8aEzSTk+VKdmKZkRWHTqbzCEgKhL+yvpR8B1k3Ak8CO0bt6o+SBV/l8MOqUgFFgdt0xx8tLEw==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -5261,7 +5261,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/svg-spinners@1.2.1':
+  '@iconify-json/svg-spinners@1.2.0':
     dependencies:
       '@iconify/types': 2.0.0
 
