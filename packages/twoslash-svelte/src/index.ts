@@ -1,15 +1,12 @@
 import type { CodeMapping } from '@volar/language-core'
-import type { CreateTwoslashOptions, HandbookOptions, ParsedFlagNotation, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
-import type { CompilerOptions } from 'typescript'
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
 import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
 import { svelte2tsx } from 'svelte2tsx'
 import { createTwoslasher as _createTwoSlasher, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
-import pkg from 'vscode-html-languageservice'
-
-const { TextDocument } = pkg
+import htmlLanguageService from 'vscode-html-languageservice'
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
   /**
@@ -27,10 +24,11 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
   const _twoslasher = _createTwoSlasher(createOptions)
 
   function twoslasher(code: string, extension?: string, options: TwoslashExecuteOptions = {}) {
-    if (extension !== 'svelte')
+    if (extension !== 'svelte') {
       return _twoslasher(code, extension, options)
+    }
 
-    const compilerOptions: CompilerOptions = {
+    const compilerOptions: ts.CompilerOptions = {
       ...defaultCompilerOptions,
       ...options.compilerOptions,
     }
@@ -40,35 +38,32 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       ...options.handbookOptions,
     }
 
-    const sourceMeta = {
+    const sourceMeta = findQueryMarkers(code, {
       removals: [] as Range[],
       positionCompletions: [] as number[],
       positionQueries: [] as number[],
       positionHighlights: [] as TwoslashReturnMeta['positionHighlights'],
-      flagNotations: [] as ParsedFlagNotation[],
-    } satisfies Partial<TwoslashReturnMeta>
+    }, createPositionConverter(code))
 
-    const {
-      customTags = createOptions.customTags || [],
-    } = options
-
-    const positionConverter = createPositionConverter(code)
-    findQueryMarkers(code, sourceMeta, positionConverter)
-    const flagNotations = findFlagNotations(code, customTags, ts.optionDeclarations)
+    const customTags = options.customTags ?? createOptions.customTags ?? []
+    const optionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
+    const flagNotations = findFlagNotations(code, customTags, optionDeclarations)
 
     // #region apply flags
     for (const flag of flagNotations) {
       switch (flag.type) {
-        case 'unknown':
+        case 'unknown': {
           continue
-
-        case 'compilerOptions':
+        }
+        case 'compilerOptions': {
           compilerOptions[flag.name] = flag.value
           break
-        case 'handbookOptions':
+        }
+        case 'handbookOptions': {
           // @ts-expect-error -- this is fine
           handbookOptions[flag.name] = flag.value
           break
+        }
       }
       sourceMeta.removals.push([flag.start, flag.end])
     }
@@ -86,8 +81,9 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
 
     function getLastGeneratedOffset(pos: number) {
       const offsets = [...map.toGeneratedLocation(pos)]
-      if (!offsets.length)
+      if (!offsets.length) {
         return undefined
+      }
       return offsets[offsets.length - 1]?.[0]
     }
 
@@ -110,7 +106,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
         .map(p => getLastGeneratedOffset(p)!),
       positionQueries: sourceMeta.positionQueries
         .map(p => get(map.toGeneratedLocation(p), 0)?.[0])
-        .filter(isNotNull),
+        .filter(value => value != null),
       positionHighlights: sourceMeta.positionHighlights
         .map(([start, end]) => [
           get(map.toGeneratedLocation(start), 0)?.[0],
@@ -119,41 +115,47 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
         .filter((x): x is [number, number] => x[0] != null && x[1] != null),
     })
 
-    if (createOptions.debugShowGeneratedCode)
+    if (createOptions.debugShowGeneratedCode) {
       return result
+    }
 
     // Map the tokens
     const mappedNodes = result.nodes
       .map((node) => {
-        if ('text' in node && node.text === 'any')
+        if ('text' in node && node.text === 'any') {
           return undefined
+        }
         const startMap = get(map.toSourceLocation(node.start), 0)
-        if (!startMap)
+        if (!startMap) {
           return undefined
+        }
         const start = startMap[0]
         let end = get(map.toSourceLocation(node.start + node.length), 0)?.[0]
-        if (end == null && startMap[1].sourceOffsets[0] === startMap[0])
+        if (end == null && startMap[1].sourceOffsets[0] === startMap[0]) {
           end = startMap[1].sourceOffsets[1]
-        if (end == null || start < 0 || end < 0 || start > end)
+        }
+        if (end == null || start < 0 || end < 0 || start > end) {
           return undefined
-        return Object.assign(node, {
+        }
+        return {
           ...node,
           target: code.slice(start, end),
           start: startMap[0],
           length: end - start,
-        })
+        }
       })
-      .filter(isNotNull)
+      .filter(value => value != null)
 
     const mappedRemovals = [
       ...sourceMeta.removals,
       ...result.meta.removals.map((r) => {
         const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
         const end = get(map.toSourceLocation(r[1]), 0)?.[0]
-        if (start == null || end == null || start < 0 || end < 0 || start >= end)
+        if (start == null || end == null || start < 0 || end < 0 || start >= end) {
           return undefined
+        }
         return [start, end] as Range
-      }).filter(isNotNull),
+      }).filter(value => value != null),
     ]
 
     if (!options.handbookOptions?.keepNotations) {
@@ -167,11 +169,13 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     }
     result.nodes = result.nodes.filter((node, index) => {
       const next = result.nodes[index + 1]
-      if (!next)
+      if (!next) {
         return true
+      }
       // When multiple nodes are on the same position, we keep the last one by ignoring the previous ones
-      if (next.type === node.type && next.start === node.start)
+      if (next.type === node.type && next.start === node.start) {
         return false
+      }
       return true
     })
     result.meta.extension = 'svelte'
@@ -181,10 +185,6 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
   twoslasher.getCacheMap = _twoslasher.getCacheMap
 
   return twoslasher
-}
-
-function isNotNull<T>(value: T | null | undefined): value is T {
-  return value != null
 }
 
 function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T | undefined {
@@ -200,9 +200,9 @@ function generateSourceMap(
   generatedCode: string,
   encodedMappings: string,
 ): SourceMap {
-  const v3Mappings = decode(encodedMappings)
-  const sourcedDoc = TextDocument.create('', 'svelte', 0, sourceCode)
-  const genDoc = TextDocument.create('', 'typescriptreact', 0, generatedCode)
+  const decodedMappings = decode(encodedMappings)
+  const sourcedDoc = htmlLanguageService.TextDocument.create('', 'svelte', 0, sourceCode)
+  const genDoc = htmlLanguageService.TextDocument.create('', 'typescriptreact', 0, generatedCode)
   const mappings: CodeMapping[] = []
 
   let current:
@@ -212,8 +212,8 @@ function generateSourceMap(
     }
     | undefined
 
-  for (let genLine = 0; genLine < v3Mappings.length; genLine++) {
-    for (const segment of v3Mappings[genLine]) {
+  for (let genLine = 0; genLine < decodedMappings.length; genLine++) {
+    for (const segment of decodedMappings[genLine]) {
       const genCharacter = segment[0]
       const genOffset = genDoc.offsetAt({ line: genLine, character: genCharacter })
       if (current) {
