@@ -6,7 +6,6 @@ import { svelte2tsx } from 'svelte2tsx'
 import { createTwoslasher as _createTwoSlasher, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
-import htmlLanguageService from 'vscode-html-languageservice'
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
   /**
@@ -200,9 +199,9 @@ function generateSourceMap(
   generatedCode: string,
   encodedMappings: string,
 ): SourceMap {
+  const sourcePositionConverter = createPositionConverter(generatedCode)
+  const generatedPositionConverter = createPositionConverter(sourceCode)
   const decodedMappings = decode(encodedMappings)
-  const sourcedDoc = htmlLanguageService.TextDocument.create('', 'svelte', 0, sourceCode)
-  const genDoc = htmlLanguageService.TextDocument.create('', 'typescriptreact', 0, generatedCode)
   const mappings: CodeMapping[] = []
 
   let current:
@@ -215,7 +214,7 @@ function generateSourceMap(
   for (let genLine = 0; genLine < decodedMappings.length; genLine++) {
     for (const segment of decodedMappings[genLine]) {
       const genCharacter = segment[0]
-      const genOffset = genDoc.offsetAt({ line: genLine, character: genCharacter })
+      const genOffset = sourcePositionConverter.posToIndex(genLine, genCharacter)
       if (current) {
         let length = genOffset - current.genOffset
         const sourceText = sourceCode.substring(current.sourceOffset, current.sourceOffset + length)
@@ -259,7 +258,7 @@ function generateSourceMap(
         current = undefined
       }
       if (segment[2] !== undefined && segment[3] !== undefined) {
-        const sourceOffset = sourcedDoc.offsetAt({ line: segment[2], character: segment[3] })
+        const sourceOffset = generatedPositionConverter.posToIndex(segment[2], segment[3])
         current = {
           genOffset,
           sourceOffset,
