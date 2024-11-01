@@ -55,8 +55,5 @@
     "twoslash": "workspace:*",
     "twoslash-protocol": "workspace:*",
     "vscode-html-languageservice": "catalog:"
-  },
-  "devDependencies": {
-    "svelte2tsx": "catalog:"
   }
 }

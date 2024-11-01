@@ -411,6 +411,9 @@ importers:
       '@volar/language-core':
         specifier: 'catalog:'
         version: 2.4.8
+      svelte2tsx:
+        specifier: '*'
+        version: 0.7.22(svelte@5.1.9)(typescript@5.6.3)
       twoslash:
         specifier: workspace:*
         version: link:../twoslash
@@ -423,10 +426,6 @@ importers:
       vscode-html-languageservice:
         specifier: 'catalog:'
         version: 5.3.1
-    devDependencies:
-      svelte2tsx:
-        specifier: 'catalog:'
-        version: 0.7.22(svelte@5.1.9)(typescript@5.6.3)
 
   packages/twoslash-vue:
     dependencies:
