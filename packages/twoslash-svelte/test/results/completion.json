@@ -1,0 +1,108 @@
+{
+  "code": "<script>\r\n    let count = $state(0);\r\n\r\n    function increment() {\r\n        count++;\r\n    }\r\n</script>\r\n\r\n<button onclick={increment}>\r\n    Count is: {count}\r\n</button>",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 18,
+      "length": 5,
+      "target": "count",
+      "line": 1,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "function $state<0>(initial: 0): 0 (+1 overload)\nnamespace $state",
+      "docs": "Declares reactive state.\n\nExample:\n```ts\nlet count = $state(0);\n```\n\nhttps://svelte.dev/docs/svelte/$state",
+      "tags": [
+        [
+          "param",
+          "initial The initial value"
+        ]
+      ],
+      "start": 26,
+      "length": 6,
+      "target": "$state",
+      "line": 1,
+      "character": 16
+    },
+    {
+      "type": "hover",
+      "text": "(local function) increment(): void",
+      "start": 53,
+      "length": 9,
+      "target": "increment",
+      "line": 3,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 76,
+      "length": 5,
+      "target": "count",
+      "line": 4,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "(local function) increment(): void",
+      "start": 123,
+      "length": 9,
+      "target": "increment",
+      "line": 8,
+      "character": 17
+    },
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 151,
+      "length": 5,
+      "target": "count",
+      "line": 9,
+      "character": 15
+    },
+    {
+      "type": "completion",
+      "start": 153,
+      "length": 0,
+      "completions": [
+        {
+          "name": "count",
+          "kind": "let",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "confirm",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "console",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "const",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "continue",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        }
+      ],
+      "completionsPrefix": "co",
+      "line": 9,
+      "character": 17,
+      "target": ""
+    }
+  ],
+  "flags": []
+}

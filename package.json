@@ -43,6 +43,8 @@
     "react": "catalog:",
     "shiki": "catalog:",
     "simple-git-hooks": "catalog:",
+    "svelte": "catalog:",
+    "svelte2tsx": "catalog:",
     "tslib": "catalog:",
     "twoslash": "workspace:*",
     "twoslash-cdn": "workspace:*",
