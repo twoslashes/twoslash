@@ -1,5 +1,5 @@
 {
-  "code": "<script>\r    function increment() {\r\n        count++;\r\n    }\r\n    // ---cut-after---\r\n</script>\r\n\r\n<button onclick={increment}>\r\n    Count is: {count}\r\n</button>",
+  "code": "<script>\n    function increment() {\n        count++;\n    }\n    // ---cut-after---\n</script>\n\n<button onclick={increment}>\n    Count is: {count}\n</button>",
   "nodes": [
     {
       "type": "hover",
@@ -7,16 +7,16 @@
       "start": 22,
       "length": 9,
       "target": "increment",
-      "line": 0,
-      "character": 22
+      "line": 1,
+      "character": 13
     },
     {
       "type": "hover",
       "text": "let count: number",
-      "start": 45,
+      "start": 44,
       "length": 5,
       "target": "count",
-      "line": 1,
+      "line": 2,
       "character": 8
     }
   ],

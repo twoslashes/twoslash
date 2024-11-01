@@ -1,10 +1,10 @@
 {
-  "code": "<script>\r\n    let count = $state(0);\r\n\r\n    function increment() {\r\n        count++;\r\n    }\r\n</script>\r\n\r\n<button onclick={increment}>\r\n    Count is: {count}\r\n</button>",
+  "code": "<script>\n    let count = $state(0);\n\n    function increment() {\n        count++;\n    }\n</script>\n\n<button onclick={increment}>\n    Count is: {count}\n</button>",
   "nodes": [
     {
       "type": "hover",
       "text": "let count: number",
-      "start": 18,
+      "start": 17,
       "length": 5,
       "target": "count",
       "line": 1,
@@ -20,7 +20,7 @@
           "initial The initial value"
         ]
       ],
-      "start": 26,
+      "start": 25,
       "length": 6,
       "target": "$state",
       "line": 1,
@@ -29,7 +29,7 @@
     {
       "type": "hover",
       "text": "(local function) increment(): void",
-      "start": 53,
+      "start": 50,
       "length": 9,
       "target": "increment",
       "line": 3,
@@ -38,7 +38,7 @@
     {
       "type": "hover",
       "text": "let count: number",
-      "start": 76,
+      "start": 72,
       "length": 5,
       "target": "count",
       "line": 4,
@@ -47,7 +47,7 @@
     {
       "type": "hover",
       "text": "(local function) increment(): void",
-      "start": 123,
+      "start": 115,
       "length": 9,
       "target": "increment",
       "line": 8,
@@ -56,7 +56,7 @@
     {
       "type": "hover",
       "text": "let count: number",
-      "start": 151,
+      "start": 142,
       "length": 5,
       "target": "count",
       "line": 9,
@@ -65,7 +65,7 @@
     {
       "type": "query",
       "text": "let count: number",
-      "start": 151,
+      "start": 142,
       "length": 5,
       "target": "count",
       "line": 9,
