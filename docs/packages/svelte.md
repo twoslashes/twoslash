@@ -4,7 +4,7 @@ This package added the support for Twoslash to handle Svelte files.
 
 For example:
 
-```svelte svelte-check
+```svelte twoslash
 <script>
     import { onMount } from 'svelte'
     //       ^?
