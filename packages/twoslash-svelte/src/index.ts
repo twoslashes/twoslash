@@ -1,10 +1,10 @@
 import type { CodeMapping } from '@volar/language-core'
-import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, ParsedFlagNotation, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
+import type { CreateTwoslashOptions, HandbookOptions, ParsedFlagNotation, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
 import type { CompilerOptions } from 'typescript'
 import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
 import { svelte2tsx } from 'svelte2tsx'
-import { createTwoslasher as createTwoslasherBase, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
+import { createTwoslasher as _createTwoSlasher, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
 import pkg from 'vscode-html-languageservice'
@@ -24,18 +24,17 @@ export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
  * Create a twoslasher instance that add additional support for Svelte
  */
 export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}): TwoslashInstance {
-  const twoslasherBase = createTwoslasherBase(createOptions)
-  const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
+  const _twoslasher = _createTwoSlasher(createOptions)
 
   function twoslasher(code: string, extension?: string, options: TwoslashExecuteOptions = {}) {
     if (extension !== 'svelte')
-      return twoslasherBase(code, extension, options)
+      return _twoslasher(code, extension, options)
 
-    const compilerOptions: Partial<CompilerOptions> = {
+    const compilerOptions: CompilerOptions = {
       ...defaultCompilerOptions,
       ...options.compilerOptions,
     }
-    const handbookOptions: Partial<HandbookOptions> = {
+    const handbookOptions: HandbookOptions = {
       ...defaultHandbookOptions,
       noErrorsCutted: true,
       ...options.handbookOptions,
@@ -53,9 +52,9 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       customTags = createOptions.customTags || [],
     } = options
 
-    const pc = createPositionConverter(code)
-    findQueryMarkers(code, sourceMeta, pc)
-    const flagNotations = findFlagNotations(code, customTags, tsOptionDeclarations)
+    const positionConverter = createPositionConverter(code)
+    findQueryMarkers(code, sourceMeta, positionConverter)
+    const flagNotations = findFlagNotations(code, customTags, ts.optionDeclarations)
 
     // #region apply flags
     for (const flag of flagNotations) {
@@ -92,7 +91,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       return offsets[offsets.length - 1]?.[0]
     }
 
-    const result = twoslasherBase(compiled.code, 'tsx', {
+    const result = _twoslasher(compiled.code, 'tsx', {
       ...options,
       compilerOptions: {
         types: [
@@ -125,20 +124,20 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
 
     // Map the tokens
     const mappedNodes = result.nodes
-      .map((q) => {
-        if ('text' in q && q.text === 'any')
+      .map((node) => {
+        if ('text' in node && node.text === 'any')
           return undefined
-        const startMap = get(map.toSourceLocation(q.start), 0)
+        const startMap = get(map.toSourceLocation(node.start), 0)
         if (!startMap)
           return undefined
         const start = startMap[0]
-        let end = get(map.toSourceLocation(q.start + q.length), 0)?.[0]
+        let end = get(map.toSourceLocation(node.start + node.length), 0)?.[0]
         if (end == null && startMap[1].sourceOffsets[0] === startMap[0])
           end = startMap[1].sourceOffsets[1]
         if (end == null || start < 0 || end < 0 || start > end)
           return undefined
-        return Object.assign(q, {
-          ...q,
+        return Object.assign(node, {
+          ...node,
           target: code.slice(start, end),
           start: startMap[0],
           length: end - start,
@@ -166,12 +165,12 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     else {
       result.meta.removals = mappedRemovals
     }
-    result.nodes = result.nodes.filter((n, idx) => {
-      const next = result.nodes[idx + 1]
+    result.nodes = result.nodes.filter((node, index) => {
+      const next = result.nodes[index + 1]
       if (!next)
         return true
       // When multiple nodes are on the same position, we keep the last one by ignoring the previous ones
-      if (next.type === n.type && next.start === n.start)
+      if (next.type === node.type && next.start === node.start)
         return false
       return true
     })
@@ -179,13 +178,13 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     return result
   }
 
-  twoslasher.getCacheMap = twoslasherBase.getCacheMap
+  twoslasher.getCacheMap = _twoslasher.getCacheMap
 
   return twoslasher
 }
 
-function isNotNull<T>(x: T | null | undefined): x is T {
-  return x != null
+function isNotNull<T>(value: T | null | undefined): value is T {
+  return value != null
 }
 
 function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T | undefined {
@@ -196,16 +195,6 @@ function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T 
   return undefined
 }
 
-/**
- * Generate a `@volar/source-map` from a sourcemap object.
- * @param sourceCode - Source code
- * @param generatedCode - Generated code
- * @param encodedMappings - Base64 VLQ encoded mappings
- * @returns {SourceMap} - a `@volar/source-map`
- *
- * Copied from `@astro/language-services`
- * @see https://github.com/withastro/language-tools/blob/df90fe5f79978b567387cc1b0cedcc23a43bd156/packages/language-server/src/core/astro2tsx.ts#L97-L161
- */
 function generateSourceMap(
   sourceCode: string,
   generatedCode: string,
