@@ -7,7 +7,7 @@ const code = await import('./fixtures/example.vue?raw').then(m => m.default)
 
 const styleHeader = [
   '<head>',
-  `<link rel="stylesheet" href="https://esm.sh/@shikijs/twoslash@1.22.2/style-rich.css" />`,
+  `<link rel="stylesheet" href="https://esm.sh/@shikijs/twoslash@1.0.0-beta.5/style-rich.css" />`,
   `<style>:root { color-scheme: dark; --twoslash-popup-bg: #222; }</style>`,
   '</head>',
   '',
