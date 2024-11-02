@@ -27,6 +27,65 @@
       "character": 16
     },
     {
+      "type": "completion",
+      "start": 26,
+      "length": 0,
+      "completions": [
+        {
+          "name": "$$Component",
+          "kind": "const",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "$bindable",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "$derived",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "$effect",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "$host",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "$inspect",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "$props",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "$state",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        }
+      ],
+      "completionsPrefix": "$",
+      "line": 1,
+      "character": 17,
+      "target": ""
+    },
+    {
       "type": "hover",
       "text": "(local function) increment(): void",
       "start": 50,
@@ -61,47 +120,6 @@
       "target": "count",
       "line": 9,
       "character": 15
-    },
-    {
-      "type": "completion",
-      "start": 144,
-      "length": 0,
-      "completions": [
-        {
-          "name": "count",
-          "kind": "let",
-          "kindModifiers": "",
-          "sortText": "11"
-        },
-        {
-          "name": "confirm",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "console",
-          "kind": "var",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "const",
-          "kind": "keyword",
-          "kindModifiers": "",
-          "sortText": "15"
-        },
-        {
-          "name": "continue",
-          "kind": "keyword",
-          "kindModifiers": "",
-          "sortText": "15"
-        }
-      ],
-      "completionsPrefix": "co",
-      "line": 9,
-      "character": 17,
-      "target": ""
     }
   ],
   "flags": []
