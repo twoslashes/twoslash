@@ -2,7 +2,6 @@ packages:
   - packages/*
   - docs
   - packages/*/playground
-
 catalog:
   '@antfu/eslint-config': ^3.7.3
   '@iconify-json/ri': ^1.2.0
