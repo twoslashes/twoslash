@@ -408,9 +408,6 @@ importers:
       '@volar/language-core':
         specifier: 'catalog:'
         version: 2.4.8
-      svelte2tsx:
-        specifier: '*'
-        version: 0.7.22(svelte@5.1.9)(typescript@5.6.3)
       twoslash:
         specifier: workspace:*
         version: link:../twoslash
@@ -420,6 +417,10 @@ importers:
       typescript:
         specifier: ^5.6.2
         version: 5.6.3
+    devDependencies:
+      '@types/node':
+        specifier: ^22.7.4
+        version: 22.8.6
 
   packages/twoslash-vue:
     dependencies:
@@ -4091,10 +4092,6 @@ packages:
 
   svelte@5.1.6:
     resolution: {integrity: sha512-bYS/DpkqXk0j5UZgiNXrEjZYPRZ4Ncd87w4KUSbcZGyojA0+i/Ls9OGUjETHmdLe8RcQ0G8SX/T0PypPpAA/ew==}
-    engines: {node: '>=18'}
-
-  svelte@5.1.9:
-    resolution: {integrity: sha512-nzq+PPKGS2PoEWDjAcXSrKSbXmmmOAxd6dAz1IhRusUpVkFS6DMELWPyBPGwu6TpO/gsgtFXwX0M4+pAR5gzKw==}
     engines: {node: '>=18'}
 
   svgo@3.3.2:
@@ -8491,30 +8488,7 @@ snapshots:
       svelte: 5.1.6
       typescript: 5.6.3
 
-  svelte2tsx@0.7.22(svelte@5.1.9)(typescript@5.6.3):
-    dependencies:
-      dedent-js: 1.0.1
-      pascal-case: 3.1.2
-      svelte: 5.1.9
-      typescript: 5.6.3
-
   svelte@5.1.6:
-    dependencies:
-      '@ampproject/remapping': 2.3.0
-      '@jridgewell/sourcemap-codec': 1.5.0
-      '@types/estree': 1.0.6
-      acorn: 8.14.0
-      acorn-typescript: 1.4.13(acorn@8.14.0)
-      aria-query: 5.3.2
-      axobject-query: 4.1.0
-      esm-env: 1.1.4
-      esrap: 1.2.2
-      is-reference: 3.0.2
-      locate-character: 3.0.0
-      magic-string: 0.30.12
-      zimmerframe: 1.1.2
-
-  svelte@5.1.9:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0

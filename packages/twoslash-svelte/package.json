@@ -46,7 +46,6 @@
     "start": "esno src/index.ts"
   },
   "peerDependencies": {
-    "svelte2tsx": "*",
     "typescript": "*"
   },
   "dependencies": {
@@ -54,5 +53,8 @@
     "@volar/language-core": "catalog:",
     "twoslash": "workspace:*",
     "twoslash-protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4"
   }
 }
