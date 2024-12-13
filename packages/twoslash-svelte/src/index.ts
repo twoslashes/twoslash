@@ -1,11 +1,15 @@
 import type { CodeMapping } from '@volar/language-core'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
 import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
 import { svelte2tsx } from 'svelte2tsx'
 import { createTwoslasher as _createTwoSlasher, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
+
+const require = createRequire(import.meta.url)
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
   /**
@@ -86,19 +90,11 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       return offsets[offsets.length - 1]?.[0]
     }
 
+    const svelte2tsxPath = dirname(require.resolve('svelte2tsx'))
     const result = _twoslasher(compiled.code, 'tsx', {
       ...options,
       compilerOptions: {
-        types: [
-          '../node_modules/svelte2tsx/svelte-jsx',
-          '../node_modules/svelte2tsx/svelte-jsx-v4',
-          '../node_modules/svelte2tsx/svelte-shims',
-          '../node_modules/svelte2tsx/svelte-shims-v4',
-          './types/svelte-jsx',
-          './types/svelte-jsx-v4',
-          './types/svelte-shims',
-          './types/svelte-shims-v4',
-        ],
+        types: ['svelte-jsx', 'svelte-jsx-v4', 'svelte-shims', 'svelte-shims-v4'].map(p => join(svelte2tsxPath, p)),
         ...compilerOptions,
       },
       handbookOptions: {

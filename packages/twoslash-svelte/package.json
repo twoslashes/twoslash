@@ -51,10 +51,11 @@
   "dependencies": {
     "@jridgewell/sourcemap-codec": "catalog:",
     "@volar/language-core": "catalog:",
+    "svelte2tsx": "catalog:",
     "twoslash": "workspace:*",
     "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^22.7.4"
+    "@types/node": "catalog:"
   }
 }
