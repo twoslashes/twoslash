@@ -1,7 +1,7 @@
 {
   "name": "twoslash",
   "type": "module",
-  "version": "0.2.10",
+  "version": "0.2.12",
   "description": "Markup for generating rich type information in your documentations ahead of time",
   "author": "TypeScript team",
   "license": "MIT",
@@ -55,11 +55,11 @@
     "typescript": "*"
   },
   "dependencies": {
-    "@typescript/vfs": "^1.6.0",
+    "@typescript/vfs": "catalog:",
     "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {
-    "ohash": "^1.1.3"
+    "ohash": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

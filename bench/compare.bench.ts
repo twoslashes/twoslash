@@ -1,13 +1,13 @@
 /* eslint-disable import/first */
 process.env.NODE_ENV = 'production'
 
-import { fileURLToPath } from 'node:url'
 import fs from 'node:fs/promises'
 import { basename } from 'node:path'
-import { bench, describe } from 'vitest'
-import fg from 'fast-glob'
+import { fileURLToPath } from 'node:url'
 import { twoslasher as twoslasherOld } from '@typescript/twoslash'
+import fg from 'fast-glob'
 import { createTwoslasher } from 'twoslash'
+import { bench, describe } from 'vitest'
 
 const codes = await fg([
   'examples/*.ts',

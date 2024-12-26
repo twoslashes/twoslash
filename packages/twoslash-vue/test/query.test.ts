@@ -19,10 +19,10 @@ describe('basic', () => {
     expect(result.meta.positionQueries)
       .toMatchInlineSnapshot(`
         [
-          38,
-          235,
-          1676,
-          1892,
+          79,
+          276,
+          1561,
+          1729,
         ]
       `)
 
@@ -41,7 +41,7 @@ describe('basic', () => {
           "target": "computed",
           "text": "(alias) const computed: {
             <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;
-            <T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): WritableComputedRef<T>;
+            <T, S = T>(options: WritableComputedOptions<T, S>, debugOptions?: DebuggerOptions): WritableComputedRef<T, S>;
         }
         import computed",
           "type": "query",

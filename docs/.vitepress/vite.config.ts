@@ -1,11 +1,11 @@
-import { fileURLToPath } from 'node:url'
-import { resolve } from 'node:path'
 import fs from 'node:fs/promises'
-import { defineConfig } from 'vite'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { createJiti } from 'jiti'
+import { format } from 'pretty-format'
 import UnoCSS from 'unocss/vite'
 import Components from 'unplugin-vue-components/vite'
-import { format } from 'pretty-format'
-import JITI from 'jiti'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
@@ -72,7 +72,6 @@ export default defineConfig({
           // eslint-disable-next-line regexp/no-super-linear-backtracking
           /(`{3,4})(\w+)([^\n]*?)\beval\b([^\n]*)\n([\s\S]+?)\n\1/g,
           async (_, quotes, lang, optionsPre, optionsPost, code) => {
-            // eslint-disable-next-line no-console
             console.log('markdown eval', { lang, code })
             const logs: any[][] = []
             const _console = globalThis.console
@@ -93,11 +92,10 @@ export default defineConfig({
             } as any
 
             try {
-              const jiti = JITI(id, {
-                esmResolve: true,
+              const jiti = createJiti(id, {
                 cache: false,
               })
-              await jiti(filename)
+              await jiti.import(filename)
             }
             finally {
               globalThis.console = _console

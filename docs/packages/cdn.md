@@ -74,9 +74,9 @@ Fetching files from CDN is asynchronous, and there is no way to make the whole p
 For example, in [Shiki](https://shiki.style/), the `codeToHtml` function is synchronous as well as the [`@shikijs/twoslash` transformer](https://shiki.style/packages/twoslash).
 
 ```ts
-import { createTwoslashFromCDN } from 'twoslash-cdn'
-import { createHighlighter } from 'shiki'
 import { transformerTwoslash } from '@shikijs/twoslash'
+import { createHighlighter } from 'shiki'
+import { createTwoslashFromCDN } from 'twoslash-cdn'
 
 const highlighter = await createHighlighter({})
 

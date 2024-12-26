@@ -1,12 +1,15 @@
-import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit } from 'typescript'
-import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import type { ErrorLevel, NodeError, NodeWithoutPosition, Position, Range } from 'twoslash-protocol'
-import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
-import { TwoslashError } from './error'
-import { validateCodeForErrors } from './validation'
-import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
+import type { CompilerOptions, CompletionEntry, CompletionTriggerKind, DiagnosticCategory, JsxEmit, System } from 'typescript'
+
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, TwoslashReturnMeta, VirtualFile } from './types'
+import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
+
+import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
+import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
+import { TwoslashError } from './error'
 import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
+
+import { validateCodeForErrors } from './validation'
 
 export * from './public'
 
@@ -25,15 +28,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   const vfs = createOptions.fsMap || new Map<string, string>()
   const system = useFS
     ? createSystem(vfs)
-    : {
-        ...createFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory),
-        // To work with non-hoisted packages structure
-        realpath(path: string) {
-          if (vfs.has(path))
-            return path
-          return ts.sys.realpath?.(path) || path
-        },
-      }
+    : createCacheableFSBackedSystem(vfs, _root, ts, createOptions.tsLibDirectory, createOptions.fsCache)
   const fsRoot = useFS ? '/' : `${_root}/`
 
   const cache = createOptions.cache === false
@@ -204,12 +199,10 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     }
     // #endregion
 
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     function getOffsetInFile(offset: number, file: VirtualFile) {
       return offset - file.offset + (file.prepend?.length || 0)
     }
 
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     function getFileContent(file: VirtualFile) {
       return (file.prepend || '') + file.content + (file.append || '')
     }
@@ -505,6 +498,55 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   }
 
   return twoslasher
+}
+
+function createCacheableFSBackedSystem(
+  vfs: Map<string, string>,
+  root: string,
+  ts: TS,
+  tsLibDirectory?: string,
+  enableFsCache = true,
+): System {
+  function withCache<T>(fn: (key: string) => T) {
+    const cache = new Map<string, T>()
+    return (key: string) => {
+      const cached = cache.get(key)
+      if (cached !== undefined)
+        return cached
+
+      const result = fn(key)
+      cache.set(key, result)
+      return result
+    }
+  }
+  const cachedReadFile = withCache(ts.sys.readFile)
+
+  const cachedTs = enableFsCache
+    ? {
+        ...ts,
+        sys: {
+          ...ts.sys,
+          directoryExists: withCache(ts.sys.directoryExists),
+          fileExists: withCache(ts.sys.fileExists),
+          ...(ts.sys.realpath ? { realpath: withCache(ts.sys.realpath) } : {}),
+          readFile(path, encoding) {
+            if (encoding === undefined)
+              return cachedReadFile(path)
+            return ts.sys.readFile(path, encoding)
+          },
+        } satisfies System,
+      }
+    : ts
+
+  return {
+    ...createFSBackedSystem(vfs, root, cachedTs, tsLibDirectory),
+    // To work with non-hoisted packages structure
+    realpath(path: string) {
+      if (vfs.has(path))
+        return path
+      return cachedTs.sys.realpath?.(path) || path
+    },
+  }
 }
 
 /**

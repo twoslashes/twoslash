@@ -66,9 +66,9 @@ If you are using [`@shikijs/twoslash`](https://shiki.style/packages/twoslash) an
 
 ```ts twoslash
 // @noErrors
+import Shiki from '@shikijs/markdown-it'
 import { transformerTwoslash } from '@shikijs/twoslash'
 import { createTwoslasher as createTwoslasherESLint } from 'twoslash-eslint'
-import Shiki from '@shikijs/markdown-it'
 
 const shikiPlugin = await Shiki({
   theme: 'vitesse-light',

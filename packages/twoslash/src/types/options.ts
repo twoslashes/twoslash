@@ -1,6 +1,6 @@
 import type { VirtualTypeScriptEnvironment } from '@typescript/vfs'
-import type { CompilerOptions, CustomTransformers } from 'typescript'
 import type { NodeWithoutPosition } from 'twoslash-protocol'
+import type { CompilerOptions, CustomTransformers } from 'typescript'
 import type { HandbookOptions } from './handbook-options'
 import type { TwoslashReturnMeta } from './returns'
 
@@ -85,4 +85,11 @@ export interface CreateTwoslashOptions extends TwoslashExecuteOptions {
    * Cache the ts envs based on compiler options, defaults to true
    */
   cache?: boolean | Map<string, VirtualTypeScriptEnvironment>
+
+  /**
+   * Cache file system requests
+   *
+   * @default true
+   */
+  fsCache?: boolean
 }

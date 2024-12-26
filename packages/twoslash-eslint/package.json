@@ -1,7 +1,7 @@
 {
   "name": "twoslash-eslint",
   "type": "module",
-  "version": "0.2.10",
+  "version": "0.2.12",
   "description": "ESLint-backed twoslash runner",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -53,6 +53,6 @@
     "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {
-    "@types/eslint": "^9.6.1"
+    "@types/eslint": "catalog:"
   }
 }

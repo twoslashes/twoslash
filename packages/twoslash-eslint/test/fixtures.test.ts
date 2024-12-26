@@ -1,11 +1,11 @@
 /// <reference types="vite/client" />
 
+import type { Linter } from 'eslint'
+import type { TwoslashGenericResult } from 'twoslash-protocol'
 import { extname } from 'node:path'
 import process from 'node:process'
-import { expect, it } from 'vitest'
-import type { TwoslashGenericResult } from 'twoslash-protocol'
 import antfu from '@antfu/eslint-config'
-import type { Linter } from 'eslint'
+import { expect, it } from 'vitest'
 import { createTwoslasher } from '../src/index'
 
 // To add a test, create a file in the fixtures folder and it will will run through

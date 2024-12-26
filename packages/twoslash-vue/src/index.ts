@@ -1,7 +1,4 @@
-import type { Language, VueCompilerOptions } from '@vue/language-core'
-import { FileMap, createLanguage, createVueLanguagePlugin, defaultMapperFactory, resolveVueCompilerOptions } from '@vue/language-core'
-import type { CompilerOptions } from 'typescript'
-import ts from 'typescript'
+import type { Language, SourceScript, VueCompilerOptions } from '@vue/language-core'
 import type {
   CompilerOptionDeclaration,
   CreateTwoslashOptions,
@@ -12,6 +9,15 @@ import type {
   TwoslashInstance,
   TwoslashReturnMeta,
 } from 'twoslash'
+import type { CompilerOptions } from 'typescript'
+import {
+  createLanguage,
+  createVueLanguagePlugin,
+  defaultMapperFactory,
+  FileMap,
+  resolveVueCompilerOptions,
+  setupGlobalTypes,
+} from '@vue/language-core'
 import {
   createTwoslasher as createTwoslasherBase,
   defaultCompilerOptions,
@@ -25,6 +31,7 @@ import {
   removeCodeRanges,
   resolveNodePositions,
 } from 'twoslash-protocol'
+import ts from 'typescript'
 
 export interface VueSpecificOptions {
   /**
@@ -65,10 +72,12 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, id => id, () => '', () => true, defaultCompilerOptions, resolveVueCompilerOptions(vueCompilerOptions))
+      const resolvedVueOptions = resolveVueCompilerOptions(vueCompilerOptions)
+      resolvedVueOptions.__setupedGlobalTypes = setupGlobalTypes(ts.sys.getCurrentDirectory(), resolvedVueOptions, ts.sys)
+      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, defaultCompilerOptions, resolvedVueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
-        new FileMap(ts.sys.useCaseSensitiveFileNames),
+        new FileMap(ts.sys.useCaseSensitiveFileNames) as unknown as Map<string, SourceScript<string>>,
         () => {},
       )
     }
@@ -138,9 +147,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
     const sourceScript = lang.scripts.set('index.vue', ts.ScriptSnapshot.fromString(strippedCode))!
-    const fileCompiled = get(sourceScript.generated!.embeddedCodes.values(), 1)!
+    const fileCompiled = get(sourceScript.generated!.embeddedCodes.values(), 2)!
     const compiled = fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength())
-      .replace(/(?=export const __VLS_globalTypesStart)/, '// ---cut-after---\n')
 
     const map = defaultMapperFactory(fileCompiled.mappings)
 
@@ -209,15 +217,13 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
 
     const mappedRemovals = [
       ...sourceMeta.removals,
-      ...result.meta.removals
-        .map((r) => {
-          const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
-          const end = get(map.toSourceLocation(r[1]), 0)?.[0]
-          if (start == null || end == null || start < 0 || end < 0 || start >= end)
-            return undefined
-          return [start, end] as Range
-        })
-        .filter(isNotNull),
+      ...result.meta.removals.map((r) => {
+        const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
+        const end = get(map.toSourceLocation(r[1]), 0)?.[0]
+        if (start == null || end == null || start < 0 || end < 0 || start >= end)
+          return undefined
+        return [start, end] as Range
+      }).filter(isNotNull),
     ]
 
     if (!options.handbookOptions?.keepNotations) {

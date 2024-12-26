@@ -1,6 +1,6 @@
-import { createPositionConverter, resolveNodePositions } from 'twoslash-protocol'
-import { Linter } from 'eslint'
 import type { NodeErrorWithoutPosition, TwoslashGenericFunction, TwoslashGenericResult } from 'twoslash-protocol'
+import { Linter } from 'eslint'
+import { createPositionConverter, resolveNodePositions } from 'twoslash-protocol'
 
 export interface CreateTwoslashESLintOptions {
   /**

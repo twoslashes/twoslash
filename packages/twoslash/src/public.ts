@@ -1,8 +1,12 @@
 // Public Utilities
 
-export * from './error'
-export * from './types'
 export * from './defaults'
+export * from './error'
+export {
+  removeTwoslashNotations,
+} from './fallback'
+
+export * from './types'
 
 export {
   findCutNotations,
@@ -10,10 +14,6 @@ export {
   findQueryMarkers,
   getObjectHash,
 } from './utils'
-
-export {
-  removeTwoslashNotations,
-} from './fallback'
 
 export {
   validateCodeForErrors,

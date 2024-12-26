@@ -1,8 +1,8 @@
 import type { TwoslashExecuteOptions, TwoslashFunction, TwoslashOptions, TwoslashReturn } from 'twoslash'
+import { setupTypeAcquisition } from '@typescript/ata'
+import { createDefaultMapFromCDN } from '@typescript/vfs'
 import { createTwoslasher } from 'twoslash'
 import ts from 'typescript'
-import { createDefaultMapFromCDN } from '@typescript/vfs'
-import { setupTypeAcquisition } from '@typescript/ata'
 
 /**
  * A subset of `unstorage`'s interface to maximize the compatibility

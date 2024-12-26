@@ -3,7 +3,7 @@
   "nodes": [
     {
       "type": "hover",
-      "text": "(alias) function ref<T>(value: T): Ref<UnwrapRef<T>> (+1 overload)\nimport ref",
+      "text": "(alias) function ref<T>(value: T): [T] extends [Ref] ? IfAny<T, Ref<T>, T> : Ref<UnwrapRef<T>, UnwrapRef<T> | T> (+1 overload)\nimport ref",
       "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
       "tags": [
         [
@@ -23,7 +23,7 @@
     },
     {
       "type": "hover",
-      "text": "const count1: Ref<number>",
+      "text": "const count1: Ref<number, number>",
       "start": 58,
       "length": 6,
       "target": "count1",
@@ -32,7 +32,7 @@
     },
     {
       "type": "hover",
-      "text": "(alias) ref<number>(value: number): Ref<number> (+1 overload)\nimport ref",
+      "text": "(alias) ref<number>(value: number): Ref<number, number> (+1 overload)\nimport ref",
       "docs": "Takes an inner value and returns a reactive and mutable ref object, which\nhas a single property `.value` that points to the inner value.",
       "tags": [
         [
@@ -61,7 +61,7 @@
     },
     {
       "type": "hover",
-      "text": "const count1: Ref<number>",
+      "text": "const count1: Ref<number, number>",
       "start": 104,
       "length": 6,
       "target": "count1",
@@ -70,7 +70,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) Ref<number>.value: number",
+      "text": "(property) Ref<number, number>.value: number",
       "start": 111,
       "length": 5,
       "target": "value",
@@ -88,7 +88,7 @@
     },
     {
       "type": "hover",
-      "text": "const count1: Ref<number>",
+      "text": "(property) count1: number",
       "start": 160,
       "length": 6,
       "target": "count1",
@@ -102,141 +102,9 @@
       "completions": [
         {
           "name": "count1",
-          "kind": "const",
+          "kind": "property",
           "kindModifiers": "",
           "sortText": "11"
-        },
-        {
-          "name": "count2",
-          "kind": "function",
-          "kindModifiers": "",
-          "sortText": "11"
-        },
-        {
-          "name": "caches",
-          "kind": "var",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "cancelAnimationFrame",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "cancelIdleCallback",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "case",
-          "kind": "keyword",
-          "kindModifiers": "",
-          "sortText": "15"
-        },
-        {
-          "name": "catch",
-          "kind": "keyword",
-          "kindModifiers": "",
-          "sortText": "15"
-        },
-        {
-          "name": "class",
-          "kind": "keyword",
-          "kindModifiers": "",
-          "sortText": "15"
-        },
-        {
-          "name": "clearImmediate",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "clearInterval",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "clearTimeout",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "close",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "closed",
-          "kind": "var",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "confirm",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "console",
-          "kind": "var",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "const",
-          "kind": "keyword",
-          "kindModifiers": "",
-          "sortText": "15"
-        },
-        {
-          "name": "continue",
-          "kind": "keyword",
-          "kindModifiers": "",
-          "sortText": "15"
-        },
-        {
-          "name": "createImageBitmap",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "crossOriginIsolated",
-          "kind": "var",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "crypto",
-          "kind": "var",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "customElements",
-          "kind": "var",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
-          "name": "captureEvents",
-          "kind": "function",
-          "kindModifiers": "deprecated,declare",
-          "sortText": "z15"
-        },
-        {
-          "name": "clientInformation",
-          "kind": "var",
-          "kindModifiers": "deprecated,declare",
-          "sortText": "z15"
         }
       ],
       "completionsPrefix": "c",

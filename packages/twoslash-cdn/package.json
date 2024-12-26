@@ -1,7 +1,7 @@
 {
   "name": "twoslash-cdn",
   "type": "module",
-  "version": "0.2.10",
+  "version": "0.2.12",
   "description": "Run Twoslash on the browser, with Auto-Type-Acquisition on CDN.",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -52,13 +52,13 @@
     "twoslash": "workspace:*"
   },
   "devDependencies": {
-    "@typescript/ata": "^0.9.7",
-    "@typescript/vfs": "^1.6.0",
+    "@typescript/ata": "catalog:",
+    "@typescript/vfs": "catalog:",
     "twoslash-cdn": "workspace:*",
-    "typescript": "^5.5.4",
-    "unbuild": "^2.0.0",
-    "unstorage": "^1.10.2",
-    "vite": "^5.4.2",
-    "vitest": "^2.0.5"
+    "typescript": "catalog:",
+    "unbuild": "catalog:",
+    "unstorage": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
   }
 }

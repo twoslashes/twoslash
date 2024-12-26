@@ -1,9 +1,11 @@
-import '@shikijs/twoslash/style-rich.css'
+/* eslint-disable antfu/no-top-level-await */
 import { createTransformerFactory, rendererRich } from '@shikijs/twoslash/core'
 import { codeToHtml } from 'shiki'
+import { createTwoslashFromCDN } from 'twoslash-cdn'
 import { createStorage } from 'unstorage'
 import indexedDbDriver from 'unstorage/drivers/indexedb'
-import { createTwoslashFromCDN } from 'twoslash-cdn'
+
+import '@shikijs/twoslash/style-rich.css'
 
 const storage = createStorage({
   driver: indexedDbDriver({ base: 'twoslash-cdn:' }),
