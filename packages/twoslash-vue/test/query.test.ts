@@ -20,9 +20,9 @@ describe('basic', () => {
       .toMatchInlineSnapshot(`
         [
           94,
-          291,
-          1619,
-          1787,
+          162,
+          997,
+          1166,
         ]
       `)
 
