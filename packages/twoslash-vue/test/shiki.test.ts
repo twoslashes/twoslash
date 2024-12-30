@@ -1,5 +1,5 @@
 import { createTransformerFactory, rendererRich } from '@shikijs/twoslash/core'
-import { codeToHtml } from 'shiki'
+import { createHighlighter } from 'shiki'
 import { expect, it } from 'vitest'
 import { createTwoslasher } from '../src'
 
@@ -14,9 +14,20 @@ const styleHeader = [
 ].join('\n')
 
 const twoslasherVue = createTwoslasher()
+const shiki = await createHighlighter({
+  themes: [
+    'vitesse-dark',
+  ],
+  langs: [
+    'vue',
+    'ts',
+    'tsx',
+    'vue',
+  ],
+})
 
 it('highlight vue', async () => {
-  const result = await codeToHtml(code, {
+  const result = await shiki.codeToHtml(code, {
     lang: 'vue',
     theme: 'vitesse-dark',
     transformers: [
@@ -38,7 +49,7 @@ const twoslasherRaw = createTwoslasher({
 })
 
 it('highlight raw', async () => {
-  const result = await codeToHtml(code, {
+  const result = await shiki.codeToHtml(code, {
     lang: 'vue',
     theme: 'vitesse-dark',
     transformers: [
