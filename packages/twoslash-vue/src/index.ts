@@ -171,8 +171,10 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       handbookOptions: {
         ...handbookOptions,
         /**
+         * Ignore ts 1184 error that declare keyword can't be used in function.
+         *
          * https://github.com/vuejs/language-tools/pull/5090/files
-         * This should be removed after @vue/language-core@2.2.1
+         * The following line should be removed when @vue/language-core@v2.2.1 is released
          */
         errors: [...handbookOptions.errors ?? [], 1184],
         keepNotations: true,
