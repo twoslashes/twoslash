@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.2.12",
   "private": true,
-  "packageManager": "pnpm@9.15.1",
+  "packageManager": "pnpm@9.15.2",
   "scripts": {
     "typecheck": "tsc",
     "build": "pnpm -r run build",
@@ -61,6 +61,7 @@
     "twoslash": "workspace:*",
     "twoslash-vue": "workspace:*",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vue": "catalog:"
   },
   "simple-git-hooks": {
