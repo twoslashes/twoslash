@@ -170,6 +170,11 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       },
       handbookOptions: {
         ...handbookOptions,
+        /**
+         * https://github.com/vuejs/language-tools/pull/5090/files
+         * This should be removed after @vue/language-core@2.2.1
+         */
+        errors: [...handbookOptions.errors ?? [], 1184],
         keepNotations: true,
       },
       shouldGetHoverInfo(id) {
