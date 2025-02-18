@@ -141,8 +141,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     for (const [start, end] of sourceMeta.removals) {
       strippedCode
        = strippedCode.slice(0, start)
-       + strippedCode.slice(start, end).replace(/\S/g, ' ')
-       + strippedCode.slice(end)
+         + strippedCode.slice(start, end).replace(/\S/g, ' ')
+         + strippedCode.slice(end)
     }
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
