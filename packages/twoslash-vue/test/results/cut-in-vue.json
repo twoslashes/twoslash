@@ -39,7 +39,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) Foo.bar: string",
+      "text": "(property) bar: string",
       "start": 89,
       "length": 3,
       "target": "bar",
@@ -48,7 +48,7 @@
     },
     {
       "type": "query",
-      "text": "(property) Foo.bar: string",
+      "text": "(property) bar: string",
       "start": 89,
       "length": 3,
       "target": "bar",
