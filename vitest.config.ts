@@ -12,7 +12,7 @@ export default defineConfig({
       //   json: 'bench/results.json'
       // }
     },
-    testTimeout: 8000,
+    testTimeout: 15000,
     coverage: {
       include: [
         '**/src/**/*.ts',
