@@ -40,7 +40,7 @@ it('highlight vue', async () => {
     ],
   })
 
-  expect(styleHeader + result)
+  await expect(styleHeader + result)
     .toMatchFileSnapshot('./results/renderer/example.vue.html')
 })
 
@@ -62,6 +62,6 @@ it('highlight raw', async () => {
     ],
   })
 
-  expect(styleHeader + result)
+  await expect(styleHeader + result)
     .toMatchFileSnapshot('./results/renderer/example.raw.html')
 })
