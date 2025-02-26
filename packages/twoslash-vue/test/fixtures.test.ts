@@ -9,7 +9,7 @@ import { createTwoslasher } from '../src/index'
 // To add a test, create a file in the fixtures folder and it will will run through
 // as though it was the codeblock.
 
-const fixtures = import.meta.glob('./fixtures/**/*.*', { as: 'raw' })
+const fixtures = import.meta.glob('./fixtures/**/*.*', { query: '?raw', import: 'default' })
 
 // A temporary list of regex to match with the path of the file to test
 const filters: RegExp[] = [
@@ -43,7 +43,7 @@ Object.entries(fixtures).forEach(([path, fixture]) => {
       }
       catch (err: any) {
         if (expectThrows) {
-          expect(err.message).toMatchFileSnapshot(outPath)
+          await expect(err.message).toMatchFileSnapshot(outPath)
           return
         }
         else {
@@ -56,7 +56,7 @@ Object.entries(fixtures).forEach(([path, fixture]) => {
       }
 
       else {
-        expect(cleanFixture(result))
+        await expect(cleanFixture(result))
           .toMatchFileSnapshot(outPath)
       }
     },
