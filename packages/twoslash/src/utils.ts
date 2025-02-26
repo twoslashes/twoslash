@@ -1,7 +1,7 @@
 import type { createPositionConverter, Range } from 'twoslash-protocol'
 import type { SourceFile } from 'typescript'
 import type { CompilerOptionDeclaration, ParsedFlagNotation, TwoslashReturnMeta, VirtualFile } from './types'
-import { objectHash } from 'ohash'
+import { hash as objectHash } from 'ohash'
 import { defaultHandbookOptions } from './defaults'
 import { TwoslashError } from './error'
 import { reAnnonateMarkers, reConfigBoolean, reConfigValue, reCutAfter, reCutBefore, reCutEnd, reCutStart, reFilenamesMakers } from './regexp'
