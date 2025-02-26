@@ -46,7 +46,7 @@
     "prepublishOnly": "nr build"
   },
   "peerDependencies": {
-    "typescript": "*"
+    "typescript": "^5.5.0"
   },
   "dependencies": {
     "twoslash": "workspace:*"
