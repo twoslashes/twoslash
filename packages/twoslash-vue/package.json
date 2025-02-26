@@ -47,7 +47,7 @@
     "start": "esno src/index.ts"
   },
   "peerDependencies": {
-    "typescript": "*"
+    "typescript": "^5.5.0"
   },
   "dependencies": {
     "@vue/language-core": "catalog:",
