@@ -17,8 +17,17 @@ describe('basic', () => {
       .toHaveProperty('text', `(property) onClick?: ((payload: MouseEvent) => void) | undefined`)
   })
 
-  // Windows have different paths, result in different positions
-  it.skipIf(isWindows)('has correct query', () => {
+  it('has correct query', () => {
+    expect(result.nodes.find(n => n.type === 'query' && n.target === 'double'))
+      .toHaveProperty('text', 'const double: ComputedRef<number>')
+    expect(result.nodes.filter(n => n.type === 'query'))
+      .toHaveLength(4)
+
+    // Windows have different paths, result in different positions
+    // We skip the following position tests on Windows
+    if (isWindows)
+      return
+
     expect(result.meta.positionQueries)
       .toMatchInlineSnapshot(`
           [
@@ -28,9 +37,6 @@ describe('basic', () => {
             1034,
           ]
         `)
-
-    expect(result.nodes.find(n => n.type === 'query' && n.target === 'double'))
-      .toHaveProperty('text', 'const double: ComputedRef<number>')
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'computed'))
       .toMatchInlineSnapshot(`
@@ -80,7 +86,5 @@ describe('basic', () => {
           "type": "query",
         }
       `)
-    expect(result.nodes.filter(n => n.type === 'query'))
-      .toHaveLength(4)
   })
 })
