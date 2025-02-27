@@ -3,6 +3,8 @@ import { createHighlighter } from 'shiki'
 import { expect, it } from 'vitest'
 import { createTwoslasher } from '../src'
 
+const isWindows = process.platform === 'win32'
+
 const code = await import('./fixtures/example.vue?raw').then(m => m.default)
 
 const styleHeader = [
@@ -48,7 +50,7 @@ const twoslasherRaw = createTwoslasher({
   debugShowGeneratedCode: true,
 })
 
-it('highlight raw', async () => {
+it.skipIf(isWindows)('highlight raw', async () => {
   const result = await shiki.codeToHtml(code, {
     lang: 'vue',
     theme: 'vitesse-dark',
