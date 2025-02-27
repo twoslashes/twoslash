@@ -17,11 +17,10 @@ describe('basic', () => {
       .toHaveProperty('text', `(property) onClick?: ((payload: MouseEvent) => void) | undefined`)
   })
 
-  it('has correct query', () => {
-    if (!isWindows) {
-      // Windows have different paths, result in different positions
-      expect(result.meta.positionQueries)
-        .toMatchInlineSnapshot(`
+  // Windows have different paths, result in different positions
+  it.skipIf(isWindows)('has correct query', () => {
+    expect(result.meta.positionQueries)
+      .toMatchInlineSnapshot(`
           [
             93,
             161,
@@ -29,7 +28,6 @@ describe('basic', () => {
             1034,
           ]
         `)
-    }
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'double'))
       .toHaveProperty('text', 'const double: ComputedRef<number>')
