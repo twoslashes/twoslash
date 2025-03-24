@@ -47,6 +47,7 @@ export default defineConfig({
     },
     async shikiSetup(shiki) {
       await shiki.loadTheme(...Object.keys(bundledThemes) as any)
+      await shiki.loadLanguage('js', 'json')
     },
     codeTransformers: [
       transformerTwoslash() as any,
