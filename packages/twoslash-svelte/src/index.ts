@@ -74,8 +74,8 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     for (const [start, end] of sourceMeta.removals) {
       strippedCode
        = strippedCode.slice(0, start)
-       + strippedCode.slice(start, end).replace(/\S/g, ' ')
-       + strippedCode.slice(end)
+         + strippedCode.slice(start, end).replace(/\S/g, ' ')
+         + strippedCode.slice(end)
     }
 
     const compiled = svelte2tsx(strippedCode)
