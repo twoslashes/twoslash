@@ -49,7 +49,7 @@ export default defineConfig({
       await shiki.loadTheme(...Object.keys(bundledThemes) as any)
     },
     codeTransformers: [
-      transformerTwoslash(),
+      transformerTwoslash() as any,
       transformerTwoslash({
         errorRendering: 'hover',
         twoslasher: createTwoslasherESLint({

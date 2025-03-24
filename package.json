@@ -1,9 +1,9 @@
 {
   "name": "@twoslash/monorepo",
   "type": "module",
-  "version": "0.2.12",
+  "version": "0.3.1",
   "private": true,
-  "packageManager": "pnpm@9.11.0",
+  "packageManager": "pnpm@10.6.3",
   "scripts": {
     "typecheck": "tsc",
     "build": "pnpm -r run build",
@@ -59,10 +59,11 @@
     "vue": "catalog:"
   },
   "resolutions": {
-    "@types/node": "^22.7.4",
+    "@types/node": "^22.13.10",
     "twoslash": "workspace:*",
     "twoslash-vue": "workspace:*",
     "typescript": "catalog:",
+    "vite": "catalog:",
     "vue": "catalog:"
   },
   "simple-git-hooks": {

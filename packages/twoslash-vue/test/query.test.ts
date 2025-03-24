@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { createTwoslasher } from '../src/index'
 
+const isWindows = process.platform === 'win32'
+
 const code = await import('./fixtures/query-basic.vue?raw').then(m => m.default)
 
 const twoslasher = createTwoslasher()
@@ -16,18 +18,25 @@ describe('basic', () => {
   })
 
   it('has correct query', () => {
-    expect(result.meta.positionQueries)
-      .toMatchInlineSnapshot(`
-        [
-          79,
-          276,
-          1561,
-          1729,
-        ]
-      `)
-
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'double'))
       .toHaveProperty('text', 'const double: ComputedRef<number>')
+    expect(result.nodes.filter(n => n.type === 'query'))
+      .toHaveLength(4)
+
+    // Windows have different paths, result in different positions
+    // We skip the following position tests on Windows
+    if (isWindows)
+      return
+
+    expect(result.meta.positionQueries)
+      .toMatchInlineSnapshot(`
+          [
+            93,
+            161,
+            863,
+            1034,
+          ]
+        `)
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'computed'))
       .toMatchInlineSnapshot(`
@@ -77,7 +86,5 @@ describe('basic', () => {
           "type": "query",
         }
       `)
-    expect(result.nodes.filter(n => n.type === 'query'))
-      .toHaveLength(4)
   })
 })

@@ -1,7 +1,9 @@
 import { createTransformerFactory, rendererRich } from '@shikijs/twoslash/core'
-import { codeToHtml } from 'shiki'
+import { createHighlighter } from 'shiki'
 import { expect, it } from 'vitest'
 import { createTwoslasher } from '../src'
+
+const isWindows = process.platform === 'win32'
 
 const code = await import('./fixtures/example.vue?raw').then(m => m.default)
 
@@ -14,9 +16,20 @@ const styleHeader = [
 ].join('\n')
 
 const twoslasherVue = createTwoslasher()
+const shiki = await createHighlighter({
+  themes: [
+    'vitesse-dark',
+  ],
+  langs: [
+    'vue',
+    'ts',
+    'tsx',
+    'vue',
+  ],
+})
 
 it('highlight vue', async () => {
-  const result = await codeToHtml(code, {
+  const result = await shiki.codeToHtml(code, {
     lang: 'vue',
     theme: 'vitesse-dark',
     transformers: [
@@ -29,7 +42,7 @@ it('highlight vue', async () => {
     ],
   })
 
-  expect(styleHeader + result)
+  await expect(styleHeader + result)
     .toMatchFileSnapshot('./results/renderer/example.vue.html')
 })
 
@@ -37,8 +50,8 @@ const twoslasherRaw = createTwoslasher({
   debugShowGeneratedCode: true,
 })
 
-it('highlight raw', async () => {
-  const result = await codeToHtml(code, {
+it.skipIf(isWindows)('highlight raw', async () => {
+  const result = await shiki.codeToHtml(code, {
     lang: 'vue',
     theme: 'vitesse-dark',
     transformers: [
@@ -51,6 +64,6 @@ it('highlight raw', async () => {
     ],
   })
 
-  expect(styleHeader + result)
+  await expect(styleHeader + result)
     .toMatchFileSnapshot('./results/renderer/example.raw.html')
 })

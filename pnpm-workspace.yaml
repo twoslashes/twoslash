@@ -3,54 +3,53 @@ packages:
   - docs
   - packages/*/playground
 catalog:
-  '@antfu/eslint-config': ^3.7.3
-  '@iconify-json/ri': ^1.2.0
-  '@iconify-json/svg-spinners': ^1.2.0
-  '@shikijs/markdown-it': ^1.20.0
-  '@shikijs/transformers': ^1.20.0
-  '@shikijs/twoslash': ^1.20.0
-  '@shikijs/vitepress-twoslash': ^1.20.0
+  '@antfu/eslint-config': ^4.10.1
+  '@iconify-json/ri': ^1.2.5
+  '@iconify-json/svg-spinners': ^1.2.2
+  '@shikijs/markdown-it': ^3.2.1
+  '@shikijs/transformers': ^3.2.1
+  '@shikijs/twoslash': ^3.2.1
+  '@shikijs/vitepress-twoslash': ^3.2.1
   '@types/eslint': ^9.6.1
-  '@types/node': ^22.7.4
-  '@types/react': ^18.3.10
-  '@types/react-dom': ^18.3.0
+  '@types/node': ^22.13.10
+  '@types/react': ^19.0.10
+  '@types/react-dom': ^19.0.4
   '@typescript/ata': ^0.9.7
-  '@typescript/twoslash': ^3.2.8
-  '@typescript/vfs': ^1.6.0
-  '@unocss/reset': ^0.62.4
-  '@vitest/coverage-v8': 2.0.5
-  '@vue/language-core': ~2.1.6
-  '@jridgewell/sourcemap-codec': ^1.5.0
-  '@volar/language-core': ^2.4.8
-  '@vueuse/core': ^11.1.0
-  bumpp: ^9.6.0
-  eslint: ^9.11.1
-  esno: ^4.7.0
-  fast-glob: ^3.3.2
+  '@typescript/twoslash': ^3.2.9
+  '@typescript/vfs': ^1.6.1
+  '@unocss/reset': ^66.0.0
+  '@vitest/coverage-v8': ^3.0.8
+  '@vue/language-core': 2.2.4
+  '@vueuse/core': ^13.0.0
+  bumpp: ^10.1.0
+  eslint: ^9.22.0
+  esno: ^4.8.0
+  fast-glob: ^3.3.3
   floating-vue: ^5.2.2
-  fuse.js: ^7.0.0
+  fuse.js: ^7.1.0
   idb-keyval: ^6.2.1
-  jiti: ^2.0.0
-  lint-staged: ^15.2.10
+  jiti: ^2.4.2
+  lint-staged: ^15.5.0
   lz-string: ^1.5.0
-  mlly: ^1.7.1
-  ohash: ^1.1.4
-  preact: ^10.24.1
+  mlly: ^1.7.4
+  ohash: ^2.0.11
+  preact: ^10.26.4
   pretty-format: ^29.7.0
-  react: ^18.3.1
-  sass: ^1.79.4
-  shiki: ^1.20.0
+  react: ^19.0.0
+  sass: ^1.85.1
+  shiki: ^3.2.1
   simple-git-hooks: ^2.11.1
-  svelte2tsx: ^0.7.22
-  svelte: ^5.1.6
-  tslib: ^2.7.0
-  typescript: ^5.6.2
-  unbuild: ^2.0.0
-  unocss: ^0.62.4
-  unplugin-vue-components: ^0.27.4
-  unstorage: ^1.12.0
-  vite: ^5.4.8
-  vite-tsconfig-paths: ^5.0.1
-  vitepress: ^1.3.4
-  vitest: 2.0.5
-  vue: ^3.5.10
+  svelte: ^5.25.3
+  tslib: ^2.8.1
+  typescript: ^5.8.2
+  unbuild: ^3.5.0
+  unocss: ^66.0.0
+  unplugin-vue-components: ^28.4.1
+  unstorage: ^1.15.0
+  vite: ^6.2.2
+  vite-tsconfig-paths: ^5.1.4
+  vitepress: ^2.0.0-alpha.4
+  vitest: ^3.0.8
+  vue: ^3.5.13
+onlyBuiltDependencies:
+  - esbuild

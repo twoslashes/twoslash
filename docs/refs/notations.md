@@ -2,7 +2,7 @@
 
 ## Queries in Twoslash
 
-One of the key reasons for making Twoslash is the ability to use the TypeScript compiler to pull out type information about your code mechanically. Twoslash comes with two different ways to query your code: `?^` and `?|`.
+One of the key reasons for making Twoslash is the ability to use the TypeScript compiler to pull out type information about your code mechanically. Twoslash comes with two different ways to query your code: `?^` and `^|`.
 
 ### Extract Type
 
