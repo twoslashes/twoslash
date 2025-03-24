@@ -45,9 +45,9 @@ export default defineConfig({
       light: 'vitesse-light',
       dark: 'vitesse-dark',
     },
+    languages: ['json', 'js'],
     async shikiSetup(shiki) {
       await shiki.loadTheme(...Object.keys(bundledThemes) as any)
-      await shiki.loadLanguage('js', 'json')
     },
     codeTransformers: [
       transformerTwoslash() as any,
