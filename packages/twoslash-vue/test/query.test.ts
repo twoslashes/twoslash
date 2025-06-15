@@ -30,13 +30,13 @@ describe('basic', () => {
 
     expect(result.meta.positionQueries)
       .toMatchInlineSnapshot(`
-          [
-            93,
-            161,
-            863,
-            1034,
-          ]
-        `)
+        [
+          93,
+          161,
+          898,
+          1099,
+        ]
+      `)
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'computed'))
       .toMatchInlineSnapshot(`

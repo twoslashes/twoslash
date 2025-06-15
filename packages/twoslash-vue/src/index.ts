@@ -12,11 +12,10 @@ import type {
 import type { CompilerOptions } from 'typescript'
 import {
   createLanguage,
+  createParsedCommandLineByJson,
   createVueLanguagePlugin,
   defaultMapperFactory,
   FileMap,
-  resolveVueCompilerOptions,
-  setupGlobalTypes,
 } from '@vue/language-core'
 import {
   createTwoslasher as createTwoslasherBase,
@@ -72,9 +71,8 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const resolvedVueOptions = resolveVueCompilerOptions(vueCompilerOptions)
-      resolvedVueOptions.__setupedGlobalTypes = setupGlobalTypes(ts.sys.getCurrentDirectory(), resolvedVueOptions, ts.sys)
-      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, defaultCompilerOptions, resolvedVueOptions, id => id)
+      const vueOptions = createParsedCommandLineByJson(ts, ts.sys, ts.sys.getCurrentDirectory(), {}).vueOptions
+      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, defaultCompilerOptions, vueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
         new FileMap(ts.sys.useCaseSensitiveFileNames) as unknown as Map<string, SourceScript<string>>,

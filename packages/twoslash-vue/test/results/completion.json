@@ -88,7 +88,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) count1: number",
+      "text": "const count1: Ref<number, number>",
       "start": 160,
       "length": 6,
       "target": "count1",
@@ -102,9 +102,141 @@
       "completions": [
         {
           "name": "count1",
-          "kind": "property",
+          "kind": "const",
           "kindModifiers": "",
           "sortText": "11"
+        },
+        {
+          "name": "count2",
+          "kind": "function",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
+          "name": "caches",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "cancelAnimationFrame",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "cancelIdleCallback",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "case",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "catch",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "class",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "clearImmediate",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "clearInterval",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "clearTimeout",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "close",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "closed",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "confirm",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "console",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "const",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "continue",
+          "kind": "keyword",
+          "kindModifiers": "",
+          "sortText": "15"
+        },
+        {
+          "name": "createImageBitmap",
+          "kind": "function",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "crossOriginIsolated",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "crypto",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "customElements",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
+          "name": "captureEvents",
+          "kind": "function",
+          "kindModifiers": "deprecated,declare",
+          "sortText": "z15"
+        },
+        {
+          "name": "clientInformation",
+          "kind": "var",
+          "kindModifiers": "deprecated,declare",
+          "sortText": "z15"
         }
       ],
       "completionsPrefix": "c",
