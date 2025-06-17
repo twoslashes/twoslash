@@ -39,6 +39,7 @@ catalog:
   sass: ^1.85.1
   shiki: ^3.2.1
   simple-git-hooks: ^2.11.1
+  svelte: ^5.25.3
   tslib: ^2.8.1
   typescript: ^5.8.2
   unbuild: ^3.5.0
