@@ -5,7 +5,7 @@
       "type": "error",
       "id": "style/indent",
       "code": 0,
-      "text": "Expected indentation of 0 spaces but found 3. ([style/indent](https://eslint.style/rules/ts/indent))",
+      "text": "Expected indentation of 0 spaces but found 3. ([style/indent](https://eslint.style/rules/indent))",
       "start": 0,
       "length": 3,
       "level": "error",
