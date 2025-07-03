@@ -39,6 +39,7 @@ export default defineConfig({
   title: 'Twoslash',
   description: 'Markup for TypeScript information in docs',
   markdown: {
+    languages: ['vue'],
     theme: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
