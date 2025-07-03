@@ -81,12 +81,12 @@ export interface NodeTag extends NodeBase {
 
 export type TwoslashNode = NodeHighlight | NodeHover | NodeQuery | NodeCompletion | NodeError | NodeTag
 
-export type NodeWithoutPosition = Omit<NodeHighlight, keyof Position> |
-  Omit<NodeHover, keyof Position> |
-  Omit<NodeQuery, keyof Position> |
-  Omit<NodeCompletion, keyof Position> |
-  Omit<NodeError, keyof Position> |
-  Omit<NodeTag, keyof Position>
+export type NodeWithoutPosition = Omit<NodeHighlight, keyof Position>
+  | Omit<NodeHover, keyof Position>
+  | Omit<NodeQuery, keyof Position>
+  | Omit<NodeCompletion, keyof Position>
+  | Omit<NodeError, keyof Position>
+  | Omit<NodeTag, keyof Position>
 
 export type NodeErrorWithoutPosition = Omit<NodeError, keyof Position>
 

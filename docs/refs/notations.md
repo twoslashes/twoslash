@@ -165,6 +165,7 @@ export const helloWorld: string = 'Hi'
 
 // @filename: b.ts
 import { helloWorld } from './a'
+
 console.log(helloWorld)
 ```
 
