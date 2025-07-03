@@ -71,7 +71,10 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const vueOptions = createParsedCommandLineByJson(ts, ts.sys, ts.sys.getCurrentDirectory(), {}).vueOptions
+      const vueOptions = {
+        ...createParsedCommandLineByJson(ts, ts.sys, ts.sys.getCurrentDirectory(), {}).vueOptions,
+        ...vueCompilerOptions,
+      }
       const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, defaultCompilerOptions, vueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
