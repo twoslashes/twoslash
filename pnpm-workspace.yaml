@@ -20,7 +20,7 @@ catalog:
   '@typescript/vfs': ^1.6.1
   '@unocss/reset': ^66.3.2
   '@vitest/coverage-v8': ^3.2.4
-  '@vue/language-core': ^3.0.1
+  '@vue/language-core': ^3.0.3
   '@vueuse/core': ^13.5.0
   bumpp: ^10.2.0
   eslint: ^9.30.1

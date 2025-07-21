@@ -31,10 +31,10 @@ describe('basic', () => {
     expect(result.meta.positionQueries)
       .toMatchInlineSnapshot(`
         [
-          93,
-          161,
-          898,
-          1099,
+          94,
+          162,
+          893,
+          1094,
         ]
       `)
 
