@@ -1,4 +1,4 @@
-import type { Language, SourceScript, VueCompilerOptions } from '@vue/language-core'
+import type { Language, RawVueCompilerOptions, SourceScript } from '@vue/language-core'
 import type {
   CompilerOptionDeclaration,
   CreateTwoslashOptions,
@@ -11,11 +11,12 @@ import type {
 } from 'twoslash'
 import type { CompilerOptions } from 'typescript'
 import {
+  CompilerOptionsResolver,
   createLanguage,
-  createParsedCommandLineByJson,
   createVueLanguagePlugin,
   defaultMapperFactory,
   FileMap,
+  writeGlobalTypes,
 } from '@vue/language-core'
 import {
   createTwoslasher as createTwoslasherBase,
@@ -36,7 +37,7 @@ export interface VueSpecificOptions {
   /**
    * Vue Compiler options
    */
-  vueCompilerOptions?: Partial<VueCompilerOptions>
+  vueCompilerOptions?: Partial<RawVueCompilerOptions>
 }
 
 export interface CreateTwoslashVueOptions extends CreateTwoslashOptions, VueSpecificOptions {
@@ -59,7 +60,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
   const cache = twoslasherBase.getCacheMap() as any as Map<string, Language> | undefined
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 
-  function getVueLanguage(compilerOptions: Partial<CompilerOptions>, vueCompilerOptions: Partial<VueCompilerOptions>) {
+  function getVueLanguage(compilerOptions: Partial<CompilerOptions>, vueCompilerOptions: Partial<RawVueCompilerOptions>) {
     if (!cache)
       return getLanguage()
     const key = `vue:${getObjectHash([compilerOptions, vueCompilerOptions])}`
@@ -71,11 +72,11 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const vueOptions = {
-        ...createParsedCommandLineByJson(ts, ts.sys, ts.sys.getCurrentDirectory(), {}).vueOptions,
-        ...vueCompilerOptions,
-      }
-      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, defaultCompilerOptions, vueOptions, id => id)
+      const resolver = new CompilerOptionsResolver(ts.sys.fileExists)
+      resolver.addConfig(vueCompilerOptions, ts.sys.getCurrentDirectory())
+      const vueOptions = resolver.build()
+      writeGlobalTypes(vueOptions, ts.sys.writeFile)
+      const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, compilerOptions, vueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
         new FileMap(ts.sys.useCaseSensitiveFileNames) as unknown as Map<string, SourceScript<string>>,
@@ -88,7 +89,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     if (extension !== 'vue')
       return twoslasherBase(code, extension, options)
 
-    const vueCompilerOptions: Partial<VueCompilerOptions> = {
+    const vueCompilerOptions: Partial<RawVueCompilerOptions> = {
       ...createOptions.vueCompilerOptions,
       ...options.vueCompilerOptions,
     }
@@ -147,7 +148,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     }
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
-    const sourceScript = lang.scripts.set('index.vue', ts.ScriptSnapshot.fromString(strippedCode))!
+    const sourceScript = lang.scripts.set(`${ts.sys.getCurrentDirectory()}/index.vue`, ts.ScriptSnapshot.fromString(strippedCode))!
     const fileCompiled = get(sourceScript.generated!.embeddedCodes.values(), 2)!
     const compiled = fileCompiled.snapshot.getText(0, fileCompiled.snapshot.getLength())
 
