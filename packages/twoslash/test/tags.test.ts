@@ -62,3 +62,21 @@ const another = ''
     }
   `)
 })
+
+it('play', () => {
+  const file = `
+// test
+// @noErrors
+const a = 1
+// ---cut-after---
+const b = 2
+`
+  const result = twoslasher(file, 'ts')
+  twoslasher(file, 'ts')
+  expect(result.code).toMatchInlineSnapshot(`
+    "
+    // test
+    const a = 1
+    "
+  `)
+})

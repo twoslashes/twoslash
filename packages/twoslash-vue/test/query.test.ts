@@ -39,52 +39,46 @@ describe('basic', () => {
       `)
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'computed'))
-      .toMatchInlineSnapshot(`
-        {
-          "character": 14,
-          "docs": undefined,
-          "length": 8,
-          "line": 1,
-          "start": 39,
-          "tags": undefined,
-          "target": "computed",
-          "text": "(alias) const computed: {
-            <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;
-            <T, S = T>(options: WritableComputedOptions<T, S>, debugOptions?: DebuggerOptions): WritableComputedRef<T, S>;
-        }
-        import computed",
-          "type": "query",
-        }
-      `)
+      .toEqual({
+        character: 14,
+        docs: undefined,
+        length: 8,
+        line: 1,
+        start: 39,
+        tags: undefined,
+        target: 'computed',
+        text: `(alias) const computed: {
+    <T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;
+    <T, S = T>(options: WritableComputedOptions<T, S>, debugOptions?: DebuggerOptions): WritableComputedRef<T, S>;
+}
+import computed`,
+        type: 'query',
+      })
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'count'))
-      .toMatchInlineSnapshot(`
-        {
-          "character": 18,
-          "docs": undefined,
-          "length": 5,
-          "line": 9,
-          "start": 228,
-          "tags": undefined,
-          "target": "count",
-          "text": "(property) count: number",
-          "type": "query",
-        }
-      `)
+      .toEqual({
+        character: 18,
+        docs: undefined,
+        length: 5,
+        line: 9,
+        start: 228,
+        tags: undefined,
+        target: 'count',
+        text: '(property) count: number',
+        type: 'query',
+      })
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'click'))
-      .toMatchInlineSnapshot(`
-        {
-          "character": 11,
-          "docs": undefined,
-          "length": 5,
-          "line": 8,
-          "start": 163,
-          "tags": undefined,
-          "target": "click",
-          "text": "(property) onClick?: ((payload: MouseEvent) => void) | undefined",
-          "type": "query",
-        }
-      `)
+      .toEqual({
+        character: 11,
+        docs: undefined,
+        length: 5,
+        line: 8,
+        start: 163,
+        tags: undefined,
+        target: 'click',
+        text: '(property) onClick?: ((payload: MouseEvent) => void) | undefined',
+        type: 'query',
+      })
   })
 })

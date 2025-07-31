@@ -18,19 +18,17 @@ const a = ref(1)
     expect(result.code).toEqual(file)
 
     expect(result.nodes.find(n => n.type === 'hover' && n.target === 'ref'))
-      .toMatchInlineSnapshot(`
-        {
-          "character": 10,
-          "docs": undefined,
-          "length": 3,
-          "line": 0,
-          "start": 10,
-          "tags": undefined,
-          "target": "ref",
-          "text": "function ref<number>(value: number): Ref<number>",
-          "type": "hover",
-        }
-      `)
+      .toEqual({
+        character: 10,
+        docs: undefined,
+        length: 3,
+        line: 0,
+        start: 10,
+        tags: undefined,
+        target: 'ref',
+        text: 'function ref<number>(value: number): Ref<number>',
+        type: 'hover',
+      })
   })
 
   it('extra file', () => {
@@ -49,19 +47,16 @@ a.value = 'foo'
     expect(result.code).toEqual(file)
 
     expect(result.nodes.findLast(n => n.type === 'hover' && n.target === 'ref'))
-      .toMatchInlineSnapshot(`
-        {
-          "character": 10,
-          "docs": undefined,
-          "length": 3,
-          "line": 1,
-          "start": 38,
-          "tags": undefined,
-          "target": "ref",
-          "text": "(alias) ref<number>(value: number): Ref<number>
-        import ref",
-          "type": "hover",
-        }
-      `)
+      .toEqual({
+        character: 10,
+        docs: undefined,
+        length: 3,
+        line: 1,
+        start: 38,
+        tags: undefined,
+        target: 'ref',
+        text: '(alias) ref<number>(value: number): Ref<number>\nimport ref',
+        type: 'hover',
+      })
   })
 })
