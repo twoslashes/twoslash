@@ -54,37 +54,6 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     return cache.get(key)!
   }
 
-  function resolveReturn(payload: TwoslashReturnCache): TwoslashReturn {
-    const { code, nodes, meta } = payload
-    const indexToPos = createPositionConverter(code).indexToPos
-    const resolvedNodes = resolveNodePositions(nodes, indexToPos)
-
-    return {
-      code,
-      nodes: resolvedNodes,
-      meta,
-
-      get queries() {
-        return this.nodes.filter(i => i.type === 'query') as any
-      },
-      get completions() {
-        return this.nodes.filter(i => i.type === 'completion') as any
-      },
-      get errors() {
-        return this.nodes.filter(i => i.type === 'error') as any
-      },
-      get highlights() {
-        return this.nodes.filter(i => i.type === 'highlight') as any
-      },
-      get hovers() {
-        return this.nodes.filter(i => i.type === 'hover') as any
-      },
-      get tags() {
-        return this.nodes.filter(i => i.type === 'tag') as any
-      },
-    }
-  }
-
   function cachedTwoslasher(
     code: string,
     extension = 'ts',
@@ -98,7 +67,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       result = { code: r.code, nodes: r.nodes, meta: r.meta }
       twoslashCache.set(key, result)
     }
-    return resolveReturn(result)
+    return generateTwoslashReturn(result)
   }
 
   function twoslasher(
@@ -519,7 +488,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     for (const file of Object.keys(extraFiles))
       env.createFile(fsRoot + file, '')
 
-    return resolveReturn({ code: outputCode, nodes: resolvedNodes, meta })
+    return generateTwoslashReturn({ code: outputCode, nodes: resolvedNodes, meta })
   }
 
   const codeCache = createOptions.codeCache ?? true
@@ -605,5 +574,36 @@ function diagnosticCategoryToErrorLevel(e: DiagnosticCategory): ErrorLevel | und
       return 'message'
     default:
       return undefined
+  }
+}
+
+function generateTwoslashReturn(payload: TwoslashReturnCache): TwoslashReturn {
+  const { code, nodes, meta } = payload
+  const indexToPos = createPositionConverter(code).indexToPos
+  const resolvedNodes = resolveNodePositions(nodes, indexToPos)
+
+  return {
+    code,
+    nodes: resolvedNodes,
+    meta,
+
+    get queries() {
+      return this.nodes.filter(i => i.type === 'query') as any
+    },
+    get completions() {
+      return this.nodes.filter(i => i.type === 'completion') as any
+    },
+    get errors() {
+      return this.nodes.filter(i => i.type === 'error') as any
+    },
+    get highlights() {
+      return this.nodes.filter(i => i.type === 'highlight') as any
+    },
+    get hovers() {
+      return this.nodes.filter(i => i.type === 'hover') as any
+    },
+    get tags() {
+      return this.nodes.filter(i => i.type === 'tag') as any
+    },
   }
 }
