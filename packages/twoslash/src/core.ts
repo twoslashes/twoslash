@@ -5,6 +5,7 @@ import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteO
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 
 import { createPositionConverter, isInRange, isInRanges, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
+import { FileCache } from './cache'
 import { defaultCompilerOptions, defaultHandbookOptions } from './defaults'
 import { TwoslashError } from './error'
 import { findCutNotations, findFlagNotations, findQueryMarkers, getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
@@ -14,6 +15,10 @@ import { validateCodeForErrors } from './validation'
 export * from './public'
 
 type TS = typeof import('typescript')
+
+type TwoslashReturnCache = Pick<TwoslashReturn, 'code' | 'nodes' | 'meta'>
+
+const twoslashCache = new FileCache<TwoslashReturnCache>()
 
 /**
  * Create a Twoslash instance with cached TS environments
@@ -47,6 +52,53 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
       return env
     }
     return cache.get(key)!
+  }
+
+  function resolveReturn(payload: TwoslashReturnCache): TwoslashReturn {
+    const { code, nodes, meta } = payload
+    const indexToPos = createPositionConverter(code).indexToPos
+    const resolvedNodes = resolveNodePositions(nodes, indexToPos)
+
+    return {
+      code,
+      nodes: resolvedNodes,
+      meta,
+
+      get queries() {
+        return this.nodes.filter(i => i.type === 'query') as any
+      },
+      get completions() {
+        return this.nodes.filter(i => i.type === 'completion') as any
+      },
+      get errors() {
+        return this.nodes.filter(i => i.type === 'error') as any
+      },
+      get highlights() {
+        return this.nodes.filter(i => i.type === 'highlight') as any
+      },
+      get hovers() {
+        return this.nodes.filter(i => i.type === 'hover') as any
+      },
+      get tags() {
+        return this.nodes.filter(i => i.type === 'tag') as any
+      },
+    }
+  }
+
+  function cachedTwoslasher(
+    code: string,
+    extension = 'ts',
+    options: TwoslashExecuteOptions = {},
+  ): TwoslashReturn {
+    const keyPayload = { code, extension, options }
+    const key = getObjectHash(keyPayload)
+    let result = twoslashCache.get(key)
+    if (!result) {
+      const r = twoslasher(code, extension, options)
+      result = { code: r.code, nodes: r.nodes, meta: r.meta }
+      twoslashCache.set(key, result)
+    }
+    return resolveReturn(result)
   }
 
   function twoslasher(
@@ -467,37 +519,17 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     for (const file of Object.keys(extraFiles))
       env.createFile(fsRoot + file, '')
 
-    return {
-      code: outputCode,
-      nodes: resolvedNodes,
-      meta,
-
-      get queries() {
-        return this.nodes.filter(i => i.type === 'query') as any
-      },
-      get completions() {
-        return this.nodes.filter(i => i.type === 'completion') as any
-      },
-      get errors() {
-        return this.nodes.filter(i => i.type === 'error') as any
-      },
-      get highlights() {
-        return this.nodes.filter(i => i.type === 'highlight') as any
-      },
-      get hovers() {
-        return this.nodes.filter(i => i.type === 'hover') as any
-      },
-      get tags() {
-        return this.nodes.filter(i => i.type === 'tag') as any
-      },
-    }
+    return resolveReturn({ code: outputCode, nodes: resolvedNodes, meta })
   }
 
-  twoslasher.getCacheMap = () => {
+  const codeCache = createOptions.codeCache ?? true
+  const _twoslasher = codeCache ? cachedTwoslasher : twoslasher
+
+  ;(_twoslasher as TwoslashInstance).getCacheMap = () => {
     return cache
   }
 
-  return twoslasher
+  return _twoslasher as TwoslashInstance
 }
 
 function createCacheableFSBackedSystem(

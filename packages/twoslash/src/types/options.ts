@@ -92,4 +92,11 @@ export interface CreateTwoslashOptions extends TwoslashExecuteOptions {
    * @default true
    */
   fsCache?: boolean
+
+  /**
+   * Cache the results of the twoslasher function (Experimental)
+   *
+   * @default true
+   */
+  codeCache?: boolean
 }
