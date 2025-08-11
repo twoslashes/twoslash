@@ -4,53 +4,53 @@ packages:
   - packages/*/playground
 
 catalog:
-  '@antfu/eslint-config': ^4.17.0
+  '@antfu/eslint-config': ^4.19.0
   '@iconify-json/ri': ^1.2.5
-  '@iconify-json/svg-spinners': ^1.2.2
-  '@shikijs/markdown-it': ^3.8.1
-  '@shikijs/transformers': ^3.8.1
-  '@shikijs/twoslash': ^3.8.1
-  '@shikijs/vitepress-twoslash': ^3.8.1
+  '@iconify-json/svg-spinners': ^1.2.3
+  '@shikijs/markdown-it': ^3.9.2
+  '@shikijs/transformers': ^3.9.2
+  '@shikijs/twoslash': ^3.9.2
+  '@shikijs/vitepress-twoslash': ^3.9.2
   '@types/eslint': ^9.6.1
-  '@types/node': ^24.0.15
-  '@types/react': ^19.1.8
-  '@types/react-dom': ^19.1.6
+  '@types/node': ^24.2.1
+  '@types/react': ^19.1.9
+  '@types/react-dom': ^19.1.7
   '@typescript/ata': ^0.9.8
   '@typescript/twoslash': ^3.2.9
   '@typescript/vfs': ^1.6.1
-  '@unocss/reset': ^66.3.3
+  '@unocss/reset': ^66.4.2
   '@vitest/coverage-v8': ^3.2.4
-  '@vue/language-core': ^3.0.3
-  '@vueuse/core': ^13.5.0
-  bumpp: ^10.2.0
-  eslint: ^9.31.0
+  '@vue/language-core': ^3.0.5
+  '@vueuse/core': ^13.6.0
+  bumpp: ^10.2.2
+  eslint: ^9.33.0
   esno: ^4.8.0
   fast-glob: ^3.3.3
   floating-vue: ^5.2.2
   fuse.js: ^7.1.0
   idb-keyval: ^6.2.2
-  jiti: ^2.4.2
-  lint-staged: ^16.1.2
+  jiti: ^2.5.1
+  lint-staged: ^16.1.5
   lz-string: ^1.5.0
   mlly: ^1.7.4
   ohash: ^2.0.11
-  preact: ^10.26.9
+  preact: ^10.27.0
   pretty-format: ^30.0.5
-  react: ^19.1.0
-  sass: ^1.89.2
-  shiki: ^3.8.1
-  simple-git-hooks: ^2.13.0
+  react: ^19.1.1
+  sass: ^1.90.0
+  shiki: ^3.9.2
+  simple-git-hooks: ^2.13.1
   tslib: ^2.8.1
-  typescript: ^5.8.3
-  unbuild: ^3.5.0
-  unocss: ^66.3.3
-  unplugin-vue-components: ^28.8.0
+  typescript: ^5.9.2
+  unbuild: ^3.6.0
+  unocss: ^66.4.2
+  unplugin-vue-components: ^29.0.0
   unstorage: ^1.16.1
-  vite: ^7.0.5
+  vite: ^7.1.1
   vite-tsconfig-paths: ^5.1.4
-  vitepress: ^2.0.0-alpha.8
+  vitepress: ^2.0.0-alpha.9
   vitest: ^3.2.4
-  vue: ^3.5.17
+  vue: ^3.5.18
 
 onlyBuiltDependencies:
   - esbuild
