@@ -203,6 +203,12 @@
           "sortText": "15"
         },
         {
+          "name": "cookieStore",
+          "kind": "var",
+          "kindModifiers": "declare",
+          "sortText": "15"
+        },
+        {
           "name": "createImageBitmap",
           "kind": "function",
           "kindModifiers": "declare",

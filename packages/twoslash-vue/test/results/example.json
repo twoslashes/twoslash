@@ -143,7 +143,7 @@
     },
     {
       "type": "hover",
-      "text": "(property) LegacyOptions<ToResolvedProps<{}, {}>, { msg: string; }, {}, { greet(): void; }, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, ComponentProvideOptions>.data?: ((this: CreateComponentPublicInstanceWithMixins<...>, vm: CreateComponentPublicInstanceWithMixins<ToResolvedProps<{}, {}>, {}, {}, {}, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, ... 18 more ..., {}>) => {\n    ...;\n}) | undefined",
+      "text": "(property) LegacyOptions<ToResolvedProps<{}, {}>, { msg: string; }, {}, { greet(): void; }, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, ComponentProvideOptions>.data?: ((this: CreateComponentPublicInstanceWithMixins<...>, vm: CreateComponentPublicInstanceWithMixins<ToResolvedProps<{}, {}>, {}, {}, {}, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, {}, ToResolvedProps<{}, {}>, {}, false, {}, {}, {}, {}, string, {}, any, ComponentProvideOptions, OptionTypesType<{}, {}, {}, {}, {}, {}>, Readonly<{}> & Readonly<{}>, {}, {}, {}, MethodOptions, {}>) => {\n    ...;\n}) | undefined",
       "start": 196,
       "length": 4,
       "target": "data",

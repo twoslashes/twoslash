@@ -20,7 +20,7 @@
     {
       "type": "hover",
       "text": "(method) Console.log(...data: any[]): void (+1 overload)",
-      "docs": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log_static)",
+      "docs": "The **`console.log()`** static method outputs a message to the console.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log_static)",
       "start": 8,
       "length": 3,
       "target": "log",
