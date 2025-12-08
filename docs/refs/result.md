@@ -30,7 +30,7 @@ Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packag
 
 ## Information Nodes
 
-Twoslash returns all types of information in the `nodes` array. Check the [type definition](https://github.com/antfu/twoslashes/blob/main/packages/twoslash/src/types/nodes.ts) for all the fields.
+Twoslash returns all types of information in the `nodes` array. Check the [type definition](https://github.com/twoslashes/twoslash/blob/main/packages/twoslash-protocol/src/types/nodes.ts) for all the fields.
 
 ### Properties
 

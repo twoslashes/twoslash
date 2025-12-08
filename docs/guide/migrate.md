@@ -8,7 +8,7 @@ Consider `twoslash` as the successor of `@typescript/twoslash` that maintained a
 
 Breaking changes from `@typescript/twoslash`:
 
-1. The returned items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `nodes`. Learn more at the [Information Nodes](#information-nodes) section.
+1. The returned items have different signatures, and different types of the items (`staticQuickInfo`, `queries`, `errors`, `tags`) are now unified into a single array `nodes`. Learn more at the [Information Nodes](/refs/result#information-nodes) section.
 2. Main entry point `import {} from "twoslash"` dependent on `typescript` package, while a new sub-entry `import {} from "twoslash/core"` is dependency-free and requires providing your own TypeScript instance.
 3. `defaultOptions` is renamed to `handbookOptions`.
 4. `defaultCompilerOptions` is renamed to `compilerOptions`.
