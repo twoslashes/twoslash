@@ -16,8 +16,8 @@ catalog:
   '@types/react': ^19.1.9
   '@types/react-dom': ^19.1.7
   '@typescript/ata': ^0.9.8
-  '@typescript/twoslash': ^3.2.9
-  '@typescript/vfs': ^1.6.1
+  '@typescript/twoslash': ^3.2.10
+  '@typescript/vfs': ^1.6.2
   '@unocss/reset': ^66.4.2
   '@vitest/coverage-v8': ^3.2.4
   '@vue/language-core': ^3.0.5
