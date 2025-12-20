@@ -16,7 +16,6 @@ import {
   createVueLanguagePlugin,
   defaultMapperFactory,
   FileMap,
-  writeGlobalTypes,
 } from '@vue/language-core'
 import {
   createTwoslasher as createTwoslasherBase,
@@ -75,7 +74,6 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       const resolver = new CompilerOptionsResolver(ts.sys.fileExists)
       resolver.addConfig(vueCompilerOptions, ts.sys.getCurrentDirectory())
       const vueOptions = resolver.build()
-      writeGlobalTypes(vueOptions, ts.sys.writeFile)
       const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, compilerOptions, vueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
