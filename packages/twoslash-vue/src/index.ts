@@ -11,12 +11,11 @@ import type {
 } from 'twoslash'
 import type { CompilerOptions } from 'typescript'
 import {
-  CompilerOptionsResolver,
   createLanguage,
   createVueLanguagePlugin,
   defaultMapperFactory,
   FileMap,
-  writeGlobalTypes,
+  getDefaultCompilerOptions,
 } from '@vue/language-core'
 import {
   createTwoslasher as createTwoslasherBase,
@@ -72,10 +71,11 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const resolver = new CompilerOptionsResolver(ts.sys.fileExists)
-      resolver.addConfig(vueCompilerOptions, ts.sys.getCurrentDirectory())
-      const vueOptions = resolver.build()
-      writeGlobalTypes(vueOptions, ts.sys.writeFile)
+      const defaultOptions = getDefaultCompilerOptions()
+      const vueOptions = Object.assign({}, defaultOptions, vueCompilerOptions, {
+        target: typeof vueCompilerOptions.target === 'number' ? vueCompilerOptions.target : defaultOptions.target,
+        plugins: defaultOptions.plugins,
+      })
       const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, compilerOptions, vueOptions, id => id)
       return createLanguage(
         [vueLanguagePlugin],
