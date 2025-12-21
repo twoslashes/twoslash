@@ -71,7 +71,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     return cache.get(key)!
 
     function getLanguage() {
-      const resolver = new CompilerOptionsResolver(ts.sys.fileExists)
+      const resolver = new CompilerOptionsResolver(ts, ts.sys.readFile)
       resolver.addConfig(vueCompilerOptions, ts.sys.getCurrentDirectory())
       const vueOptions = resolver.build()
       const vueLanguagePlugin = createVueLanguagePlugin<string>(ts, compilerOptions, vueOptions, id => id)
@@ -140,9 +140,9 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
     let strippedCode = code
     for (const [start, end] of sourceMeta.removals) {
       strippedCode
-       = strippedCode.slice(0, start)
-         + strippedCode.slice(start, end).replace(/\S/g, ' ')
-         + strippedCode.slice(end)
+        = strippedCode.slice(0, start)
+          + strippedCode.slice(start, end).replace(/\S/g, ' ')
+          + strippedCode.slice(end)
     }
 
     const lang = getVueLanguage(compilerOptions, vueCompilerOptions)
