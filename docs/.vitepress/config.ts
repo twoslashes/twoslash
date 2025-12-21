@@ -8,31 +8,31 @@ import { defineConfig } from 'vitepress'
 import { version } from '../../package.json'
 import vite from './vite.config'
 
-const GUIDES: DefaultTheme.NavItemWithLink[] = [
+const GUIDES = [
   { text: 'Getting Started', link: '/guide/' },
   { text: 'Installation', link: '/guide/install' },
   { text: 'Syntax Highlighting', link: '/guide/highlight' },
   { text: 'Migration', link: '/guide/migrate' },
-]
+] satisfies DefaultTheme.SidebarItem[]
 
-const REFERENCES: DefaultTheme.NavItemWithLink[] = [
+const REFERENCES = [
   { text: 'Twoslash Notations', link: '/refs/notations' },
   { text: 'API References', link: '/refs/api' },
   { text: 'Options References', link: '/refs/options' },
   { text: 'Result References', link: '/refs/result' },
-]
+] satisfies DefaultTheme.SidebarItem[]
 
-const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
+const INTEGRATIONS = [
   { text: 'Vue Language Support', link: '/packages/vue' },
   { text: 'ESLint TwoSlash', link: '/packages/eslint' },
   { text: 'CDN Usage', link: '/packages/cdn' },
-]
+] satisfies DefaultTheme.SidebarItem[]
 
-const VERSIONS: DefaultTheme.NavItemWithLink[] = [
+const VERSIONS = [
   { text: `v${version} (current)`, link: '/' },
   { text: `Release Notes`, link: 'https://github.com/twoslashes/twoslash/releases' },
   { text: `Contributing`, link: 'https://github.com/twoslashes/twoslash/blob/main/CONTRIBUTING.md' },
-]
+] satisfies DefaultTheme.SidebarItem[]
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -133,25 +133,22 @@ export default defineConfig({
       },
     ],
 
-    sidebar: Object.assign(
-      {},
-      {
-        '/': [
-          {
-            text: 'Guide',
-            items: GUIDES,
-          },
-          {
-            text: 'Integrations',
-            items: INTEGRATIONS,
-          },
-          {
-            text: 'References',
-            items: REFERENCES,
-          },
-        ],
-      },
-    ),
+    sidebar: {
+      '/': [
+        {
+          text: 'Guide',
+          items: GUIDES,
+        },
+        {
+          text: 'Integrations',
+          items: INTEGRATIONS,
+        },
+        {
+          text: 'References',
+          items: REFERENCES,
+        },
+      ],
+    },
 
     editLink: {
       pattern: 'https://github.com/twoslashes/twoslash/edit/main/docs/:path',

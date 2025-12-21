@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
+    "@antfu/ni": "catalog:",
     "@iconify-json/ri": "catalog:",
     "@iconify-json/svg-spinners": "catalog:",
     "@shikijs/markdown-it": "catalog:",
@@ -58,6 +59,7 @@
   },
   "resolutions": {
     "@types/node": "^25.0.3",
+    "chokidar": "catalog:",
     "twoslash": "workspace:*",
     "twoslash-vue": "workspace:*",
     "typescript": "catalog:",
