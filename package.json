@@ -10,7 +10,7 @@
     "test": "vitest",
     "lint": "eslint .",
     "bench": "vitest bench --run",
-    "release": "bumpp -r && pnpm -r publish",
+    "release": "bumpp -r",
     "docs": "pnpm -C docs run docs:dev",
     "docs:build": "pnpm -C docs run docs:build",
     "prepare": "simple-git-hooks"
