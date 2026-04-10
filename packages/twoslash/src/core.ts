@@ -54,10 +54,13 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     extension = 'ts',
     options: TwoslashExecuteOptions = {},
   ): TwoslashReturn {
+    const tsMajorVersion = Number(ts.versionMajorMinor.split('.')[0])
     const meta: TwoslashReturnMeta = {
       extension: typesToExtension(extension),
       compilerOptions: {
         ...defaultCompilerOptions,
+        // TypeScript removed the baseUrl option in 6.0
+        ...tsMajorVersion <= 5 && { baseUrl: fsRoot },
         ...createOptions.compilerOptions,
         ...options.compilerOptions,
       },
