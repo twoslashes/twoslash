@@ -49,6 +49,7 @@
   ],
   "scripts": {
     "build": "unbuild",
+    "generate-flag-key": "esno scripts/flag-keys.ts",
     "prepublishOnly": "nr build"
   },
   "peerDependencies": {
