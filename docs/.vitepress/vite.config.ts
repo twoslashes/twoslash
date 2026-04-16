@@ -29,7 +29,7 @@ export default defineConfig({
           return
         return code.replace(/(`{3,4})(\w+) twoslash([^\n]*)\n([\s\S]+?)\n\1/g, (_, quotes, lang, options, code) => {
           // Only run on codeblocks which have a twoslash annotation
-          if (!code.match(/\/\/ @|\^[?|^]|---cut/))
+          if (!/\/\/ @|\^[?|^]|---cut/.test(code))
             return _
 
           let preferInput = false
@@ -76,7 +76,7 @@ export default defineConfig({
             const logs: any[][] = []
             const _console = globalThis.console
 
-            const filename = resolve(id, '..', `.eval.${new Date().getTime()}.${lang}`)
+            const filename = resolve(id, '..', `.eval.${Date.now()}.${lang}`)
             await fs.writeFile(filename, code, 'utf-8')
 
             globalThis.console = {

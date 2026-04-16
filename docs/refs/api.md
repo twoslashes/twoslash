@@ -16,7 +16,7 @@ const result1 = twoslasher('import { ref } from "vue"', 'ts')
 const result2 = twoslasher('import { computed } from "vue"', 'ts')
 ```
 
-This would result in a [5-20 times faster](#benchmark) performance in repetitive usage.
+This would result in a 5-20 times faster performance in repetitive usage.
 
 To avoid getting interference across runs, it will reuse the language server with the same `compilerOptions`. Internally it holds a map of hashed `compilerOptions` to the language server instances.
 

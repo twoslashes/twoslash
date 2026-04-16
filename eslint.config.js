@@ -16,3 +16,4 @@ export default antfu({
     '**/.eval*',
   ],
 })
+  .removeRules('markdown/heading-increment')
