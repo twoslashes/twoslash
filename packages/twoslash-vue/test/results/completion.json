@@ -149,12 +149,6 @@
           "sortText": "15"
         },
         {
-          "name": "clearImmediate",
-          "kind": "function",
-          "kindModifiers": "declare",
-          "sortText": "15"
-        },
-        {
           "name": "clearInterval",
           "kind": "function",
           "kindModifiers": "declare",

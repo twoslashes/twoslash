@@ -61,6 +61,8 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
         ...defaultCompilerOptions,
         // TypeScript removed the baseUrl option in 6.0
         ...(tsMajorVersion <= 5 && { baseUrl: fsRoot }),
+        // In TS 6+, paths are resolved relative to pathsBasePath instead of baseUrl
+        ...(tsMajorVersion >= 6 && { pathsBasePath: fsRoot }),
         ...createOptions.compilerOptions,
         ...options.compilerOptions,
       },
