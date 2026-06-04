@@ -245,6 +245,9 @@ importers:
       twoslash-eslint:
         specifier: workspace:*
         version: link:packages/twoslash-eslint
+      twoslash-remote:
+        specifier: workspace:*
+        version: link:packages/twoslash-remote
       twoslash-vue:
         specifier: workspace:*
         version: link:packages/twoslash-vue
@@ -371,6 +374,46 @@ importers:
         version: 9.6.1
 
   packages/twoslash-protocol: {}
+
+  packages/twoslash-remote:
+    dependencies:
+      twoslash-protocol:
+        specifier: workspace:*
+        version: link:../twoslash-protocol
+
+  packages/twoslash-remote/playground:
+    dependencies:
+      '@shikijs/twoslash':
+        specifier: 'catalog:'
+        version: 4.0.2(typescript@6.0.2)
+      shiki:
+        specifier: 'catalog:'
+        version: 4.0.2
+      twoslash-protocol:
+        specifier: workspace:*
+        version: link:../../twoslash-protocol
+      twoslash-remote:
+        specifier: workspace:*
+        version: link:..
+    devDependencies:
+      '@typescript/ata':
+        specifier: 'catalog:'
+        version: 0.9.8(typescript@6.0.2)
+      '@typescript/vfs':
+        specifier: 'catalog:'
+        version: 1.6.4(typescript@6.0.2)
+      twoslash-cdn:
+        specifier: workspace:*
+        version: link:../../twoslash-cdn
+      typescript:
+        specifier: ^6.0.2
+        version: 6.0.2
+      unstorage:
+        specifier: 'catalog:'
+        version: 1.17.5(idb-keyval@6.2.2)
+      vite:
+        specifier: ^8.0.8
+        version: 8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(sass@1.99.0)(tsx@4.19.2)(yaml@2.8.2)
 
   packages/twoslash-vue:
     dependencies:
@@ -8611,7 +8654,7 @@ snapshots:
     dependencies:
       '@jridgewell/remapping': 2.3.5
       acorn: 8.15.0
-      picomatch: 4.0.3
+      picomatch: 4.0.4
       webpack-virtual-modules: 0.6.2
 
   unplugin@3.0.0:
@@ -8676,7 +8719,7 @@ snapshots:
       picomatch: 4.0.4
       postcss: 8.5.9
       rolldown: 1.0.0-rc.15
-      tinyglobby: 0.2.15
+      tinyglobby: 0.2.16
     optionalDependencies:
       '@types/node': 25.6.0
       esbuild: 0.27.2

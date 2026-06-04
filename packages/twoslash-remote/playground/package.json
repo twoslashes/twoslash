@@ -1,0 +1,23 @@
+{
+  "name": "twoslash-remote-playground",
+  "type": "module",
+  "version": "0.3.8",
+  "private": true,
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@shikijs/twoslash": "catalog:",
+    "shiki": "catalog:",
+    "twoslash-protocol": "workspace:*",
+    "twoslash-remote": "workspace:*"
+  },
+  "devDependencies": {
+    "@typescript/ata": "catalog:",
+    "@typescript/vfs": "catalog:",
+    "twoslash-cdn": "workspace:*",
+    "typescript": "catalog:",
+    "unstorage": "catalog:",
+    "vite": "catalog:"
+  }
+}
