@@ -13,8 +13,12 @@
     {
       "type": "hover",
       "text": "function $state<0>(initial: 0): 0 (+1 overload)\nnamespace $state",
-      "docs": "Declares reactive state.\n\nExample:\n```ts\nlet count = $state(0);\n```\n\nhttps://svelte.dev/docs/svelte/$state",
+      "docs": "Declares reactive state.\n\nExample:\n```ts\nlet count = $state(0);\n```",
       "tags": [
+        [
+          "see",
+          "{@link https://svelte.dev/docs/svelte/$state Documentation}"
+        ],
         [
           "param",
           "initial The initial value"
