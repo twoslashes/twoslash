@@ -38,6 +38,12 @@
           "sortText": "11"
         },
         {
+          "name": "$$render",
+          "kind": "function",
+          "kindModifiers": "",
+          "sortText": "11"
+        },
+        {
           "name": "$bindable",
           "kind": "function",
           "kindModifiers": "declare",

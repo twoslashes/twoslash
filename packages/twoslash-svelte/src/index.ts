@@ -73,9 +73,9 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     let strippedCode = code
     for (const [start, end] of sourceMeta.removals) {
       strippedCode
-       = strippedCode.slice(0, start)
-         + strippedCode.slice(start, end).replace(/\S/g, ' ')
-         + strippedCode.slice(end)
+        = strippedCode.slice(0, start)
+          + strippedCode.slice(start, end).replace(/\S/g, ' ')
+          + strippedCode.slice(end)
     }
 
     const compiled = svelte2tsx(strippedCode)
@@ -189,6 +189,11 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
   return twoslasher
 }
 
+/**
+ * @deprecated Use `createTwoslasher` instead.
+ */
+export const createTwoslasherSvelte = createTwoslasher
+
 function get<T>(iterator: IterableIterator<T> | Generator<T>, index: number): T | undefined {
   for (const item of iterator) {
     if (index-- === 0)
@@ -202,8 +207,8 @@ function generateSourceMap(
   generatedCode: string,
   encodedMappings: string,
 ): SourceMap {
-  const sourcePositionConverter = createPositionConverter(generatedCode)
-  const generatedPositionConverter = createPositionConverter(sourceCode)
+  const generatedPositionConverter = createPositionConverter(generatedCode)
+  const sourcePositionConverter = createPositionConverter(sourceCode)
   const decodedMappings = decode(encodedMappings)
   const mappings: CodeMapping[] = []
 
@@ -217,7 +222,7 @@ function generateSourceMap(
   for (let genLine = 0; genLine < decodedMappings.length; genLine++) {
     for (const segment of decodedMappings[genLine]) {
       const genCharacter = segment[0]
-      const genOffset = sourcePositionConverter.posToIndex(genLine, genCharacter)
+      const genOffset = generatedPositionConverter.posToIndex(genLine, genCharacter)
       if (current) {
         let length = genOffset - current.genOffset
         const sourceText = sourceCode.substring(current.sourceOffset, current.sourceOffset + length)
@@ -261,7 +266,7 @@ function generateSourceMap(
         current = undefined
       }
       if (segment[2] !== undefined && segment[3] !== undefined) {
-        const sourceOffset = generatedPositionConverter.posToIndex(segment[2], segment[3])
+        const sourceOffset = sourcePositionConverter.posToIndex(segment[2], segment[3])
         current = {
           genOffset,
           sourceOffset,

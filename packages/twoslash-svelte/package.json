@@ -1,7 +1,7 @@
 {
   "name": "twoslash-svelte",
   "type": "module",
-  "version": "0.2.12",
+  "version": "0.3.8",
   "description": "Extended Twoslash for Svelte support",
   "author": "Hugo Korte <hugokorteapple@gmail.com>",
   "license": "MIT",
