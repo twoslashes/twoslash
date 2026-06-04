@@ -12,6 +12,7 @@
     "@vueuse/core": "catalog:",
     "floating-vue": "catalog:",
     "fuse.js": "catalog:",
+    "oxc-minify": "catalog:",
     "sass": "catalog:",
     "unocss": "catalog:",
     "vitepress": "catalog:",

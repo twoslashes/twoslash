@@ -41,6 +41,7 @@ catalog:
   lz-string: ^1.5.0
   mlly: ^1.8.2
   ohash: ^2.0.11
+  oxc-minify: ^0.134.0
   preact: ^10.29.1
   pretty-format: ^30.3.0
   react: ^19.2.5
