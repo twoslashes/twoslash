@@ -48,6 +48,7 @@
     "twoslash": "workspace:*",
     "twoslash-cdn": "workspace:*",
     "twoslash-eslint": "workspace:*",
+    "twoslash-remote": "workspace:*",
     "twoslash-vue": "workspace:*",
     "typescript": "catalog:",
     "unbuild": "catalog:",

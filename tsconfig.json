@@ -21,6 +21,12 @@
       ],
       "twoslash-eslint": [
         "./packages/twoslash-eslint/src/index.ts"
+      ],
+      "twoslash-remote": [
+        "./packages/twoslash-remote/src/index.ts"
+      ],
+      "twoslash-remote/server": [
+        "./packages/twoslash-remote/src/server.ts"
       ]
     },
     "resolveJsonModule": true,
