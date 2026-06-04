@@ -54,11 +54,15 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
     extension = 'ts',
     options: TwoslashExecuteOptions = {},
   ): TwoslashReturn {
+    const tsMajorVersion = Number(ts.versionMajorMinor.split('.')[0])
     const meta: TwoslashReturnMeta = {
       extension: typesToExtension(extension),
       compilerOptions: {
         ...defaultCompilerOptions,
-        baseUrl: fsRoot,
+        // TypeScript removed the baseUrl option in 6.0
+        ...(tsMajorVersion <= 5 && { baseUrl: fsRoot }),
+        // In TS 6+, paths are resolved relative to pathsBasePath instead of baseUrl
+        ...(tsMajorVersion >= 6 && { pathsBasePath: fsRoot }),
         ...createOptions.compilerOptions,
         ...options.compilerOptions,
       },
@@ -173,7 +177,7 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
 
     Object.entries(extraFiles)
       .forEach(([filename, content]) => {
-        if (!meta.virtualFiles.find(i => i.filename === filename)) {
+        if (!meta.virtualFiles.some(i => i.filename === filename)) {
           env.createFile(
             fsRoot + filename,
             typeof content === 'string'

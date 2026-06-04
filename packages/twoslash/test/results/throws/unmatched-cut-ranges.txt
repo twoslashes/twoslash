@@ -1,6 +1,6 @@
 
 ## Mismatched cut markers
 
-You have a cut-start at 57 which is after the cut-end at 12
+You have a cut-start at line 4 which is after the cut-end at line 2
 
 Make sure you have a matching pair for each.

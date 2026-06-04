@@ -1,8 +1,8 @@
 {
-  "name": "twoslash-eslint",
+  "name": "twoslash-remote",
   "type": "module",
   "version": "0.3.8",
-  "description": "ESLint-backed twoslash runner",
+  "description": "Run Twoslash by delegating resolution to a remote HTTP API",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/antfu",
@@ -10,13 +10,14 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/twoslashes/twoslash.git",
-    "directory": "packages/twoslash-eslint"
+    "directory": "packages/twoslash-remote"
   },
   "bugs": "https://github.com/twoslashes/twoslash/issues",
   "keywords": [
     "twoslash",
-    "vue",
-    "shiki"
+    "remote",
+    "http",
+    "fetch"
   ],
   "sideEffects": false,
   "exports": {
@@ -24,6 +25,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.mjs",
+      "require": "./dist/server.cjs"
     }
   },
   "main": "./dist/index.mjs",
@@ -31,6 +37,9 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
+      "server": [
+        "./dist/server.d.ts"
+      ],
       "*": [
         "./dist/*",
         "./dist/index.d.ts"
@@ -43,16 +52,9 @@
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
-    "prepublishOnly": "nr build",
-    "start": "esno src/index.ts"
-  },
-  "peerDependencies": {
-    "eslint": ">=8.50.0"
+    "prepublishOnly": "nr build"
   },
   "dependencies": {
     "twoslash-protocol": "workspace:*"
-  },
-  "devDependencies": {
-    "@types/eslint": "catalog:"
   }
 }

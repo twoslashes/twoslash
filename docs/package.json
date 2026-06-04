@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "version": "0.3.1",
+  "version": "0.3.8",
   "private": true,
   "scripts": {
     "docs:dev": "vitepress dev",
@@ -12,6 +12,7 @@
     "@vueuse/core": "catalog:",
     "floating-vue": "catalog:",
     "fuse.js": "catalog:",
+    "oxc-minify": "catalog:",
     "sass": "catalog:",
     "svelte": "catalog:",
     "unocss": "catalog:",

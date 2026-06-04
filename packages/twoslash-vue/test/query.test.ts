@@ -14,7 +14,7 @@ describe('basic', () => {
     expect(result.nodes.find(n => n.type === 'hover' && n.target === 'button'))
       .toHaveProperty('text', '(property) button: ButtonHTMLAttributes & ReservedProps')
     expect(result.nodes.find(n => n.type === 'hover' && n.target === 'click'))
-      .toHaveProperty('text', `(property) onClick?: ((payload: MouseEvent) => void) | undefined`)
+      .toHaveProperty('text', `(property) onClick?: ((payload: PointerEvent) => void) | undefined`)
   })
 
   it('has correct query', () => {
@@ -30,13 +30,13 @@ describe('basic', () => {
 
     expect(result.meta.positionQueries)
       .toMatchInlineSnapshot(`
-          [
-            93,
-            161,
-            863,
-            1034,
-          ]
-        `)
+        [
+          278,
+          346,
+          1200,
+          1382,
+        ]
+      `)
 
     expect(result.nodes.find(n => n.type === 'query' && n.target === 'computed'))
       .toMatchInlineSnapshot(`
@@ -82,7 +82,7 @@ describe('basic', () => {
           "start": 163,
           "tags": undefined,
           "target": "click",
-          "text": "(property) onClick?: ((payload: MouseEvent) => void) | undefined",
+          "text": "(property) onClick?: ((payload: PointerEvent) => void) | undefined",
           "type": "query",
         }
       `)

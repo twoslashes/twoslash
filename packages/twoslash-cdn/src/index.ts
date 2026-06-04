@@ -59,7 +59,7 @@ export interface TwoslashCdnReturn {
 
   /**
    * Runs Auto-Type-Acquisition (ATA) on the given code, the async operation before running twoslash
-   * @param code
+   * @param source
    */
   prepareTypes: (source: string) => Promise<void>
 

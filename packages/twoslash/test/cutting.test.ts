@@ -140,3 +140,10 @@ describe('supports space before cut comments', () => {
     expect(hover1?.line).toEqual(hover2?.line)
   })
 })
+
+describe('supports cut comments at end of file', () => {
+  const file1 = `const x = "123"\n// ---cut-start---\n  /** @type {"345"} */\n// ---cut-end---`
+  it('works without error', () => {
+    twoslasher(file1, 'ts')
+  })
+})

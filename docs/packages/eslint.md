@@ -87,9 +87,11 @@ const shikiPlugin = await Shiki({
           // ESLint flat config items here
         ]
       }),
-      // Use hover to render errors instead of inserting a error line
-      // Up to your preference
-      errorRendering: 'hover',
+      rendererRich: {
+        // Use hover to render errors instead of inserting a error line
+        // Up to your preference
+        errorRendering: 'hover',
+      }
     }),
   ]
 })

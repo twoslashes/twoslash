@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>twoslash-remote · Shiki + dev server + twoslash-cdn worker</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      }
+      body {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 2em;
+        background: #0f0f0f;
+        color: #ddd;
+        line-height: 1.5;
+      }
+      h1 {
+        margin: 0 0 0.25em;
+      }
+      .intro,
+      .meta {
+        opacity: 0.75;
+        font-size: 0.92em;
+      }
+      .pipeline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+        margin: 1em 0 2em;
+        font-size: 0.85em;
+        opacity: 0.9;
+      }
+      .pipeline span {
+        background: #1a1a1a;
+        border: 1px solid #2a2a2a;
+        padding: 0.35em 0.6em;
+        border-radius: 4px;
+      }
+      .pipeline .arrow {
+        background: transparent;
+        border: 0;
+        opacity: 0.6;
+      }
+      section {
+        margin: 1.5em 0;
+      }
+      section h3 {
+        margin: 0 0 0.5em;
+        font-size: 1em;
+        opacity: 0.85;
+      }
+      pre.shiki {
+        border-radius: 6px;
+        padding: 1em;
+        overflow-x: auto;
+      }
+      pre.twoslash {
+        --twoslash-popup-bg: #222;
+      }
+      code {
+        background: #1f1f1f;
+        padding: 0.1em 0.3em;
+        border-radius: 3px;
+        font-size: 0.92em;
+      }
+      .error {
+        margin: 1em 0;
+        padding: 1em;
+        background: #2a1010;
+        border: 1px solid #5a1010;
+        border-radius: 6px;
+        color: #f88;
+        white-space: pre-wrap;
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 0.85em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>twoslash-remote demo</h1>
+    <p class="intro">
+      Shiki renders in the browser. Twoslash analysis runs on the Vite dev
+      server's <code>/twoslash</code> endpoint, which delegates to a Node
+      worker thread running <code>twoslash-cdn</code> with a persistent
+      filesystem-backed CDN cache.
+    </p>
+    <div class="pipeline" aria-hidden="true">
+      <span>Browser · Shiki + twoslash-remote</span>
+      <span class="arrow">→</span>
+      <span><code>POST /twoslash</code></span>
+      <span class="arrow">→</span>
+      <span>Vite plugin middleware</span>
+      <span class="arrow">→</span>
+      <span>Node worker_threads</span>
+      <span class="arrow">→</span>
+      <span>twoslash-cdn + ATA</span>
+    </div>
+    <div id="app">Loading…</div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
