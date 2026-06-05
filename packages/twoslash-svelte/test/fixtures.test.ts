@@ -34,7 +34,7 @@ Object.entries(fixtures).forEach(([path, fixture]) => {
       let result: TwoslashReturn = undefined!
       try {
         result = twoslasher(
-          await fixture(),
+          await fixture() as string,
           inExt,
           {
             customTags: ['annotate'],

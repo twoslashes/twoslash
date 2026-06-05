@@ -41,12 +41,11 @@ export default defineConfig({
   title: 'Twoslash',
   description: 'Markup for TypeScript information in docs',
   markdown: {
-    languages: ['vue'],
+    languages: ['vue', 'svelte', 'json', 'js'],
     theme: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
     },
-    languages: ['json', 'js'],
     async shikiSetup(shiki) {
       await shiki.loadTheme(...Object.keys(bundledThemes) as any)
     },

@@ -167,6 +167,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       result.nodes = resolveNodePositions(removed.nodes, result.code)
     }
     else {
+      result.code = code
       result.meta.removals = mappedRemovals
     }
     result.nodes = result.nodes.filter((node, index) => {
