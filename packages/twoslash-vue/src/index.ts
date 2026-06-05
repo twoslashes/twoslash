@@ -233,6 +233,7 @@ export function createTwoslasher(createOptions: CreateTwoslashVueOptions = {}): 
       result.nodes = resolveNodePositions(removed.nodes, result.code)
     }
     else {
+      result.code = code
       result.meta.removals = mappedRemovals
     }
 

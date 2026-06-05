@@ -14,6 +14,7 @@
     "fuse.js": "catalog:",
     "oxc-minify": "catalog:",
     "sass": "catalog:",
+    "svelte": "catalog:",
     "unocss": "catalog:",
     "vitepress": "catalog:",
     "vue": "catalog:"

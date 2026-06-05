@@ -4,6 +4,7 @@ import antfu from '@antfu/eslint-config'
 import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 import { bundledThemes } from 'shiki'
 import { createTwoslasher as createTwoslasherESLint } from 'twoslash-eslint'
+import { createTwoslasher as createTwoslasherSvelte } from 'twoslash-svelte'
 import { defineConfig } from 'vitepress'
 import { version } from '../../package.json'
 import vite from './vite.config'
@@ -24,6 +25,7 @@ const REFERENCES = [
 
 const INTEGRATIONS = [
   { text: 'Vue Language Support', link: '/packages/vue' },
+  { text: 'Svelte Language Support', link: '/packages/svelte' },
   { text: 'ESLint TwoSlash', link: '/packages/eslint' },
   { text: 'CDN Usage', link: '/packages/cdn' },
 ] satisfies DefaultTheme.SidebarItem[]
@@ -39,7 +41,7 @@ export default defineConfig({
   title: 'Twoslash',
   description: 'Markup for TypeScript information in docs',
   markdown: {
-    languages: ['vue'],
+    languages: ['vue', 'svelte', 'json', 'js'],
     theme: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
@@ -63,6 +65,10 @@ export default defineConfig({
           ],
         }) as any,
         explicitTrigger: /\beslint-check\b/,
+      }),
+      transformerTwoslash({
+        langs: ['svelte'],
+        twoslasher: createTwoslasherSvelte(),
       }),
       {
         // Render custom themes with codeblocks
