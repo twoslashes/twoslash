@@ -1,7 +1,6 @@
 import type { CodeMapping } from '@volar/language-core'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
 import { createRequire } from 'node:module'
-import { join } from 'node:path'
 import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
 import { svelte2tsx } from 'svelte2tsx'
@@ -16,6 +15,12 @@ export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
    * @default false
    */
   debugShowGeneratedCode?: boolean
+  /**
+   * Use the version 4 definitions for Svelte.
+   *
+   * @default false
+   */
+  useVersion4TypeDefinitions?: boolean
 }
 
 /**
@@ -88,18 +93,21 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       }
       return offsets[offsets.length - 1]?.[0]
     }
-    const svelte2tsxPath = require.resolve('svelte2tsx')
-    const result = _twoslasher(compiled.code, 'tsx', {
+    const svelte2tsxPackageJsonPath = require.resolve('svelte2tsx/package.json')
+
+    const references = createOptions.useVersion4TypeDefinitions
+      ? [
+          `/// <reference path="${new URL('svelte-shims-v4.d.ts', svelte2tsxPackageJsonPath).pathname}" />`,
+          `/// <reference path="${new URL('svelte-jsx-v4.d.ts', svelte2tsxPackageJsonPath).pathname}" />`,
+        ]
+      : [
+          `/// <reference path="${new URL('svelte-shims.d.ts', svelte2tsxPackageJsonPath).pathname}" />`,
+          `/// <reference path="${new URL('svelte-jsx.d.ts', svelte2tsxPackageJsonPath).pathname}" />`,
+        ].join('\n')
+
+    const result = _twoslasher(`${references}\n${compiled.code}`, 'tsx', {
       ...options,
-      compilerOptions: {
-        types: [
-          join(svelte2tsxPath, '..', 'svelte-jsx'),
-          join(svelte2tsxPath, '..', 'svelte-jsx-v4'),
-          join(svelte2tsxPath, '..', 'svelte-shims'),
-          join(svelte2tsxPath, '..', 'svelte-shims-v4'),
-        ],
-        ...compilerOptions,
-      },
+      compilerOptions,
       handbookOptions: {
         ...handbookOptions,
         keepNotations: true,

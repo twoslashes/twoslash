@@ -59,6 +59,7 @@ catalog:
   shiki: ^4.0.2
   simple-git-hooks: ^2.13.1
   svelte: ^5.25.3
+  svelte2tsx: ^0.7.56
   tslib: ^2.8.1
   typescript: ^6.0.2
   unbuild: ^3.6.1
