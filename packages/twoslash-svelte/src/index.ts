@@ -148,66 +148,6 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       })
       .filter(value => value != null)
 
-    function findMarkupRemovals(code: string): Range[] {
-      const ranges: Range[] = []
-      const cutRe = /<!--\s*---cut---\s*-->/g
-      const cutBeforeRe = /<!--\s*---cut-before---\s*-->/g
-      const cutAfterRe = /<!--\s*---cut-after---\s*-->/g
-      const cutStartRe = /<!--\s*---cut-start---\s*-->/g
-      const cutEndRe = /<!--\s*---cut-end---\s*-->/g
-
-      const cuts = [...code.matchAll(cutRe)]
-      const cutBefores = [...code.matchAll(cutBeforeRe)]
-      const cutAfters = [...code.matchAll(cutAfterRe)]
-      const cutStarts = [...code.matchAll(cutStartRe)]
-      const cutEnds = [...code.matchAll(cutEndRe)]
-
-      for (const match of cuts) {
-        const lineStart = code.lastIndexOf('\n', match.index! - 1) + 1
-        ranges.push([0, lineStart + match[0].length + 1])
-      }
-
-      for (let i = 0; i < cutBefores.length; i++) {
-        const match = cutBefores[i]
-        const afterMatch = cutAfters[i]
-        if (afterMatch) {
-          const lineStart = code.lastIndexOf('\n', afterMatch.index! - 1) + 1
-          ranges.push([match.index!, lineStart + afterMatch[0].length + 1])
-        }
-        else {
-          ranges.push([match.index!, code.length])
-        }
-      }
-
-      for (let i = cutBefores.length; i < cutAfters.length; i++) {
-        const match = cutAfters[i]
-        const lineStart = code.lastIndexOf('\n', match.index! - 1) + 1
-        ranges.push([0, lineStart + match[0].length + 1])
-      }
-
-      for (let i = 0; i < cutStarts.length; i++) {
-        const startMatch = cutStarts[i]
-        const endMatch = cutEnds[i]
-        if (endMatch) {
-          const endLineStart = code.lastIndexOf('\n', endMatch.index! - 1) + 1
-          ranges.push([startMatch.index!, endLineStart + endMatch[0].length + 1])
-        }
-        else {
-          throw new Error(
-            `Mismatched HTML cut markers: cut-start at position ${startMatch.index!} has no matching cut-end`,
-          )
-        }
-      }
-
-      if (cutEnds.length > cutStarts.length) {
-        throw new Error(
-          `Mismatched HTML cut markers: more cut-end markers than cut-start markers`,
-        )
-      }
-
-      return ranges
-    }
-
     const mappedRemovals = [
       ...sourceMeta.removals,
       ...findMarkupRemovals(code),
@@ -337,4 +277,64 @@ function generateSourceMap(
     }
   }
   return new SourceMap(mappings)
+}
+
+function findMarkupRemovals(code: string): Range[] {
+  const ranges: Range[] = []
+  const cutRe = /<!--\s*---cut---\s*-->/g
+  const cutBeforeRe = /<!--\s*---cut-before---\s*-->/g
+  const cutAfterRe = /<!--\s*---cut-after---\s*-->/g
+  const cutStartRe = /<!--\s*---cut-start---\s*-->/g
+  const cutEndRe = /<!--\s*---cut-end---\s*-->/g
+
+  const cuts = [...code.matchAll(cutRe)]
+  const cutBefores = [...code.matchAll(cutBeforeRe)]
+  const cutAfters = [...code.matchAll(cutAfterRe)]
+  const cutStarts = [...code.matchAll(cutStartRe)]
+  const cutEnds = [...code.matchAll(cutEndRe)]
+
+  for (const match of cuts) {
+    const lineStart = code.lastIndexOf('\n', match.index! - 1) + 1
+    ranges.push([0, lineStart + match[0].length + 1])
+  }
+
+  for (let i = 0; i < cutBefores.length; i++) {
+    const match = cutBefores[i]
+    const afterMatch = cutAfters[i]
+    if (afterMatch) {
+      const lineStart = code.lastIndexOf('\n', afterMatch.index! - 1) + 1
+      ranges.push([match.index!, lineStart + afterMatch[0].length + 1])
+    }
+    else {
+      ranges.push([match.index!, code.length])
+    }
+  }
+
+  for (let i = cutBefores.length; i < cutAfters.length; i++) {
+    const match = cutAfters[i]
+    const lineStart = code.lastIndexOf('\n', match.index! - 1) + 1
+    ranges.push([0, lineStart + match[0].length + 1])
+  }
+
+  for (let i = 0; i < cutStarts.length; i++) {
+    const startMatch = cutStarts[i]
+    const endMatch = cutEnds[i]
+    if (endMatch) {
+      const endLineStart = code.lastIndexOf('\n', endMatch.index! - 1) + 1
+      ranges.push([startMatch.index!, endLineStart + endMatch[0].length + 1])
+    }
+    else {
+      throw new Error(
+        `Mismatched HTML cut markers: cut-start at position ${startMatch.index!} has no matching cut-end`,
+      )
+    }
+  }
+
+  if (cutEnds.length > cutStarts.length) {
+    throw new Error(
+      `Mismatched HTML cut markers: more cut-end markers than cut-start markers`,
+    )
+  }
+
+  return ranges
 }
