@@ -1,5 +1,5 @@
 {
-  "code": "<script>\n    let count = $state(0);\n    // ---cut-after---\n    function increment() {\n        count++;\n    }\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
+  "code": "<script>\n    let count = $state(0);\n    function increment() {\n        count++;\n    }\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
   "nodes": [
     {
       "type": "hover",
