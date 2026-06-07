@@ -1,10 +1,14 @@
 import type { CodeMapping } from '@volar/language-core'
+import type { Node } from 'estree-walker'
+import type { AST } from 'svelte/compiler'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
 import { createRequire } from 'node:module'
 import { join } from 'node:path'
 import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
+import { walk } from 'estree-walker'
 import { svelte2tsx } from 'svelte2tsx'
+import { parse } from 'svelte/compiler'
 import { createTwoslasher as _createTwoSlasher, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
 import ts from 'typescript'
@@ -148,6 +152,8 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       })
       .filter(value => value != null)
 
+    const ast = parse(strippedCode, { modern: true })
+
     const mappedRemovals = [
       ...sourceMeta.removals,
       ...findMarkupRemovals(code),
@@ -157,7 +163,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
         if (start == null || end == null || start < 0 || end < 0 || start >= end) {
           return undefined
         }
-        return [start, end] as Range
+        return clampRemovalToScriptBoundaries(start, end, ast) as Range | undefined
       }).filter(value => value != null),
     ]
 
@@ -280,61 +286,83 @@ function generateSourceMap(
 }
 
 function findMarkupRemovals(code: string): Range[] {
+  const ast = parse(code, { modern: true })
+
+  const comments: Array<{ start: number, end: number, data: string }> = []
+  walk(ast as unknown as Node, {
+    enter(node: AST.SvelteNode) {
+      if (node.type === 'Comment') {
+        comments.push({ start: node.start, end: node.end, data: node.data.trim() })
+      }
+    },
+  })
+
   const ranges: Range[] = []
-  const cutRe = /<!--\s*---cut---\s*-->/g
-  const cutBeforeRe = /<!--\s*---cut-before---\s*-->/g
-  const cutAfterRe = /<!--\s*---cut-after---\s*-->/g
-  const cutStartRe = /<!--\s*---cut-start---\s*-->/g
-  const cutEndRe = /<!--\s*---cut-end---\s*-->/g
 
-  const cuts = [...code.matchAll(cutRe)]
-  const cutBefores = [...code.matchAll(cutBeforeRe)]
-  const cutAfters = [...code.matchAll(cutAfterRe)]
-  const cutStarts = [...code.matchAll(cutStartRe)]
-  const cutEnds = [...code.matchAll(cutEndRe)]
+  const cuts = comments.filter(c => c.data === '---cut---' || c.data === '---cut-before---')
+  const cutAfters = comments.filter(c => c.data === '---cut-after---')
+  const cutStarts = comments.filter(c => c.data === '---cut-start---')
+  const cutEnds = comments.filter(c => c.data === '---cut-end---')
 
-  for (const match of cuts) {
-    const lineStart = code.lastIndexOf('\n', match.index! - 1) + 1
-    ranges.push([0, lineStart + match[0].length + 1])
+  for (const comment of cuts) {
+    const end = code[comment.end] === '\n' ? comment.end + 1 : comment.end
+    ranges.push([0, end])
   }
 
-  for (let i = 0; i < cutBefores.length; i++) {
-    const match = cutBefores[i]
-    const afterMatch = cutAfters[i]
-    if (afterMatch) {
-      const lineStart = code.lastIndexOf('\n', afterMatch.index! - 1) + 1
-      ranges.push([match.index!, lineStart + afterMatch[0].length + 1])
-    }
-    else {
-      ranges.push([match.index!, code.length])
-    }
-  }
-
-  for (let i = cutBefores.length; i < cutAfters.length; i++) {
-    const match = cutAfters[i]
-    const lineStart = code.lastIndexOf('\n', match.index! - 1) + 1
-    ranges.push([0, lineStart + match[0].length + 1])
+  for (const comment of cutAfters) {
+    ranges.push([comment.start, code.length])
   }
 
   for (let i = 0; i < cutStarts.length; i++) {
-    const startMatch = cutStarts[i]
-    const endMatch = cutEnds[i]
-    if (endMatch) {
-      const endLineStart = code.lastIndexOf('\n', endMatch.index! - 1) + 1
-      ranges.push([startMatch.index!, endLineStart + endMatch[0].length + 1])
-    }
-    else {
-      throw new Error(
-        `Mismatched HTML cut markers: cut-start at position ${startMatch.index!} has no matching cut-end`,
-      )
-    }
+    const start = cutStarts[i]
+    const end = cutEnds[i]
+    const rangeEnd = code[end.end] === '\n' ? end.end + 1 : end.end
+    ranges.push([start.start, rangeEnd])
   }
 
-  if (cutEnds.length > cutStarts.length) {
+  if (cutStarts.length !== cutEnds.length) {
+    if (cutStarts.length > cutEnds.length) {
+      throw new Error(
+        `Mismatched HTML cut markers: cut-start at position ${cutStarts[cutEnds.length].start} has no matching cut-end`,
+      )
+    }
     throw new Error(
       `Mismatched HTML cut markers: more cut-end markers than cut-start markers`,
     )
   }
 
   return ranges
+}
+
+function clampRemovalToScriptBoundaries(
+  start: number,
+  end: number,
+  ast: ReturnType<typeof parse>,
+): [number, number] | undefined {
+  const scriptBlocks = [
+    ast.instance,
+    ast.module,
+  ].filter(block => block != null)
+
+  for (const block of scriptBlocks) {
+    const tagStart = block.start // start of `<script`
+    const contentStart = block.content.start // just inside `<script>`
+    const contentEnd = block.content.end // just before `</script>`
+    const tagEnd = block.end // end of `</script>`
+
+    // removal starts before script block content, clamp it forward
+    if (start < contentStart && end > tagStart) {
+      start = contentStart
+    }
+    // removal ends after script block content, clamp it back
+    if (end > contentEnd && start < tagEnd) {
+      end = contentEnd
+    }
+    // after clamping, the range may have become invalid
+    if (start >= end) {
+      return undefined
+    }
+  }
+
+  return [start, end]
 }
