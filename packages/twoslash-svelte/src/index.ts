@@ -158,8 +158,14 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       ...sourceMeta.removals,
       ...findMarkupRemovals(code),
       ...result.meta.removals.map((r) => {
-        const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
-        const end = get(map.toSourceLocation(r[1]), 0)?.[0]
+        const scriptContentStart = hasRange(ast.instance?.content) ? ast.instance.content.start : 0
+        const scriptContentEnd = hasRange(ast.instance?.content) ? ast.instance.content.end : 0
+        const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? scriptContentStart
+        const end = get(map.toSourceLocation(r[1]), 0)?.[0] ?? (
+          start != null && scriptContentEnd != null && r[1] > scriptContentEnd
+            ? scriptContentEnd
+            : undefined
+        )
         if (start == null || end == null || start < 0 || end < 0 || start >= end) {
           return undefined
         }
@@ -365,4 +371,13 @@ function clampRemovalToScriptBoundaries(
   }
 
   return [start, end]
+}
+
+function hasRange(range: unknown): range is { start: number, end: number } {
+  return typeof range === 'object'
+    && range != null
+    && 'start' in range
+    && 'end' in range
+    && typeof range.start === 'number'
+    && typeof range.end === 'number'
 }

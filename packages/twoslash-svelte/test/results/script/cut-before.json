@@ -1,40 +1,40 @@
 {
-  "code": "<script>\n    function increment() {\n        count++;\n    }\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
+  "code": "<script>    function increment() {\n        count++;\n    }\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
   "nodes": [
     {
       "type": "hover",
       "text": "(local function) increment(): void",
-      "start": 22,
+      "start": 21,
       "length": 9,
       "target": "increment",
-      "line": 1,
-      "character": 13
+      "line": 0,
+      "character": 21
     },
     {
       "type": "hover",
       "text": "let count: number",
-      "start": 44,
+      "start": 43,
       "length": 5,
       "target": "count",
-      "line": 2,
+      "line": 1,
       "character": 8
     },
     {
       "type": "hover",
       "text": "(local function) increment(): void",
-      "start": 86,
+      "start": 85,
       "length": 9,
       "target": "increment",
-      "line": 5,
+      "line": 4,
       "character": 17
     },
     {
       "type": "hover",
       "text": "let count: number",
-      "start": 113,
+      "start": 112,
       "length": 5,
       "target": "count",
-      "line": 6,
+      "line": 5,
       "character": 15
     }
   ],
