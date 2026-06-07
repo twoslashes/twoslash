@@ -1,0 +1,91 @@
+{
+  "code": "<script>\n    let count = $state(0);\n    function increment() {\n        count++;\n    }\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 17,
+      "length": 5,
+      "target": "count",
+      "line": 1,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "function $state<0>(initial: 0): 0 (+1 overload)\nnamespace $state",
+      "docs": "Declares reactive state.\n\nExample:\n```ts\nlet count = $state(0);\n```",
+      "tags": [
+        [
+          "see",
+          "{@link https://svelte.dev/docs/svelte/$state Documentation}"
+        ],
+        [
+          "param",
+          "initial The initial value"
+        ]
+      ],
+      "start": 25,
+      "length": 6,
+      "target": "$state",
+      "line": 1,
+      "character": 16
+    },
+    {
+      "type": "query",
+      "text": "function $state<0>(initial: 0): 0 (+1 overload)\nnamespace $state",
+      "docs": "Declares reactive state.\n\nExample:\n```ts\nlet count = $state(0);\n```",
+      "tags": [
+        [
+          "see",
+          "{@link https://svelte.dev/docs/svelte/$state Documentation}"
+        ],
+        [
+          "param",
+          "initial The initial value"
+        ]
+      ],
+      "start": 25,
+      "length": 6,
+      "target": "$state",
+      "line": 1,
+      "character": 16
+    },
+    {
+      "type": "hover",
+      "text": "(local function) increment(): void",
+      "start": 49,
+      "length": 9,
+      "target": "increment",
+      "line": 2,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 71,
+      "length": 5,
+      "target": "count",
+      "line": 3,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "(local function) increment(): void",
+      "start": 113,
+      "length": 9,
+      "target": "increment",
+      "line": 6,
+      "character": 17
+    },
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 140,
+      "length": 5,
+      "target": "count",
+      "line": 7,
+      "character": 15
+    }
+  ],
+  "flags": []
+}

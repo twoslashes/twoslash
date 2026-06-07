@@ -1,0 +1,24 @@
+{
+  "code": "<button onclick={increment}>\n    Count is: {count}\n</button>",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "(local function) increment(): void",
+      "start": 17,
+      "length": 9,
+      "target": "increment",
+      "line": 0,
+      "character": 17
+    },
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 44,
+      "length": 5,
+      "target": "count",
+      "line": 1,
+      "character": 15
+    }
+  ],
+  "flags": []
+}
