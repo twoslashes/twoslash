@@ -83,6 +83,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     }
 
     const compiled = svelte2tsx(strippedCode)
+
     const map = generateSourceMap(strippedCode, compiled.code, compiled.map.mappings)
 
     function getLastGeneratedOffset(pos: number) {
