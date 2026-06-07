@@ -332,18 +332,31 @@ function findMarkupRemovals(code: string): Range[] {
   for (let i = 0; i < cutStarts.length; i++) {
     const start = cutStarts[i]
     const end = cutEnds[i]
+    if (!start || !end) {
+      continue
+    }
     const rangeEnd = code[end.end] === '\n' ? end.end + 1 : end.end
     ranges.push([start.start, rangeEnd])
   }
 
-  if (cutStarts.length !== cutEnds.length) {
-    if (cutStarts.length > cutEnds.length) {
-      throw new Error(
-        `Mismatched HTML cut markers: cut-start at position ${cutStarts[cutEnds.length].start} has no matching cut-end`,
-      )
-    }
+  if (cutStarts.length > cutEnds.length) {
     throw new Error(
-      `Mismatched HTML cut markers: more cut-end markers than cut-start markers`,
+      `
+## Mismatched cut markers
+
+You have unclosed cut-starts at lines ${cutStarts.slice(cutEnds.length).map(c => c.start).join(', ')}
+
+Make sure you have a matching pair for each.`,
+    )
+  }
+  if (cutEnds.length > cutStarts.length) {
+    throw new Error(
+      `
+## Mismatched cut markers
+
+You have unclosed cut-ends at lines ${cutEnds.slice(cutStarts.length).map(c => c.start).join(', ')}
+
+Make sure you have a matching pair for each.`,
     )
   }
 
