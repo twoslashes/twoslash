@@ -289,7 +289,7 @@ export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'r
         if (startLine === -1) {
           throw new TwoslashError(
             `Mismatched cut markers`,
-            `You have an unclosed the cut-end at line ${lineIndex + 1}`,
+            `You have unclosed cut-ends at lines ${lineIndex + 1}`,
             `Make sure you have a matching pair for each.`,
           )
         }
