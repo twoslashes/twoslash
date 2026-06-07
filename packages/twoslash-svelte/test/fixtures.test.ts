@@ -1,8 +1,7 @@
 /// <reference types="vite/client" />
 
 import type { TwoslashReturn } from 'twoslash'
-import { access, mkdir, writeFile } from 'node:fs/promises'
-import { dirname, extname } from 'node:path'
+import { extname } from 'node:path'
 import process from 'node:process'
 import { expect, it } from 'vitest'
 import { createTwoslasher } from '../src/index'
@@ -56,18 +55,8 @@ Object.entries(fixtures).forEach(([path, fixture]) => {
         throw new Error('Expected to throw')
       }
       else {
-        const output = cleanFixture(result)
-
-        try {
-          await access(outPath)
-          await expect(output)
-            .toMatchFileSnapshot(outPath)
-        }
-        catch {
-          // Create result if result does not exist
-          await mkdir(dirname(outPath), { recursive: true })
-          await writeFile(outPath, output)
-        }
+        await expect(cleanFixture(result))
+          .toMatchFileSnapshot(outPath)
       }
     },
   )
