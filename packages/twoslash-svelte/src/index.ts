@@ -158,14 +158,23 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       ...sourceMeta.removals,
       ...findMarkupRemovals(code),
       ...result.meta.removals.map((r) => {
-        const scriptContentStart = hasRange(ast.instance?.content) ? ast.instance.content.start : 0
-        const scriptContentEnd = hasRange(ast.instance?.content) ? ast.instance.content.end : 0
-        const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? scriptContentStart
-        const end = get(map.toSourceLocation(r[1]), 0)?.[0] ?? (
-          start != null && scriptContentEnd != null && r[1] > scriptContentEnd
-            ? scriptContentEnd
-            : undefined
-        )
+        const instanceContent = hasRange(ast.instance?.content) ? ast.instance.content : undefined
+        const moduleContent = hasRange(ast.module?.content) ? ast.module.content : undefined
+
+        let start = get(map.toSourceLocation(r[0]), 0)?.[0]
+        let end = get(map.toSourceLocation(r[1]), 0)?.[0]
+
+        // Determine which script block this removal belongs to based on start position
+        const scriptContent = start != null
+          ? (instanceContent && start >= instanceContent.start && start <= instanceContent.end ? instanceContent : undefined)
+          ?? (moduleContent && start >= moduleContent.start && start <= moduleContent.end ? moduleContent : undefined)
+          : instanceContent ?? moduleContent
+
+        start ??= scriptContent?.start
+        if (end == null && scriptContent != null && r[1] > scriptContent.end) {
+          end = scriptContent.end
+        }
+
         if (start == null || end == null || start < 0 || end < 0 || start >= end) {
           return undefined
         }

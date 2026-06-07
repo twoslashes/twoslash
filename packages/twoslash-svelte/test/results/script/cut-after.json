@@ -1,13 +1,13 @@
 {
-  "code": "<script>\n    let count = $state(0);\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
+  "code": "<script>\n    let count = $state(0);\n</script>\n<script module>\n    let count2 = $state(0);\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
   "nodes": [
     {
       "type": "hover",
-      "text": "let count: number",
-      "start": 17,
-      "length": 5,
-      "target": "count",
-      "line": 1,
+      "text": "let count2: number",
+      "start": 143,
+      "length": 6,
+      "target": "count2",
+      "line": 8,
       "character": 8
     },
     {
@@ -24,11 +24,11 @@
           "initial The initial value"
         ]
       ],
-      "start": 25,
+      "start": 152,
       "length": 6,
       "target": "$state",
-      "line": 1,
-      "character": 16
+      "line": 8,
+      "character": 17
     }
   ],
   "flags": []
