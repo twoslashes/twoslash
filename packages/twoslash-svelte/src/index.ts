@@ -1,16 +1,14 @@
 import type { CodeMapping } from '@volar/language-core'
-import type { Node } from 'estree-walker'
-import type { AST } from 'svelte/compiler'
 import type { CompilerOptionDeclaration, CreateTwoslashOptions, HandbookOptions, Range, TwoslashExecuteOptions, TwoslashInstance, TwoslashReturnMeta } from 'twoslash'
 import { createRequire } from 'node:module'
 import { join } from 'node:path'
 import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
-import { walk } from 'estree-walker'
 import { svelte2tsx } from 'svelte2tsx'
 import { parse } from 'svelte/compiler'
 import { createTwoslasher as _createTwoSlasher, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
+import { findCutNotations } from 'twoslash/core'
 import ts from 'typescript'
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
@@ -155,32 +153,18 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
 
     const ast = parse(strippedCode, { modern: true })
 
+    findCutNotations(code, sourceMeta, {
+      reCutBefore: /^<!--\s*---cut(-before)?---\s*-->$/,
+      reCutAfter: /^<!--\s*---cut-after---\s*-->$/,
+      reCutStart: /^<!--\s*---cut-start---\s*-->$/,
+      reCutEnd: /^<!--\s*---cut-end---\s*-->$/,
+    })
+
     const mappedRemovals = [
       ...sourceMeta.removals,
-      ...findMarkupRemovals(code),
-      ...result.meta.removals.map((r) => {
-        const instanceContent = hasRange(ast.instance?.content) ? ast.instance.content : undefined
-        const moduleContent = hasRange(ast.module?.content) ? ast.module.content : undefined
-
-        let start = get(map.toSourceLocation(r[0]), 0)?.[0]
-        let end = get(map.toSourceLocation(r[1]), 0)?.[0]
-
-        // Determine which script block this removal belongs to based on start position
-        const scriptContent = start != null
-          ? (instanceContent && start >= instanceContent.start && start <= instanceContent.end ? instanceContent : undefined)
-          ?? (moduleContent && start >= moduleContent.start && start <= moduleContent.end ? moduleContent : undefined)
-          : instanceContent ?? moduleContent
-
-        start ??= scriptContent?.start
-        if (end == null && scriptContent != null && r[1] > scriptContent.end) {
-          end = scriptContent.end
-        }
-
-        if (start == null || end == null || start < 0 || end < 0 || start >= end) {
-          return undefined
-        }
-        return clampRemovalToScriptBoundaries(start, end, ast) as Range | undefined
-      }).filter(value => value != null),
+      ...result.meta.removals
+        .map(r => mapRemovalToSource(r, map, ast))
+        .filter(value => value != null),
     ]
 
     if (!options.handbookOptions?.keepNotations) {
@@ -301,97 +285,39 @@ function generateSourceMap(
   return new SourceMap(mappings)
 }
 
-function findMarkupRemovals(code: string): Range[] {
-  const ast = parse(code, { modern: true })
-
-  const comments: Array<{ start: number, end: number, data: string }> = []
-  walk(ast as unknown as Node, {
-    enter(node: AST.SvelteNode) {
-      if (node.type === 'Comment') {
-        comments.push({ start: node.start, end: node.end, data: node.data.trim() })
-      }
-    },
-  })
-
-  const ranges: Range[] = []
-
-  const cuts = comments.filter(c => c.data === '---cut---' || c.data === '---cut-before---')
-  const cutAfters = comments.filter(c => c.data === '---cut-after---')
-  const cutStarts = comments.filter(c => c.data === '---cut-start---')
-  const cutEnds = comments.filter(c => c.data === '---cut-end---')
-
-  for (const comment of cuts) {
-    const end = code[comment.end] === '\n' ? comment.end + 1 : comment.end
-    ranges.push([0, end])
-  }
-
-  for (const comment of cutAfters) {
-    ranges.push([comment.start, code.length])
-  }
-
-  for (let i = 0; i < cutStarts.length; i++) {
-    const start = cutStarts[i]
-    const end = cutEnds[i]
-    if (!start || !end) {
-      continue
-    }
-    const rangeEnd = code[end.end] === '\n' ? end.end + 1 : end.end
-    ranges.push([start.start, rangeEnd])
-  }
-
-  if (cutStarts.length > cutEnds.length) {
-    throw new Error(
-      `
-## Mismatched cut markers
-
-You have unclosed cut-starts at lines ${cutStarts.slice(cutEnds.length).map(c => c.start).join(', ')}
-
-Make sure you have a matching pair for each.`,
-    )
-  }
-  if (cutEnds.length > cutStarts.length) {
-    throw new Error(
-      `
-## Mismatched cut markers
-
-You have unclosed cut-ends at lines ${cutEnds.slice(cutStarts.length).map(c => c.start).join(', ')}
-
-Make sure you have a matching pair for each.`,
-    )
-  }
-
-  return ranges
-}
-
-function clampRemovalToScriptBoundaries(
-  start: number,
-  end: number,
+function mapRemovalToSource(
+  r: Range,
+  map: SourceMap,
   ast: ReturnType<typeof parse>,
-): [number, number] | undefined {
-  const scriptBlocks = [
-    ast.instance,
-    ast.module,
-  ].filter(block => block != null)
+): Range | undefined {
+  const instanceContent = hasRange(ast.instance?.content) ? ast.instance.content : undefined
+  const moduleContent = hasRange(ast.module?.content) ? ast.module.content : undefined
 
-  for (const block of scriptBlocks) {
-    const tagStart = block.start // start of `<script`
-    const contentStart = block.content.start // just inside `<script>`
-    const contentEnd = block.content.end // just before `</script>`
-    const tagEnd = block.end // end of `</script>`
+  let start = get(map.toSourceLocation(r[0]), 0)?.[0]
+  let end = get(map.toSourceLocation(r[1]), 0)?.[0]
 
-    // removal starts before script block content, clamp it forward
-    if (start < contentStart && end > tagStart) {
-      start = contentStart
-    }
-    // removal ends after script block content, clamp it back
-    if (end > contentEnd && start < tagEnd) {
-      end = contentEnd
-    }
-    // after clamping, the range may have become invalid
-    if (start >= end) {
-      return undefined
-    }
+  // Determine which script block this removal belongs to
+  const scriptContent = start != null
+    ? (instanceContent && start >= instanceContent.start && start <= instanceContent.end ? instanceContent : undefined)
+    ?? (moduleContent && start >= moduleContent.start && start <= moduleContent.end ? moduleContent : undefined)
+    : instanceContent ?? moduleContent
+
+  // Fall back to script boundaries for unmappable positions
+  start ??= scriptContent?.start
+  if (end == null && scriptContent != null && r[1] > scriptContent.end)
+    end = scriptContent.end
+
+  if (start == null || end == null || start < 0 || end < 0 || start >= end)
+    return undefined
+
+  // Clamp to script content boundaries to protect <script> tags
+  if (scriptContent) {
+    start = Math.max(start, scriptContent.start)
+    end = Math.min(end, scriptContent.end)
   }
+
+  if (start >= end)
+    return undefined
 
   return [start, end]
 }

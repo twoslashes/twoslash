@@ -1,6 +1,6 @@
 
 ## Mismatched cut markers
 
-You have unclosed cut-ends at lines 157
+You have unclosed cut-ends at lines 10
 
 Make sure you have a matching pair for each.

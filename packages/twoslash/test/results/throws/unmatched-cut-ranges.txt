@@ -3,4 +3,4 @@
 
 You have a cut-start at line 4 which is after the cut-end at line 2
 
-Make sure you have a matching pair for each.
+Move the cut-start to before line 2.
