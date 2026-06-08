@@ -1,6 +1,6 @@
 
 ## Mismatched cut markers
 
-You have unclosed cut-starts at lines 96
+You have unclosed cut-starts at line(s) 7
 
-Make sure you have a matching pair for each.
+Add a cut-end after each cut-start.
