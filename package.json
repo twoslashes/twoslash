@@ -1,7 +1,7 @@
 {
   "name": "@twoslash/monorepo",
   "type": "module",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "private": true,
   "packageManager": "pnpm@11.5.1",
   "scripts": {
