@@ -47,13 +47,13 @@
   },
   "peerDependencies": {
     "svelte": ">=5",
-    "svelte2tsx": "*",
     "typescript": "*"
   },
   "dependencies": {
     "@jridgewell/sourcemap-codec": "catalog:",
     "@volar/language-core": "catalog:",
     "estree-walker": "catalog:",
+    "svelte2tsx": "catalog:",
     "twoslash": "workspace:*",
     "twoslash-protocol": "workspace:*"
   },

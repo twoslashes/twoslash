@@ -129,6 +129,9 @@ catalogs:
     svelte:
       specifier: ^5.25.3
       version: 5.56.1
+    svelte2tsx:
+      specifier: ^0.7.56
+      version: 0.7.56
     tslib:
       specifier: ^2.8.1
       version: 2.8.1
@@ -457,7 +460,7 @@ importers:
         specifier: '>=5'
         version: 5.56.1(@typescript-eslint/types@8.58.1)
       svelte2tsx:
-        specifier: '*'
+        specifier: 'catalog:'
         version: 0.7.56(svelte@5.56.1(@typescript-eslint/types@8.58.1))(typescript@6.0.2)
       twoslash:
         specifier: workspace:*
