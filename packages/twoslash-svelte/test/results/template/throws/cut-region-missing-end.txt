@@ -1,6 +1,6 @@
 
 ## Mismatched cut markers
 
-You have unclosed cut-starts at line(s) 5
+You have unclosed cut-starts at line(s) 7
 
 Add a cut-end after each cut-start.

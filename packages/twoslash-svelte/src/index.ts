@@ -4,8 +4,10 @@ import { createRequire } from 'node:module'
 import { decode } from '@jridgewell/sourcemap-codec'
 import { SourceMap } from '@volar/language-core'
 import { svelte2tsx } from 'svelte2tsx'
+import { parse } from 'svelte/compiler'
 import { createTwoslasher as createTwoSlasherBase, defaultCompilerOptions, defaultHandbookOptions, findFlagNotations, findQueryMarkers } from 'twoslash'
 import { createPositionConverter, removeCodeRanges, resolveNodePositions } from 'twoslash-protocol'
+import { findCutNotations } from 'twoslash/core'
 import ts from 'typescript'
 
 export interface CreateTwoslashSvelteOptions extends CreateTwoslashOptions {
@@ -78,6 +80,7 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
     }
 
     const compiled = svelte2tsx(strippedCode)
+
     const map = generateSourceMap(strippedCode, compiled.code, compiled.map.mappings)
 
     function getLastGeneratedOffset(pos: number) {
@@ -146,16 +149,20 @@ export function createTwoslasher(createOptions: CreateTwoslashSvelteOptions = {}
       })
       .filter(value => value != null)
 
+    const ast = parse(strippedCode, { modern: true })
+
+    findCutNotations(code, sourceMeta, {
+      reCutBefore: /^<!--\s*---cut(-before)?---\s*-->$/,
+      reCutAfter: /^<!--\s*---cut-after---\s*-->$/,
+      reCutStart: /^<!--\s*---cut-start---\s*-->$/,
+      reCutEnd: /^<!--\s*---cut-end---\s*-->$/,
+    })
+
     const mappedRemovals = [
       ...sourceMeta.removals,
-      ...result.meta.removals.map((r) => {
-        const start = get(map.toSourceLocation(r[0]), 0)?.[0] ?? code.match(/(?<=<script[\s\S]*>\s)/)?.index
-        const end = get(map.toSourceLocation(r[1]), 0)?.[0]
-        if (start == null || end == null || start < 0 || end < 0 || start >= end) {
-          return undefined
-        }
-        return [start, end] as Range
-      }).filter(value => value != null),
+      ...result.meta.removals
+        .map(r => mapRemovalToSource(r, map, ast))
+        .filter(value => value != null),
     ]
 
     if (!options.handbookOptions?.keepNotations) {
@@ -274,4 +281,50 @@ function generateSourceMap(
     }
   }
   return new SourceMap(mappings)
+}
+
+function mapRemovalToSource(
+  r: Range,
+  map: SourceMap,
+  ast: ReturnType<typeof parse>,
+): Range | undefined {
+  const instanceContent = hasRange(ast.instance?.content) ? ast.instance.content : undefined
+  const moduleContent = hasRange(ast.module?.content) ? ast.module.content : undefined
+
+  let start = get(map.toSourceLocation(r[0]), 0)?.[0]
+  let end = get(map.toSourceLocation(r[1]), 0)?.[0]
+
+  // Determine which script block this removal belongs to
+  const scriptContent = start != null
+    ? (instanceContent && start >= instanceContent.start && start <= instanceContent.end ? instanceContent : undefined)
+    ?? (moduleContent && start >= moduleContent.start && start <= moduleContent.end ? moduleContent : undefined)
+    : instanceContent ?? moduleContent
+
+  // Fall back to script boundaries for unmappable positions
+  start ??= scriptContent?.start
+  if (end == null && scriptContent != null && r[1] > scriptContent.end)
+    end = scriptContent.end
+
+  if (start == null || end == null || start < 0 || end < 0 || start >= end)
+    return undefined
+
+  // Clamp to script content boundaries to protect <script> tags
+  if (scriptContent) {
+    start = Math.max(start, scriptContent.start)
+    end = Math.min(end, scriptContent.end)
+  }
+
+  if (start >= end)
+    return undefined
+
+  return [start, end]
+}
+
+function hasRange(range: unknown): range is { start: number, end: number } {
+  return typeof range === 'object'
+    && range != null
+    && 'start' in range
+    && 'end' in range
+    && typeof range.start === 'number'
+    && typeof range.end === 'number'
 }

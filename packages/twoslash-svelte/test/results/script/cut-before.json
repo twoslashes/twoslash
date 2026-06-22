@@ -1,0 +1,42 @@
+{
+  "code": "<script>    function increment() {\n        count++;\n    }\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "(local function) increment(): void",
+      "start": 21,
+      "length": 9,
+      "target": "increment",
+      "line": 0,
+      "character": 21
+    },
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 43,
+      "length": 5,
+      "target": "count",
+      "line": 1,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "(local function) increment(): void",
+      "start": 85,
+      "length": 9,
+      "target": "increment",
+      "line": 4,
+      "character": 17
+    },
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 112,
+      "length": 5,
+      "target": "count",
+      "line": 5,
+      "character": 15
+    }
+  ],
+  "flags": []
+}

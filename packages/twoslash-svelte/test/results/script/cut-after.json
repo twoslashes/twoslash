@@ -1,0 +1,35 @@
+{
+  "code": "<script>\n    let count = $state(0);\n</script>\n<button onclick={increment}>\n    Count is: {count}\n</button>",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "let count: number",
+      "start": 17,
+      "length": 5,
+      "target": "count",
+      "line": 1,
+      "character": 8
+    },
+    {
+      "type": "hover",
+      "text": "function $state<0>(initial: 0): 0 (+1 overload)\nnamespace $state",
+      "docs": "Declares reactive state.\n\nExample:\n```ts\nlet count = $state(0);\n```",
+      "tags": [
+        [
+          "see",
+          "{@link https://svelte.dev/docs/svelte/$state Documentation}"
+        ],
+        [
+          "param",
+          "initial The initial value"
+        ]
+      ],
+      "start": 25,
+      "length": 6,
+      "target": "$state",
+      "line": 1,
+      "character": 16
+    }
+  ],
+  "flags": []
+}

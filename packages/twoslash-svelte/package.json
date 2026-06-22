@@ -46,11 +46,13 @@
     "start": "esno src/index.ts"
   },
   "peerDependencies": {
+    "svelte": ">=5",
     "typescript": "*"
   },
   "dependencies": {
     "@jridgewell/sourcemap-codec": "catalog:",
     "@volar/language-core": "catalog:",
+    "estree-walker": "catalog:",
     "svelte2tsx": "catalog:",
     "twoslash": "workspace:*",
     "twoslash-protocol": "workspace:*"

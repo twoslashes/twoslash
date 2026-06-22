@@ -259,10 +259,22 @@ export function findFlagNotations(code: string, customTags: string[], tsOptionDe
   return flagNotations
 }
 
-export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'removals'>) {
+export interface FindCutNotationsOptions {
+  reCutBefore?: RegExp
+  reCutAfter?: RegExp
+  reCutStart?: RegExp
+  reCutEnd?: RegExp
+}
+
+export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'removals'>, options: FindCutNotationsOptions = {}) {
+  const mergedReCutBefore = options.reCutBefore || reCutBefore
+  const mergedReCutAfter = options.reCutAfter || reCutAfter
+  const mergedReCutStart = options.reCutStart || reCutStart
+  const mergedReCutEnd = options.reCutEnd || reCutEnd
+
   let removals: Range[] = []
   const lines = code.split('\n')
-  const cutStarts: number[] = []
+  const cutStarts: Array<{ idx: number, line: number }> = []
   // start character after \n
   let idx = 0
   let lineIndex = 0
@@ -270,38 +282,38 @@ export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'r
   for (const line of lines) {
     const comment = line.trim()
 
-    if (comment.match(reCutBefore)) {
+    if (comment.match(mergedReCutBefore)) {
       removals = [[0, idx + line.length + 1]]
     }
-    else if (comment.match(reCutAfter)) {
+    else if (comment.match(mergedReCutAfter)) {
       removals.push([idx, code.length])
       break
     }
-    else if (comment.match(reCutStart)) {
-      cutStarts.push(idx)
+    else if (comment.match(mergedReCutStart)) {
+      cutStarts.push({ idx, line: lineIndex })
     }
-    else if (comment.match(reCutEnd)) {
-      const startIdx = cutStarts.pop()
+    else if (comment.match(mergedReCutEnd)) {
+      const start = cutStarts.pop()
 
-      if (startIdx === undefined) {
-        const startLine = lines.findIndex((line, i) => i > lineIndex && line.trim().match(reCutStart))
+      if (start === undefined) {
+        const startLine = lines.findIndex((l, i) => i > lineIndex && l.trim().match(mergedReCutStart))
 
         if (startLine === -1) {
           throw new TwoslashError(
             `Mismatched cut markers`,
-            `You have an unclosed the cut-end at line ${lineIndex + 1}`,
-            `Make sure you have a matching pair for each.`,
+            `You have an unclosed cut-end at line ${lineIndex + 1}`,
+            `Add a cut-start before line ${lineIndex + 1}.`,
           )
         }
 
         throw new TwoslashError(
           `Mismatched cut markers`,
           `You have a cut-start at line ${startLine + 1} which is after the cut-end at line ${lineIndex + 1}`,
-          `Make sure you have a matching pair for each.`,
+          `Move the cut-start to before line ${lineIndex + 1}.`,
         )
       }
 
-      removals.push([startIdx, idx + line.length + 1])
+      removals.push([start.idx, idx + line.length + 1])
     }
 
     lineIndex++
@@ -311,8 +323,8 @@ export function findCutNotations(code: string, meta: Pick<TwoslashReturnMeta, 'r
   if (cutStarts.length > 0) {
     throw new TwoslashError(
       `Mismatched cut markers`,
-      `You have unclosed cut-starts at lines ${cutStarts.join(', ')}`,
-      `Make sure you have a matching pair for each.`,
+      `You have unclosed cut-starts at line(s) ${cutStarts.map(s => s.line + 1).join(', ')}`,
+      `Add a cut-end after each cut-start.`,
     )
   }
 
