@@ -63,6 +63,8 @@ catalog:
   svelte2tsx: ^0.7.56
   tslib: ^2.8.1
   typescript: ^6.0.2
+  typescript5: npm:typescript@^5.9.3
+  typescript7: npm:typescript@^7.0.2
   unbuild: ^3.6.1
   unocss: ^66.6.8
   unplugin-vue-components: ^32.0.0

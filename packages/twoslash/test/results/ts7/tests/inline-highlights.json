@@ -1,0 +1,39 @@
+{
+  "code": "type Result = \"pass\" | \"fail\"\n\nconst hello = \"OK\"\n",
+  "nodes": [
+    {
+      "type": "highlight",
+      "start": 5,
+      "length": 6,
+      "line": 0,
+      "character": 5
+    },
+    {
+      "type": "hover",
+      "text": "type Result = \"fail\" | \"pass\"",
+      "start": 5,
+      "length": 6,
+      "target": "Result",
+      "line": 0,
+      "character": 5
+    },
+    {
+      "type": "highlight",
+      "start": 37,
+      "length": 2,
+      "text": "Sure",
+      "line": 2,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "const hello: \"OK\"",
+      "start": 37,
+      "length": 5,
+      "target": "hello",
+      "line": 2,
+      "character": 6
+    }
+  ],
+  "flags": []
+}

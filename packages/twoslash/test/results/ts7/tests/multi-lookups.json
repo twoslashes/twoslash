@@ -1,0 +1,105 @@
+{
+  "code": "function paintShape(opts: PaintOptions) {\n  let xPos = opts.xPos\n  let yPos = opts.yPos\n  // ...\n}\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "function paintShape(opts: PaintOptions): void",
+      "start": 9,
+      "length": 10,
+      "target": "paintShape",
+      "line": 0,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) opts: PaintOptions",
+      "start": 20,
+      "length": 4,
+      "target": "opts",
+      "line": 0,
+      "character": 20
+    },
+    {
+      "type": "hover",
+      "text": "interface PaintOptions",
+      "start": 26,
+      "length": 12,
+      "target": "PaintOptions",
+      "line": 0,
+      "character": 26
+    },
+    {
+      "type": "hover",
+      "text": "let xPos: number | undefined",
+      "start": 48,
+      "length": 4,
+      "target": "xPos",
+      "line": 1,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) opts: PaintOptions",
+      "start": 55,
+      "length": 4,
+      "target": "opts",
+      "line": 1,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "(property) PaintOptions.xPos?: number | undefined",
+      "start": 60,
+      "length": 4,
+      "target": "xPos",
+      "line": 1,
+      "character": 18
+    },
+    {
+      "type": "query",
+      "text": "(property) PaintOptions.xPos?: number | undefined",
+      "start": 60,
+      "length": 4,
+      "target": "xPos",
+      "line": 1,
+      "character": 18
+    },
+    {
+      "type": "hover",
+      "text": "let yPos: number | undefined",
+      "start": 71,
+      "length": 4,
+      "target": "yPos",
+      "line": 2,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) opts: PaintOptions",
+      "start": 78,
+      "length": 4,
+      "target": "opts",
+      "line": 2,
+      "character": 13
+    },
+    {
+      "type": "hover",
+      "text": "(property) PaintOptions.yPos?: number | undefined",
+      "start": 83,
+      "length": 4,
+      "target": "yPos",
+      "line": 2,
+      "character": 18
+    },
+    {
+      "type": "query",
+      "text": "(property) PaintOptions.yPos?: number | undefined",
+      "start": 83,
+      "length": 4,
+      "target": "yPos",
+      "line": 2,
+      "character": 18
+    }
+  ],
+  "flags": []
+}

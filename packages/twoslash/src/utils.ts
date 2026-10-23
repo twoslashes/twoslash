@@ -1,5 +1,6 @@
 import type { createPositionConverter, Range } from 'twoslash-protocol'
-import type { SourceFile } from 'typescript'
+import type { CompilerOptions } from 'typescript'
+import type { IdentifierSpan } from './pipeline'
 import type { CompilerOptionDeclaration, ParsedFlagNotation, TwoslashReturnMeta, VirtualFile } from './types'
 import { hash as objectHash } from 'ohash'
 import { defaultHandbookOptions } from './defaults'
@@ -57,16 +58,24 @@ export function typesToExtension(types: string) {
   )
 }
 
-export function getIdentifierTextSpans(ts: typeof import('typescript'), sourceFile: SourceFile, fileOffset: number) {
-  const textSpans: [start: number, end: number, text: string][] = []
+/** The subset of a syntax node shared by the TypeScript 5/6 and 7 ASTs */
+export interface SyntaxNode {
+  kind: number
+  forEachChild: <T>(cb: (node: SyntaxNode) => T) => T | undefined
+  getStart: () => number
+  getText: () => string
+}
+
+export function getIdentifierTextSpans(sourceFile: SyntaxNode, identifierKind: number, fileOffset: number) {
+  const textSpans: IdentifierSpan[] = []
   checkChildren(sourceFile)
   return textSpans
 
-  function checkChildren(node: import('typescript').Node) {
-    ts.forEachChild(node, (child) => {
-      if (ts.isIdentifier(child)) {
-        const text = child.getText(sourceFile)
-        const start = child.getStart(sourceFile, false) + fileOffset
+  function checkChildren(node: SyntaxNode) {
+    node.forEachChild((child) => {
+      if (child.kind === identifierKind) {
+        const text = child.getText()
+        const start = child.getStart() + fileOffset
         const end = start + text.length
         textSpans.push([start, end, text])
       }
@@ -381,4 +390,25 @@ export function removeTsExtension(filename: string) {
     .replace(/\.d\.ts$/, '.ts')
     .replace(/\.map$/, '')
   return sansMapOrDTS.replace(/\.[^/.]+$/, '')
+}
+
+type CompilerOptionValue = CompilerOptions[string]
+
+/**
+ * Convert compiler options in their TS API representation (numeric enums, lib file names) back to tsconfig values
+ */
+export function toTsconfigOptions(compilerOptions: CompilerOptions, declarations: CompilerOptionDeclaration[]) {
+  const toJson = (value: CompilerOptionValue | Extract<CompilerOptionValue, unknown[]>[number], declaration?: CompilerOptionDeclaration) => {
+    if (!declaration || typeof declaration.type === 'string')
+      return value
+    for (const [key, mapped] of declaration.type) {
+      if (mapped === value)
+        return key
+    }
+    return value
+  }
+  return Object.fromEntries(Object.entries(compilerOptions).map(([name, value]) => {
+    const declaration = declarations.find(i => i.name === name)
+    return [name, Array.isArray(value) ? value.map(i => toJson(i, declaration?.element)) : toJson(value, declaration)]
+  }))
 }

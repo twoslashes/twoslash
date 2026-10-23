@@ -1,7 +1,7 @@
 import type { TwoslashOptions } from './core'
 import type { TwoslashOptionsLegacy, TwoslashReturnLegacy } from './legacy'
 import ts from 'typescript'
-import { createTwoslasher as _createTwoslasher, twoslasher as _twoslasher } from './core'
+import { createTwoslasher as _createTwoslasher, createTwoslasherAsync as _createTwoslasherAsync, twoslasher as _twoslasher } from './core'
 import { convertLegacyOptions, convertLegacyReturn } from './legacy'
 
 export * from './legacy'
@@ -15,6 +15,17 @@ const cwd = /* @__PURE__ */ typeof process !== 'undefined' && typeof process.cwd
  */
 export function createTwoslasher(opts?: TwoslashOptions) {
   return _createTwoslasher({
+    vfsRoot: cwd,
+    tsModule: ts,
+    ...opts,
+  })
+}
+
+/**
+ * Create a Twoslash instance that also supports TypeScript 7+, call `close` when done to stop the language server
+ */
+export function createTwoslasherAsync(opts?: TwoslashOptions) {
+  return _createTwoslasherAsync({
     vfsRoot: cwd,
     tsModule: ts,
     ...opts,

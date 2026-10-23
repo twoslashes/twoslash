@@ -1,0 +1,42 @@
+{
+  "code": "ctx.foo()\nctx.foo\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const ctx: {\n    foo(): string;\n}",
+      "start": 0,
+      "length": 3,
+      "target": "ctx",
+      "line": 0,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(method) foo(): string",
+      "start": 4,
+      "length": 3,
+      "target": "foo",
+      "line": 0,
+      "character": 4
+    },
+    {
+      "type": "hover",
+      "text": "const ctx: {\n    foo(): string;\n}",
+      "start": 10,
+      "length": 3,
+      "target": "ctx",
+      "line": 1,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "(method) foo(): string",
+      "start": 14,
+      "length": 3,
+      "target": "foo",
+      "line": 1,
+      "character": 4
+    }
+  ],
+  "flags": []
+}

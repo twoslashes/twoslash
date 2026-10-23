@@ -1,0 +1,99 @@
+{
+  "code": "\nfunction fn(s) {\n  console.log(s.subtr(3))\n}\n\nfn(42)\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "function fn(s: any): void",
+      "start": 10,
+      "length": 2,
+      "target": "fn",
+      "line": 1,
+      "character": 9
+    },
+    {
+      "type": "error",
+      "start": 13,
+      "length": 1,
+      "code": 7006,
+      "filename": "index.ts",
+      "id": "err-7006-49-1",
+      "text": "Parameter 's' implicitly has an 'any' type.",
+      "level": "error",
+      "line": 1,
+      "character": 12
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) s: any",
+      "start": 13,
+      "length": 1,
+      "target": "s",
+      "line": 1,
+      "character": 12
+    },
+    {
+      "type": "hover",
+      "text": "var console: Console",
+      "start": 20,
+      "length": 7,
+      "target": "console",
+      "line": 2,
+      "character": 2
+    },
+    {
+      "type": "hover",
+      "text": "(method) Console.log(...data: any[]): void",
+      "docs": "The **`console.log()`** static method outputs a message to the console.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/console/log_static)",
+      "start": 28,
+      "length": 3,
+      "target": "log",
+      "line": 2,
+      "character": 10
+    },
+    {
+      "type": "hover",
+      "text": "(parameter) s: any",
+      "start": 32,
+      "length": 1,
+      "target": "s",
+      "line": 2,
+      "character": 14
+    },
+    {
+      "type": "hover",
+      "text": "any",
+      "start": 34,
+      "length": 5,
+      "target": "subtr",
+      "line": 2,
+      "character": 16
+    },
+    {
+      "type": "hover",
+      "text": "function fn(s: any): void",
+      "start": 47,
+      "length": 2,
+      "target": "fn",
+      "line": 5,
+      "character": 0
+    }
+  ],
+  "flags": [
+    {
+      "type": "compilerOptions",
+      "name": "target",
+      "value": 2,
+      "start": 0,
+      "end": 19
+    },
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        7006
+      ],
+      "start": 19,
+      "end": 36
+    }
+  ]
+}

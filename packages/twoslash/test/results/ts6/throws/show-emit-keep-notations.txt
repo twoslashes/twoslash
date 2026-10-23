@@ -1,0 +1,6 @@
+
+## Option 'showEmit' cannot be used with 'keepNotations'
+
+With `showEmit` enabled, the output will always be the emitted code
+
+Remove either option to continue

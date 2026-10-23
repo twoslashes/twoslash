@@ -1,0 +1,33 @@
+{
+  "code": "const c = 3\nconst e = 5\nconst g = 7\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const c: 3",
+      "start": 6,
+      "length": 1,
+      "target": "c",
+      "line": 0,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "const e: 5",
+      "start": 18,
+      "length": 1,
+      "target": "e",
+      "line": 1,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "const g: 7",
+      "start": 30,
+      "length": 1,
+      "target": "g",
+      "line": 2,
+      "character": 6
+    }
+  ],
+  "flags": []
+}

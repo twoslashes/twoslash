@@ -1,0 +1,25 @@
+{
+  "code": "let a: number = 'hi'\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "let a: number",
+      "start": 4,
+      "length": 1,
+      "target": "a",
+      "line": 0,
+      "character": 4
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": [
+        2322
+      ],
+      "start": 0,
+      "end": 19
+    }
+  ]
+}

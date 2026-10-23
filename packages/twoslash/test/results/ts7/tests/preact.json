@@ -1,0 +1,68 @@
+{
+  "code": "\n/** @jsxImportSource preact */\nfunction App() {\n  return <h1>Hello World</h1>\n}\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "function App(): JSXInternal.Element",
+      "tags": [
+        [
+          "jsxImportSource",
+          "preact"
+        ]
+      ],
+      "start": 41,
+      "length": 3,
+      "target": "App",
+      "line": 2,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "(property) JSXInternal.IntrinsicElements.h1: JSXInternal.HTMLAttributes<HTMLHeadingElement>",
+      "start": 59,
+      "length": 2,
+      "target": "h1",
+      "line": 3,
+      "character": 10
+    },
+    {
+      "type": "hover",
+      "text": "(property) JSXInternal.IntrinsicElements.h1: JSXInternal.HTMLAttributes<HTMLHeadingElement>",
+      "start": 75,
+      "length": 2,
+      "target": "h1",
+      "line": 3,
+      "character": 26
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "noErrors",
+      "value": true,
+      "start": 59,
+      "end": 72
+    },
+    {
+      "type": "compilerOptions",
+      "name": "module",
+      "value": 1,
+      "start": 0,
+      "end": 21
+    },
+    {
+      "type": "compilerOptions",
+      "name": "jsx",
+      "value": 4,
+      "start": 21,
+      "end": 40
+    },
+    {
+      "type": "compilerOptions",
+      "name": "target",
+      "value": 99,
+      "start": 40,
+      "end": 59
+    }
+  ]
+}
