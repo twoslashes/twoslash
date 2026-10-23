@@ -71,6 +71,12 @@ export interface CreateTwoslashOptions extends TwoslashExecuteOptions {
   tsLibDirectory?: string
 
   /**
+   * Absolute path to the `typescript` package, used to start the native language server of TypeScript 7+.
+   * Resolved from Twoslash by default.
+   */
+  tsPackageDirectory?: string
+
+  /**
    * An optional Map object which is passed into @typescript/vfs - if you are using twoslash on the
    * web then you'll need this to set up your lib *.d.ts files. If missing, it will use your fs.
    */

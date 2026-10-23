@@ -1,0 +1,15 @@
+{
+  "code": "const bye = 'globe'\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const bye: \"globe\"",
+      "start": 6,
+      "length": 3,
+      "target": "bye",
+      "line": 0,
+      "character": 6
+    }
+  ],
+  "flags": []
+}

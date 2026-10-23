@@ -14,3 +14,14 @@ export interface TwoslashInstance {
    */
   getCacheMap: () => Map<string, VirtualTypeScriptEnvironment> | undefined
 }
+
+export interface TwoslashAsyncInstance {
+  /**
+   * Run Twoslash on a string of code, with a particular extension
+   */
+  (code: string, extension?: string, options?: TwoslashExecuteOptions): Promise<TwoslashReturn>
+  /**
+   * Stop the TypeScript language server, if one was started
+   */
+  close: () => Promise<void>
+}

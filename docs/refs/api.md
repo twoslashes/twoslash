@@ -33,6 +33,28 @@ const twoslasher = createTwoslasher()
 twoslasher.getCacheMap()?.clear()
 ```
 
+## `createTwoslasherAsync`
+
+TypeScript 7 is written in Go and no longer ships the JavaScript language service, so Twoslash talks to its native language server instead. That communication is asynchronous, which `createTwoslasherAsync` handles. It works with TypeScript 5 and 6 as well, so you can switch to it before upgrading.
+
+```ts twoslash
+import { createTwoslasherAsync } from 'twoslash'
+
+const twoslasher = createTwoslasherAsync()
+
+const result = await twoslasher('import { ref } from "vue"', 'ts')
+
+// Stop the language server when you are done, otherwise it keeps the process alive.
+await twoslasher.close()
+```
+
+Calls are processed one at a time. With TypeScript 7, some features behave differently:
+
+- `@showEmit` is not supported, since the language server does not expose emitted output.
+- Virtual files (`// @filename: src/foo.ts`) must be in directories that exist on disk.
+- Compiler options that TypeScript 7 removed (like `baseUrl` or `moduleResolution: node`) throw an error.
+- Hover texts follow the TypeScript 7 output, e.g. union members can be ordered differently.
+
 ## `twoslasher`
 
 The `twoslasher` function is a shorthand for directly getting the result from the code. It will create a new TypeScript language server every time it is called. Ideally, `createTwoslasher` should be preferred.

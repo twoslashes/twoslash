@@ -53,14 +53,15 @@
     "prepublishOnly": "nr build"
   },
   "peerDependencies": {
-    "typescript": "^5.5.0 || ^6.0.0"
+    "typescript": "^5.5.0 || ^6.0.0 || ^7.0.0"
   },
   "dependencies": {
     "@typescript/vfs": "catalog:",
     "twoslash-protocol": "workspace:*"
   },
   "devDependencies": {
-    "ohash": "catalog:"
+    "ohash": "catalog:",
+    "typescript7": "catalog:"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

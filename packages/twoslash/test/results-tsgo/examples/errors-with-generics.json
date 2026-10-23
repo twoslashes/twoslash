@@ -1,0 +1,84 @@
+{
+  "code": "const a: Record<string, string> = {}\nlet b: Record<string, number> = {}\nb = a\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const a: Record<string, string>",
+      "start": 6,
+      "length": 1,
+      "target": "a",
+      "line": 0,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "type Record<K extends string | number | symbol, T> = { [P in K]: T; }",
+      "docs": "Construct a type with a set of properties K of type T",
+      "start": 9,
+      "length": 6,
+      "target": "Record",
+      "line": 0,
+      "character": 9
+    },
+    {
+      "type": "hover",
+      "text": "let b: Record<string, number>",
+      "start": 41,
+      "length": 1,
+      "target": "b",
+      "line": 1,
+      "character": 4
+    },
+    {
+      "type": "hover",
+      "text": "type Record<K extends string | number | symbol, T> = { [P in K]: T; }",
+      "docs": "Construct a type with a set of properties K of type T",
+      "start": 44,
+      "length": 6,
+      "target": "Record",
+      "line": 1,
+      "character": 7
+    },
+    {
+      "type": "error",
+      "start": 72,
+      "length": 1,
+      "code": 2322,
+      "filename": "index.ts",
+      "id": "err-2322-89-1",
+      "text": "Type 'Record<string, string>' is not assignable to type 'Record<string, number>'.\n  'string' index signatures are incompatible.\n    Type 'string' is not assignable to type 'number'.",
+      "level": "error",
+      "line": 2,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "let b: Record<string, number>",
+      "start": 72,
+      "length": 1,
+      "target": "b",
+      "line": 2,
+      "character": 0
+    },
+    {
+      "type": "hover",
+      "text": "const a: Record<string, string>",
+      "start": 76,
+      "length": 1,
+      "target": "a",
+      "line": 2,
+      "character": 4
+    }
+  ],
+  "flags": [
+    {
+      "type": "handbookOptions",
+      "name": "errors",
+      "value": [
+        2322
+      ],
+      "start": 0,
+      "end": 17
+    }
+  ]
+}

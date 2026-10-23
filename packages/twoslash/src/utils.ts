@@ -1,4 +1,5 @@
 import type { createPositionConverter, Range } from 'twoslash-protocol'
+import type { CompilerOptions } from 'typescript'
 import type { IdentifierSpan } from './pipeline'
 import type { CompilerOptionDeclaration, ParsedFlagNotation, TwoslashReturnMeta, VirtualFile } from './types'
 import { hash as objectHash } from 'ohash'
@@ -389,4 +390,25 @@ export function removeTsExtension(filename: string) {
     .replace(/\.d\.ts$/, '.ts')
     .replace(/\.map$/, '')
   return sansMapOrDTS.replace(/\.[^/.]+$/, '')
+}
+
+type CompilerOptionValue = CompilerOptions[string]
+
+/**
+ * Convert compiler options in their TS API representation (numeric enums, lib file names) back to tsconfig values
+ */
+export function toTsconfigOptions(compilerOptions: CompilerOptions, declarations: CompilerOptionDeclaration[]) {
+  const toJson = (value: CompilerOptionValue | Extract<CompilerOptionValue, unknown[]>[number], declaration?: CompilerOptionDeclaration) => {
+    if (!declaration || typeof declaration.type === 'string')
+      return value
+    for (const [key, mapped] of declaration.type) {
+      if (mapped === value)
+        return key
+    }
+    return value
+  }
+  return Object.fromEntries(Object.entries(compilerOptions).map(([name, value]) => {
+    const declaration = declarations.find(i => i.name === name)
+    return [name, Array.isArray(value) ? value.map(i => toJson(i, declaration?.element)) : toJson(value, declaration)]
+  }))
 }

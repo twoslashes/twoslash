@@ -1,11 +1,11 @@
 import type { CompilerOptions, CompletionsTriggerCharacter, CompletionTriggerKind, JsxEmit, System } from 'typescript'
 import type { IdentifierSpan } from './pipeline'
-import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, VirtualFile } from './types'
+import type { CompilerOptionDeclaration, CreateTwoslashOptions, TwoslashAsyncInstance, TwoslashExecuteOptions, TwoslashInstance, TwoslashOptions, TwoslashReturn, VirtualFile } from './types'
 import { createFSBackedSystem, createSystem, createVirtualTypeScriptEnvironment } from '@typescript/vfs'
 import { removeCodeRanges } from 'twoslash-protocol'
 import { TwoslashError } from './error'
 import { addCompletionNodes, addErrorNodes, addQuickInfoNodes, finalizeRun, getCompletionRequests, getFileContent, getHoverRequests, getOffsetInFile, getRunFiles, prepareRun } from './pipeline'
-import { getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, typesToExtension } from './utils'
+import { getExtension, getIdentifierTextSpans, getObjectHash, removeTsExtension, splitFiles, toTsconfigOptions, typesToExtension } from './utils'
 
 export * from './public'
 
@@ -17,6 +17,13 @@ type TS = typeof import('typescript')
 export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): TwoslashInstance {
   const ts: TS = createOptions.tsModule!
   const tsMajorVersion = Number(ts.versionMajorMinor.split('.')[0])
+  if (tsMajorVersion >= 7) {
+    throw new TwoslashError(
+      `TypeScript ${ts.versionMajorMinor} is not supported by the synchronous API`,
+      'TypeScript 7 no longer ships the JavaScript language service, so Twoslash has to talk to its native language server asynchronously.',
+      'Use `createTwoslasherAsync` instead.',
+    )
+  }
   const tsOptionDeclarations = (ts as any).optionDeclarations as CompilerOptionDeclaration[]
 
   // In a browser we want to DI everything, in node we can use local infra
@@ -183,6 +190,103 @@ export function createTwoslasher(createOptions: CreateTwoslashOptions = {}): Two
   }
 
   return twoslasher
+}
+
+/**
+ * Create a Twoslash instance that works with every supported TypeScript version, including TypeScript 7+
+ */
+export function createTwoslasherAsync(createOptions: CreateTwoslashOptions = {}): TwoslashAsyncInstance {
+  const ts: TS = createOptions.tsModule!
+  if (Number(ts.versionMajorMinor.split('.')[0]) < 7) {
+    const twoslasher = createTwoslasher(createOptions)
+    return Object.assign(async (...args: Parameters<TwoslashInstance>) => twoslasher(...args), { close: async () => {} })
+  }
+
+  const root = createOptions.vfsRoot!.replace(/\\/g, '/')
+  const fsRoot = `${root}/`
+  const tsconfigPath = `${fsRoot}tsconfig.json`
+  let session: ReturnType<typeof createSession> | undefined
+  // Runs share the files of one language server, so they can't overlap
+  let queue: Promise<unknown> = Promise.resolve()
+
+  async function createSession() {
+    const { createTsgoSession, resolveTsPackageDirectory } = await import('./tsgo')
+    return createTsgoSession(createOptions.tsPackageDirectory || resolveTsPackageDirectory(), root)
+  }
+
+  async function twoslasher(code: string, extension = 'ts', options: TwoslashExecuteOptions = {}): Promise<TwoslashReturn> {
+    const { optionDeclarations } = await import('./option-declarations')
+    const run = prepareRun(code, extension, options, createOptions, {
+      fsRoot,
+      optionDeclarations,
+      compilerOptions: {
+        // Matches the default of `@typescript/vfs`, used with older TypeScript versions
+        jsx: 2 satisfies JsxEmit.React,
+        // Nothing is emitted, this avoids errors about outputs overwriting JS inputs
+        noEmit: true,
+      },
+    })
+    const { meta } = run
+    if (meta.handbookOptions.showEmit) {
+      throw new TwoslashError(
+        `Option 'showEmit' is not supported with TypeScript ${ts.versionMajorMinor}`,
+        'TypeScript 7 does not expose the emitted output to Twoslash',
+        'Remove the option, or use TypeScript 6 or earlier',
+      )
+    }
+
+    const files = getRunFiles(run)
+    const tsconfig = JSON.stringify({
+      compilerOptions: toTsconfigOptions(meta.compilerOptions, optionDeclarations),
+      files: files.map(i => i.filepath),
+    })
+    session ||= createSession()
+    const project = await (await session).openProject(tsconfigPath, tsconfig, files)
+    try {
+      const configErrors = await project.getConfigErrors()
+      if (configErrors.length) {
+        throw new TwoslashError(
+          `Invalid compiler options`,
+          configErrors.join('\n'),
+          `TypeScript ${ts.versionMajorMinor} may have removed or changed these options.`,
+        )
+      }
+
+      const lspFiles = meta.virtualFiles.filter(i => i.supportLsp)
+      const identifiers = new Map(await Promise.all(lspFiles.map(async file => [file, await project.getIdentifiers(file)] as const)))
+      const hoverRequests = getHoverRequests(run, file => identifiers.get(file)!)
+      const quickInfos = new Map(await Promise.all(
+        [...hoverRequests.hovers, ...hoverRequests.queries]
+          .map(async request => [request, await project.getQuickInfo(request.file.filepath, getOffsetInFile(request.start, request.file))] as const),
+      ))
+      addQuickInfoNodes(run, hoverRequests, request => quickInfos.get(request))
+
+      const completionRequests = getCompletionRequests(run)
+      const completions = await Promise.all(completionRequests.map(i => project.getCompletions(i.file.filepath, i.offset, i.triggerCharacter)))
+      addCompletionNodes(run, completionRequests, request => completions[completionRequests.indexOf(request)])
+
+      const diagnostics = new Map(await Promise.all(lspFiles.map(async file => [file, await project.getDiagnostics(file.filepath)] as const)))
+      addErrorNodes(run, file => diagnostics.get(file)!)
+
+      return finalizeRun(run)
+    }
+    finally {
+      await project.close()
+    }
+  }
+
+  return Object.assign(
+    (...args: Parameters<typeof twoslasher>) => {
+      const result = queue.then(() => twoslasher(...args))
+      queue = result.catch(() => {})
+      return result
+    },
+    {
+      async close() {
+        await (await session)?.close()
+      },
+    },
+  )
 }
 
 function createCacheableFSBackedSystem(
