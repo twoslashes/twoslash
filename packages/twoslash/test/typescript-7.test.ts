@@ -1,19 +1,13 @@
-import { createRequire } from 'node:module'
-import { dirname } from 'node:path'
-import ts7 from 'typescript7'
 import { afterAll, expect, it } from 'vitest'
 import { createTwoslasher, createTwoslasherAsync } from '../src/index'
+import { typescriptVersions } from './typescript-versions'
 
-// Types are resolved from TypeScript 6, while the TypeScript 7 entry only exposes its version
-const tsModule = ts7 as unknown as typeof import('typescript')
-const twoslasher = createTwoslasherAsync({
-  tsModule,
-  tsPackageDirectory: dirname(createRequire(import.meta.url).resolve('typescript7/package.json')),
-})
+const ts7 = typescriptVersions.find(i => i.id === 'ts7')!
+const twoslasher = createTwoslasherAsync(ts7)
 afterAll(() => twoslasher.close())
 
 it('points the sync API to the async one', () => {
-  expect(() => createTwoslasher({ tsModule })).toThrow('createTwoslasherAsync')
+  expect(() => createTwoslasher(ts7)).toThrow('createTwoslasherAsync')
 })
 
 it('runs overlapping calls one after another', async () => {

@@ -135,6 +135,9 @@ catalogs:
     tslib:
       specifier: ^2.8.1
       version: 2.8.1
+    typescript5:
+      specifier: npm:typescript@^5.9.3
+      version: 5.9.3
     typescript7:
       specifier: npm:typescript@^7.0.2
       version: 7.0.2
@@ -345,6 +348,9 @@ importers:
       ohash:
         specifier: 'catalog:'
         version: 2.0.11
+      typescript5:
+        specifier: 'catalog:'
+        version: typescript@5.9.3
       typescript7:
         specifier: 'catalog:'
         version: typescript@7.0.2
@@ -4625,6 +4631,11 @@ packages:
 
   type-level-regexp@0.1.17:
     resolution: {integrity: sha512-wTk4DH3cxwk196uGLK/E9pE45aLfeKJacKmcEgEOA/q5dnPGNxXt0cfYdFxb57L+sEpf1oJH4Dnx/pnRcku9jg==}
+
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
 
   typescript@6.0.2:
     resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
@@ -9096,6 +9107,8 @@ snapshots:
       prelude-ls: 1.2.1
 
   type-level-regexp@0.1.17: {}
+
+  typescript@5.9.3: {}
 
   typescript@6.0.2: {}
 

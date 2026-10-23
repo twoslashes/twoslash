@@ -1,0 +1,43 @@
+{
+  "code": "const map = new Map<string, Set<number>>()\n",
+  "nodes": [
+    {
+      "type": "hover",
+      "text": "const map: Map<string, Set<number>>",
+      "start": 6,
+      "length": 3,
+      "target": "map",
+      "line": 0,
+      "character": 6
+    },
+    {
+      "type": "hover",
+      "text": "var Map: MapConstructor\nnew <string, Set<number>>(iterable?: Iterable<readonly [string, Set<number>]> | null | undefined) => Map<string, Set<number>> (+3 overloads)",
+      "start": 16,
+      "length": 3,
+      "target": "Map",
+      "line": 0,
+      "character": 16
+    },
+    {
+      "type": "hover",
+      "text": "interface Set<T>",
+      "start": 28,
+      "length": 3,
+      "target": "Set",
+      "line": 0,
+      "character": 28
+    }
+  ],
+  "flags": [
+    {
+      "type": "compilerOptions",
+      "name": "lib",
+      "value": [
+        "lib.es2015.d.ts"
+      ],
+      "start": 0,
+      "end": 16
+    }
+  ]
+}

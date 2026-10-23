@@ -13,7 +13,6 @@ export default antfu({
   ignores: [
     '**/test/fixtures/**/*',
     '**/test/results/**/*',
-    '**/test/results-tsgo/**/*',
     '**/.eval*',
   ],
 })

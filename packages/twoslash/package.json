@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "ohash": "catalog:",
+    "typescript5": "catalog:",
     "typescript7": "catalog:"
   },
   "simple-git-hooks": {
